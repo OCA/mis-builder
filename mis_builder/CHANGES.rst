@@ -9,6 +9,8 @@ Changelog
 9.0.2.0.3 (unreleased)
 ~~~~~~~~~~~~~~~~~~~~~~
 
+* [IMP] more robust behaviour in presence of missing expressions
+* [FIX] indent style
 * [FIX] unicode error when exporting to Excel
 * [IMP] provide full access to mis builder style for group Adviser.
 
