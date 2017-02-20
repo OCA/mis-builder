@@ -496,6 +496,7 @@ class MisReportKpi(models.Model):
     sequence = fields.Integer(string='Sequence', default=100)
     report_id = fields.Many2one('mis.report',
                                 string='Report',
+                                required=True,
                                 ondelete='cascade')
 
     _order = 'sequence, id'
@@ -608,7 +609,7 @@ class MisReportSubkpi(models.Model):
     _order = 'sequence'
 
     sequence = fields.Integer()
-    report_id = fields.Many2one('mis.report')
+    report_id = fields.Many2one('mis.report', required=True)
     name = fields.Char(size=32, required=True,
                        string='Name')
     description = fields.Char(required=True,
@@ -705,6 +706,7 @@ class MisReportQuery(models.Model):
                                          ('date', 'datetime'))])
     domain = fields.Char(string='Domain')
     report_id = fields.Many2one('mis.report', string='Report',
+                                required=True,
                                 ondelete='cascade')
 
     _order = 'name'
