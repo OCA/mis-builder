@@ -98,6 +98,7 @@ Contributors
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Benjamin Willig <benjamin.willig@acsone.eu>
 * Martronic SA <info@martronic.ch>  
+* nicomacr <nmr@adhoc.com.ar>
 
 Maintainer
 ----------

@@ -42,6 +42,7 @@ Main bug fixes:
 * [FIX] sorting of detail by account
 * [FIX] computation bug in detail by account when multiple accounting
   expressions were used in a KPI
+* [FIX] permission issue when adding report to dashboard with non admin user
 
 9.0.2.0.3 (unreleased)
 ~~~~~~~~~~~~~~~~~~~~~~
