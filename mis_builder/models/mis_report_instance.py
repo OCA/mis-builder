@@ -334,9 +334,9 @@ class MisReportInstance(models.Model):
                 record.pivot_date = fields.Date.context_today(record)
 
     @api.model
-    def _default_company(self):
-        return self.env['res.company'].\
-            _company_default_get('mis.report.instance')
+    def _default_company_ids(self):
+        return [(6,0,[self.env['res.company'].\
+            _company_default_get('mis.report.instance').id])]
 
     _name = 'mis.report.instance'
 
@@ -362,10 +362,14 @@ class MisReportInstance(models.Model):
                                    string='Target Moves',
                                    required=True,
                                    default='posted')
-    company_id = fields.Many2one(comodel_name='res.company',
-                                 string='Company',
-                                 default=_default_company,
-                                 required=True)
+    company_ids = fields.Many2many(comodel_name='res.company',
+        string='Company',
+        help='Select companies for which data will  be searched. \
+            User\'s company if empty.',
+        default=_default_company_ids,
+        required=False)
+    currency_id = fields.Many2one('res.currency', 'Currency',
+        required=False)
     landscape_pdf = fields.Boolean(string='Landscape PDF')
     comparison_mode = fields.Boolean(
         compute="_compute_comparison_mode",
