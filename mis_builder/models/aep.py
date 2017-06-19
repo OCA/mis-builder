@@ -67,11 +67,10 @@ class AccountingExpressionProcessor(object):
                          r"(?P<accounts>_[a-zA-Z0-9]+|\[.*?\])"
                          r"(?P<domain>\[.*?\])?")
 
-    def __init__(self, company_ids=None, currency_id=None):
-        self.company_ids = company_ids and company_ids or \
-            [self.env.user.company_id]
+    def __init__(self, company_ids, currency_id=None):
+        self.company_ids = company_ids
         self.currency_id = currency_id and currency_id or \
-            self.env.user.company_id.currency_id
+            self.company_ids[0].currency_id
         self.dp = self.currency_id.decimal_places
         # before done_parsing: {(domain, mode): set(account_codes)}
         # after done_parsing: {(domain, mode): list(account_ids)}
