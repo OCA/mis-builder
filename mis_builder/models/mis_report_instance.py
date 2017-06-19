@@ -365,9 +365,9 @@ class MisReportInstance(models.Model):
     company_ids = fields.Many2many(comodel_name='res.company',
         string='Company',
         help='Select companies for which data will  be searched. \
-            User\'s company if empty.',
+            User\'s company by default.',
         default=_default_company_ids,
-        required=False)
+        required=True)
     currency_id = fields.Many2one('res.currency', 'Currency',
         required=False)
     landscape_pdf = fields.Boolean(string='Landscape PDF')
