@@ -44,7 +44,8 @@ class MisBuilderXlsx(ReportXlsx):
 
         # create worksheet
         report_name = u'{} - {}'.format(
-            objects[0].name, objects[0].company_id.name)
+            objects[0].name, u', '.join(
+                [a.name for a in objects[0].company_ids]))
         sheet = workbook.add_worksheet(report_name[:31])
         row_pos = 0
         col_pos = 0
