@@ -588,7 +588,7 @@ class MisReportInstance(models.Model):
         is guaranteed to be the id of the mis.report.instance.period.
         """
         self.ensure_one()
-        aep = self.report_id._prepare_aep(self.company_id)
+        aep = self.report_id._prepare_aep(self.company_ids, self.currency_id)
         kpi_matrix = self.report_id.prepare_kpi_matrix()
         for period in self.period_ids:
             description = None
@@ -619,7 +619,7 @@ class MisReportInstance(models.Model):
         account_id = arg.get('account_id')
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env['mis.report.instance.period'].browse(period_id)
-            aep = AEP(self.company_id)
+            aep = AEP(self.company_ids, self.currency_id)
             aep.parse_expr(expr)
             aep.done_parsing()
             domain = aep.get_aml_domain_for_expr(

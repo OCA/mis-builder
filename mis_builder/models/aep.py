@@ -231,7 +231,7 @@ class AccountingExpressionProcessor(object):
             # sum from the beginning of time
             date_from_date = fields.Date.from_string(date_from)
             fy_date_from = \
-                self.company.\
+                self.company_ids[0].\
                 compute_fiscalyear_dates(date_from_date)['date_from']
             domain = ['|',
                       ('date', '>=', fields.Date.to_string(fy_date_from)),
@@ -243,7 +243,7 @@ class AccountingExpressionProcessor(object):
         elif mode == self.MODE_UNALLOCATED:
             date_from_date = fields.Date.from_string(date_from)
             fy_date_from = \
-                self.company.\
+                self.company_ids[0].\
                 compute_fiscalyear_dates(date_from_date)['date_from']
             domain = [('date', '<', fields.Date.to_string(fy_date_from)),
                       ('user_type_id.include_initial_balance', '=', False)]
@@ -260,9 +260,9 @@ class AccountingExpressionProcessor(object):
         This method must be executed after done_parsing().
         """
         if not aml_model:
-            aml_model = self.company.env['account.move.line']
+            aml_model = self.company_ids[0].env['account.move.line']
         else:
-            aml_model = self.company.env[aml_model]
+            aml_model = self.company_ids[0].env[aml_model]
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
         domain_by_mode = {}
