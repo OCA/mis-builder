@@ -70,7 +70,7 @@ class AccountingExpressionProcessor(object):
     def __init__(self, companies, currency_id=None):
         self.companies = companies
         self.currency_id = currency_id and currency_id or \
-            self.companies[0].currency_id
+            self.companies.env.user.company_id.currency_id
         self.dp = self.currency_id.decimal_places
         # before done_parsing: {(domain, mode): set(account_codes)}
         # after done_parsing: {(domain, mode): list(account_ids)}
