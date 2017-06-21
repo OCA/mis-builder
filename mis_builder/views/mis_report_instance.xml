@@ -30,7 +30,6 @@
                     <field name="name"/>
                     <field name="report_id" string="Template"/>
                     <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"/>
-                    <field name="currency_id" />
                     <field name="target_move"/>
                     <field name="pivot_date"/>
                 </tree>
@@ -65,7 +64,6 @@
                         <group>
                             <field name="report_id" string="Template"/>
                             <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"/>
-                            <field name="currency_id" />
                             <field name="target_move" widget="radio"/>
                             <field name="landscape_pdf"/>
                             <field name="comparison_mode"/>

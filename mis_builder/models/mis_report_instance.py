@@ -335,7 +335,7 @@ class MisReportInstance(models.Model):
 
     @api.model
     def _default_company_ids(self):
-        return [(6,0,[self.env['res.company'].\
+        return [(6, 0, [self.env['res.company'].\
             _company_default_get('mis.report.instance').id])]
 
     _name = 'mis.report.instance'
@@ -362,14 +362,13 @@ class MisReportInstance(models.Model):
                                    string='Target Moves',
                                    required=True,
                                    default='posted')
-    company_ids = fields.Many2many(comodel_name='res.company',
+    company_ids = fields.Many2many(
+        comodel_name='res.company',
         string='Company',
         help='Select companies for which data will  be searched. \
             User\'s company by default.',
         default=_default_company_ids,
         required=True)
-    currency_id = fields.Many2one('res.currency', 'Currency',
-        required=False)
     landscape_pdf = fields.Boolean(string='Landscape PDF')
     comparison_mode = fields.Boolean(
         compute="_compute_comparison_mode",
@@ -588,7 +587,7 @@ class MisReportInstance(models.Model):
         is guaranteed to be the id of the mis.report.instance.period.
         """
         self.ensure_one()
-        aep = self.report_id._prepare_aep(self.company_ids, self.currency_id)
+        aep = self.report_id._prepare_aep(self.company_ids)
         kpi_matrix = self.report_id.prepare_kpi_matrix()
         for period in self.period_ids:
             description = None
@@ -619,7 +618,7 @@ class MisReportInstance(models.Model):
         account_id = arg.get('account_id')
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env['mis.report.instance.period'].browse(period_id)
-            aep = AEP(self.company_ids, self.currency_id)
+            aep = AEP(self.company_ids)
             aep.parse_expr(expr)
             aep.done_parsing()
             domain = aep.get_aml_domain_for_expr(

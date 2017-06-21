@@ -67,10 +67,10 @@ class AccountingExpressionProcessor(object):
                          r"(?P<accounts>_[a-zA-Z0-9]+|\[.*?\])"
                          r"(?P<domain>\[.*?\])?")
 
-    def __init__(self, company_ids, currency_id=None):
-        self.company_ids = company_ids
+    def __init__(self, companies, currency_id=None):
+        self.companies = companies
         self.currency_id = currency_id and currency_id or \
-            self.company_ids[0].currency_id
+            self.companies[0].currency_id
         self.dp = self.currency_id.decimal_places
         # before done_parsing: {(domain, mode): set(account_codes)}
         # after done_parsing: {(domain, mode): list(account_ids)}
@@ -87,7 +87,7 @@ class AccountingExpressionProcessor(object):
         self.smart_end = True
 
     def _load_account_codes(self, account_codes):
-        account_model = self.company.env['account.account']
+        account_model = self.companies.env['account.account']
         exact_codes = set()
         for account_code in account_codes:
             if account_code in self._account_ids_by_code:
@@ -95,19 +95,19 @@ class AccountingExpressionProcessor(object):
             if account_code is None:
                 # None means we want all accounts
                 account_ids = account_model.\
-                    search([('company_id', 'in', self.company_ids.ids)]).ids
+                    search([('company_id', 'in', self.companies.ids)]).ids
                 self._account_ids_by_code[account_code].update(account_ids)
             elif '%' in account_code:
                 account_ids = account_model.\
                     search([('code', '=like', account_code),
-                            ('company_id', 'in', self.company_ids.ids)]).ids
+                            ('company_id', 'in', self.companies.ids)]).ids
                 self._account_ids_by_code[account_code].update(account_ids)
             else:
                 # search exact codes after the loop to do less queries
                 exact_codes.add(account_code)
         for account in account_model.\
                 search([('code', 'in', list(exact_codes)),
-                        ('company_id', 'in', self.company_ids.ids)]):
+                        ('company_id', 'in', self.companies.ids)]):
             self._account_ids_by_code[account.code].add(account.id)
 
     def _parse_match_object(self, mo):
@@ -230,7 +230,7 @@ class AccountingExpressionProcessor(object):
             # sum from the beginning of time
             date_from_date = fields.Date.from_string(date_from)
             fy_date_from = \
-                self.company_ids[0].\
+                self.companies[0].\
                 compute_fiscalyear_dates(date_from_date)['date_from']
             domain = ['|',
                       ('date', '>=', fields.Date.to_string(fy_date_from)),
@@ -242,7 +242,7 @@ class AccountingExpressionProcessor(object):
         elif mode == self.MODE_UNALLOCATED:
             date_from_date = fields.Date.from_string(date_from)
             fy_date_from = \
-                self.company_ids[0].\
+                self.companies[0].\
                 compute_fiscalyear_dates(date_from_date)['date_from']
             domain = [('date', '<', fields.Date.to_string(fy_date_from)),
                       ('user_type_id.include_initial_balance', '=', False)]
@@ -259,9 +259,9 @@ class AccountingExpressionProcessor(object):
         This method must be executed after done_parsing().
         """
         if not aml_model:
-            aml_model = self.company_ids[0].env['account.move.line']
+            aml_model = self.companies.env['account.move.line']
         else:
-            aml_model = self.company_ids[0].env[aml_model]
+            aml_model = self.companies.env[aml_model]
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
         domain_by_mode = {}
@@ -395,10 +395,10 @@ class AccountingExpressionProcessor(object):
             yield account_id, [self._ACC_RE.sub(f, expr) for expr in exprs]
 
     @classmethod
-    def _get_balances(cls, mode, company_ids, date_from, date_to,
+    def _get_balances(cls, mode, companies, date_from, date_to,
                       target_move='posted'):
         expr = 'deb{mode}[], crd{mode}[]'.format(mode=mode)
-        aep = AccountingExpressionProcessor(company_ids)
+        aep = AccountingExpressionProcessor(companies)
         # disable smart_end to have the data at once, instead
         # of initial + variation
         aep.smart_end = False
@@ -408,58 +408,58 @@ class AccountingExpressionProcessor(object):
         return aep._data[((), mode)]
 
     @classmethod
-    def get_balances_initial(cls, company_ids, date, target_move='posted'):
+    def get_balances_initial(cls, companies, date, target_move='posted'):
         """ A convenience method to obtain the initial balances of all accounts
         at a given date.
 
         It is the same as get_balances_end(date-1).
 
-        :param company_ids:
+        :param companies:
         :param date:
         :param target_move: if 'posted', consider only posted moves
 
         Returns a dictionary: {account_id, (debit, credit)}
         """
-        return cls._get_balances(cls.MODE_INITIAL, company_ids,
+        return cls._get_balances(cls.MODE_INITIAL, companies,
                                  date, date, target_move)
 
     @classmethod
-    def get_balances_end(cls, company_ids, date, target_move='posted'):
+    def get_balances_end(cls, companies, date, target_move='posted'):
         """ A convenience method to obtain the ending balances of all accounts
         at a given date.
 
         It is the same as get_balances_initial(date+1).
 
-        :param company_ids:
+        :param companies:
         :param date:
         :param target_move: if 'posted', consider only posted moves
 
         Returns a dictionary: {account_id, (debit, credit)}
         """
-        return cls._get_balances(cls.MODE_END, company_ids,
+        return cls._get_balances(cls.MODE_END, companies,
                                  date, date, target_move)
 
     @classmethod
-    def get_balances_variation(cls, company_ids, date_from, date_to,
+    def get_balances_variation(cls, companies, date_from, date_to,
                                target_move='posted'):
         """ A convenience method to obtain the variation of the
         balances of all accounts over a period.
 
-        :param company_ids:
+        :param companies:
         :param date:
         :param target_move: if 'posted', consider only posted moves
 
         Returns a dictionary: {account_id, (debit, credit)}
         """
-        return cls._get_balances(cls.MODE_VARIATION, company_ids,
+        return cls._get_balances(cls.MODE_VARIATION, companies,
                                  date_from, date_to, target_move)
 
     @classmethod
-    def get_unallocated_pl(cls, company_ids, date, target_move='posted'):
+    def get_unallocated_pl(cls, companies, date, target_move='posted'):
         """ A convenience method to obtain the unallocated profit/loss
         of the previous fiscal years at a given date.
 
-        :param company_ids:
+        :param companies:
         :param date:
         :param target_move: if 'posted', consider only posted moves
 
@@ -467,6 +467,6 @@ class AccountingExpressionProcessor(object):
         """
         # TODO shoud we include here the accounts of type "unaffected"
         # or leave that to the caller?
-        bals = cls._get_balances(cls.MODE_UNALLOCATED, company_ids,
+        bals = cls._get_balances(cls.MODE_UNALLOCATED, companies,
                                  date, date, target_move)
         return tuple(map(sum, izip(*bals.values())))
