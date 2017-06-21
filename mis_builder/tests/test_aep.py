@@ -26,7 +26,6 @@ class TestAEP(common.TransactionCase):
         # create company
         self.company = self.res_company.create({
             'name': 'AEP Company'})
-        self.company_ids = self.res_company.search([('id','=',self.company.id)])
         # create receivable bs account
         type_ar = self.browse_ref('account.data_account_type_receivable')
         self.account_ar = self.account_model.create({
@@ -67,7 +66,7 @@ class TestAEP(common.TransactionCase):
             debit_acc=self.account_ar,
             credit_acc=self.account_in)
         # create the AEP, and prepare the expressions we'll need
-        self.aep = AEP(self.company_ids)
+        self.aep = AEP(self.company)
         self.aep.parse_expr("bali[]")
         self.aep.parse_expr("bale[]")
         self.aep.parse_expr("balp[]")
@@ -203,7 +202,7 @@ class TestAEP(common.TransactionCase):
 
     def test_aep_convenience_methods(self):
         initial = AEP.get_balances_initial(
-            self.company_ids,
+            self.company,
             time.strftime('%Y') + '-03-01',
             'posted')
         self.assertEquals(initial, {
@@ -211,7 +210,7 @@ class TestAEP(common.TransactionCase):
             self.account_in.id: (0, 300),
         })
         variation = AEP.get_balances_variation(
-            self.company_ids,
+            self.company,
             time.strftime('%Y') + '-03-01',
             time.strftime('%Y') + '-03-31',
             'posted')
@@ -220,7 +219,7 @@ class TestAEP(common.TransactionCase):
             self.account_in.id: (0, 500),
         })
         end = AEP.get_balances_end(
-            self.company_ids,
+            self.company,
             time.strftime('%Y') + '-03-31',
             'posted')
         self.assertEquals(end, {
@@ -228,7 +227,7 @@ class TestAEP(common.TransactionCase):
             self.account_in.id: (0, 800),
         })
         unallocated = AEP.get_unallocated_pl(
-            self.company_ids,
+            self.company,
             time.strftime('%Y') + '-03-15',
             'posted')
         self.assertEquals(unallocated, (0, 100))
