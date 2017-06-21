@@ -290,8 +290,7 @@ class AccountingExpressionProcessor(object):
                 debit = acc['debit'] or 0.0
                 credit = acc['credit'] or 0.0
                 if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and \
-                        float_is_zero(debit-credit,
-                            precision_rounding=\
+                            float_is_zero(debit-credit, precision_rounding=
                             company.currency_id.decimal_places):
                     # in initial mode, ignore accounts with 0 balance
                     continue
@@ -299,7 +298,8 @@ class AccountingExpressionProcessor(object):
                     rate = self.currency_id.rate / company.currency_id.rate
                 else:
                     rate = 1.0
-                self._data[key][acc['account_id'][0]] = (debit*rate, credit*rate)
+                self._data[key][acc['account_id'][0]] =\
+                    (debit*rate, credit*rate)
         # compute ending balances by summing initial and variation
         for key in ends:
             domain, mode = key
