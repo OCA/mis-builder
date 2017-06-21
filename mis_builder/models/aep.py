@@ -218,7 +218,7 @@ class AccountingExpressionProcessor(object):
         #      AND(OR(aml_domains[mode]), date_domain[mode]) for each mode
         return expression.OR(aml_domains) + \
             expression.OR(date_domain_by_mode.values())
-        
+
     def get_aml_domain_for_dates(self, date_from, date_to,
                                  mode,
                                  target_move):
@@ -262,6 +262,7 @@ class AccountingExpressionProcessor(object):
             aml_model = self.companies.env['account.move.line']
         else:
             aml_model = self.companies.env[aml_model]
+        account_model = self.companies.env['account.account']
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
         domain_by_mode = {}
@@ -285,14 +286,20 @@ class AccountingExpressionProcessor(object):
                                         ['debit', 'credit', 'account_id'],
                                         ['account_id'])
             for acc in accs:
+                company = account_model.browse(acc['account_id'][0]).company_id
                 debit = acc['debit'] or 0.0
                 credit = acc['credit'] or 0.0
                 if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and \
                         float_is_zero(debit-credit,
-                                      precision_rounding=self.dp):
+                            precision_rounding=\
+                            company.currency_id.decimal_places):
                     # in initial mode, ignore accounts with 0 balance
                     continue
-                self._data[key][acc['account_id'][0]] = (debit, credit)
+                if company.currency_id != self.currency_id:
+                    rate = self.currency_id.rate / company.currency_id.rate
+                else:
+                    rate = 1.0
+                self._data[key][acc['account_id'][0]] = (debit*rate, credit*rate)
         # compute ending balances by summing initial and variation
         for key in ends:
             domain, mode = key
