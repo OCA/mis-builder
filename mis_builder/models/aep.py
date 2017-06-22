@@ -73,7 +73,8 @@ class AccountingExpressionProcessor(object):
         if not currency:
             self.currency = companies.mapped('currency_id')
         if len(self.currency) > 1:
-            self.currency = companies.env.user.company_id.currency_id
+            raise UserError(_('"If currency_id is not given, \
+                every companies must have the same currency."'))
         self.dp = self.currency.decimal_places
         # before done_parsing: {(domain, mode): set(account_codes)}
         # after done_parsing: {(domain, mode): list(account_ids)}
