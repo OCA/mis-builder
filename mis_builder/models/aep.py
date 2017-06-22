@@ -8,7 +8,7 @@ from itertools import izip
 
 from odoo import fields, _
 from odoo.models import expression
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.float_utils import float_is_zero
 from .accounting_none import AccountingNone
@@ -68,19 +68,14 @@ class AccountingExpressionProcessor(object):
                          r"(?P<accounts>_[a-zA-Z0-9]+|\[.*?\])"
                          r"(?P<domain>\[.*?\])?")
 
-    def __init__(self, companies, currency_id=None):
+    def __init__(self, companies, currency=None):
         self.companies = companies
-        if not currency_id:
-            currencies = set()
-            for company in self.companies:
-                currencies.add(company.currency_id)
-            if len(list(currencies)) > 1:
-                raise UserError(_('"If currency_id is not given, \
-                    every companies must have the same currency."'))
-            self.currency_id = list(currencies)[0]
-        else:
-            self.currency_id = currency_id
-        self.dp = self.currency_id.decimal_places
+        if not currency:
+            self.currency = companies.mapped('currency_id')
+        if len(self.currency) > 1:
+            raise UserError(_('"If currency_id is not given, \
+                every companies must have the same currency."'))
+        self.dp = self.currency.decimal_places
         # before done_parsing: {(domain, mode): set(account_codes)}
         # after done_parsing: {(domain, mode): list(account_ids)}
         self._map_account_ids = defaultdict(set)
@@ -263,13 +258,12 @@ class AccountingExpressionProcessor(object):
         # get exchange rates for each company with its rouding
         company_rates = {}
         for company in self.companies:
-            if company.currency_id != self.currency_id:
-                rate = self.currency_id.rate / company.currency_id.rate
+            if company.currency_id != self.currency:
+                rate = self.currency.rate / company.currency_id.rate
             else:
                 rate = 1.0
-            company_rates[company.id] = {
-                'rate' : rate,
-                'dp' : company.currency_id.decimal_places}
+            company_rates[company.id] = (rate,
+                company.currency_id.decimal_places)
         return company_rates
 
     def do_queries(self, date_from, date_to,
@@ -284,7 +278,6 @@ class AccountingExpressionProcessor(object):
             aml_model = self.companies.env['account.move.line']
         else:
             aml_model = self.companies.env[aml_model]
-        account_model = self.companies.env['account.account']
         company_rates = self.get_rates_per_company()
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
@@ -310,13 +303,7 @@ class AccountingExpressionProcessor(object):
                 ['debit', 'credit', 'account_id', 'company_id'],
                 ['account_id'])
             for acc in accs:
-                company_rate = company_rates.get(acc['company_id'][0])
-                if company_rate:
-                    rate = company_rate['rate']
-                    dp = company_rate['dp']
-                else:
-                    rate = 1.0
-                    dp = self.dp
+                rate, dp = company_rates[acc['company_id'][0]]
                 debit = acc['debit'] or 0.0
                 credit = acc['credit'] or 0.0
                 if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and \
