@@ -289,9 +289,10 @@ class AccountingExpressionProcessor(object):
                 company = account_model.browse(acc['account_id'][0]).company_id
                 debit = acc['debit'] or 0.0
                 credit = acc['credit'] or 0.0
+                company_dp = company.currency_id.decimal_places
                 if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and \
-                        float_is_zero(debit-credit, precision_rounding =
-                            company.currency_id.decimal_places):
+                        float_is_zero(debit-credit,
+                                      precision_rounding=company_dp):
                     # in initial mode, ignore accounts with 0 balance
                     continue
                 if company.currency_id != self.currency_id:
