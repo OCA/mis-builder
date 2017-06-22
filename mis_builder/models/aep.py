@@ -6,8 +6,9 @@ import re
 from collections import defaultdict
 from itertools import izip
 
-from odoo import fields
+from odoo import fields, _
 from odoo.models import expression
+from odoo.exceptions import ValidationError, UserError
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.float_utils import float_is_zero
 from .accounting_none import AccountingNone
@@ -69,8 +70,16 @@ class AccountingExpressionProcessor(object):
 
     def __init__(self, companies, currency_id=None):
         self.companies = companies
-        self.currency_id = currency_id and currency_id or \
-            self.companies.env.user.company_id.currency_id
+        if not currency_id:
+            currencies = set()
+            for company in self.companies:
+                currencies.add(company.currency_id)
+            if len(list(currencies)) > 1:
+                raise UserError(_('"If currency_id is not given, \
+                    every companies must have the same currency."'))
+            self.currency_id = list(currencies)[0]
+        else:
+            self.currency_id = currency_id
         self.dp = self.currency_id.decimal_places
         # before done_parsing: {(domain, mode): set(account_codes)}
         # after done_parsing: {(domain, mode): list(account_ids)}
@@ -250,6 +259,19 @@ class AccountingExpressionProcessor(object):
             domain.append(('move_id.state', '=', 'posted'))
         return expression.normalize_domain(domain)
 
+    def get_company_rates(self):
+        # get exchange rates for each company with its rouding
+        company_rates = {}
+        for company in self.companies:
+            if company.currency_id != self.currency_id:
+                rate = self.currency_id.rate / company.currency_id.rate
+            else:
+                rate = 1.0
+            company_rates[company.id] = {
+                'rate' : rate,
+                'dp' : company.currency_id.decimal_places}
+        return company_rates
+
     def do_queries(self, date_from, date_to,
                    target_move='posted', additional_move_line_filter=None,
                    aml_model=None):
@@ -263,6 +285,7 @@ class AccountingExpressionProcessor(object):
         else:
             aml_model = self.companies.env[aml_model]
         account_model = self.companies.env['account.account']
+        company_rates = self.get_rates_per_company()
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
         domain_by_mode = {}
@@ -282,23 +305,25 @@ class AccountingExpressionProcessor(object):
             if additional_move_line_filter:
                 domain.extend(additional_move_line_filter)
             # fetch sum of debit/credit, grouped by account_id
-            accs = aml_model.read_group(domain,
-                                        ['debit', 'credit', 'account_id'],
-                                        ['account_id'])
+            accs = aml_model.read_group(
+                domain,
+                ['debit', 'credit', 'account_id', 'company_id'],
+                ['account_id'])
             for acc in accs:
-                company = account_model.browse(acc['account_id'][0]).company_id
-                debit = acc['debit'] or 0.0
-                credit = acc['credit'] or 0.0
-                company_dp = company.currency_id.decimal_places
-                if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and \
-                        float_is_zero(debit-credit,
-                                      precision_rounding=company_dp):
-                    # in initial mode, ignore accounts with 0 balance
-                    continue
-                if company.currency_id != self.currency_id:
-                    rate = self.currency_id.rate / company.currency_id.rate
+                company_rate = company_rates.get(acc['company_id'][0])
+                if company_rate:
+                    rate = company_rate['rate']
+                    dp = company_rate['dp']
                 else:
                     rate = 1.0
+                    dp = self.dp
+                debit = acc['debit'] or 0.0
+                credit = acc['credit'] or 0.0
+                if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and \
+                        float_is_zero(debit-credit,
+                                      precision_rounding=dp):
+                    # in initial mode, ignore accounts with 0 balance
+                    continue
                 self._data[key][acc['account_id'][0]] =\
                     (debit*rate, credit*rate)
         # compute ending balances by summing initial and variation
