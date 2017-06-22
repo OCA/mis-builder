@@ -73,8 +73,7 @@ class AccountingExpressionProcessor(object):
         if not currency:
             self.currency = companies.mapped('currency_id')
         if len(self.currency) > 1:
-            raise UserError(_('"If currency_id is not given, \
-                every companies must have the same currency."'))
+            self.currency = companies.env.user.company_id.currency_id
         self.dp = self.currency.decimal_places
         # before done_parsing: {(domain, mode): set(account_codes)}
         # after done_parsing: {(domain, mode): list(account_ids)}
@@ -278,7 +277,7 @@ class AccountingExpressionProcessor(object):
             aml_model = self.companies.env['account.move.line']
         else:
             aml_model = self.companies.env[aml_model]
-        company_rates = self.get_rates_per_company()
+        company_rates = self.get_company_rates()
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
         domain_by_mode = {}
@@ -301,7 +300,7 @@ class AccountingExpressionProcessor(object):
             accs = aml_model.read_group(
                 domain,
                 ['debit', 'credit', 'account_id', 'company_id'],
-                ['account_id'])
+                ['account_id', 'company_id'], lazy=False)
             for acc in accs:
                 rate, dp = company_rates[acc['company_id'][0]]
                 debit = acc['debit'] or 0.0
