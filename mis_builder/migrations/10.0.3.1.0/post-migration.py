@@ -5,12 +5,9 @@
 from openupgradelib import openupgrade
 
 
-def migrate(env, version):
-    cr = env.cr
-    map_payment_type(cr)
-
 @openupgrade.migrate(use_env=True)
 def migrate(env, version):
     cr = env.cr
     model = env['mis.report.instance']
-    openupgrade.m2o_to_x2m(cr, model, 'mis_report_instance', 'company_ids', 'company_id')
+    openupgrade.m2o_to_x2m(cr, model, 'mis_report_instance',
+                           'company_ids', 'company_id')
