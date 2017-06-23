@@ -364,7 +364,7 @@ class MisReportInstance(models.Model):
                                    default='posted')
     company_ids = fields.Many2many(
         comodel_name='res.company',
-        string='Company',
+        string='Companies',
         help='Select companies for which data will  be searched. \
             User\'s company by default.',
         default=_default_company_ids,
