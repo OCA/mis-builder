@@ -27,10 +27,10 @@ class TestMultiCompanyAEP(common.TransactionCase):
         # create company A and B
         self.companyA = self.res_company.create({
             'name': 'AEP Company A',
-            'currency_id': self.currency_model.search([('code', '=', 'USD')])})
+            'currency_id': self.currency_model.search([('name', '=', 'USD')])})
         self.companyB = self.res_company.create({
             'name': 'AEP Company B',
-            'currency_id': self.currency_model.search([('code', '=', 'EUR')])})
+            'currency_id': self.currency_model.search([('name', '=', 'EUR')])})
         self.companies = self.res_company.browse([self.companyA.id,
                                                   self.companyB.id])
         type_ar = self.browse_ref('account.data_account_type_receivable')
@@ -42,44 +42,44 @@ class TestMultiCompanyAEP(common.TransactionCase):
             else:
                 divider = 2.0
             # create receivable bs account
-            setattr(self, 'account_ar_' + companyKey =\
-                self.account_model.create({
-                    'company_id': company.id,
-                    'code': '400AR',
-                    'name': 'Receivable',
-                    'user_type_id': type_ar.id,
-                    'reconcile': True})
+            setattr(self, 'account_ar_' + companyKey,
+                    self.account_model.create({
+                        'company_id': company.id,
+                        'code': '400AR',
+                        'name': 'Receivable',
+                        'user_type_id': type_ar.id,
+                        'reconcile': True}))
             # create income pl account
-            setattr(self, 'account_in_' + companyKey =\
-                self.account_model.create({
-                    'company_id': company.id,
-                    'code': '700IN',
-                    'name': 'Income',
-                    'user_type_id': type_in.id})
+            setattr(self, 'account_in_' + companyKey,
+                    self.account_model.create({
+                        'company_id': company.id,
+                        'code': '700IN',
+                        'name': 'Income',
+                        'user_type_id': type_in.id}))
             # create journal
-            setattr(self, 'journal' + companyKey =\
-                self.journal_model.create({
-                    'company_id': company.id,
-                    'name': 'Sale journal',
-                    'code': 'VEN',
-                    'type': 'sale'})
+            setattr(self, 'journal' + companyKey,
+                    self.journal_model.create({
+                        'company_id': company.id,
+                        'name': 'Sale journal',
+                        'code': 'VEN',
+                        'type': 'sale'}))
             # create move in december last year
             self._create_move(
-                journal = getattr(self, 'journal' + companyKey),
+                journal=getattr(self, 'journal' + companyKey),
                 date=datetime.date(self.prev_year, 12, 1),
                 amount=100/divider,
                 debit_acc=getattr(self, 'account_ar_' + companyKey),
                 credit_acc=getattr(self, 'account_in_' + companyKey))
             # create move in january this year
             self._create_move(
-                journal = getattr(self, 'journal' + companyKey),
+                journal=getattr(self, 'journal' + companyKey),
                 date=datetime.date(self.curr_year, 1, 1),
                 amount=300/divider,
                 debit_acc=getattr(self, 'account_ar_' + companyKey),
                 credit_acc=getattr(self, 'account_in_' + companyKey))
             # create move in february this year
             self._create_move(
-                journal = getattr(self, 'journal' + companyKey),
+                journal=getattr(self, 'journal' + companyKey),
                 date=datetime.date(self.curr_year, 3, 1),
                 amount=500/divider,
                 debit_acc=getattr(self, 'account_ar_' + companyKey),
