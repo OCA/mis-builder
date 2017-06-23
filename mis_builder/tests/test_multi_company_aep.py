@@ -27,17 +27,17 @@ class TestMultiCompanyAEP(common.TransactionCase):
         # create company A and B
         self.companyA = self.res_company.create({
             'name': 'AEP Company A',
-            'currency_id': self.currency_model.search([('code','=','USD')])})
+            'currency_id': self.currency_model.search([('code', '=', 'USD')])})
         self.companyB = self.res_company.create({
             'name': 'AEP Company B',
-            'currency_id': self.currency_model.search([('code','=','EUR')])})
+            'currency_id': self.currency_model.search([('code', '=', 'EUR')])})
         self.companies = self.res_company.browse([self.companyA.id,
                                                   self.companyB.id])
         type_ar = self.browse_ref('account.data_account_type_receivable')
         type_in = self.browse_ref('account.data_account_type_revenue')
         for company in [self.companyA, self.companyB]:
-            companyKey = company.name.replace('AEP Company ','')
-            if companyKey = 'A':
+            companyKey = company.name.replace('AEP Company ', '')
+            if companyKey == 'A':
                 divider = 1.0
             else:
                 divider = 2.0
@@ -85,7 +85,7 @@ class TestMultiCompanyAEP(common.TransactionCase):
                 debit_acc=getattr(self, 'account_ar_' + companyKey),
                 credit_acc=getattr(self, 'account_in_' + companyKey))
         # create the AEP, and prepare the expressions we'll need
-        
+
         self.aep = AEP(self.companies)
         self.aep.parse_expr("bali[]")
         self.aep.parse_expr("bale[]")

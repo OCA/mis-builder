@@ -263,7 +263,7 @@ class AccountingExpressionProcessor(object):
             else:
                 rate = 1.0
             company_rates[company.id] = (rate,
-                    company.currency_id.decimal_places)
+                                         company.currency_id.decimal_places)
         return company_rates
 
     def do_queries(self, date_from, date_to,
