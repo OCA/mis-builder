@@ -6,7 +6,14 @@ Changelog for mis_builder
 ..
 .. *
 
-  
+10.0.3.1.0 (unreleased)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+New features:
+
+* [ADD] month and year relative periods, easier to use than
+  date ranges for the most common case.
+
 10.0.3.0.4 (2017-10-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 

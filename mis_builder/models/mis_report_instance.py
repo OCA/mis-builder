@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import datetime
+from dateutil.relativedelta import relativedelta
 import logging
 
 from odoo import api, fields, models, _
@@ -111,6 +112,26 @@ class MisReportInstancePeriod(models.Model):
                 record.date_from = fields.Date.to_string(date_from)
                 record.date_to = fields.Date.to_string(date_to)
                 record.valid = True
+            elif record.mode == MODE_REL and record.type == 'm':
+                date_from = d.replace(day=1)
+                date_from = date_from + \
+                    relativedelta(months=record.offset)
+                date_to = date_from + \
+                    relativedelta(months=record.duration-1) + \
+                    relativedelta(day=31)
+                record.date_from = fields.Date.to_string(date_from)
+                record.date_to = fields.Date.to_string(date_to)
+                record.valid = True
+            elif record.mode == MODE_REL and record.type == 'y':
+                date_from = d.replace(month=1, day=1)
+                date_from = date_from + \
+                    relativedelta(years=record.offset)
+                date_to = date_from + \
+                    relativedelta(years=record.duration-1)
+                date_to = date_to.replace(month=12, day=31)
+                record.date_from = fields.Date.to_string(date_from)
+                record.date_to = fields.Date.to_string(date_to)
+                record.valid = True
             elif record.mode == MODE_REL and record.type == 'date_range':
                 date_range_obj = record.env['date.range']
                 current_periods = date_range_obj.search(
@@ -152,6 +173,8 @@ class MisReportInstancePeriod(models.Model):
     type = fields.Selection(
         [('d', _('Day')),
          ('w', _('Week')),
+         ('m', _('Month')),
+         ('y', _('Year')),
          ('date_range', _('Date Range'))],
         string='Period type'
     )
