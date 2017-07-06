@@ -32,6 +32,8 @@ New features:
   acount, to implement budget control)
 * [IMP] many UI improvements
 * [IMP] many code style improvements and some refactoring
+* [IMP] add the column date_from, date_to in expression evaluation context,
+  as well as time, datetime and dateutil modules
 
 Main bug fixes:
 

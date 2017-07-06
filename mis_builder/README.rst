@@ -99,6 +99,7 @@ Contributors
 * Benjamin Willig <benjamin.willig@acsone.eu>
 * Martronic SA <info@martronic.ch>  
 * nicomacr <nmr@adhoc.com.ar>
+* Juan Jose Scarafia <jjs@adhoc.com.ar>
 
 Maintainer
 ----------
