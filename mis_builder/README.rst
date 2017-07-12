@@ -96,7 +96,8 @@ Contributors
 * Marco Calcagni <mcalcagni@dinamicheaziendali.it>
 * Sébastien Beau <sebastien.beau@akretion.com>
 * Laurent Mignon <laurent.mignon@acsone.eu>
-* Benjamin Willing <benjamine.willig@acsone.eu>
+* Benjamin Willig <benjamin.willig@acsone.eu>
+* Martronic SA <info@martronic.ch>  
 
 Maintainer
 ----------
