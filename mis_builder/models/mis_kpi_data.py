@@ -4,9 +4,9 @@
 
 from collections import defaultdict
 
-from odoo import api, fields, models, _
-from odoo.exceptions import UserError
-from odoo.osv import expression
+from openerp import api, fields, models, _
+from openerp.exceptions import UserError
+from openerp.osv import expression
 
 ACC_SUM = 'sum'
 ACC_AVG = 'avg'

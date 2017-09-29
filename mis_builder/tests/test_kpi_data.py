@@ -2,8 +2,8 @@
 # Copyright 2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import models
-from odoo.tests.common import SavepointCase
+from openerp import models
+from openerp.tests.common import SavepointCase
 
 from ..models.mis_kpi_data import ACC_SUM, ACC_AVG
 from .common import init_test_model
