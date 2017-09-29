@@ -3,7 +3,7 @@
 
 [report]
 include =
-    */OCA/account-financial-reporting/*
+    */OCA/mis-builder/*
 
 omit =
     */tests/*
