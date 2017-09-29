@@ -148,7 +148,8 @@ class KpiMatrix(object):
     def __init__(self, env):
         # cache language id for faster rendering
         lang_model = env['res.lang']
-        self.lang = lang_model._lang_get(env.user.lang)
+        lang_id = lang_model._lang_get(env.user.lang)
+        self.lang = lang_model.browse(lang_id)
         self._style_model = env['mis.report.style']
         self._account_model = env['account.account']
         # data structures

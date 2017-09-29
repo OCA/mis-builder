@@ -13,8 +13,8 @@ import dateutil
 import pytz
 
 from openerp import api, fields, models, _
+from openerp.models import expression as osv_expression
 from openerp.exceptions import UserError
-from openrp.osv import expression as osv_expression
 from openerp.tools.safe_eval import safe_eval
 
 from .aep import AccountingExpressionProcessor as AEP
