@@ -40,16 +40,6 @@ class MisKpiData(models.AbstractModel):
     )
     amount = fields.Float(
     )
-    seq1 = fields.Integer(
-        related='kpi_expression_id.kpi_id.sequence',
-        store=True,
-        readonly=True
-    )
-    seq2 = fields.Integer(
-        related='kpi_expression_id.subkpi_id.sequence',
-        store=True,
-        readonly=True
-    )
 
     @api.depends('kpi_expression_id.subkpi_id.name',
                  'kpi_expression_id.kpi_id.name',
