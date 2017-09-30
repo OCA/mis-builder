@@ -10,6 +10,8 @@ from ..models.mis_report_instance import (
     DateFilterRequired, DateFilterForbidden,
 )
 
+from .common import assert_matrix
+
 
 class TestPeriodDates(common.TransactionCase):
 
@@ -126,3 +128,17 @@ class TestPeriodDates(common.TransactionCase):
         self.assertEqual(self.period.date_from, '2016-01-01')
         self.assertEqual(self.period.date_to, '2018-12-31')
         self.assertTrue(self.period.valid)
+
+    def test_dates_in_expr(self):
+        self.env['mis.report.kpi'].create(dict(
+            report_id=self.report.id,
+            name='k1',
+            description='kpi 1',
+            expression='(date_to - date_from).days + 1',
+        ))
+        self.instance.date_from = '2017-01-01'
+        self.instance.date_to = '2017-01-31'
+        matrix = self.instance._compute_matrix()
+        assert_matrix(matrix, [
+            [31],
+        ])

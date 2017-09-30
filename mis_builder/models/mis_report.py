@@ -751,7 +751,8 @@ class MisReport(models.Model):
             locals_dict = {}
 
         locals_dict.update(self.prepare_locals_dict())
-        locals_dict.update({'date_from': date_from, 'date_to': date_to})
+        locals_dict['date_from'] = fields.Date.from_string(date_from)
+        locals_dict['date_to'] = fields.Date.from_string(date_to)
 
         # fetch non-accounting queries
         locals_dict.update(self._fetch_queries(
