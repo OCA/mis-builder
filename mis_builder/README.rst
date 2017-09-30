@@ -15,7 +15,13 @@ can be added to Odoo dashboards.
 Installation
 ============
 
-There is no specific installation procedure for this module.
+Your preferred way to install addons will work with MIS Builder.
+
+An easy way to install it with all its dependencies is using pip:
+
+* ``pip install odoo9-addon-mis_builder odoo-autodiscover``
+* then restart Odoo, update the addons list in your database, and install
+  the MIS Builder application.
 
 Configuration and Usage
 =======================
@@ -44,7 +50,7 @@ To configure this module, you need to:
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/91/9.0
+   :target: https://runbot.odoo-community.org/runbot/248/9.0
 
 Developer notes
 ===============
@@ -59,48 +65,28 @@ analytic accounts.
 Known issues / Roadmap
 ======================
 
-* V9 thoughts:
-
-  * select accounts by tag (see also select accounts by type below)
-  * how to handle multi-company consolidation now that consolidation children are gone?
-  * what replaces root accounts / account charts in v9? nothing it seems, so
-    we are limited to one chart of accounts per company;
-  * for multi-company consolidation, must we replace the consolidation chart
-    of account by a list of companies?
-
-* Allow selecting accounts by type. This is currently possible by expressing
-  a query such as balp[][('account_id.user_type.code', '=', ...)]. This will work
-  but would be more efficient if one could write balp[user_type=...], as it would
-  involve much less queries to the database.
-  Possible syntax could be balp[code:60%,70%], balp[type:...], balp[tag:...],
-  with code: being optional and the default.
-
-* More tests should be added. The first part is creating test data, then it will be
-  easier. At the minimum, We need the following test data:
-
-  * one account charts with a few normal accounts and view accounts,
-  * two fiscal years,
-  * an opening entry in the second fiscal year,
-  * to test multi-company consolidation, we need a second company with it's own
-    account chart and two fiscal years, but without opening entry; we also need
-    a third company which is the parent of the other two and has a consolidation
-    chart of account.
+The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_ 
+and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can 
+be found on github.
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/account-financial-reporting/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/mis-builder/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/account-financial-reporting/issues/new?body=module:%20mis_builder%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+If you spotted it first, help us smashing it by providing a detailed and welcomed feedback.
 
 Credits
 =======
 
+Author
+------
+
+* Stéphane Bidoul <stephane.bidoul@acsone.eu>
+
 Contributors
 ------------
 
-* Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Laetitia Gangloff <laetitia.gangloff@acsone.eu>
 * Adrien Peiffer <adrien.peiffer@acsone.eu>
 * Alexis de Lattre <alexis.delattre@akretion.com>
@@ -111,6 +97,11 @@ Contributors
 * Marco Calcagni <mcalcagni@dinamicheaziendali.it>
 * Sébastien Beau <sebastien.beau@akretion.com>
 * Laurent Mignon <laurent.mignon@acsone.eu>
+* Luc De Meyer <luc.demeyer@noviat.com>
+* Benjamin Willig <benjamin.willig@acsone.eu>
+* Martronic SA <info@martronic.ch>  
+* nicomacr <nmr@adhoc.com.ar>
+* Juan Jose Scarafia <jjs@adhoc.com.ar>
 
 Maintainer
 ----------
@@ -125,4 +116,4 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-To contribute to this module, please visit http://odoo-community.org.
+To contribute to this module, please visit https://odoo-community.org.

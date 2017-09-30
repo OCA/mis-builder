@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
         <record model="ir.ui.view" id="mis_report_instance_add_to_dashboard_form_view">
             <field name="name">add.mis.report.instance.dashboard.wizard.view</field>
             <field name="model">add.mis.report.instance.dashboard.wizard</field>
             <field name="arch" type="xml">
-                <form string="Add to dashboard" version="7.0">
+                <form string="Add to dashboard">
                     <group>
                         <field name="name"/>
                         <field name="dashboard_id"/>
@@ -29,5 +28,4 @@
             <field name="target">new</field>
         </record>
 
-    </data>
-</openerp>
+</odoo>
