@@ -46,16 +46,6 @@ class MisBudgetItem(models.Model):
         comodel_name='account.analytic.account',
         string="Analytic account",
     )
-    seq1 = fields.Integer(
-        related='kpi_expression_id.kpi_id.sequence',
-        store=True,
-        readonly=True,
-    )
-    seq2 = fields.Integer(
-        related='kpi_expression_id.subkpi_id.sequence',
-        store=True,
-        readonly=True,
-    )
 
     @api.onchange('date_range_id')
     def _onchange_date_range(self):
