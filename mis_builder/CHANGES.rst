@@ -1,10 +1,54 @@
-Changelog
----------
+Changelog for mis_builder
+-------------------------
 
 .. Future (?)
 .. ~~~~~~~~~~
 ..
 .. *
+
+10.0.3.0.1 (2017-09-30)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+New features:
+
+* [ADD] Alternative move line source per report column.
+  This makes mis buidler accounting expressions work on any model
+  that has debit, credit, account_id and date fields. Provided you can
+  expose, say, committed purchases, or your budget as a view with
+  debit, credit and account_id, this opens up a lot of possibilities
+* [ADD] Comparison column source (more flexible than the previous,
+  now deprecated, comparison mechanism).
+  CAVEAT: there is no automated migration to the new mechanism.
+* [ADD] Sum column source, to create columns that add/subtract
+  other columns.
+* [ADD] mis.kpi.data abstract model as a basis for manual KPI values
+  supporting automatic ajustment to the reporting time period (the basis
+  for budget item, but could also server other purposes, such as manually
+  entering some KPI values, such as number of employee)
+* [ADD] mis_builder_budget module providing a new budget data source
+* [ADD] new "hide empty" style property
+* [IMP] new AEP method to get accounts involved in an expression
+  (this is useful to find which KPI relate to a given P&L
+  acount, to implement budget control)
+* [IMP] many UI improvements
+* [IMP] many code style improvements and some refactoring
+* [IMP] add the column date_from, date_to in expression evaluation context,
+  as well as time, datetime and dateutil modules
+
+Main bug fixes:
+
+* [FIX] deletion of templates and reports (cascade and retricts) 
+  (https://github.com/OCA/account-financial-reporting/issues/281)
+* [FIX] copy of reports 
+  (https://github.com/OCA/account-financial-reporting/issues/282)
+* [FIX] better error message when periods have wrong/missing dates 
+  (https://github.com/OCA/account-financial-reporting/issues/283)
+* [FIX] xlsx export of string types KPI 
+  (https://github.com/OCA/account-financial-reporting/issues/285)
+* [FIX] sorting of detail by account
+* [FIX] computation bug in detail by account when multiple accounting
+  expressions were used in a KPI
+* [FIX] permission issue when adding report to dashboard with non admin user
 
 10.0.2.0.3 (unreleased)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,7 +83,8 @@ April 26-29, 2016. The rest (ie a major refactoring) has been done in
 the weeks after.
 
 * [IMP] hide button box in edit mode on the report instance settings form
-* [FIX] Fix sum aggregation of non-stored fields (issue #178)
+* [FIX] Fix sum aggregation of non-stored fields 
+  (https://github.com/OCA/account-financial-reporting/issues/178)
 * [IMP] There is now a default style at the report level
 * [CHG] Number display properties (rounding, prefix, suffix, factor) are
   now defined in styles

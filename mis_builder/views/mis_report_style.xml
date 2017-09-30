@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <data>
 
         <record model="ir.ui.view" id="mis_report_style_view_tree">
             <field name="name">mis.report.style.view.tree</field>
@@ -16,7 +15,7 @@
             <field name="name">mis.report.style.view.form</field>
             <field name="model">mis.report.style</field>
             <field name="arch" type="xml">
-                <form string="MIS Report Style" version="7.0">
+                <form string="MIS Report Style">
                 <sheet>
                     <group string="Style" col="2">
                         <field name="name" />
@@ -61,6 +60,11 @@
                         <field name="indent_level"
                                attrs="{'invisible': [('indent_level_inherit', '=', True)]}" />
                     </group>
+                    <group string="Visibility" col="4">
+                        <field name="hide_empty_inherit" />
+                        <field name="hide_empty"
+                               attrs="{'invisible': [('hide_empty_inherit', '=', True)]}" />
+                    </group>
                 </sheet>
                 </form>
             </field>
@@ -76,5 +80,4 @@
 
         <menuitem id="mis_report_style_view_menu" parent="mis_report_conf_menu" name="MIS Report Styles" action="mis_report_style_view_action" sequence="22"/>
 
-    </data>
 </odoo>
