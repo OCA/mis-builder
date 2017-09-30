@@ -37,10 +37,14 @@ New features:
 
 Main bug fixes:
 
-* [FIX] deletion of templates and reports (cascade and retricts) (#281)
-* [FIX] copy of reports (#282)
-* [FIX] better error message when periods have wrong/missing dates (#283)
-* [FIX] xlsx export of string types KPI (#285)
+* [FIX] deletion of templates and reports (cascade and retricts) 
+  (https://github.com/OCA/account-financial-reporting/issues/281)
+* [FIX] copy of reports 
+  (https://github.com/OCA/account-financial-reporting/issues/282)
+* [FIX] better error message when periods have wrong/missing dates 
+  (https://github.com/OCA/account-financial-reporting/issues/283)
+* [FIX] xlsx export of string types KPI 
+  (https://github.com/OCA/account-financial-reporting/issues/285)
 * [FIX] sorting of detail by account
 * [FIX] computation bug in detail by account when multiple accounting
   expressions were used in a KPI
@@ -75,7 +79,8 @@ April 26-29, 2016. The rest (ie a major refactoring) has been done in
 the weeks after.
 
 * [IMP] hide button box in edit mode on the report instance settings form
-* [FIX] Fix sum aggregation of non-stored fields (issue #178)
+* [FIX] Fix sum aggregation of non-stored fields 
+  (https://github.com/OCA/account-financial-reporting/issues/178)
 * [IMP] There is now a default style at the report level
 * [CHG] Number display properties (rounding, prefix, suffix, factor) are
   now defined in styles
