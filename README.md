@@ -25,6 +25,11 @@ It features the following key characteristics:
 - User-configurable styles (CSS).
 - Interactive display with drill-down.
 - Export to PDF and Excel.
+- A budgeting module.
+- Evaluate KPI over various datasources, such as actuals, simulation, committed cost
+  (some custom development is required to create the data source).
+- For developers, the accounting balance computation engine is exposed as an easy
+  to use API.
 
 
 [//]: # (addons)
@@ -33,7 +38,8 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[mis_builder](mis_builder/) | 9.0.2.0.2 | Build 'Management Information System' Reports and Dashboards
+[mis_builder](mis_builder/) | 9.0.3.0.1 | Build 'Management Information System' Reports and Dashboards
+[mis_builder_budget](mis_builder_budget/) | 9.0.1.1.0 | Create budgets for MIS reports
 
 
 Unported addons
