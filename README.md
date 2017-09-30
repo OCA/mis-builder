@@ -4,10 +4,15 @@
 
 # MIS Builder
 
-Management Information System reports for Odoo: easily build super fast, 
+Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
 
-This project implements a class of reports where KPI (Key Performance Indicators) 
+**This is the 10.0 branch. Please note the development of new features occurs mainly on
+the 9.0 branch, to be forward-ported to 10.0. Please submit pull requests to the 9.0
+branch in priority, unless they are 10.0 specific bugs, or they rely on
+Odoo features that are not present in 9.0.**
+
+This project implements a class of reports where KPI (Key Performance Indicators)
 are displayed in row, and time periods in columns. It focuses on very fast reporting
 on accounting data but can also use data from any other Odoo model.
 
