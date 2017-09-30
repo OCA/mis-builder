@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    'name': 'Mis Builder Budget',
+    'name': 'MIS Builder Budget',
     'summary': """
         Create budgets for MIS reports""",
     'version': '9.0.1.1.0',
@@ -22,6 +22,5 @@
         'security/mis_budget.xml',
         'views/mis_budget.xml',
     ],
-    'demo': [
-    ],
+    'installable': True,
 }

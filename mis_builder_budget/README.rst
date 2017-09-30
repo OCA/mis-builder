@@ -39,18 +39,20 @@ when displayed. Columns can be compared by adding a column of type "comparison" 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/91/10.0
+   :target: https://runbot.odoo-community.org/runbot/248/9.0
 
 Known issues / Roadmap
 ======================
 
-* Improve the workflow (eg, make non-draft budgets readonly).
+The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_ 
+and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can 
+be found on github.
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
