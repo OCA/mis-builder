@@ -1,12 +1,12 @@
-Changelog
----------
+Changelog for mis_builder
+-------------------------
 
 .. Future (?)
 .. ~~~~~~~~~~
 ..
 .. *
 
-9.0.3.0.0 (unreleased)
+9.0.3.0.1 (2017-09-30)
 ~~~~~~~~~~~~~~~~~~~~~~
 
 New features:
