@@ -5,7 +5,7 @@
             <field name="name">add.mis.report.instance.dashboard.wizard.view</field>
             <field name="model">add.mis.report.instance.dashboard.wizard</field>
             <field name="arch" type="xml">
-                <form string="Add to dashboard" version="7.0">
+                <form string="Add to dashboard">
                     <group>
                         <field name="name"/>
                         <field name="dashboard_id"/>
