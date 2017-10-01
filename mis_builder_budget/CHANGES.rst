@@ -6,7 +6,7 @@ Changelog for mis_builder_budget
 ..
 .. *
 
-9.0.1.0.0 (2017-09-30)
+9.0.1.1.1 (2017-10-01)
 ~~~~~~~~~~~~~~~~~~~~~~
 
 First version.
