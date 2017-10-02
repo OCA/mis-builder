@@ -79,7 +79,10 @@
                     <field name="accumulation_method"/>
                     <field name="style_id"/>
                     <field name="style_expression"/>
-                    <field name="report_id" invisible="1"/>
+                    <field name='id' invisible='1'/>
+                    <field name="report_id"
+                           invisible="1"
+                           attrs="{'required': [('id', '!=', False)]}"/>
                 </group>
                 <notebook>
                     <page string="Expressions">
