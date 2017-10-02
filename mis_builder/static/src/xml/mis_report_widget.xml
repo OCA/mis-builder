@@ -9,6 +9,7 @@
                     <button class="oe_mis_builder_export btn btn-sm oe_button"><span class="fa fa-download"/> Export</button>
                     <button t-if="widget.show_settings" class="oe_mis_builder_settings btn btn-sm oe_button"><span class="fa fa-cog"/> Settings</button>
                 </div>
+                <div class="oe_mis_builder_analytic_account" style="visibility: hidden; position: relative; display: inline-block;"></div>
                 <table class="oe_list_content o_list_view table table-condensed table-striped mis_builder">
                     <thead>
                         <tr t-foreach="widget.mis_report_data.header" t-as="row" class="oe_list_header_columns">
