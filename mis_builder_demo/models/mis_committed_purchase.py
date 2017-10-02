@@ -15,6 +15,10 @@ class MisCommittedPurchase(models.Model):
 
     line_type = fields.Char()
     name = fields.Char()
+    analytic_account_id = fields.Many2one(
+        comodel_name='account.analytic.account',
+        string="Analytic Account",
+    )
     account_id = fields.Many2one(
         comodel_name='account.account',
         string='Account',

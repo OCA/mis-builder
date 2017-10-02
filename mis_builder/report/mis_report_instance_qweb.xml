@@ -33,6 +33,15 @@
                   <span t-field="company.name" /><span t-if="company != o.query_company_ids[-1]">, </span>
                 </t>
               </h3>
+              <p>
+                <div class="mis_report_filers">
+                  <t t-foreach="o.get_filter_descriptions_from_context()" t-as="filter_description">
+                    <div>
+                      <span t-esc="filter_description"/>
+                    </div>
+                  </t>
+                </div>
+              </p>
               <div class="mis_table">
                 <div class="mis_thead">
                   <div class="mis_row">

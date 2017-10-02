@@ -11,13 +11,17 @@ _logger = logging.getLogger(__name__)
 class Report(models.Model):
     _inherit = "ir.actions.report"
 
-    @api.multi
+    @api.model
     def render_qweb_pdf(self, res_ids=None, data=None):
-        ctx = self.env.context.copy()
-        if res_ids:
+        if self.report_name == 'mis_builder.report_mis_report_instance':
+            if not res_ids:
+                res_ids = self.env.context.get('active_ids')
             obj = self.env[self.model].browse(res_ids)[0]
-            if hasattr(obj, 'landscape_pdf') and obj.landscape_pdf:
-                ctx.update({'landscape': True})
-        return super(Report, self.with_context(ctx)).render_qweb_pdf(
-            res_ids, data
-        )
+            context = dict(
+                obj._context_with_filters(),
+                landscape=obj.landscape_pdf,
+            )
+            return super(Report, self.with_context(context)).render_qweb_pdf(
+                res_ids, data
+            )
+        return super(Report, self).render_qweb_pdf(res_ids, data)
