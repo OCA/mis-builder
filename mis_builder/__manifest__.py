@@ -4,7 +4,7 @@
 
 {
     'name': 'MIS Builder',
-    'version': '10.0.3.0.3',
+    'version': '10.0.3.1.0',
     'category': 'Reporting',
     'summary': """
         Build 'Management Information System' Reports and Dashboards
@@ -19,6 +19,11 @@
         'date_range',  # OCA/server-tools
         'web_widget_color',  # OCA/web
     ],
+    'external_dependencies': {
+        'python': [
+            'openupgradelib',
+        ],
+    },
     'data': [
         'wizard/mis_builder_dashboard.xml',
         'views/mis_report.xml',
