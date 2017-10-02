@@ -122,11 +122,13 @@ class MisReportInstancePeriod(models.Model):
                      ('company_id', 'in',
                       record.report_instance_id.company_ids.ids)])
                 if current_periods:
+                    # TODO we take the first date range we found as current
+                    #      this may be surprising if several companies
+                    #      have overlapping date ranges with different dates
                     current_period = current_periods[0]
                     all_periods = date_range_obj.search(
                         [('type_id', '=', current_period.type_id.id),
-                         ('company_id', 'in',
-                          record.report_instance_id.company_ids.ids)],
+                         ('company_id', '=', current_period.company_id.id)],
                         order='date_start')
                     p = all_periods.ids.index(current_period.id) + \
                         record.offset
@@ -337,8 +339,9 @@ class MisReportInstance(models.Model):
 
     @api.model
     def _default_company_ids(self):
-        return [(6, 0, [self.env['res.company'].
-                _company_default_get('mis.report.instance').id])]
+        default_company_id = self.env['res.company'].\
+            _company_default_get('mis.report.instance').id
+        return [(6, 0, [default_company_id])]
 
     _name = 'mis.report.instance'
 
@@ -367,16 +370,17 @@ class MisReportInstance(models.Model):
     company_ids = fields.Many2many(
         comodel_name='res.company',
         string='Companies',
-        help='Select companies for which data will  be searched. \
-            User\'s company by default.',
+        help="Select companies for which data will  be searched.",
         default=_default_company_ids,
-        required=True)
+        required=True,
+    )
     currency_id = fields.Many2one(
         comodel_name='res.currency',
         string='Currency',
-        help='Select currency target for the report. \
-            User\'s company currency by default.',
-        required=False)
+        help="Select target currency for the report. "
+             "Required if companies have different currencies.",
+        required=False,
+    )
     landscape_pdf = fields.Boolean(string='Landscape PDF')
     comparison_mode = fields.Boolean(
         compute="_compute_comparison_mode",
@@ -595,10 +599,7 @@ class MisReportInstance(models.Model):
         is guaranteed to be the id of the mis.report.instance.period.
         """
         self.ensure_one()
-        currency = self.currency_id
-        if not self.currency_id:
-            currency = self.env['res.company']._get_user_currency()
-        aep = self.report_id._prepare_aep(self.company_ids, currency)
+        aep = self.report_id._prepare_aep(self.company_ids, self.currency_id)
         kpi_matrix = self.report_id.prepare_kpi_matrix()
         for period in self.period_ids:
             description = None
@@ -624,15 +625,12 @@ class MisReportInstance(models.Model):
     @api.multi
     def drilldown(self, arg):
         self.ensure_one()
-        currency = self.currency_id
-        if not self.currency_id:
-            currency = self.env['res.company']._get_user_currency()
         period_id = arg.get('period_id')
         expr = arg.get('expr')
         account_id = arg.get('account_id')
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env['mis.report.instance.period'].browse(period_id)
-            aep = AEP(self.company_ids, currency)
+            aep = AEP(self.company_ids, self.currency_id)
             aep.parse_expr(expr)
             aep.done_parsing()
             domain = aep.get_aml_domain_for_expr(
