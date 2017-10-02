@@ -298,7 +298,12 @@ class MisReportInstancePeriod(models.Model):
         Returns an Odoo domain expression (a python list)
         compatible with account.move.line."""
         self.ensure_one()
-        return []
+        filters = []
+        mis_report_filters = self.env.context.get('mis_report_filters', {})
+        for filter_name, value in mis_report_filters.items():
+            if value:
+                filters.append((filter_name, '=', value))
+        return filters
 
     @api.multi
     def _get_additional_query_filter(self, query):
@@ -436,6 +441,10 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
+    analytic_account_id = fields.Many2one(
+        comodel_name='account.analytic.account', string='Analytic Account',
+        oldname='account_analytic_id')
+    hide_analytic_filters = fields.Boolean()
 
     @api.onchange('company_id', 'multi_company')
     def _onchange_company(self):
@@ -454,6 +463,18 @@ class MisReportInstance(models.Model):
                 rec.query_company_ids = rec.company_ids or rec.company_id
             else:
                 rec.query_company_ids = rec.company_id
+
+    @api.model
+    def get_filter_descriptions_from_context(self):
+        filters = self.env.context.get('mis_report_filters', {})
+        analytic_account_id = filters.get('analytic_account_id')
+        filter_descriptions = []
+        if analytic_account_id:
+            analytic_account = self.env['account.analytic.account'].browse(
+                analytic_account_id)
+            filter_descriptions.append(
+                _("Analytic Account: %s") % analytic_account.display_name)
+        return filter_descriptions
 
     @api.multi
     def save_report(self):
@@ -533,6 +554,21 @@ class MisReportInstance(models.Model):
                 self.date_range_id = False
 
     @api.multi
+    def _add_analytic_filters_to_context(self, context):
+        if self.analytic_account_id:
+            context['mis_report_filters']['analytic_account_id'] = \
+                self.analytic_account_id.id
+
+    @api.multi
+    def _context_with_filters(self):
+        if 'mis_report_filters' in self.env.context:
+            # analytic filters are already in context, do nothing
+            return self.env.context
+        context = dict(self.env.context, mis_report_filters={})
+        self._add_analytic_filters_to_context(context)
+        return context
+
+    @api.multi
     def preview(self):
         self.ensure_one()
         view_id = self.env.ref('mis_builder.'
@@ -545,12 +581,16 @@ class MisReportInstance(models.Model):
             'view_type': 'form',
             'view_id': view_id.id,
             'target': 'current',
+            'context': self._context_with_filters(),
         }
 
     @api.multi
     def print_pdf(self):
         self.ensure_one()
-        context = dict(self.env.context, active_ids=self.ids)
+        context = dict(
+            self._context_with_filters(),
+            landscape=self.landscape_pdf,
+        )
         return {
             'name': 'MIS report instance QWEB PDF report',
             'model': 'mis.report.instance',
@@ -563,7 +603,9 @@ class MisReportInstance(models.Model):
     @api.multi
     def export_xls(self):
         self.ensure_one()
-        context = dict(self.env.context, active_ids=self.ids)
+        context = dict(
+            self._context_with_filters(),
+        )
         return {
             'name': 'MIS report instance XLSX report',
             'model': 'mis.report.instance',

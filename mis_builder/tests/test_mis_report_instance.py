@@ -277,3 +277,21 @@ class TestMisReportInstance(common.TransactionCase):
             self.report_instance.company_id)
         self.report_instance._onchange_company()
         self.assertFalse(self.report_instance.company_ids)
+
+    def test_mis_report_analytic_filters(self):
+        # Check that matrix has no values when using a filter with a non
+        # existing account
+        matrix = self.report_instance.with_context(
+            mis_report_filters={
+                'analytic_account_id': 999,
+            }
+        )._compute_matrix()
+        for row in matrix.iter_rows():
+            vals = [c.val for c in row.iter_cells()]
+            if row.kpi.name == 'k1':
+                self.assertEquals(
+                    vals, [AccountingNone, AccountingNone, AccountingNone])
+            elif row.kpi.name == 'k2':
+                self.assertEquals(vals, [AccountingNone, AccountingNone, None])
+            elif row.kpi.name == 'k4':
+                self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
