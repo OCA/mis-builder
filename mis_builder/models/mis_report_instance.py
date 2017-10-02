@@ -339,8 +339,9 @@ class MisReportInstance(models.Model):
 
     @api.model
     def _default_company_ids(self):
-        return [(6, 0, [self.env['res.company'].
-                _company_default_get('mis.report.instance').id])]
+        default_company_id = self.env['res.company'].\
+            _company_default_get('mis.report.instance').id
+        return [(6, 0, [default_company_id])]
 
     _name = 'mis.report.instance'
 
@@ -369,16 +370,17 @@ class MisReportInstance(models.Model):
     company_ids = fields.Many2many(
         comodel_name='res.company',
         string='Companies',
-        help='Select companies for which data will  be searched. \
-            User\'s company by default.',
+        help="Select companies for which data will  be searched.",
         default=_default_company_ids,
-        required=True)
+        required=True,
+    )
     currency_id = fields.Many2one(
         comodel_name='res.currency',
         string='Currency',
-        help='Select currency target for the report. \
-            User\'s company currency by default.',
-        required=False)
+        help="Select target currency for the report. "
+             "Required if companies have different currencies.",
+        required=False,
+    )
     landscape_pdf = fields.Boolean(string='Landscape PDF')
     comparison_mode = fields.Boolean(
         compute="_compute_comparison_mode",

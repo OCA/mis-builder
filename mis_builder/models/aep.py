@@ -73,8 +73,10 @@ class AccountingExpressionProcessor(object):
         if not currency:
             self.currency = companies.mapped('currency_id')
             if len(self.currency) > 1:
-                raise UserError(_('"If currency_id is not given, \
-                    every companies must have the same currency."'))
+                raise UserError(_(
+                    "If currency_id is not provided, "
+                    "all companies must have the same currency."
+                ))
         else:
             self.currency = currency
         self.dp = self.currency.decimal_places
@@ -235,6 +237,8 @@ class AccountingExpressionProcessor(object):
             # of the current fiscal year only, for balance sheet accounts
             # sum from the beginning of time
             date_from_date = fields.Date.from_string(date_from)
+            # TODO this takes the fy from the first company
+            # make that user controllable (nice to have)?
             fy_date_from = \
                 self.companies.\
                 compute_fiscalyear_dates(date_from_date)['date_from']
@@ -247,6 +251,8 @@ class AccountingExpressionProcessor(object):
                 domain.append(('date', '<=', date_to))
         elif mode == self.MODE_UNALLOCATED:
             date_from_date = fields.Date.from_string(date_from)
+            # TODO this takes the fy from the first company
+            # make that user controllable (nice to have)?
             fy_date_from = \
                 self.companies.\
                 compute_fiscalyear_dates(date_from_date)['date_from']
@@ -256,7 +262,7 @@ class AccountingExpressionProcessor(object):
             domain.append(('move_id.state', '=', 'posted'))
         return expression.normalize_domain(domain)
 
-    def get_company_rates(self):
+    def _get_company_rates(self):
         # get exchange rates for each company with its rouding
         company_rates = {}
         for company in self.companies:
@@ -264,8 +270,8 @@ class AccountingExpressionProcessor(object):
                 rate = self.currency.rate / company.currency_id.rate
             else:
                 rate = 1.0
-            company_rates[company.id] = (rate,
-                                         company.currency_id.decimal_places)
+            company_rates[company.id] = \
+                (rate, company.currency_id.decimal_places)
         return company_rates
 
     def do_queries(self, date_from, date_to,
@@ -280,7 +286,7 @@ class AccountingExpressionProcessor(object):
             aml_model = self.companies.env['account.move.line']
         else:
             aml_model = self.companies.env[aml_model]
-        company_rates = self.get_company_rates()
+        company_rates = self._get_company_rates()
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
         domain_by_mode = {}
@@ -313,7 +319,7 @@ class AccountingExpressionProcessor(object):
                                       precision_rounding=dp):
                     # in initial mode, ignore accounts with 0 balance
                     continue
-                self._data[key][acc['account_id'][0]] =\
+                self._data[key][acc['account_id'][0]] = \
                     (debit*rate, credit*rate)
         # compute ending balances by summing initial and variation
         for key in ends:
