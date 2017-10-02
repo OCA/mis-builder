@@ -122,11 +122,13 @@ class MisReportInstancePeriod(models.Model):
                      ('company_id', 'in',
                       record.report_instance_id.company_ids.ids)])
                 if current_periods:
+                    # TODO we take the first date range we found as current
+                    #      this may be surprising if several companies
+                    #      have overlapping date ranges with different dates
                     current_period = current_periods[0]
                     all_periods = date_range_obj.search(
                         [('type_id', '=', current_period.type_id.id),
-                         ('company_id', 'in',
-                          record.report_instance_id.company_ids.ids)],
+                         ('company_id', '=', current_period.company_id.id)],
                         order='date_start')
                     p = all_periods.ids.index(current_period.id) + \
                         record.offset
