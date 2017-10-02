@@ -595,10 +595,7 @@ class MisReportInstance(models.Model):
         is guaranteed to be the id of the mis.report.instance.period.
         """
         self.ensure_one()
-        currency = self.currency_id
-        if not self.currency_id:
-            currency = self.env['res.company']._get_user_currency()
-        aep = self.report_id._prepare_aep(self.company_ids, currency)
+        aep = self.report_id._prepare_aep(self.company_ids, self.currency_id)
         kpi_matrix = self.report_id.prepare_kpi_matrix()
         for period in self.period_ids:
             description = None
@@ -624,15 +621,12 @@ class MisReportInstance(models.Model):
     @api.multi
     def drilldown(self, arg):
         self.ensure_one()
-        currency = self.currency_id
-        if not self.currency_id:
-            currency = self.env['res.company']._get_user_currency()
         period_id = arg.get('period_id')
         expr = arg.get('expr')
         account_id = arg.get('account_id')
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env['mis.report.instance.period'].browse(period_id)
-            aep = AEP(self.company_ids, currency)
+            aep = AEP(self.company_ids, self.currency_id)
             aep.parse_expr(expr)
             aep.done_parsing()
             domain = aep.get_aml_domain_for_expr(
