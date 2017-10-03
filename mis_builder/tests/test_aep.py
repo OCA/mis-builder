@@ -47,19 +47,19 @@ class TestAEP(common.TransactionCase):
             'name': 'Sale journal',
             'code': 'VEN',
             'type': 'sale'})
-        # create move in december last year
+        # create move in December last year
         self._create_move(
             date=datetime.date(self.prev_year, 12, 1),
             amount=100,
             debit_acc=self.account_ar,
             credit_acc=self.account_in)
-        # create move in january this year
+        # create move in January this year
         self._create_move(
             date=datetime.date(self.curr_year, 1, 1),
             amount=300,
             debit_acc=self.account_ar,
             credit_acc=self.account_in)
-        # create move in february this year
+        # create move in March this year
         self._create_move(
             date=datetime.date(self.curr_year, 3, 1),
             amount=500,
