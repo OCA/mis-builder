@@ -29,7 +29,8 @@
                     <button type="object" name="export_xls" string="Export" icon="fa-download" />
                     <field name="name"/>
                     <field name="report_id" string="Template"/>
-                    <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="multi_company" groups="base.group_multi_company"/>
                     <field name="currency_id" groups="base.group_multi_currency"/>
                     <field name="target_move"/>
                     <field name="pivot_date"/>
@@ -64,7 +65,11 @@
                     <group>
                         <group>
                             <field name="report_id" string="Template"/>
-                            <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="multi_company" groups="base.group_multi_company"/>
+                            <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"
+                                    domain="['|', ('id', '=', company_id), ('parent_id', 'child_of', company_id)]"
+                                    attrs="{'invisible': [('multi_company', '=', False)]}"/>
                             <field name="currency_id" groups="base.group_multi_currency"/>
                             <field name="target_move" widget="radio"/>
                             <field name="landscape_pdf"/>
