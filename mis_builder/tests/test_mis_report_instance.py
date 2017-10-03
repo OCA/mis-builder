@@ -126,6 +126,7 @@ class TestMisReportInstance(common.TransactionCase):
         self.report_instance = self.env['mis.report.instance'].create(dict(
             name='test instance',
             report_id=self.report.id,
+            company_id=self.env.ref('base.main_company').id,
             company_ids=[(6, 0, [self.env.ref('base.main_company').id])],
             period_ids=[(0, 0, dict(
                 name='p1',
