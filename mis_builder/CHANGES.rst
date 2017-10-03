@@ -6,6 +6,14 @@ Changelog for mis_builder
 ..
 .. *
 
+9.0.3.0.3 (2017-10-03)
+~~~~~~~~~~~~~~~~~~~~~~
+
+Bug fix:
+
+* [FIX] fix error saving KPI on newly created reports
+  (https://github.com/OCA/mis-builder/issues/18)
+
 9.0.3.0.1 (2017-09-30)
 ~~~~~~~~~~~~~~~~~~~~~~
 

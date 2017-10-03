@@ -46,6 +46,9 @@ coverage.xml
 .project
 .pydevproject
 
+# Eclipse
+.settings
+
 # Rope
 .ropeproject
 
