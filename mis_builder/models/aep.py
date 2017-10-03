@@ -69,6 +69,7 @@ class AccountingExpressionProcessor(object):
                          r"(?P<domain>\[.*?\])?")
 
     def __init__(self, companies, currency=None):
+        self.env = companies.env
         self.companies = companies
         if not currency:
             self.currency = companies.mapped('currency_id')
@@ -95,7 +96,7 @@ class AccountingExpressionProcessor(object):
         self.smart_end = True
 
     def _load_account_codes(self, account_codes):
-        account_model = self.companies.env['account.account']
+        account_model = self.env['account.account']
         exact_codes = set()
         for account_code in account_codes:
             if account_code in self._account_ids_by_code:
@@ -262,12 +263,14 @@ class AccountingExpressionProcessor(object):
             domain.append(('move_id.state', '=', 'posted'))
         return expression.normalize_domain(domain)
 
-    def _get_company_rates(self):
+    def _get_company_rates(self, date):
         # get exchange rates for each company with its rouding
         company_rates = {}
+        target_rate = self.currency.with_context(date=date).rate
         for company in self.companies:
             if company.currency_id != self.currency:
-                rate = self.currency.rate / company.currency_id.rate
+                rate = target_rate / \
+                    company.currency_id.with_context(date=date).rate
             else:
                 rate = 1.0
             company_rates[company.id] = \
@@ -283,10 +286,10 @@ class AccountingExpressionProcessor(object):
         This method must be executed after done_parsing().
         """
         if not aml_model:
-            aml_model = self.companies.env['account.move.line']
+            aml_model = self.env['account.move.line']
         else:
-            aml_model = self.companies.env[aml_model]
-        company_rates = self._get_company_rates()
+            aml_model = self.env[aml_model]
+        company_rates = self._get_company_rates(date_to)
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
         domain_by_mode = {}
