@@ -338,10 +338,10 @@ class MisReportInstance(models.Model):
                 record.pivot_date = fields.Date.context_today(record)
 
     @api.model
-    def _default_company_ids(self):
+    def _default_company_id(self):
         default_company_id = self.env['res.company'].\
             _company_default_get('mis.report.instance').id
-        return [(6, 0, [default_company_id])]
+        return default_company_id
 
     _name = 'mis.report.instance'
 
@@ -367,11 +367,22 @@ class MisReportInstance(models.Model):
                                    string='Target Moves',
                                    required=True,
                                    default='posted')
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        string='Company',
+        default=_default_company_id,
+        required=True,
+    )
+    multi_company = fields.Boolean(
+        string='Multiple',
+        help="Check if you wish to specify "
+             "children companies to be searched for data.",
+        default=False,
+    )
     company_ids = fields.Many2many(
         comodel_name='res.company',
         string='Companies',
-        help="Select companies for which data will  be searched.",
-        default=_default_company_ids,
+        help="Select companies for which data will be searched.",
         required=True,
     )
     currency_id = fields.Many2one(
@@ -391,6 +402,17 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
+
+    @api.onchange('company_id', 'multi_company')
+    def _onchange_company(self):
+        if self.company_id and self.multi_company:
+            self.company_ids = self.env['res.company'].search(
+                ['|', ('id', '=', self.company_id.id),
+                 ('parent_id', 'child_of', self.company_id.id)
+                 ]
+            )
+        else:
+            self.company_ids = self.company_id
 
     @api.multi
     def save_report(self):
