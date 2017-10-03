@@ -19,11 +19,6 @@
         'date_range',  # OCA/server-tools
         'web_widget_color',  # OCA/web
     ],
-    'external_dependencies': {
-        'python': [
-            'openupgradelib',
-        ],
-    },
     'data': [
         'wizard/mis_builder_dashboard.xml',
         'views/mis_report.xml',
