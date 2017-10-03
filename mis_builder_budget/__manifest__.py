@@ -22,5 +22,5 @@
         'security/mis_budget.xml',
         'views/mis_budget.xml',
     ],
-    'installable': True,
+    'installable': False,
 }
