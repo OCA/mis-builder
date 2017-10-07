@@ -37,6 +37,15 @@ It features the following key characteristics:
 
 
 [//]: # (addons)
+
+Unported addons
+---------------
+addon | version | summary
+--- | --- | ---
+[mis_builder](mis_builder/) | 10.0.3.0.2 (unported) | Build 'Management Information System' Reports and Dashboards
+[mis_builder_budget](mis_builder_budget/) | 10.0.1.1.1 (unported) | Create budgets for MIS reports
+[mis_builder_demo](mis_builder_demo/) | 9.0.1.0.0 (unported) | Demo data for the mis_builder module
+
 [//]: # (end addons)
 
 Translation Status
