@@ -38,7 +38,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[mis_builder](mis_builder/) | 10.0.3.0.2 | Build 'Management Information System' Reports and Dashboards
+[mis_builder](mis_builder/) | 10.0.3.0.3 | Build 'Management Information System' Reports and Dashboards
 [mis_builder_budget](mis_builder_budget/) | 10.0.1.1.1 | Create budgets for MIS reports
 
 
