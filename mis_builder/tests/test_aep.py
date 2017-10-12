@@ -232,6 +232,35 @@ class TestAEP(common.TransactionCase):
             'posted')
         self.assertEquals(unallocated, (0, 100))
 
+    def test_float_is_zero(self):
+        dp = self.company.currency_id.decimal_places
+        self.assertEqual(dp, 2)
+        # make initial balance at Jan 1st equal to 0.01
+        self._create_move(
+            date=datetime.date(self.prev_year, 12, 1),
+            amount=100.01,
+            debit_acc=self.account_in,
+            credit_acc=self.account_ar)
+        initial = AEP.get_balances_initial(
+            self.company,
+            time.strftime('%Y') + '-01-01',
+            'posted')
+        self.assertEquals(initial, {
+            self.account_ar.id: (100.00, 100.01),
+        })
+        # make initial balance at Jan 1st equal to 0.001
+        self._create_move(
+            date=datetime.date(self.prev_year, 12, 1),
+            amount=0.009,
+            debit_acc=self.account_ar,
+            credit_acc=self.account_in)
+        initial = AEP.get_balances_initial(
+            self.company,
+            time.strftime('%Y') + '-01-01',
+            'posted')
+        # epsilon initial balances is reported as empty
+        self.assertEquals(initial, {})
+
     def test_get_account_ids_for_expr(self):
         expr = 'balp[700IN]'
         account_ids = self.aep.get_account_ids_for_expr(expr)
