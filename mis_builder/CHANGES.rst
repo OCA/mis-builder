@@ -13,6 +13,8 @@ New features:
 
 * [ADD] month and year relative periods, easier to use than
   date ranges for the most common case.
+* [ADD] multi-company consolidation support, with currency conversion
+  (the conversion rate date is the end of the reporting period)
 
 10.0.3.0.4 (2017-10-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
