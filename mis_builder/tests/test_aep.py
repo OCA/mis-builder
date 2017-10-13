@@ -81,6 +81,13 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr("crdp[700I%]")
         self.aep.parse_expr("bali[400%]")
         self.aep.parse_expr("bale[700%]")
+        self.aep.parse_expr(
+            "balp[]"
+            "[('account_id.code', '=', '400AR')]")
+        self.aep.parse_expr(
+            "balp[]"
+            "[('account_id.user_type_id', '=', "
+            "  ref('account.data_account_type_receivable').id)]")
         self.aep.parse_expr("bal_700IN")  # deprecated
         self.aep.parse_expr("bals[700IN]")  # deprecated
         self.aep.done_parsing()
@@ -133,6 +140,12 @@ class TestAEP(common.TransactionCase):
         self.assertIs(self._eval('bali[700IN]'), AccountingNone)
         # check variation
         self.assertEquals(self._eval('balp[400AR]'), 100)
+        self.assertEquals(self._eval(
+            "balp[][('account_id.code', '=', '400AR')]"), 100)
+        self.assertEquals(self._eval(
+            "balp[]"
+            "[('account_id.user_type_id', '=', "
+            "  ref('account.data_account_type_receivable').id)]"), 100)
         self.assertEquals(self._eval('balp[700IN]'), -100)
         # check ending balance
         self.assertEquals(self._eval('bale[400AR]'), 100)
