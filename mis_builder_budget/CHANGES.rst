@@ -6,7 +6,14 @@ Changelog for mis_builder_budget
 ..
 .. *
 
-9.0.1.1.1 (2017-10-01)
-~~~~~~~~~~~~~~~~~~~~~~
+10.0.3.1.x (unreleased)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+New features:
+
+- [ADD] multi-company record rule for MIS Budgets
+
+10.0.1.1.1 (2017-10-01)
+~~~~~~~~~~~~~~~~~~~~~~~
 
 First version.
