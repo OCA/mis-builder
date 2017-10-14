@@ -300,7 +300,7 @@ class MisReportInstancePeriod(models.Model):
         compatible with account.move.line."""
         self.ensure_one()
         filters = []
-        analytic_account_id = self.env.context.get('account_analytic_id')
+        analytic_account_id = self.env.context.get('analytic_account_id')
         if analytic_account_id:
             filters.append(('analytic_account_id', '=', analytic_account_id))
         return filters
@@ -441,8 +441,9 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
-    account_analytic_id = fields.Many2one(
-        comodel_name='account.analytic.account', string='Analytic Account')
+    analytic_account_id = fields.Many2one(
+        comodel_name='account.analytic.account', string='Analytic Account',
+        oldname='account_analytic_id')
 
     @api.onchange('company_id', 'multi_company')
     def _onchange_company(self):
@@ -545,7 +546,7 @@ class MisReportInstance(models.Model):
         view_id = self.env.ref('mis_builder.'
                                'mis_report_instance_result_view_form')
         context = {
-            'account_analytic_id': self.account_analytic_id.id,
+            'analytic_account_id': self.analytic_account_id.id,
         }
         return {
             'type': 'ir.actions.act_window',

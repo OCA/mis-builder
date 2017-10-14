@@ -77,7 +77,7 @@
                                 <field name="date_range_id"/>
                                 <field name="date_from" attrs="{'required': [('comparison_mode', '=', False)]}"/>
                                 <field name="date_to" attrs="{'required': [('comparison_mode', '=', False)]}"/>
-                                <field name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
+                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                             </group>
                         </group>
                     </group>
