@@ -6,13 +6,21 @@ Changelog for mis_builder
 ..
 .. *
 
+9.0.3.0.4 (2017-10-14)
+~~~~~~~~~~~~~~~~~~~~~~
+
+Bug fix:
+
+* [FIX] issue with initial balance rounding.
+  `#30 <https://github.com/OCA/mis-builder/issues/30>`_
+
 9.0.3.0.3 (2017-10-03)
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Bug fix:
 
-* [FIX] fix error saving KPI on newly created reports
-  (https://github.com/OCA/mis-builder/issues/18)
+* [FIX] fix error saving KPI on newly created reports.
+  `#18 <https://github.com/OCA/mis-builder/issues/18>`_
 
 9.0.3.0.1 (2017-09-30)
 ~~~~~~~~~~~~~~~~~~~~~~
