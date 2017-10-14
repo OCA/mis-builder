@@ -2,9 +2,12 @@
 # Copyright 2014-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import datetime
+import dateutil
 import re
 from collections import defaultdict
 from itertools import izip
+import time
 
 from odoo import fields, _
 from odoo.models import expression
@@ -138,7 +141,14 @@ class AccountingExpressionProcessor(object):
         else:
             account_codes = [None]  # None means we want all accounts
         domain = domain or '[]'
-        domain = tuple(safe_eval(domain))
+        eval_context = {
+            'ref': self.env.ref,
+            'user': self.env.user,
+            'time': time,
+            'datetime': datetime,
+            'dateutil': dateutil,
+        }
+        domain = tuple(safe_eval(domain, eval_context))
         return field, mode, account_codes, domain
 
     def parse_expr(self, expr):

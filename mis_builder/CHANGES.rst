@@ -15,6 +15,11 @@ New features:
   date ranges for the most common case.
 * [ADD] multi-company consolidation support, with currency conversion
   (the conversion rate date is the end of the reporting period)
+* [ADD] provide ref, datetime, dateutil, time, user in the evaluation 
+  context of move line domains; among other things, this allows using 
+  references to xml ids (such as account types or tax tags) when 
+  querying move lines 
+  (`#26 <https://github.com/OCA/mis-builder/issues/26>`_).
 
 10.0.3.0.4 (2017-10-14)
 ~~~~~~~~~~~~~~~~~~~~~~~

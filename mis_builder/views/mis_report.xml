@@ -143,6 +143,7 @@
                                         <li><b>bale[1%%]</b>: balance of accounts starting with 1 at end of period.</li>
                                         <li><b>crdp[40%]</b>: sum of all credits on accounts starting with 40 during the period.</li>
                                         <li><b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: sum of all debits on accounts 55 and journal BNK1 during the period.</li>
+                                        <li><b>balp[][('account_id.user_type_id', '=', ref('account.data_account_type_receivable').id)]</b>: variation of the balance of all receivable accounts over the period (this is a slow method).</li>
                                     </ul>
                                 </div>
                             </group>
