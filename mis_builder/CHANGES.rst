@@ -13,8 +13,11 @@ New features:
 
 * [ADD] month and year relative periods, easier to use than
   date ranges for the most common case.
+  (`#2 <https://github.com/OCA/mis-builder/issues/2>`_)
 * [ADD] multi-company consolidation support, with currency conversion
   (the conversion rate date is the end of the reporting period)
+  (`#7 <https://github.com/OCA/mis-builder/issues/7>`_, 
+  `#3 <https://github.com/OCA/mis-builder/issues/3>`_)
 * [ADD] provide ref, datetime, dateutil, time, user in the evaluation 
   context of move line domains; among other things, this allows using 
   references to xml ids (such as account types or tax tags) when 

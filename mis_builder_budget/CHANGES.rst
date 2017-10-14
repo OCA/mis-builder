@@ -12,6 +12,7 @@ Changelog for mis_builder_budget
 New features:
 
 - [ADD] multi-company record rule for MIS Budgets
+  (`#27 <https://github.com/OCA/mis-builder/issues/27>`_)
 
 10.0.1.1.1 (2017-10-01)
 ~~~~~~~~~~~~~~~~~~~~~~~
