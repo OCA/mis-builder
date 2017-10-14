@@ -23,6 +23,10 @@ New features:
   references to xml ids (such as account types or tax tags) when 
   querying move lines 
   (`#26 <https://github.com/OCA/mis-builder/issues/26>`_).
+* [ADD] extended account selectors: you can now select accounts using
+  any domain on account.account, not only account codes
+  ``balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)]``
+  (`#4 <https://github.com/OCA/mis-builder/issues/4>`_).
 
 10.0.3.0.4 (2017-10-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
