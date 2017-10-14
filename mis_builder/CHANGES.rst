@@ -7,7 +7,7 @@ Changelog for mis_builder
 .. *
 
   
-10.0.3.0.x (unreleased)
+10.0.3.0.4 (2017-10-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 Bug fix:
