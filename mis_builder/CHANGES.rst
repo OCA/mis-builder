@@ -28,6 +28,10 @@ New features:
   ``balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)]``
   (`#4 <https://github.com/OCA/mis-builder/issues/4>`_).
 
+Upgrading from 3.0 (breaking changes):
+
+* Alternative move line data sources must have a company_id field.
+
 10.0.3.0.4 (2017-10-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
