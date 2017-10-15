@@ -17,8 +17,6 @@
     'data': [
         'security/mis_committed_purchase.xml',
         'views/mis_committed_purchase.xml',
-    ],
-    'demo': [
         'data/mis_report_style.xml',
         'data/mis_report.xml',
         'data/mis_budget.xml',
