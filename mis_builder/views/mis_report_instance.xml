@@ -70,6 +70,7 @@
                             <field name="report_id" string="Template"/>
                             <field name="currency_id" groups="base.group_multi_currency"/>
                             <field name="comparison_mode"/>
+                            <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                         </group>
                         <group>
                             <group name="simple_mode"
@@ -77,7 +78,6 @@
                                 <field name="date_range_id"/>
                                 <field name="date_from" attrs="{'required': [('comparison_mode', '=', False)]}"/>
                                 <field name="date_to" attrs="{'required': [('comparison_mode', '=', False)]}"/>
-                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                             </group>
                         </group>
                     </group>
