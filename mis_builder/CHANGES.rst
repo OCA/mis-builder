@@ -24,6 +24,10 @@ New features:
   querying move lines 
   (`#26 <https://github.com/OCA/mis-builder/issues/26>`_).
 
+Upgrading from 3.0 (breaking changes):
+
+* Alternative move line data sources must have a company_id field.
+
 10.0.3.0.4 (2017-10-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
