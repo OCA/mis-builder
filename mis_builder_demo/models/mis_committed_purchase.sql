@@ -6,6 +6,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
         /* UNINVOICED PURCHASES */
 	SELECT
 		'uninvoiced purchase' AS line_type,
+                pol.company_id AS company_id,
 		pol.name AS name,
 		po.date_planned as date,
 		CASE
@@ -37,6 +38,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
         /* DRAFT INVOICES */
 	SELECT
 		'draft invoice' AS line_type,
+                ail.company_id AS company_id,
 		ail.name AS name,
 		ail.create_date as date,
 		ail.account_id as account_id,

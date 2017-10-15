@@ -20,6 +20,10 @@ class MisCommittedPurchase(models.Model):
         comodel_name='account.account',
         string='Account',
     )
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        string='Company',
+    )
     credit = fields.Float()
     debit = fields.Float()
     date = fields.Date()
