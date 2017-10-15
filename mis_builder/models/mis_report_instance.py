@@ -142,7 +142,7 @@ class MisReportInstancePeriod(models.Model):
                      '|',
                      ('company_id', '=', False),
                      ('company_id', 'in',
-                      record.report_instance_id._query_companies().ids)])
+                      record.report_instance_id._get_query_companies().ids)])
                 if current_periods:
                     # TODO we take the first date range we found as current
                     #      this may be surprising if several companies
@@ -436,7 +436,7 @@ class MisReportInstance(models.Model):
         else:
             self.company_ids = False
 
-    def _query_companies(self):
+    def _get_query_companies(self):
         """ Return companies to query """
         if self.multi_company:
             return self.company_ids or self.company_id
@@ -651,7 +651,7 @@ class MisReportInstance(models.Model):
         """
         self.ensure_one()
         aep = self.report_id._prepare_aep(
-            self._query_companies(), self.currency_id)
+            self._get_query_companies(), self.currency_id)
         kpi_matrix = self.report_id.prepare_kpi_matrix()
         for period in self.period_ids:
             description = None
@@ -682,7 +682,7 @@ class MisReportInstance(models.Model):
         account_id = arg.get('account_id')
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env['mis.report.instance.period'].browse(period_id)
-            aep = AEP(self._query_companies(), self.currency_id)
+            aep = AEP(self._get_query_companies(), self.currency_id)
             aep.parse_expr(expr)
             aep.done_parsing()
             domain = aep.get_aml_domain_for_expr(
