@@ -31,6 +31,12 @@ It features the following key characteristics:
 - For developers, the accounting balance computation engine is exposed as an easy
   to use API.
 
+Here are some presentations:
+
+- Odoo Experience 2017 ([slides](https://www.slideshare.net/acsone/budget-control-with-misbuilder-3-2017), [video](https://youtu.be/0PpxGAf2l-0))
+- Odoo Experience 2016 ([slides](https://www.slideshare.net/acsone/misbuilder-2016))
+- Odoo Experience 2015 ([slides](https://www.slideshare.net/acsone/misbuilder))
+
 
 [//]: # (addons)
 
