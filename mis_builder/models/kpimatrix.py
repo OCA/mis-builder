@@ -255,7 +255,7 @@ class KpiMatrix(object):
                 try:
                     style_name = mis_safe_eval(row.kpi.style_expression,
                                                col.locals_dict)
-                except:
+                except Exception:
                     _logger.error("Error evaluating style expression <%s>",
                                   row.kpi.style_expression, exc_info=True)
                 if style_name:

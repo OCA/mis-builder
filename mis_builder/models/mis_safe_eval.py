@@ -30,6 +30,6 @@ def mis_safe_eval(expr, locals_dict):
     except ZeroDivisionError:
         # pylint: disable=redefined-variable-type
         val = DataError('#DIV/0', traceback.format_exc())
-    except:
+    except Exception:
         val = DataError('#ERR', traceback.format_exc())
     return val
