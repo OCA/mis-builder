@@ -10,6 +10,7 @@ import odoo.tests.common as common
 from odoo.tools.safe_eval import safe_eval
 
 from ..models.aep import AccountingExpressionProcessor as AEP
+from ..models.aep import _is_domain
 from ..models.accounting_none import AccountingNone
 
 
@@ -339,3 +340,15 @@ class TestAEP(common.TransactionCase):
                 # everything must be before from_date for initial balance
                 ('date', '<', '2017-02-01'),
             ])
+
+    def test_is_domain(self):
+        self.assertTrue(_is_domain("('a', '=' 1)"))
+        self.assertTrue(_is_domain("'&', ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("'|', ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("'!', ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("\"&\", ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("\"|\", ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("\"!\", ('a', '=' 1), ('b', '=', 1)"))
+        self.assertFalse(_is_domain("123%"))
+        self.assertFalse(_is_domain("123%,456"))
+        self.assertFalse(_is_domain(""))

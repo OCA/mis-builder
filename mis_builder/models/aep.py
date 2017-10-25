@@ -19,15 +19,12 @@ from odoo.tools.float_utils import float_is_zero
 from .accounting_none import AccountingNone
 
 
+_DOMAIN_START_RE = re.compile(r"\(|(['\"])[!&|]\1")
+
+
 def _is_domain(s):
     """ Test if a string looks like an Odoo domain """
-    return s.startswith('(') or \
-        s.startswith("'|'") or \
-        s.startswith("'&'") or \
-        s.startswith("'!'") or \
-        s.startswith('"|"') or \
-        s.startswith('"&"') or \
-        s.startswith('"!"')
+    return _DOMAIN_START_RE.match(s)
 
 
 class AccountingExpressionProcessor(object):
