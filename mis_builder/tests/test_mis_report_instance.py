@@ -216,6 +216,8 @@ class TestMisReportInstance(common.TransactionCase):
             name='company 2',
             parent_id=self.report_instance.company_id.id,
         ))
+        companies = self.env['res.company'].search([
+            ('id', 'child_of', self.report_instance.company_id.id)])
         self.report_instance.multi_company = True
         # multi company, company_ids not set
         self.assertEqual(
@@ -224,8 +226,10 @@ class TestMisReportInstance(common.TransactionCase):
         # set company_ids
         self.report_instance._onchange_company()
         self.assertTrue(self.report_instance.multi_company)
-        self.assertTrue(len(self.report_instance.company_ids) == 2)
-        self.assertTrue(len(self.report_instance._get_query_companies()) == 2)
+        self.assertEqual(
+            self.report_instance.company_ids, companies)
+        self.assertEqual(
+            self.report_instance._get_query_companies(), companies)
         # reset single company mode
         self.report_instance.multi_company = False
         self.assertEqual(
