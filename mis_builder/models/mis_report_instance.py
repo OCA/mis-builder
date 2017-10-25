@@ -436,8 +436,10 @@ class MisReportInstance(models.Model):
         else:
             self.company_ids = False
 
+    @api.multi
     def _get_query_companies(self):
         """ Return companies to query """
+        self.ensure_one()
         if self.multi_company:
             return self.company_ids or self.company_id
         else:
