@@ -19,6 +19,17 @@ from odoo.tools.float_utils import float_is_zero
 from .accounting_none import AccountingNone
 
 
+def _is_domain(s):
+    """ Test if a string looks like an Odoo domain """
+    return s.startswith('(') or \
+        s.startswith("'|'") or \
+        s.startswith("'&'") or \
+        s.startswith("'!'") or \
+        s.startswith('"|"') or \
+        s.startswith('"&"') or \
+        s.startswith('"!"')
+
+
 class AccountingExpressionProcessor(object):
     """ Processor for accounting expressions.
 
@@ -142,7 +153,7 @@ class AccountingExpressionProcessor(object):
             if not inner_account_sel:
                 # empty selector: select all accounts
                 acc_domain = tuple()
-            elif inner_account_sel.startswith('('):
+            elif _is_domain(inner_account_sel):
                 # account selector is a domain
                 acc_domain = tuple(safe_eval(account_sel, domain_eval_context))
             else:

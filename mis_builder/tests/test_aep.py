@@ -91,6 +91,11 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr(
             "balp[('user_type_id', '=', "
             "      ref('account.data_account_type_receivable').id)]")
+        self.aep.parse_expr(
+            "balp['&', "
+            "     ('user_type_id', '=', "
+            "      ref('account.data_account_type_receivable').id), "
+            "     ('code', '=', '400AR')]")
         self.aep.parse_expr("bal_700IN")  # deprecated
         self.aep.parse_expr("bals[700IN]")  # deprecated
         self.aep.done_parsing()
@@ -152,6 +157,11 @@ class TestAEP(common.TransactionCase):
         self.assertEquals(self._eval(
             "balp[('user_type_id', '=', "
             "      ref('account.data_account_type_receivable').id)]"), 100)
+        self.assertEquals(self._eval(
+            "balp['&', "
+            "     ('user_type_id', '=', "
+            "      ref('account.data_account_type_receivable').id), "
+            "     ('code', '=', '400AR')]"), 100)
         self.assertEquals(self._eval('balp[700IN]'), -100)
         # check ending balance
         self.assertEquals(self._eval('bale[400AR]'), 100)
