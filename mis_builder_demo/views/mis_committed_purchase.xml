@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="mis_committed_purchase_tree_view">
+        <field name="name">mis.committed.purchase.tree (in mis_builder_demo)</field>
+        <field name="model">mis.committed.purchase</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="line_type"/>
+                <field name="date"/>
+                <field name="name"/>
+                <field name="account_id"/>
+                <field name="debit"/>
+                <field name="credit"/>
+            </tree>
+        </field>
+    </record>
+
+</odoo>
