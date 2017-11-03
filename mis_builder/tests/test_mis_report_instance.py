@@ -209,7 +209,7 @@ class TestMisReportInstance(common.TransactionCase):
         self.assertFalse(self.report_instance.multi_company)
         self.assertFalse(self.report_instance.company_ids)
         self.assertEqual(
-            self.report_instance._get_query_companies()[0],
+            self.report_instance.query_company_ids[0],
             self.report_instance.company_id)
         # create a child company
         self.env['res.company'].create(dict(
@@ -221,7 +221,7 @@ class TestMisReportInstance(common.TransactionCase):
         self.report_instance.multi_company = True
         # multi company, company_ids not set
         self.assertEqual(
-            self.report_instance._get_query_companies()[0],
+            self.report_instance.query_company_ids[0],
             self.report_instance.company_id)
         # set company_ids
         self.report_instance._onchange_company()
@@ -229,11 +229,11 @@ class TestMisReportInstance(common.TransactionCase):
         self.assertEqual(
             self.report_instance.company_ids, companies)
         self.assertEqual(
-            self.report_instance._get_query_companies(), companies)
+            self.report_instance.query_company_ids, companies)
         # reset single company mode
         self.report_instance.multi_company = False
         self.assertEqual(
-            self.report_instance._get_query_companies()[0],
+            self.report_instance.query_company_ids[0],
             self.report_instance.company_id)
         self.report_instance._onchange_company()
         self.assertFalse(self.report_instance.company_ids)
