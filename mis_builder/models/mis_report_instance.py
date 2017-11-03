@@ -444,12 +444,11 @@ class MisReportInstance(models.Model):
     @api.multi
     @api.depends('multi_company', 'company_id', 'company_ids')
     def _compute_query_company_ids(self):
-        """ Return companies to query """
-        self.ensure_one()
-        if self.multi_company:
-            self.query_company_ids = self.company_ids or self.company_id
-        else:
-            self.query_company_ids = self.company_id
+        for rec in self:
+            if rec.multi_company:
+                rec.query_company_ids = rec.company_ids or rec.company_id
+            else:
+                rec.query_company_ids = rec.company_id
 
     @api.multi
     def save_report(self):
