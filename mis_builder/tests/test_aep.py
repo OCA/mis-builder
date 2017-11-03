@@ -10,6 +10,7 @@ import odoo.tests.common as common
 from odoo.tools.safe_eval import safe_eval
 
 from ..models.aep import AccountingExpressionProcessor as AEP
+from ..models.aep import _is_domain
 from ..models.accounting_none import AccountingNone
 
 
@@ -88,6 +89,14 @@ class TestAEP(common.TransactionCase):
             "balp[]"
             "[('account_id.user_type_id', '=', "
             "  ref('account.data_account_type_receivable').id)]")
+        self.aep.parse_expr(
+            "balp[('user_type_id', '=', "
+            "      ref('account.data_account_type_receivable').id)]")
+        self.aep.parse_expr(
+            "balp['&', "
+            "     ('user_type_id', '=', "
+            "      ref('account.data_account_type_receivable').id), "
+            "     ('code', '=', '400AR')]")
         self.aep.parse_expr("bal_700IN")  # deprecated
         self.aep.parse_expr("bals[700IN]")  # deprecated
         self.aep.done_parsing()
@@ -146,6 +155,14 @@ class TestAEP(common.TransactionCase):
             "balp[]"
             "[('account_id.user_type_id', '=', "
             "  ref('account.data_account_type_receivable').id)]"), 100)
+        self.assertEquals(self._eval(
+            "balp[('user_type_id', '=', "
+            "      ref('account.data_account_type_receivable').id)]"), 100)
+        self.assertEquals(self._eval(
+            "balp['&', "
+            "     ('user_type_id', '=', "
+            "      ref('account.data_account_type_receivable').id), "
+            "     ('code', '=', '400AR')]"), 100)
         self.assertEquals(self._eval('balp[700IN]'), -100)
         # check ending balance
         self.assertEquals(self._eval('bale[400AR]'), 100)
@@ -323,3 +340,15 @@ class TestAEP(common.TransactionCase):
                 # everything must be before from_date for initial balance
                 ('date', '<', '2017-02-01'),
             ])
+
+    def test_is_domain(self):
+        self.assertTrue(_is_domain("('a', '=' 1)"))
+        self.assertTrue(_is_domain("'&', ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("'|', ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("'!', ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("\"&\", ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("\"|\", ('a', '=' 1), ('b', '=', 1)"))
+        self.assertTrue(_is_domain("\"!\", ('a', '=' 1), ('b', '=', 1)"))
+        self.assertFalse(_is_domain("123%"))
+        self.assertFalse(_is_domain("123%,456"))
+        self.assertFalse(_is_domain(""))
