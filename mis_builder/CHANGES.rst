@@ -27,6 +27,10 @@ New features:
   any domain on account.account, not only account codes
   ``balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)]``
   (`#4 <https://github.com/OCA/mis-builder/issues/4>`_).
+* [IMP] in the report instance configuration form, the filters are
+  now grouped in a notebook page, this improves readability and
+  extensibility
+  (`#39 <https://github.com/OCA/mis-builder/issues/39>`_).
 
 Upgrading from 3.0 (breaking changes):
 
