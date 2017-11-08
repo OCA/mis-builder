@@ -176,7 +176,7 @@
                                widget="many2many_tags"
                                options="{'no_create': True}"/>
                         <field name="valid" invisible="1"/>
-                        <field name="report_instance_id" invisible="1"/>
+                        <field name="report_instance_id" invisible="1" attrs="{'required': [('id', '!=', False)]}"/>
                         <field name="report_id" invisible="1"/>
                         <field name="id" invisible="1"/>
                     </group>
