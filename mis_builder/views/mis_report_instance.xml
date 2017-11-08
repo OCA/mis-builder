@@ -81,7 +81,12 @@
                     <notebook>
                         <page string="Columns" attrs="{'invisible': [('comparison_mode', '=', False)]}">
                             <group>
-                                <field name="period_ids" colspan="4" nolabel="1" attrs="{'required': [('comparison_mode', '=', True)]}" context="{'default_report_instance_id': id}">
+                                <group>
+                                    <field name="date" />
+                                </group>
+                                <group>
+                                </group>
+                                <field name="period_ids" nolabel="1" colspan="4" attrs="{'required': [('comparison_mode', '=', True)]}" context="{'default_report_instance_id': id}">
                                     <tree colors="red:valid==False">
                                         <field name="sequence" widget="handle"/>
                                         <field name="name"/>
@@ -91,7 +96,6 @@
                                         <field name="valid" invisible="1"/>
                                     </tree>
                                 </field>
-                                <field name="date"/>
                             </group>
                         </page>
                         <page string="Filters">
