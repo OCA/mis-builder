@@ -32,6 +32,14 @@ New features:
   extensibility
   (`#39 <https://github.com/OCA/mis-builder/issues/39>`_).
 
+Bug fixes:
+
+* [FIX] fix error when saving periods in comparison mode on newly 
+  created (not yet saved) report instances.
+  `#50 <https://github.com/OCA/mis-builder/pull/50>`_
+* [FIX] improve display of Base Date report instance view.
+  `#51 <https://github.com/OCA/mis-builder/pull/51>`_
+
 Upgrading from 3.0 (breaking changes):
 
 * Alternative move line data sources must have a company_id field.
