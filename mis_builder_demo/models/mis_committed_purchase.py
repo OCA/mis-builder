@@ -31,5 +31,5 @@ class MisCommittedPurchase(models.Model):
     def init(self, cr):
         script = opj(os.path.dirname(__file__), 'mis_committed_purchase.sql')
         with open(script) as f:
-            tools.drop_view_if_exists(self.env.cr, 'mis_committed_purchase')
-            self.env.cr.execute(f.read())
+            tools.drop_view_if_exists(cr, 'mis_committed_purchase')
+            cr.execute(f.read())
