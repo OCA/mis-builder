@@ -8,7 +8,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
 		'uninvoiced purchase' AS line_type,
                 pol.company_id AS company_id,
 		pol.name AS name,
-		po.date_planned as date,
+		po.create_date as date,
 		CASE
 		  WHEN (cast(split_part(ip.value_reference, ',', 2) AS INTEGER) IS NOT NULL) THEN cast(split_part(ip.value_reference, ',', 2) AS INTEGER)
 		  WHEN (cast(split_part(ipc.value_reference, ',', 2) AS INTEGER) IS NOT NULL) THEN cast(split_part(ipc.value_reference, ',', 2) AS INTEGER)
