@@ -5,7 +5,7 @@
 import os
 from os.path import join as opj
 
-from openerp import api, fields, models, tools
+from openerp import fields, models, tools
 
 
 class MisCommittedPurchase(models.Model):
