@@ -3,6 +3,9 @@
 # Copyright 2016-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from __future__ import division
+from builtins import str
+from past.utils import old_div
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
@@ -170,7 +173,7 @@ class MisReportKpiStyle(models.Model):
         # format number following user language
         if value is None or value is AccountingNone:
             return u''
-        value = round(value / float(divider or 1), dp or 0) or 0
+        value = round(old_div(value, float(divider or 1)), dp or 0) or 0
         r = lang.format('%%%s.%df' % (sign, dp or 0), value, grouping=True)
         r = r.replace('-', u'\N{NON-BREAKING HYPHEN}')
         if prefix:
@@ -188,7 +191,7 @@ class MisReportKpiStyle(models.Model):
     def render_str(self, lang, value):
         if value is None or value is AccountingNone:
             return u''
-        return unicode(value)
+        return str(value)
 
     @api.model
     def compare_and_render(self, lang, style_props, type, compare_method,
@@ -212,10 +215,10 @@ class MisReportKpiStyle(models.Model):
         elif type == TYPE_NUM:
             if value and average_value:
                 # pylint: disable=redefined-variable-type
-                value = value / float(average_value)
+                value = old_div(value, float(average_value))
             if base_value and average_base_value:
                 # pylint: disable=redefined-variable-type
-                base_value = base_value / float(average_base_value)
+                base_value = old_div(base_value, float(average_base_value))
             if compare_method == CMP_DIFF:
                 delta = value - base_value
                 if delta and round(delta, style_props.dp or 0) != 0:
@@ -224,7 +227,7 @@ class MisReportKpiStyle(models.Model):
                     delta = AccountingNone
             elif compare_method == CMP_PCT:
                 if base_value and round(base_value, style_props.dp or 0) != 0:
-                    delta = (value - base_value) / abs(base_value)
+                    delta = old_div((value - base_value), abs(base_value))
                     if delta and round(delta, 3) != 0:
                         style_r.update(dict(
                             divider=0.01, dp=1, prefix='', suffix='%'))

@@ -3,6 +3,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 
+from __future__ import division
+from past.utils import old_div
 def _sum(l):
     """ Same as stdlib sum but returns None instead of 0
     in case of empty sequence.
@@ -35,7 +37,7 @@ def _avg(l):
     """
     if not l:
         return None
-    return sum(l) / float(len(l))
+    return old_div(sum(l), float(len(l)))
 
 
 def _min(*args):

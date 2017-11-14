@@ -2,6 +2,8 @@
 # Copyright 2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from __future__ import division
+from past.utils import old_div
 from odoo import models
 from odoo.tests.common import SavepointCase
 
@@ -127,17 +129,17 @@ class TestKpiData(SavepointCase):
         r = self.env['mis.kpi.data.test.item']._query_kpi_data(
             '2017-05-01', '2017-05-20', [])
         self.assertEqual(r, {
-            self.expr1: (10*10 + 20*10) / 20,
+            self.expr1: old_div((10*10 + 20*10), 20),
         })
         # two half
         r = self.env['mis.kpi.data.test.item']._query_kpi_data(
             '2017-05-06', '2017-05-15', [])
         self.assertEqual(r, {
-            self.expr1: (10*5 + 20*5) / 10,
+            self.expr1: old_div((10*5 + 20*5), 10),
         })
         # more than covered range
         r = self.env['mis.kpi.data.test.item']._query_kpi_data(
             '2017-01-01', '2017-05-31', [])
         self.assertEqual(r, {
-            self.expr1: (10*10 + 20*10 + 30*5) / 25,
+            self.expr1: old_div((10*10 + 20*10 + 30*5), 25),
         })

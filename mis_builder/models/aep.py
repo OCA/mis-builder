@@ -2,10 +2,14 @@
 # Copyright 2014-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from __future__ import division
+from builtins import map
+from builtins import object
+from past.utils import old_div
 import datetime
 import re
 from collections import defaultdict
-from itertools import izip
+
 import time
 
 import dateutil
@@ -184,7 +188,7 @@ class AccountingExpressionProcessor(object):
 
     def done_parsing(self):
         """ Replace account domains by account ids in map """
-        for key, acc_domains in self._map_account_ids.items():
+        for key, acc_domains in list(self._map_account_ids.items()):
             all_account_ids = set()
             for acc_domain in acc_domains:
                 acc_domain_with_company = expression.AND([
@@ -252,7 +256,7 @@ class AccountingExpressionProcessor(object):
         # TODO we could do this for more precision:
         #      AND(OR(aml_domains[mode]), date_domain[mode]) for each mode
         return expression.OR(aml_domains) + \
-            expression.OR(date_domain_by_mode.values())
+            expression.OR(list(date_domain_by_mode.values()))
 
     def get_aml_domain_for_dates(self, date_from, date_to,
                                  mode,
@@ -295,8 +299,8 @@ class AccountingExpressionProcessor(object):
         target_rate = self.currency.with_context(date=date).rate
         for company in self.companies:
             if company.currency_id != self.currency:
-                rate = target_rate / \
-                    company.currency_id.with_context(date=date).rate
+                rate = old_div(target_rate, \
+                    company.currency_id.with_context(date=date).rate)
             else:
                 rate = 1.0
             company_rates[company.id] = \
@@ -519,4 +523,4 @@ class AccountingExpressionProcessor(object):
         # or leave that to the caller?
         bals = cls._get_balances(cls.MODE_UNALLOCATED, companies,
                                  date, date, target_move)
-        return tuple(map(sum, izip(*bals.values())))
+        return tuple(map(sum, zip(*list(bals.values()))))

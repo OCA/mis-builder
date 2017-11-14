@@ -2,9 +2,10 @@
 # Copyright 2014-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from builtins import object
 from collections import defaultdict
 import datetime
-from itertools import izip
+
 import logging
 import re
 import time
@@ -36,7 +37,7 @@ _logger = logging.getLogger(__name__)
 class AutoStruct(object):
 
     def __init__(self, **kwargs):
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             setattr(self, k, v)
 
 
@@ -132,6 +133,9 @@ class MisReportKpi(models.Model):
                                 ondelete='cascade')
 
     _order = 'sequence, id'
+
+    def create(self, values):
+        return super(MisReportKpi, self).create(values)
 
     @api.multi
     def name_get(self):
@@ -799,7 +803,7 @@ class MisReport(models.Model):
                 drilldown_args = []
                 name_error = False
                 for expression, replaced_expr in \
-                        izip(expressions, replaced_exprs):
+                        zip(expressions, replaced_exprs):
                     vals.append(mis_safe_eval(replaced_expr, locals_dict))
                     if replaced_expr != expression:
                         drilldown_args.append({
