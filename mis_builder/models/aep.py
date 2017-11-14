@@ -2,15 +2,29 @@
 # Copyright 2014-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import datetime
 import re
 from collections import defaultdict
 from itertools import izip
+import time
 
-from odoo import fields
+import dateutil
+
+from odoo import fields, _
 from odoo.models import expression
+from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 from odoo.tools.float_utils import float_is_zero
+
 from .accounting_none import AccountingNone
+
+
+_DOMAIN_START_RE = re.compile(r"\(|(['\"])[!&|]\1")
+
+
+def _is_domain(s):
+    """ Test if a string looks like an Odoo domain """
+    return _DOMAIN_START_RE.match(s)
 
 
 class AccountingExpressionProcessor(object):
@@ -62,102 +76,127 @@ class AccountingExpressionProcessor(object):
     MODE_END = 'e'
     MODE_UNALLOCATED = 'u'
 
-    _ACC_RE = re.compile(r"(?P<field>\bbal|\bcrd|\bdeb)"
-                         r"(?P<mode>[piseu])?"
-                         r"(?P<accounts>_[a-zA-Z0-9]+|\[.*?\])"
-                         r"(?P<domain>\[.*?\])?")
+    _ACC_RE = re.compile(
+        r"(?P<field>\bbal|\bcrd|\bdeb)"
+        r"(?P<mode>[piseu])?"
+        r"\s*"
+        r"(?P<account_sel>_[a-zA-Z0-9]+|\[.*?\])"
+        r"\s*"
+        r"(?P<ml_domain>\[.*?\])?"
+    )
 
-    def __init__(self, company):
-        self.company = company
-        self.dp = company.currency_id.decimal_places
-        # before done_parsing: {(domain, mode): set(account_codes)}
-        # after done_parsing: {(domain, mode): list(account_ids)}
+    def __init__(self, companies, currency=None):
+        self.env = companies.env
+        self.companies = companies
+        if not currency:
+            self.currency = companies.mapped('currency_id')
+            if len(self.currency) > 1:
+                raise UserError(_(
+                    "If currency_id is not provided, "
+                    "all companies must have the same currency."
+                ))
+        else:
+            self.currency = currency
+        self.dp = self.currency.decimal_places
+        # before done_parsing: {(ml_domain, mode): set(acc_domain)}
+        # after done_parsing: {(ml_domain, mode): list(account_ids)}
         self._map_account_ids = defaultdict(set)
-        # {account_code: account_id} where account_code can be
-        # - None for all accounts
-        # - NNN% for a like
-        # - NNN for a code with an exact match
-        self._account_ids_by_code = defaultdict(set)
+        # {account_domain: set(account_ids)}
+        self._account_ids_by_acc_domain = defaultdict(set)
         # smart ending balance (returns AccountingNone if there
         # are no moves in period and 0 initial balance), implies
         # a first query to get the initial balance and another
         # to get the variation, so it's a bit slower
         self.smart_end = True
 
-    def _load_account_codes(self, account_codes):
-        account_model = self.company.env['account.account']
-        exact_codes = set()
-        for account_code in account_codes:
-            if account_code in self._account_ids_by_code:
-                continue
-            if account_code is None:
-                # None means we want all accounts
-                account_ids = account_model.\
-                    search([('company_id', '=', self.company.id)]).ids
-                self._account_ids_by_code[account_code].update(account_ids)
-            elif '%' in account_code:
-                account_ids = account_model.\
-                    search([('code', '=like', account_code),
-                            ('company_id', '=', self.company.id)]).ids
-                self._account_ids_by_code[account_code].update(account_ids)
+    def _account_codes_to_domain(self, account_codes):
+        """Convert a comma separated list of account codes
+        (possibly with wildcards) to a domain on account.account.
+        """
+        elems = []
+        for account_code in account_codes.split(','):
+            account_code = account_code.strip()
+            if '%' in account_code:
+                elems.append([('code', '=like', account_code)])
             else:
-                # search exact codes after the loop to do less queries
-                exact_codes.add(account_code)
-        for account in account_model.\
-                search([('code', 'in', list(exact_codes)),
-                        ('company_id', '=', self.company.id)]):
-            self._account_ids_by_code[account.code].add(account.id)
+                elems.append([('code', '=', account_code)])
+        return tuple(expression.OR(elems))
 
     def _parse_match_object(self, mo):
         """Split a match object corresponding to an accounting variable
 
-        Returns field, mode, [account codes], (domain expression).
+        Returns field, mode, account domain, move line domain.
         """
-        field, mode, account_codes, domain = mo.groups()
+        domain_eval_context = {
+            'ref': self.env.ref,
+            'user': self.env.user,
+            'time': time,
+            'datetime': datetime,
+            'dateutil': dateutil,
+        }
+        field, mode, account_sel, ml_domain = mo.groups()
+        # handle some legacy modes
         if not mode:
             mode = self.MODE_VARIATION
         elif mode == 's':
             mode = self.MODE_END
-        if account_codes.startswith('_'):
-            account_codes = account_codes[1:]
+        # convert account selector to account domain
+        if account_sel.startswith('_'):
+            # legacy bal_NNN%
+            acc_domain = self._account_codes_to_domain(account_sel[1:])
         else:
-            account_codes = account_codes[1:-1]
-        if account_codes.strip():
-            account_codes = [a.strip() for a in account_codes.split(',')]
+            assert account_sel[0] == '[' and account_sel[-1] == ']'
+            inner_account_sel = account_sel[1:-1].strip()
+            if not inner_account_sel:
+                # empty selector: select all accounts
+                acc_domain = tuple()
+            elif _is_domain(inner_account_sel):
+                # account selector is a domain
+                acc_domain = tuple(safe_eval(account_sel, domain_eval_context))
+            else:
+                # account selector is a list of account codes
+                acc_domain = self._account_codes_to_domain(inner_account_sel)
+        # move line domain
+        if ml_domain:
+            assert ml_domain[0] == '[' and ml_domain[-1] == ']'
+            ml_domain = tuple(safe_eval(ml_domain, domain_eval_context))
         else:
-            account_codes = [None]  # None means we want all accounts
-        domain = domain or '[]'
-        domain = tuple(safe_eval(domain))
-        return field, mode, account_codes, domain
+            ml_domain = tuple()
+        return field, mode, acc_domain, ml_domain
 
     def parse_expr(self, expr):
         """Parse an expression, extracting accounting variables.
 
-        Domains and accounts are extracted and stored in the map
-        so when all expressions have been parsed, we know which
-        account codes to query for each domain and mode.
+        Move line domains and account selectors are extracted and
+        stored in the map so when all expressions have been parsed,
+        we know which account domains to query for each move line domain
+        and mode.
         """
         for mo in self._ACC_RE.finditer(expr):
-            _, mode, account_codes, domain = self._parse_match_object(mo)
+            _, mode, acc_domain, ml_domain = self._parse_match_object(mo)
             if mode == self.MODE_END and self.smart_end:
                 modes = (self.MODE_INITIAL, self.MODE_VARIATION, self.MODE_END)
             else:
                 modes = (mode, )
             for mode in modes:
-                key = (domain, mode)
-                self._map_account_ids[key].update(account_codes)
+                key = (ml_domain, mode)
+                self._map_account_ids[key].add(acc_domain)
 
     def done_parsing(self):
-        """Load account codes and replace account codes by
-        account ids in map."""
-        for key, account_codes in self._map_account_ids.items():
-            # TODO _load_account_codes could be done
-            # for all account_codes at once (also in v8)
-            self._load_account_codes(account_codes)
-            account_ids = set()
-            for account_code in account_codes:
-                account_ids.update(self._account_ids_by_code[account_code])
-            self._map_account_ids[key] = list(account_ids)
+        """ Replace account domains by account ids in map """
+        for key, acc_domains in self._map_account_ids.items():
+            all_account_ids = set()
+            for acc_domain in acc_domains:
+                acc_domain_with_company = expression.AND([
+                    acc_domain,
+                    [('company_id', 'in', self.companies.ids)],
+                ])
+                account_ids = self.env['account.account'].\
+                    search(acc_domain_with_company).ids
+                self._account_ids_by_acc_domain[acc_domain].\
+                    update(account_ids)
+                all_account_ids.update(account_ids)
+            self._map_account_ids[key] = list(all_account_ids)
 
     @classmethod
     def has_account_var(cls, expr):
@@ -171,9 +210,8 @@ class AccountingExpressionProcessor(object):
         """
         account_ids = set()
         for mo in self._ACC_RE.finditer(expr):
-            field, mode, account_codes, domain = self._parse_match_object(mo)
-            for account_code in account_codes:
-                account_ids.update(self._account_ids_by_code[account_code])
+            field, mode, acc_domain, ml_domain = self._parse_match_object(mo)
+            account_ids.update(self._account_ids_by_acc_domain[acc_domain])
         return account_ids
 
     def get_aml_domain_for_expr(self, expr,
@@ -189,11 +227,10 @@ class AccountingExpressionProcessor(object):
         aml_domains = []
         date_domain_by_mode = {}
         for mo in self._ACC_RE.finditer(expr):
-            field, mode, account_codes, domain = self._parse_match_object(mo)
-            aml_domain = list(domain)
+            field, mode, acc_domain, ml_domain = self._parse_match_object(mo)
+            aml_domain = list(ml_domain)
             account_ids = set()
-            for account_code in account_codes:
-                account_ids.update(self._account_ids_by_code[account_code])
+            account_ids.update(self._account_ids_by_acc_domain[acc_domain])
             if not account_id:
                 aml_domain.append(('account_id', 'in', tuple(account_ids)))
             else:
@@ -227,8 +264,10 @@ class AccountingExpressionProcessor(object):
             # of the current fiscal year only, for balance sheet accounts
             # sum from the beginning of time
             date_from_date = fields.Date.from_string(date_from)
+            # TODO this takes the fy from the first company
+            # make that user controllable (nice to have)?
             fy_date_from = \
-                self.company.\
+                self.companies.\
                 compute_fiscalyear_dates(date_from_date)['date_from']
             domain = ['|',
                       ('date', '>=', fields.Date.to_string(fy_date_from)),
@@ -239,14 +278,30 @@ class AccountingExpressionProcessor(object):
                 domain.append(('date', '<=', date_to))
         elif mode == self.MODE_UNALLOCATED:
             date_from_date = fields.Date.from_string(date_from)
+            # TODO this takes the fy from the first company
+            # make that user controllable (nice to have)?
             fy_date_from = \
-                self.company.\
+                self.companies.\
                 compute_fiscalyear_dates(date_from_date)['date_from']
             domain = [('date', '<', fields.Date.to_string(fy_date_from)),
                       ('user_type_id.include_initial_balance', '=', False)]
         if target_move == 'posted':
             domain.append(('move_id.state', '=', 'posted'))
         return expression.normalize_domain(domain)
+
+    def _get_company_rates(self, date):
+        # get exchange rates for each company with its rouding
+        company_rates = {}
+        target_rate = self.currency.with_context(date=date).rate
+        for company in self.companies:
+            if company.currency_id != self.currency:
+                rate = target_rate / \
+                    company.currency_id.with_context(date=date).rate
+            else:
+                rate = 1.0
+            company_rates[company.id] = \
+                (rate, company.currency_id.decimal_places)
+        return company_rates
 
     def do_queries(self, date_from, date_to,
                    target_move='posted', additional_move_line_filter=None,
@@ -257,9 +312,10 @@ class AccountingExpressionProcessor(object):
         This method must be executed after done_parsing().
         """
         if not aml_model:
-            aml_model = self.company.env['account.move.line']
+            aml_model = self.env['account.move.line']
         else:
-            aml_model = self.company.env[aml_model]
+            aml_model = self.env[aml_model]
+        company_rates = self._get_company_rates(date_to)
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
         domain_by_mode = {}
@@ -279,18 +335,20 @@ class AccountingExpressionProcessor(object):
             if additional_move_line_filter:
                 domain.extend(additional_move_line_filter)
             # fetch sum of debit/credit, grouped by account_id
-            accs = aml_model.read_group(domain,
-                                        ['debit', 'credit', 'account_id'],
-                                        ['account_id'])
+            accs = aml_model.read_group(
+                domain,
+                ['debit', 'credit', 'account_id', 'company_id'],
+                ['account_id', 'company_id'], lazy=False)
             for acc in accs:
+                rate, dp = company_rates[acc['company_id'][0]]
                 debit = acc['debit'] or 0.0
                 credit = acc['credit'] or 0.0
                 if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and \
-                        float_is_zero(debit-credit,
-                                      precision_digits=self.dp):
+                        float_is_zero(debit-credit, precision_digits=self.dp):
                     # in initial mode, ignore accounts with 0 balance
                     continue
-                self._data[key][acc['account_id'][0]] = (debit, credit)
+                self._data[key][acc['account_id'][0]] = \
+                    (debit*rate, credit*rate)
         # compute ending balances by summing initial and variation
         for key in ends:
             domain, mode = key
@@ -312,22 +370,21 @@ class AccountingExpressionProcessor(object):
         This method must be executed after do_queries().
         """
         def f(mo):
-            field, mode, account_codes, domain = self._parse_match_object(mo)
-            key = (domain, mode)
+            field, mode, acc_domain, ml_domain = self._parse_match_object(mo)
+            key = (ml_domain, mode)
             account_ids_data = self._data[key]
             v = AccountingNone
-            for account_code in account_codes:
-                account_ids = self._account_ids_by_code[account_code]
-                for account_id in account_ids:
-                    debit, credit = \
-                        account_ids_data.get(account_id,
-                                             (AccountingNone, AccountingNone))
-                    if field == 'bal':
-                        v += debit - credit
-                    elif field == 'deb':
-                        v += debit
-                    elif field == 'crd':
-                        v += credit
+            account_ids = self._account_ids_by_acc_domain[acc_domain]
+            for account_id in account_ids:
+                debit, credit = \
+                    account_ids_data.get(account_id,
+                                         (AccountingNone, AccountingNone))
+                if field == 'bal':
+                    v += debit - credit
+                elif field == 'deb':
+                    v += debit
+                elif field == 'crd':
+                    v += credit
             # in initial balance mode, assume 0 is None
             # as it does not make sense to distinguish 0 from "no data"
             if v is not AccountingNone and \
@@ -347,18 +404,14 @@ class AccountingExpressionProcessor(object):
         This method must be executed after do_queries().
         """
         def f(mo):
-            field, mode, account_codes, domain = self._parse_match_object(mo)
-            key = (domain, mode)
+            field, mode, acc_domain, ml_domain = \
+                self._parse_match_object(mo)
+            key = (ml_domain, mode)
             # first check if account_id is involved in
             # the current expression part
-            found = False
-            for account_code in account_codes:
-                if account_id in self._account_ids_by_code[account_code]:
-                    found = True
-                    break
-            if not found:
+            if account_id not in self._account_ids_by_acc_domain[acc_domain]:
                 return '(AccountingNone)'
-            # here we know account_id is involved in account_codes
+            # here we know account_id is involved in acc_domain
             account_ids_data = self._data[key]
             debit, credit = \
                 account_ids_data.get(account_id,
@@ -380,23 +433,22 @@ class AccountingExpressionProcessor(object):
         account_ids = set()
         for expr in exprs:
             for mo in self._ACC_RE.finditer(expr):
-                field, mode, account_codes, domain = \
+                field, mode, acc_domain, ml_domain = \
                     self._parse_match_object(mo)
-                key = (domain, mode)
+                key = (ml_domain, mode)
                 account_ids_data = self._data[key]
-                for account_code in account_codes:
-                    for account_id in self._account_ids_by_code[account_code]:
-                        if account_id in account_ids_data:
-                            account_ids.add(account_id)
+                for account_id in self._account_ids_by_acc_domain[acc_domain]:
+                    if account_id in account_ids_data:
+                        account_ids.add(account_id)
 
         for account_id in account_ids:
             yield account_id, [self._ACC_RE.sub(f, expr) for expr in exprs]
 
     @classmethod
-    def _get_balances(cls, mode, company, date_from, date_to,
+    def _get_balances(cls, mode, companies, date_from, date_to,
                       target_move='posted'):
         expr = 'deb{mode}[], crd{mode}[]'.format(mode=mode)
-        aep = AccountingExpressionProcessor(company)
+        aep = AccountingExpressionProcessor(companies)
         # disable smart_end to have the data at once, instead
         # of initial + variation
         aep.smart_end = False
@@ -406,58 +458,58 @@ class AccountingExpressionProcessor(object):
         return aep._data[((), mode)]
 
     @classmethod
-    def get_balances_initial(cls, company, date, target_move='posted'):
+    def get_balances_initial(cls, companies, date, target_move='posted'):
         """ A convenience method to obtain the initial balances of all accounts
         at a given date.
 
         It is the same as get_balances_end(date-1).
 
-        :param company:
+        :param companies:
         :param date:
         :param target_move: if 'posted', consider only posted moves
 
         Returns a dictionary: {account_id, (debit, credit)}
         """
-        return cls._get_balances(cls.MODE_INITIAL, company,
+        return cls._get_balances(cls.MODE_INITIAL, companies,
                                  date, date, target_move)
 
     @classmethod
-    def get_balances_end(cls, company, date, target_move='posted'):
+    def get_balances_end(cls, companies, date, target_move='posted'):
         """ A convenience method to obtain the ending balances of all accounts
         at a given date.
 
         It is the same as get_balances_initial(date+1).
 
-        :param company:
+        :param companies:
         :param date:
         :param target_move: if 'posted', consider only posted moves
 
         Returns a dictionary: {account_id, (debit, credit)}
         """
-        return cls._get_balances(cls.MODE_END, company,
+        return cls._get_balances(cls.MODE_END, companies,
                                  date, date, target_move)
 
     @classmethod
-    def get_balances_variation(cls, company, date_from, date_to,
+    def get_balances_variation(cls, companies, date_from, date_to,
                                target_move='posted'):
         """ A convenience method to obtain the variation of the
         balances of all accounts over a period.
 
-        :param company:
+        :param companies:
         :param date:
         :param target_move: if 'posted', consider only posted moves
 
         Returns a dictionary: {account_id, (debit, credit)}
         """
-        return cls._get_balances(cls.MODE_VARIATION, company,
+        return cls._get_balances(cls.MODE_VARIATION, companies,
                                  date_from, date_to, target_move)
 
     @classmethod
-    def get_unallocated_pl(cls, company, date, target_move='posted'):
+    def get_unallocated_pl(cls, companies, date, target_move='posted'):
         """ A convenience method to obtain the unallocated profit/loss
         of the previous fiscal years at a given date.
 
-        :param company:
+        :param companies:
         :param date:
         :param target_move: if 'posted', consider only posted moves
 
@@ -465,6 +517,6 @@ class AccountingExpressionProcessor(object):
         """
         # TODO shoud we include here the accounts of type "unaffected"
         # or leave that to the caller?
-        bals = cls._get_balances(cls.MODE_UNALLOCATED, company,
+        bals = cls._get_balances(cls.MODE_UNALLOCATED, companies,
                                  date, date, target_move)
         return tuple(map(sum, izip(*bals.values())))

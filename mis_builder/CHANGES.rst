@@ -6,7 +6,44 @@ Changelog for mis_builder
 ..
 .. *
 
-  
+10.0.3.1.1 (2017-11-14)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+New features:
+
+* [ADD] month and year relative periods, easier to use than
+  date ranges for the most common case.
+  (`#2 <https://github.com/OCA/mis-builder/issues/2>`_)
+* [ADD] multi-company consolidation support, with currency conversion
+  (the conversion rate date is the end of the reporting period)
+  (`#7 <https://github.com/OCA/mis-builder/issues/7>`_, 
+  `#3 <https://github.com/OCA/mis-builder/issues/3>`_)
+* [ADD] provide ref, datetime, dateutil, time, user in the evaluation 
+  context of move line domains; among other things, this allows using 
+  references to xml ids (such as account types or tax tags) when 
+  querying move lines 
+  (`#26 <https://github.com/OCA/mis-builder/issues/26>`_).
+* [ADD] extended account selectors: you can now select accounts using
+  any domain on account.account, not only account codes
+  ``balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)]``
+  (`#4 <https://github.com/OCA/mis-builder/issues/4>`_).
+* [IMP] in the report instance configuration form, the filters are
+  now grouped in a notebook page, this improves readability and
+  extensibility
+  (`#39 <https://github.com/OCA/mis-builder/issues/39>`_).
+
+Bug fixes:
+
+* [FIX] fix error when saving periods in comparison mode on newly 
+  created (not yet saved) report instances.
+  `#50 <https://github.com/OCA/mis-builder/pull/50>`_
+* [FIX] improve display of Base Date report instance view.
+  `#51 <https://github.com/OCA/mis-builder/pull/51>`_
+
+Upgrading from 3.0 (breaking changes):
+
+* Alternative move line data sources must have a company_id field.
+
 10.0.3.0.4 (2017-10-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 

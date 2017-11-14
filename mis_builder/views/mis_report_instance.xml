@@ -30,6 +30,8 @@
                     <field name="name"/>
                     <field name="report_id" string="Template"/>
                     <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="multi_company" groups="base.group_multi_company"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
                     <field name="target_move"/>
                     <field name="pivot_date"/>
                 </tree>
@@ -63,8 +65,7 @@
                     <group>
                         <group>
                             <field name="report_id" string="Template"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
-                            <field name="target_move" widget="radio"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
                             <field name="landscape_pdf"/>
                             <field name="comparison_mode"/>
                         </group>
@@ -77,20 +78,37 @@
                             </group>
                         </group>
                     </group>
-                    <group name="comparison_mode" string="Columns"
-                           attrs="{'invisible': [('comparison_mode', '=', False)]}" colspan="4">
-                        <field name="period_ids" colspan="4" nolabel="1" attrs="{'required': [('comparison_mode', '=', True)]}" context="{'default_report_instance_id': id}">
-                            <tree colors="red:valid==False">
-                                <field name="sequence" widget="handle"/>
-                                <field name="name"/>
-                                <field name="source"/>
-                                <field name="date_from"/>
-                                <field name="date_to"/>
-                                <field name="valid" invisible="1"/>
-                            </tree>
-                        </field>
-                        <field name="date"/>
-                    </group>
+                    <notebook>
+                        <page string="Columns" attrs="{'invisible': [('comparison_mode', '=', False)]}">
+                            <group>
+                                <group>
+                                    <field name="date" />
+                                </group>
+                                <group>
+                                </group>
+                                <field name="period_ids" nolabel="1" colspan="4" attrs="{'required': [('comparison_mode', '=', True)]}" context="{'default_report_instance_id': id}">
+                                    <tree colors="red:valid==False">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name"/>
+                                        <field name="source"/>
+                                        <field name="date_from"/>
+                                        <field name="date_to"/>
+                                        <field name="valid" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page string="Filters">
+                            <group name="filters">
+                                <field name="target_move" widget="radio"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="multi_company" groups="base.group_multi_company"/>
+                                <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"
+                                        domain="[('id', 'child_of', company_id)]"
+                                        attrs="{'invisible': [('multi_company', '=', False)]}"/>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
                 </form>
             </field>
@@ -162,7 +180,7 @@
                                widget="many2many_tags"
                                options="{'no_create': True}"/>
                         <field name="valid" invisible="1"/>
-                        <field name="report_instance_id" invisible="1"/>
+                        <field name="report_instance_id" invisible="1" attrs="{'required': [('id', '!=', False)]}"/>
                         <field name="report_id" invisible="1"/>
                         <field name="id" invisible="1"/>
                     </group>

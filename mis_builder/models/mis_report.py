@@ -526,9 +526,9 @@ class MisReport(models.Model):
         return kpi_matrix
 
     @api.multi
-    def _prepare_aep(self, company):
+    def _prepare_aep(self, companies, currency=None):
         self.ensure_one()
-        aep = AEP(company)
+        aep = AEP(companies, currency)
         for kpi in self.kpi_ids:
             for expression in kpi.expression_ids:
                 if expression.name:
