@@ -6,7 +6,7 @@ Changelog for mis_builder_budget
 ..
 .. *
 
-10.0.3.1.x (unreleased)
+10.0.3.1.0 (2017-11-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 New features:
