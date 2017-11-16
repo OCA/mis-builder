@@ -84,6 +84,7 @@ Vector((0.5, 1.0))
 2.0 1.0 Vector((2.0, 1.0))
 """
 
+from builtins import map
 import itertools
 import operator
 import traceback
@@ -111,7 +112,7 @@ class SimpleArray(tuple):
         if isinstance(other, tuple):
             if len(other) != len(self):
                 raise TypeError("tuples must have same length for %s" % op)
-            return self.__class__(map(_o2, self, other))
+            return self.__class__(list(map(_o2, self, other)))
         else:
             return self.__class__(_o2(z, other) for z in self)
 
@@ -130,10 +131,10 @@ class SimpleArray(tuple):
     __radd__ = __add__
 
     def __pos__(self):
-        return self.__class__(map(operator.pos, self))
+        return self.__class__(list(map(operator.pos, self)))
 
     def __neg__(self):
-        return self.__class__(map(operator.neg, self))
+        return self.__class__(list(map(operator.neg, self)))
 
     def __sub__(self, other):
         return self._op(operator.sub, other)

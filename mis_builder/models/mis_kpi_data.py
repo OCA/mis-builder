@@ -2,6 +2,8 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from __future__ import division
+from past.utils import old_div
 from collections import defaultdict
 
 from odoo import api, fields, models, _
@@ -109,7 +111,7 @@ class MisKpiData(models.AbstractModel):
                     (item.kpi_expression_id.kpi_id.accumulation_method,
                      item.name))
         # compute weighted average for ACC_AVG
-        for kpi_expression, amounts in res_avg.items():
+        for kpi_expression, amounts in list(res_avg.items()):
             res[kpi_expression] = \
-                sum(d * a for d, a in amounts) / sum(d for d, a in amounts)
+                old_div(sum(d * a for d, a in amounts), sum(d for d, a in amounts))
         return res

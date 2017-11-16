@@ -2,6 +2,8 @@
 # © 2014-2015 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from __future__ import division
+from past.utils import old_div
 import datetime
 
 from odoo import fields
@@ -66,21 +68,21 @@ class TestMultiCompanyAEP(common.TransactionCase):
             self._create_move(
                 journal=getattr(self, 'journal' + company_key),
                 date=datetime.date(self.prev_year, 12, 1),
-                amount=100/divider,
+                amount=old_div(100,divider),
                 debit_acc=getattr(self, 'account_ar_' + company_key),
                 credit_acc=getattr(self, 'account_in_' + company_key))
             # create move in january this year
             self._create_move(
                 journal=getattr(self, 'journal' + company_key),
                 date=datetime.date(self.curr_year, 1, 1),
-                amount=300/divider,
+                amount=old_div(300,divider),
                 debit_acc=getattr(self, 'account_ar_' + company_key),
                 credit_acc=getattr(self, 'account_in_' + company_key))
             # create move in february this year
             self._create_move(
                 journal=getattr(self, 'journal' + company_key),
                 date=datetime.date(self.curr_year, 3, 1),
-                amount=500/divider,
+                amount=old_div(500,divider),
                 debit_acc=getattr(self, 'account_ar_' + company_key),
                 credit_acc=getattr(self, 'account_in_' + company_key))
 
@@ -181,7 +183,7 @@ class TestMultiCompanyAEP(common.TransactionCase):
         # let's query for december, two companies
         aep = self._do_queries(
             self.company_eur | self.company_usd, self.eur, date_from, date_to)
-        self.assertAlmostEqual(self._eval(aep, 'balp[700IN]'), -100 - 50/1.1)
+        self.assertAlmostEqual(self._eval(aep, 'balp[700IN]'), -100 - old_div(50,1.1))
         # let's query for december, one company, currency = usd
         aep = self._do_queries(
             self.company_eur, self.usd, date_from, date_to)
