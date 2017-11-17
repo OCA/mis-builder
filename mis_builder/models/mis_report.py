@@ -172,15 +172,15 @@ class MisReportKpi(models.Model):
     @api.depends('expression_ids.subkpi_id.name', 'expression_ids.name')
     def _compute_expression(self):
         for kpi in self:
-            l = []
+            exprs = []
             for expression in kpi.expression_ids:
                 if expression.subkpi_id:
-                    l.append(u'{}\xa0=\xa0{}'.format(
+                    exprs.append(u'{}\xa0=\xa0{}'.format(
                         expression.subkpi_id.name, expression.name))
                 else:
-                    l.append(
+                    exprs.append(
                         expression.name or 'AccountingNone')
-            kpi.expression = ',\n'.join(l)
+            kpi.expression = ',\n'.join(exprs)
 
     @api.multi
     def _inverse_expression(self):
@@ -526,9 +526,9 @@ class MisReport(models.Model):
         return kpi_matrix
 
     @api.multi
-    def _prepare_aep(self, company):
+    def _prepare_aep(self, companies, currency=None):
         self.ensure_one()
-        aep = AEP(company)
+        aep = AEP(companies, currency)
         for kpi in self.kpi_ids:
             for expression in kpi.expression_ids:
                 if expression.name:

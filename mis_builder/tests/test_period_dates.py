@@ -101,6 +101,34 @@ class TestPeriodDates(common.TransactionCase):
         self.assertEqual(self.period.date_to, '2017-01-15')
         self.assertTrue(self.period.valid)
 
+    def test_rel_month(self):
+        self.instance.write(dict(
+            comparison_mode=True,
+            date='2017-01-05'
+        ))
+        self.period.write(dict(
+            mode=MODE_REL,
+            type='m',
+            offset='1',
+        ))
+        self.assertEqual(self.period.date_from, '2017-02-01')
+        self.assertEqual(self.period.date_to, '2017-02-28')
+        self.assertTrue(self.period.valid)
+
+    def test_rel_year(self):
+        self.instance.write(dict(
+            comparison_mode=True,
+            date='2017-05-06'
+        ))
+        self.period.write(dict(
+            mode=MODE_REL,
+            type='y',
+            offset='1',
+        ))
+        self.assertEqual(self.period.date_from, '2018-01-01')
+        self.assertEqual(self.period.date_to, '2018-12-31')
+        self.assertTrue(self.period.valid)
+
     def test_rel_date_range(self):
         # create a few date ranges
         date_range_type = self.env['date.range.type'].create(dict(
