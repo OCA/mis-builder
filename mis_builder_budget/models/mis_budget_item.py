@@ -46,6 +46,8 @@ class MisBudgetItem(models.Model):
         comodel_name='account.analytic.account',
         string="Analytic account",
     )
+    seq1 = fields.Integer(store=True)
+    seq2 = fields.Integer(store=True)
 
     @api.onchange('date_range_id')
     def _onchange_date_range(self):
