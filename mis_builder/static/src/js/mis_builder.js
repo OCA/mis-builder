@@ -2,12 +2,12 @@ odoo.define('mis.builder', function (require) {
 "use strict";
 
 var core = require('web.core');
-var form_common = require('web.form_common');
+var form_common = require('web.Widget');
 var Model = require('web.DataModel');
 var data = require('web.data');
 var ActionManager = require('web.ActionManager');
 
-var MisReport = form_common.FormWidget.extend({
+var MisReport = Widget.extend({
     /**
      * @constructs instance.mis_builder.MisReport
      * @extends instance.web.form.FormWidget

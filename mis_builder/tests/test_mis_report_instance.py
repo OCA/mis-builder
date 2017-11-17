@@ -164,7 +164,7 @@ class TestMisReportInstance(common.TransactionCase):
 
     def test_xlsx(self):
         test_reports.try_report(self.env.cr, self.env.uid,
-                                'mis.report.instance.xlsx',
+                                'mis_builder.mis_report_instance_xlsx',
                                 [self.report_instance.id],
                                 report_type='xlsx')
 

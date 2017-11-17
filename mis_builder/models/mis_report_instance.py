@@ -548,7 +548,7 @@ class MisReportInstance(models.Model):
         return {
             'name': 'MIS report instance QWEB PDF report',
             'model': 'mis.report.instance',
-            'type': 'ir.actions.report.xml',
+            'type': 'ir.actions.report',
             'report_name': 'mis_builder.report_mis_report_instance',
             'report_type': 'qweb-pdf',
             'context': self.env.context,
@@ -560,9 +560,10 @@ class MisReportInstance(models.Model):
         return {
             'name': 'MIS report instance XLSX report',
             'model': 'mis.report.instance',
-            'type': 'ir.actions.report.xml',
-            'report_name': 'mis.report.instance.xlsx',
+            'type': 'ir.actions.report',
+            'report_name': 'mis_builder.mis_report_instance_xlsx',
             'report_type': 'xlsx',
+            'report_file': 'mis_report_instance',
             'context': self.env.context,
         }
 

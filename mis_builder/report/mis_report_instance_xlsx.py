@@ -6,21 +6,12 @@ from collections import defaultdict
 import logging
 import numbers
 
-from odoo.report import report_sxw
+from odoo import models
 
 from ..models.accounting_none import AccountingNone
 from ..models.data_error import DataError
 
 _logger = logging.getLogger(__name__)
-
-try:
-    from odoo.addons.report_xlsx.report.report_xlsx import ReportXlsx
-except ImportError:
-    _logger.debug("report_xlsx not installed, Excel export non functional")
-
-    class ReportXlsx(object):
-        def __init__(self, *args, **kwargs):
-            pass
 
 
 ROW_HEIGHT = 15  # xlsxwriter units
@@ -29,12 +20,10 @@ MIN_COL_WIDTH = 10  # characters
 MAX_COL_WIDTH = 50  # characters
 
 
-class MisBuilderXlsx(ReportXlsx):
+class MisBuilderXlsx(models.AbstractModel):
+    _name = 'report.mis_builder.mis_report_instance_xlsx'
+    _inherit = 'report.report_xlsx.abstract'
 
-    def __init__(self, name, table, rml=False, parser=False, header=True,
-                 store=False):
-        super(MisBuilderXlsx, self).__init__(
-            name, table, rml, parser, header, store)
 
     def generate_xlsx_report(self, workbook, data, objects):
 
@@ -144,7 +133,3 @@ class MisBuilderXlsx(ReportXlsx):
         min_col_pos = min(col_width.keys())
         max_col_pos = max(col_width.keys())
         sheet.set_column(min_col_pos, max_col_pos, data_col_width * COL_WIDTH)
-
-
-MisBuilderXlsx('report.mis.report.instance.xlsx',
-               'mis.report.instance', parser=report_sxw.rml_parse)
