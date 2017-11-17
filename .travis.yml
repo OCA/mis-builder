@@ -36,6 +36,7 @@ install:
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - export WKHTMLTOPDF_VERSION=0.12.4
   - travis_install_nightly
+  - pip install future
 
 script:
   - travis_run_tests
