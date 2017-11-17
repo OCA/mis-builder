@@ -9,8 +9,10 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
+from odoo.tools.safe_eval import safe_eval
 
 from .aep import AccountingExpressionProcessor as AEP
+
 
 _logger = logging.getLogger(__name__)
 
@@ -431,6 +433,30 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
+    mis_report_view = fields.Text(string='MIS Report view',
+                                  compute='_compute_mis_report_view')
+
+    def _compute_mis_report_view(self):
+        """This method is dummy because we use this field as a placeholder
+        to render the actual mis report instance in the html format using the
+        widget"""
+        for rec in self:
+            rec.mis_report_view = ""
+
+    @api.model
+    def get_mis_report_view_html(self):
+        mis_report_data = self.compute()
+        rcontext = {}
+        rcontext['mis_report_data'] = mis_report_data
+        rcontext['mis_report_data']['report_name'] = self.name
+        rcontext['mis_instance_id'] = self.id
+        return self.env.ref(
+            'mis_builder.MisReportInstance').render(rcontext)
+
+    @api.multi
+    def get_mis_report_view_from_id(self):
+        for rec in self:
+            return rec.get_mis_report_view_html()
 
     @api.onchange('company_id', 'multi_company')
     def _onchange_company(self):
@@ -528,42 +554,30 @@ class MisReportInstance(models.Model):
                 self.date_range_id = False
 
     @api.multi
-    def preview(self):
-        self.ensure_one()
-        view_id = self.env.ref('mis_builder.'
-                               'mis_report_instance_result_view_form')
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'mis.report.instance',
-            'res_id': self.id,
-            'view_mode': 'form',
-            'view_type': 'form',
-            'view_id': view_id.id,
-            'target': 'current',
-        }
-
-    @api.multi
     def print_pdf(self):
         self.ensure_one()
+        context = dict(self.env.context, active_ids=self.ids)
         return {
             'name': 'MIS report instance QWEB PDF report',
             'model': 'mis.report.instance',
-            'type': 'ir.actions.report.xml',
+            'type': 'ir.actions.report',
             'report_name': 'mis_builder.report_mis_report_instance',
             'report_type': 'qweb-pdf',
-            'context': self.env.context,
+            'context': context,
         }
 
     @api.multi
     def export_xls(self):
         self.ensure_one()
+        context = dict(self.env.context, active_ids=self.ids)
         return {
             'name': 'MIS report instance XLSX report',
             'model': 'mis.report.instance',
-            'type': 'ir.actions.report.xml',
-            'report_name': 'mis.report.instance.xlsx',
+            'type': 'ir.actions.report',
+            'report_name': 'mis_builder.mis_report_instance_xlsx',
             'report_type': 'xlsx',
-            'context': self.env.context,
+            'report_file': 'mis_report_instance',
+            'context': context,
         }
 
     @api.multi
@@ -676,6 +690,21 @@ class MisReportInstance(models.Model):
         return kpi_matrix
 
     @api.multi
+    def preview(self):
+        self.ensure_one()
+        view_id = self.env.ref('mis_builder.'
+                               'mis_report_instance_result_view_form')
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'mis.report.instance',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'view_type': 'form',
+            'view_id': view_id.id,
+            'target': 'current',
+        }
+
+    @api.multi
     def compute(self):
         self.ensure_one()
         kpi_matrix = self._compute_matrix()
@@ -684,6 +713,7 @@ class MisReportInstance(models.Model):
     @api.multi
     def drilldown(self, arg):
         self.ensure_one()
+        arg = safe_eval(arg)
         period_id = arg.get('period_id')
         expr = arg.get('expr')
         account_id = arg.get('account_id')

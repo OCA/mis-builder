@@ -7,8 +7,6 @@
 Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
 
-**Odoo 11.0 is not supported yet, nothing to see here for now.**
-
 **This is the 11.0 branch. Please note the development of new features occurs mainly on
 the 10.0 branch, to be forward-ported to 11.0. Please submit pull requests to the 10.0
 branch in priority, unless they are 11.0 specific bugs, or they rely on

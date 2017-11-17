@@ -146,10 +146,9 @@ class TestMisReportInstance(common.TransactionCase):
         self.report_instance.compute()
 
     def test_drilldown(self):
-        action = self.report_instance.drilldown(dict(
-            expr='balp[200%]',
-            period_id=self.report_instance.period_ids[0].id
-        ))
+        arg = "{'expr':'balp[200%%]', 'period_id':%s}" % \
+              self.report_instance.period_ids[0].id
+        action = self.report_instance.drilldown(arg)
         account_ids = self.env['account.account'].search(
             [('code', '=like', '200%')]).ids
         self.assertTrue(
@@ -164,7 +163,7 @@ class TestMisReportInstance(common.TransactionCase):
 
     def test_xlsx(self):
         test_reports.try_report(self.env.cr, self.env.uid,
-                                'mis.report.instance.xlsx',
+                                'mis_builder.mis_report_instance_xlsx',
                                 [self.report_instance.id],
                                 report_type='xlsx')
 

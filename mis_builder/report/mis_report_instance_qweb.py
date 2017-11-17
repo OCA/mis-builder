@@ -10,15 +10,15 @@ _logger = logging.getLogger(__name__)
 
 
 class Report(models.Model):
-    _inherit = "report"
+    _inherit = "ir.actions.report"
 
-    @api.model
-    def get_pdf(self, docids, report_name, html=None, data=None):
+    @api.multi
+    def render_qweb_pdf(self, res_ids=None, data=None):
         ctx = self.env.context.copy()
-        if docids:
-            report = self._get_report_from_name(report_name)
-            obj = self.env[report.model].browse(docids)[0]
+        if res_ids:
+            obj = self.env[self.model].browse(res_ids)[0]
             if hasattr(obj, 'landscape_pdf') and obj.landscape_pdf:
                 ctx.update({'landscape': True})
-        return super(Report, self.with_context(ctx)).get_pdf(
-            docids, report_name, html=html, data=data)
+        return super(Report, self.with_context(ctx)).render_qweb_pdf(
+            res_ids, data
+        )

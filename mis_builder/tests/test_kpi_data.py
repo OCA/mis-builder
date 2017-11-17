@@ -3,15 +3,15 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import models
-from odoo.tests.common import SavepointCase
+from odoo.tests import common
 
 from ..models.mis_kpi_data import ACC_SUM, ACC_AVG
 from .common import init_test_model
 
 
-class TestKpiData(SavepointCase):
-
+class TestKpiData(common.SavepointCase):
     # pylint: disable=missing-return
+
     @classmethod
     def setUpClass(cls):
         super(TestKpiData, cls).setUpClass()
@@ -20,6 +20,8 @@ class TestKpiData(SavepointCase):
 
             _name = 'mis.kpi.data.test.item'
             _inherit = 'mis.kpi.data'
+            _register = True
+            _auto = True
 
         init_test_model(cls.env, MisKpiDataTestItem)
 

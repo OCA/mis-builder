@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-
 import odoo
 
 
@@ -27,12 +26,17 @@ def init_test_model(env, model_cls):
     model_cls._build_model(env.registry, env.cr)
     model = env[model_cls._name].with_context(todo=[])
     model._prepare_setup()
-    model._setup_base(partial=False)
-    model._setup_fields(partial=False)
+    model._setup_base()
+    model._setup_fields()
     model._setup_complete()
     model._auto_init()
     model.init()
-    model._auto_end()
+    # setup models; this automatically adds model in registry
+    odoo.registry(env.cr.dbname).setup_models(env.cr)
+    # update database schema
+    odoo.registry(env.cr.dbname).init_models(
+        env.cr, [model._name], dict(env.context, update_custom_fields=True))
+    env.cr.commit()
     _make_acl(env, model._name)
 
 
