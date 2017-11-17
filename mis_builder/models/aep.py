@@ -5,7 +5,11 @@
 import datetime
 import re
 from collections import defaultdict
-from itertools import izip
+try:
+    import itertools.izip as zip
+except ImportError:
+    pass
+
 import time
 
 import dateutil
@@ -184,7 +188,7 @@ class AccountingExpressionProcessor(object):
 
     def done_parsing(self):
         """ Replace account domains by account ids in map """
-        for key, acc_domains in self._map_account_ids.items():
+        for key, acc_domains in list(self._map_account_ids.items()):
             all_account_ids = set()
             for acc_domain in acc_domains:
                 acc_domain_with_company = expression.AND([
@@ -252,7 +256,7 @@ class AccountingExpressionProcessor(object):
         # TODO we could do this for more precision:
         #      AND(OR(aml_domains[mode]), date_domain[mode]) for each mode
         return expression.OR(aml_domains) + \
-            expression.OR(date_domain_by_mode.values())
+            expression.OR(list(date_domain_by_mode.values()))
 
     def get_aml_domain_for_dates(self, date_from, date_to,
                                  mode,
@@ -519,4 +523,4 @@ class AccountingExpressionProcessor(object):
         # or leave that to the caller?
         bals = cls._get_balances(cls.MODE_UNALLOCATED, companies,
                                  date, date, target_move)
-        return tuple(map(sum, izip(*bals.values())))
+        return tuple(map(sum, zip(*bals.values())))

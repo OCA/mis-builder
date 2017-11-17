@@ -3,6 +3,7 @@
 # Copyright 2016-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from builtins import str
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
@@ -188,7 +189,7 @@ class MisReportKpiStyle(models.Model):
     def render_str(self, lang, value):
         if value is None or value is AccountingNone:
             return u''
-        return unicode(value)
+        return str(value)
 
     @api.model
     def compare_and_render(self, lang, style_props, type, compare_method,

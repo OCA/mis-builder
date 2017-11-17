@@ -33,7 +33,8 @@
     'qweb': [
         'static/src/xml/*.xml'
     ],
-    'installable': False,
+    'external_dependencies': {'python': ['future']},
+    'installable': True,
     'application': True,
     'license': 'AGPL-3',
 }

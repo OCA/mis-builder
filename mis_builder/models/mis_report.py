@@ -4,7 +4,10 @@
 
 from collections import defaultdict
 import datetime
-from itertools import izip
+try:
+    import itertools.izip as zip
+except ImportError:
+    pass
 import logging
 import re
 import time
@@ -36,7 +39,7 @@ _logger = logging.getLogger(__name__)
 class AutoStruct(object):
 
     def __init__(self, **kwargs):
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             setattr(self, k, v)
 
 
@@ -799,7 +802,7 @@ class MisReport(models.Model):
                 drilldown_args = []
                 name_error = False
                 for expression, replaced_expr in \
-                        izip(expressions, replaced_exprs):
+                        zip(expressions, replaced_exprs):
                     vals.append(mis_safe_eval(replaced_expr, locals_dict))
                     if replaced_expr != expression:
                         drilldown_args.append({
