@@ -5,7 +5,10 @@
 import datetime
 import re
 from collections import defaultdict
-from itertools import izip
+try:
+    import itertools.izip as zip
+except ImportError:
+    pass  # python 3
 import time
 
 import dateutil
@@ -519,4 +522,4 @@ class AccountingExpressionProcessor(object):
         # or leave that to the caller?
         bals = cls._get_balances(cls.MODE_UNALLOCATED, companies,
                                  date, date, target_move)
-        return tuple(map(sum, izip(*bals.values())))
+        return tuple(map(sum, zip(*bals.values())))
