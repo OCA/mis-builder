@@ -20,7 +20,8 @@ class TestRendering(common.TransactionCase):
         self.style = self.style_obj.create(dict(
             name='teststyle',
         ))
-        self.lang = self.env['res.lang'].search([('code', '=', 'en_US')])[0]
+        self.lang = self.env['res.lang'].with_context(active_test=False).\
+            search([('code', '=', 'en_US')])[0]
 
     def _render(self, value, type=TYPE_NUM):
         style_props = self.style_obj.merge([self.style])

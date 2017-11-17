@@ -89,6 +89,7 @@ True
 True
 """
 
+from builtins import object
 __all__ = ['AccountingNone']
 
 
@@ -166,9 +167,6 @@ class AccountingNoneType(object):
 
     def __str__(self):
         return ''
-
-    def __nonzero__(self):
-        return False
 
     def __bool__(self):
         return False

@@ -4,7 +4,10 @@
 
 from collections import defaultdict
 import datetime
-from itertools import izip
+try:
+    import itertools.izip as zip
+except ImportError:
+    pass
 import logging
 import re
 import time
@@ -36,7 +39,7 @@ _logger = logging.getLogger(__name__)
 class AutoStruct(object):
 
     def __init__(self, **kwargs):
-        for k, v in kwargs.items():
+        for k, v in list(kwargs.items()):
             setattr(self, k, v)
 
 
@@ -172,15 +175,15 @@ class MisReportKpi(models.Model):
     @api.depends('expression_ids.subkpi_id.name', 'expression_ids.name')
     def _compute_expression(self):
         for kpi in self:
-            l = []
+            exprs = []
             for expression in kpi.expression_ids:
                 if expression.subkpi_id:
-                    l.append(u'{}\xa0=\xa0{}'.format(
+                    exprs.append(u'{}\xa0=\xa0{}'.format(
                         expression.subkpi_id.name, expression.name))
                 else:
-                    l.append(
+                    exprs.append(
                         expression.name or 'AccountingNone')
-            kpi.expression = ',\n'.join(l)
+            kpi.expression = ',\n'.join(exprs)
 
     @api.multi
     def _inverse_expression(self):
@@ -526,9 +529,9 @@ class MisReport(models.Model):
         return kpi_matrix
 
     @api.multi
-    def _prepare_aep(self, company):
+    def _prepare_aep(self, companies, currency=None):
         self.ensure_one()
-        aep = AEP(company)
+        aep = AEP(companies, currency)
         for kpi in self.kpi_ids:
             for expression in kpi.expression_ids:
                 if expression.name:
@@ -799,7 +802,7 @@ class MisReport(models.Model):
                 drilldown_args = []
                 name_error = False
                 for expression, replaced_expr in \
-                        izip(expressions, replaced_exprs):
+                        zip(expressions, replaced_exprs):
                     vals.append(mis_safe_eval(replaced_expr, locals_dict))
                     if replaced_expr != expression:
                         drilldown_args.append({

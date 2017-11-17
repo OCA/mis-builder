@@ -4,7 +4,7 @@
 
 {
     'name': 'MIS Builder',
-    'version': '10.0.3.0.2',
+    'version': '10.0.3.1.1',
     'category': 'Reporting',
     'summary': """
         Build 'Management Information System' Reports and Dashboards
@@ -33,7 +33,8 @@
     'qweb': [
         'static/src/xml/*.xml'
     ],
-    'installable': False,
+    'external_dependencies': {'python': ['future']},
+    'installable': True,
     'application': True,
     'license': 'AGPL-3',
 }
