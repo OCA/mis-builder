@@ -3,11 +3,17 @@
 # Copyright 2016-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import sys
+
 from openerp import api, fields, models, _
 from openerp.exceptions import ValidationError
 
 from .accounting_none import AccountingNone
 from .data_error import DataError
+
+
+if sys.version_info.major >= 3:
+    unicode = str
 
 
 class PropertyDict(dict):
