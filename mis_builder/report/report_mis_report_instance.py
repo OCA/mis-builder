@@ -50,7 +50,7 @@ class Report(models.Model):
                                            context=context)
 
     @api.v8
-    def get_pdf(self, records, report_name, html=None, data=None):
-        return Report.get_pdf(self._model, self._cr, self._uid, records.ids,
-                              report_name, html=html, data=data,
-                              context=self._context)
+    def get_pdf(self, docids, report_name, html=None, data=None):
+        return self._model.get_pdf(self._cr, self._uid,
+                                   docids, report_name,
+                                   html=html, data=data, context=self._context)
