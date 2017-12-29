@@ -63,6 +63,7 @@ class MisReportInstance(models.Model):
     @api.multi
     def drilldown(self, arg):
         self.ensure_one()
+        arg = safe_eval(arg)
         period_id = arg.get('period_id')
         if period_id:
             period = self.env['mis.report.instance.period'].browse(period_id)
