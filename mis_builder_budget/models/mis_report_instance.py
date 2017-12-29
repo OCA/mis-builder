@@ -4,9 +4,10 @@
 
 from openerp import api, models
 from openerp.osv import expression
+from odoo.tools.safe_eval import safe_eval
 
-from openerp.addons.mis_builder.models.accounting_none import AccountingNone
-from openerp.addons.mis_builder.models.mis_safe_eval import mis_safe_eval
+from odoo.addons.mis_builder.models.accounting_none import AccountingNone
+from odoo.addons.mis_builder.models.mis_safe_eval import mis_safe_eval
 from .mis_report_instance_period import SRC_MIS_BUDGET
 
 
@@ -63,6 +64,7 @@ class MisReportInstance(models.Model):
     @api.multi
     def drilldown(self, arg):
         self.ensure_one()
+        arg = safe_eval(arg)
         period_id = arg.get('period_id')
         if period_id:
             period = self.env['mis.report.instance.period'].browse(period_id)

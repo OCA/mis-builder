@@ -713,7 +713,6 @@ class MisReportInstance(models.Model):
     @api.multi
     def drilldown(self, arg):
         self.ensure_one()
-        arg = safe_eval(arg)
         period_id = arg.get('period_id')
         expr = arg.get('expr')
         account_id = arg.get('account_id')
