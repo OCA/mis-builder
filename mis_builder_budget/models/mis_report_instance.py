@@ -5,8 +5,8 @@
 from openerp import api, models
 from openerp.osv import expression
 
-from openerp.addons.mis_builder.models.accounting_none import AccountingNone
-from openerp.addons.mis_builder.models.mis_safe_eval import mis_safe_eval
+from odoo.addons.mis_builder.models.accounting_none import AccountingNone
+from odoo.addons.mis_builder.models.mis_safe_eval import mis_safe_eval
 from .mis_report_instance_period import SRC_MIS_BUDGET
 
 
