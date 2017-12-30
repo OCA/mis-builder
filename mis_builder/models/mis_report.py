@@ -198,11 +198,9 @@ class MisReportKpi(models.Model):
                 for expression in kpi.expression_ids[1:]:
                     expression.unlink()
             else:
-                kpi.write({
-                    'expression_ids': [(0, 0, {
-                        'name': kpi.expression
-                        })]
-                    })
+                expression = self.env['mis.report.kpi.expression'].new({
+                    'name': kpi.expression})
+                kpi.expression_ids += expression
 
     @api.onchange('multi')
     def _onchange_multi(self):
