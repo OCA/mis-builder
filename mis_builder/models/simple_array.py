@@ -58,16 +58,16 @@ SimpleArray((1.0, DataError('#ERR'), 3.0))
 SimpleArray((6.0, 3.0, 2.0))
 >>> Vector = named_simple_array('Vector', ('x', 'y'))
 >>> p1 = Vector((1, 2))
->>> print p1.x, p1.y, p1
+>>> print(p1.x, p1.y, p1)
 1 2 Vector((1, 2))
 >>> p2 = Vector((2, 3))
->>> print p2.x, p2.y, p2
+>>> print(p2.x, p2.y, p2)
 2 3 Vector((2, 3))
 >>> p3 = p1 + p2
->>> print p3.x, p3.y, p3
+>>> print(p3.x, p3.y, p3)
 3 5 Vector((3, 5))
 >>> p4 = (4, 5) + p2
->>> print p4.x, p4.y, p4
+>>> print(p4.x, p4.y, p4)
 6 8 Vector((6, 8))
 >>> p1 * 2
 Vector((2, 4))
@@ -80,9 +80,11 @@ Vector((0, -1))
 >>> p1 / 2.0
 Vector((0.5, 1.0))
 >>> v = 2.0 / p1
->>> print v.x, v.y, v
+>>> print(v.x, v.y, v)
 2.0 1.0 Vector((2.0, 1.0))
 """
+
+from __future__ import print_function
 
 import itertools
 import operator
