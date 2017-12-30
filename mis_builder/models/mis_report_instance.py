@@ -9,10 +9,8 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
-from odoo.tools.safe_eval import safe_eval
 
 from .aep import AccountingExpressionProcessor as AEP
-
 
 _logger = logging.getLogger(__name__)
 
@@ -554,6 +552,21 @@ class MisReportInstance(models.Model):
                 self.date_range_id = False
 
     @api.multi
+    def preview(self):
+        self.ensure_one()
+        view_id = self.env.ref('mis_builder.'
+                               'mis_report_instance_result_view_form')
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'mis.report.instance',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'view_type': 'form',
+            'view_id': view_id.id,
+            'target': 'current',
+        }
+
+    @api.multi
     def print_pdf(self):
         self.ensure_one()
         context = dict(self.env.context, active_ids=self.ids)
@@ -688,21 +701,6 @@ class MisReportInstance(models.Model):
         kpi_matrix.compute_comparisons()
         kpi_matrix.compute_sums()
         return kpi_matrix
-
-    @api.multi
-    def preview(self):
-        self.ensure_one()
-        view_id = self.env.ref('mis_builder.'
-                               'mis_report_instance_result_view_form')
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'mis.report.instance',
-            'res_id': self.id,
-            'view_mode': 'form',
-            'view_type': 'form',
-            'view_id': view_id.id,
-            'target': 'current',
-        }
 
     @api.multi
     def compute(self):
