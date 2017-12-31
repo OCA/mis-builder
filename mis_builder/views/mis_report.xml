@@ -25,7 +25,7 @@
                     </group>
                     <notebook>
                         <page string="KPI's">
-                            <field name="kpi_ids" nolabel="1" colspan="2">
+                            <field name="kpi_ids" nolabel="1" colspan="2" context="{'default_report_id': id}">
                                 <tree string="KPI's">
                                     <field name="sequence" widget="handle"/>
                                     <field name="description"/>
@@ -38,7 +38,7 @@
                             </field>
                         </page>
                         <page string="Queries">
-                            <field name="query_ids" nolabel="1" colspan="2">
+                            <field name="query_ids" nolabel="1" colspan="2" context="{'default_report_id': id}">
                                 <tree string="Queries" editable="bottom">
                                     <field name="name"/>
                                     <field name="model_id"/>
@@ -79,7 +79,10 @@
                     <field name="accumulation_method"/>
                     <field name="style_id"/>
                     <field name="style_expression"/>
-
+                    <field name='id' invisible='1'/>
+                    <field name="report_id"
+                           invisible="1"
+                           attrs="{'required': [('id', '!=', False)]}"/>
                 </group>
                 <notebook>
                     <page string="Expressions">
@@ -89,7 +92,7 @@
                             <field name="expression_ids" colspan="2" nolabel="1"
                                    attrs="{'invisible': [('multi', '=', False)]}">
                                 <tree editable="bottom">
-                                    <field name="subkpi_id"/>
+                                    <field name="subkpi_id" domain="[('report_id', '=', parent.report_id)]"/>
                                     <field name="name"/>
                                 </tree>
                             </field>
