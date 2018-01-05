@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, models
-from openerp.osv import expression
+from odoo import api, models
+from odoo.osv import expression
 
-from openerp.addons.mis_builder.models.accounting_none import AccountingNone
-from openerp.addons.mis_builder.models.mis_safe_eval import mis_safe_eval
+from odoo.addons.mis_builder.models.accounting_none import AccountingNone
+from odoo.addons.mis_builder.models.mis_safe_eval import mis_safe_eval
 from .mis_report_instance_period import SRC_MIS_BUDGET
 
 
@@ -57,7 +56,7 @@ class MisReportInstance(models.Model):
             return self._add_column_mis_budget(
                 aep, kpi_matrix, period, label, description)
         else:
-            return super(MisReportInstance, self)._add_column(
+            return super()._add_column(
                 aep, kpi_matrix, period, label, description)
 
     @api.multi
@@ -87,4 +86,4 @@ class MisReportInstance(models.Model):
                     'view_mode': 'list',
                     'target': 'current',
                 }
-        return super(MisReportInstance, self).drilldown(arg)
+        return super().drilldown(arg)

@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class MisBudget(models.Model):
@@ -10,6 +9,11 @@ class MisBudget(models.Model):
     _name = 'mis.budget'
     _description = 'MIS Budget'
     _inherit = ['mail.thread']
+
+    @api.model
+    def _default_company(self):
+        return self.env['res.company'].\
+            _company_default_get('mis.budget')
 
     name = fields.Char(
         required=True,
@@ -50,6 +54,11 @@ class MisBudget(models.Model):
         inverse_name='budget_id',
         copy=True,
     )
+    company_id = fields.Many2one(
+        comodel_name='res.company',
+        string='Company',
+        default=_default_company,
+    )
 
     @api.multi
     def copy(self, default=None):
@@ -58,7 +67,7 @@ class MisBudget(models.Model):
             default = {}
         if 'name' not in default:
             default['name'] = _("%s (copy)") % self.name
-        return super(MisBudget, self).copy(default=default)
+        return super().copy(default=default)
 
     @api.onchange('date_range_id')
     def _onchange_date_range(self):

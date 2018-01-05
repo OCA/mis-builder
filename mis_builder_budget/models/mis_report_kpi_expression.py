@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, models
+from odoo import api, models
 
 
 class MisReportKpiExpression(models.Model):
@@ -23,5 +22,4 @@ class MisReportKpiExpression(models.Model):
                     args += [
                         ('subkpi_id.report_id', '=', report_id),
                     ]
-        return super(MisReportKpiExpression, self).\
-            name_search(name, args, operator, limit)
+        return super().name_search(name, args, operator, limit)
