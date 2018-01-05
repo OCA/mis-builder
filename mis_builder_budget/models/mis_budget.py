@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models, _
+from odoo import api, fields, models, _
 
 
 class MisBudget(models.Model):
@@ -68,7 +67,7 @@ class MisBudget(models.Model):
             default = {}
         if 'name' not in default:
             default['name'] = _("%s (copy)") % self.name
-        return super(MisBudget, self).copy(default=default)
+        return super().copy(default=default)
 
     @api.onchange('date_range_id')
     def _onchange_date_range(self):
