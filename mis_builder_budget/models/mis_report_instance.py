@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -57,7 +56,7 @@ class MisReportInstance(models.Model):
             return self._add_column_mis_budget(
                 aep, kpi_matrix, period, label, description)
         else:
-            return super(MisReportInstance, self)._add_column(
+            return super()._add_column(
                 aep, kpi_matrix, period, label, description)
 
     @api.multi
@@ -87,4 +86,4 @@ class MisReportInstance(models.Model):
                     'view_mode': 'list',
                     'target': 'current',
                 }
-        return super(MisReportInstance, self).drilldown(arg)
+        return super().drilldown(arg)
