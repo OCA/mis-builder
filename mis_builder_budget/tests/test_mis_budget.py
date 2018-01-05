@@ -2,9 +2,9 @@
 # Copyright 2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
-from openerp.addons.mis_builder.tests.common import assert_matrix
+from odoo.addons.mis_builder.tests.common import assert_matrix
 
 from ..models.mis_report_instance_period import SRC_MIS_BUDGET
 

@@ -2,8 +2,8 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, models
-from openerp.osv import expression
+from odoo import api, models
+from odoo.osv import expression
 
 from odoo.addons.mis_builder.models.accounting_none import AccountingNone
 from odoo.addons.mis_builder.models.mis_safe_eval import mis_safe_eval
