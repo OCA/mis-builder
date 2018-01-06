@@ -35,16 +35,16 @@ It features the following key characteristics:
 - For developers, the accounting balance computation engine is exposed as an easy
   to use API.
 
+Here are some presentations:
+
+- Odoo Experience 2017 ([slides](https://www.slideshare.net/acsone/budget-control-with-misbuilder-3-2017), [video](https://youtu.be/0PpxGAf2l-0))
+- Odoo Experience 2016 ([slides](https://www.slideshare.net/acsone/misbuilder-2016))
+- Odoo Experience 2015 ([slides](https://www.slideshare.net/acsone/misbuilder))
+
 
 [//]: # (addons)
 
-Unported addons
----------------
-addon | version | summary
---- | --- | ---
-[mis_builder](mis_builder/) | 10.0.3.0.2 (unported) | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 10.0.1.1.1 (unported) | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 9.0.1.0.0 (unported) | Demo data for the mis_builder module
+...
 
 [//]: # (end addons)
 

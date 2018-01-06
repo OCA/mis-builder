@@ -145,6 +145,17 @@ class TestMisReportInstance(common.TransactionCase):
     def test_json(self):
         self.report_instance.compute()
 
+    def test_drilldown(self):
+        action = self.report_instance.drilldown(dict(
+            expr='balp[200%]',
+            period_id=self.report_instance.period_ids[0].id
+        ))
+        account_ids = self.env['account.account'].search(
+            [('code', '=like', '200%')]).ids
+        self.assertTrue(
+            ('account_id', 'in', tuple(account_ids)) in action['domain'])
+        self.assertEqual(action['res_model'], 'account.move.line')
+
     def test_qweb(self):
         test_reports.try_report(self.env.cr, self.env.uid,
                                 'mis_builder.report_mis_report_instance',
@@ -191,3 +202,38 @@ class TestMisReportInstance(common.TransactionCase):
         )
         r = self.env['mis.report.kpi.expression'].name_search('k4')
         self.assertEqual([i[1] for i in r], ['kpi 4 (k4)'])
+
+    def test_multi_company_onchange(self):
+        # not multi company
+        self.assertTrue(self.report_instance.company_id)
+        self.assertFalse(self.report_instance.multi_company)
+        self.assertFalse(self.report_instance.company_ids)
+        self.assertEqual(
+            self.report_instance.query_company_ids[0],
+            self.report_instance.company_id)
+        # create a child company
+        self.env['res.company'].create(dict(
+            name='company 2',
+            parent_id=self.report_instance.company_id.id,
+        ))
+        companies = self.env['res.company'].search([
+            ('id', 'child_of', self.report_instance.company_id.id)])
+        self.report_instance.multi_company = True
+        # multi company, company_ids not set
+        self.assertEqual(
+            self.report_instance.query_company_ids[0],
+            self.report_instance.company_id)
+        # set company_ids
+        self.report_instance._onchange_company()
+        self.assertTrue(self.report_instance.multi_company)
+        self.assertEqual(
+            self.report_instance.company_ids, companies)
+        self.assertEqual(
+            self.report_instance.query_company_ids, companies)
+        # reset single company mode
+        self.report_instance.multi_company = False
+        self.assertEqual(
+            self.report_instance.query_company_ids[0],
+            self.report_instance.company_id)
+        self.report_instance._onchange_company()
+        self.assertFalse(self.report_instance.company_ids)
