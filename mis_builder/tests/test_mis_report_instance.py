@@ -145,9 +145,10 @@ class TestMisReportInstance(common.TransactionCase):
         self.report_instance.compute()
 
     def test_drilldown(self):
-        arg = "{'expr':'balp[200%%]', 'period_id':%s}" % \
-              self.report_instance.period_ids[0].id
-        action = self.report_instance.drilldown(arg)
+        action = self.report_instance.drilldown(dict(
+            expr='balp[200%]',
+            period_id=self.report_instance.period_ids[0].id
+        ))
         account_ids = self.env['account.account'].search(
             [('code', '=like', '200%')]).ids
         self.assertTrue(
