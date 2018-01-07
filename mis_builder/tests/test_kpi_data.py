@@ -2,27 +2,23 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import models
-from odoo.tests import common
+from odoo.tests.common import SavepointCase
 
 from ..models.mis_kpi_data import ACC_SUM, ACC_AVG
-from .common import init_test_model
+from .common import setup_test_model, teardown_test_model
 
 
-class TestKpiData(common.SavepointCase):
-    # pylint: disable=missing-return
+class TestKpiData(SavepointCase):
+
+    class MisKpiDataTestItem(models.Model):
+
+        _name = 'mis.kpi.data.test.item'
+        _inherit = 'mis.kpi.data'
 
     @classmethod
     def setUpClass(cls):
         super(TestKpiData, cls).setUpClass()
-
-        class MisKpiDataTestItem(models.Model):
-
-            _name = 'mis.kpi.data.test.item'
-            _inherit = 'mis.kpi.data'
-            _register = True
-            _auto = True
-
-        init_test_model(cls.env, MisKpiDataTestItem)
+        setup_test_model(cls.env, cls.MisKpiDataTestItem)
 
         report = cls.env['mis.report'].create(dict(
             name='test report',
@@ -65,6 +61,11 @@ class TestKpiData(common.SavepointCase):
             date_to='2017-06-30',
             amount=3,
         ))
+
+    @classmethod
+    def tearDownClass(cls):
+        teardown_test_model(cls.env, cls.MisKpiDataTestItem)
+        super(TestKpiData, cls).tearDownClass()
 
     def test_kpi_data_name(self):
         self.assertEqual(self.kd11.name, 'k1: 2017-05-01 - 2017-05-10')
