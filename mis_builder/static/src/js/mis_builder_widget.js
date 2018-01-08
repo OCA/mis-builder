@@ -43,7 +43,7 @@ var MisBuilderWidget = AbstractField.extend({
         var rec_id = this.recordData.id || self.getParent().state.context.active_id;
         self._rpc({
             model: 'mis.report.instance',
-            method: 'get_mis_report_view_from_id',
+            method: 'get_mis_report_view_html',
             args: [parseInt(rec_id, 10)],
             context: context,
         }).then(function (val) {

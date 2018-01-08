@@ -430,18 +430,10 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
-    mis_report_view = fields.Text(string='MIS Report view',
-                                  compute='_compute_mis_report_view')
 
-    def _compute_mis_report_view(self):
-        """This method is dummy because we use this field as a placeholder
-        to render the actual mis report instance in the html format using the
-        widget"""
-        for rec in self:
-            rec.mis_report_view = ""
-
-    @api.model
+    @api.multi
     def get_mis_report_view_html(self):
+        self.ensure_one()
         mis_report_data = self.compute()
         rcontext = {}
         rcontext['mis_report_data'] = mis_report_data
@@ -449,11 +441,6 @@ class MisReportInstance(models.Model):
         rcontext['mis_instance_id'] = self.id
         return self.env.ref(
             'mis_builder.MisReportInstance').render(rcontext)
-
-    @api.multi
-    def get_mis_report_view_from_id(self):
-        for rec in self:
-            return rec.get_mis_report_view_html()
 
     @api.onchange('company_id', 'multi_company')
     def _onchange_company(self):

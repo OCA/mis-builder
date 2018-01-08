@@ -16,7 +16,7 @@
                 <form string="MIS Report Result" edit="false" create="false"
                       delete="false">
                     <group colspan="4">
-                        <field name="mis_report_view" widget="mis_builder_widget"
+                        <field name="id" widget="mis_builder_widget"
                                nolabel="1"/>
                     </group>
                 </form>
