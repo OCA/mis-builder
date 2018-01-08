@@ -105,10 +105,12 @@ var MisBuilderWidget = AbstractField.extend({
         var self = this;
         var context = self.getParent().state.context;
         var drilldown = $(event.target).data("drilldown");
+        drilldown = drilldown.replace(/\'/g, '\"');
+        var drilldown_json = JSON.parse(drilldown);
         this._rpc({
                 model: 'mis.report.instance',
                 method: 'drilldown',
-                args: [context.active_id, drilldown],
+                args: [context.active_id, drilldown_json],
                 context: context,
             }).then(function(result){
                 self.do_action(result);
