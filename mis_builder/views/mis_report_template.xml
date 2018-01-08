@@ -39,26 +39,23 @@
                                       <t t-esc="row['description']"/>
                                     </t>
                                 </td>
-
-                                    <td t-foreach="row['cells']" t-as="cell"
-                                        t-att="{'style': cell['style'], 'title': cell['val_c']}" class="mis_builder_amount">
-                                        <t t-if="row['cells']">
-                                            <t t-if="'drilldown_arg' in cell">
-                                                  <a class="mis_builder_drilldown"
-                                                      t-att-data-active-id="mis_instance_id"
-                                                      t-att-data-drilldown="cell['drilldown_arg']">
-                                                      <t t-if="cell['val_r']">
-                                                        <t t-esc="cell['val_r']"/>
-                                                      </t>
-                                                  </a>
-                                            </t>
-                                            <t t-if="'drilldown_arg' not in cell">
-                                                <t t-if="cell['val_r']">
-                                                    <t t-esc="cell['val_r']"/>
-                                                </t>
-                                            </t>
+                                <td t-foreach="row['cells']" t-as="cell"
+                                    t-att="{'style': cell['style'], 'title': cell['val_c']}" class="mis_builder_amount">
+                                    <t t-if="'drilldown_arg' in cell">
+                                          <a class="mis_builder_drilldown"
+                                              t-att-data-active-id="mis_instance_id"
+                                              t-att-data-drilldown="cell['drilldown_arg']">
+                                              <t t-if="cell['val_r']">
+                                                <t t-esc="cell['val_r']"/>
+                                              </t>
+                                          </a>
+                                    </t>
+                                    <t t-if="'drilldown_arg' not in cell">
+                                        <t t-if="cell['val_r']">
+                                            <t t-esc="cell['val_r']"/>
                                         </t>
-                                    </td>
+                                    </t>
+                                </td>
                             </tr>
                         </tbody>
                         <tfoot>
