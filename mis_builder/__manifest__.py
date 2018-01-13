@@ -31,7 +31,7 @@
         'report/mis_report_instance_xlsx.xml',
     ],
     'qweb': [
-        'static/src/xml/*.xml'
+        'static/src/xml/mis_report_widget.xml',
     ],
     'installable': True,
     'application': True,
