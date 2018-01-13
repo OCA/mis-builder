@@ -84,8 +84,6 @@ Vector((0.5, 1.0))
 2.0 1.0 Vector((2.0, 1.0))
 """
 
-from __future__ import print_function
-
 import itertools
 import operator
 import traceback
