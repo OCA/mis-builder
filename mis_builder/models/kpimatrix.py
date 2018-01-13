@@ -461,13 +461,7 @@ class KpiMatrix(object):
             for cell in row.iter_cells():
                 if cell is None:
                     # TODO use subcol style here
-                    col_data = {
-                        'val': None,
-                        'val_r': '',
-                        'val_c': '',
-                        'style': None,
-                    }
-                    row_data['cells'].append(col_data)
+                    row_data['cells'].append({})
                 else:
                     if cell.val is AccountingNone or \
                             isinstance(cell.val, DataError):

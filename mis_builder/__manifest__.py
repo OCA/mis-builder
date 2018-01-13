@@ -28,7 +28,9 @@
         'security/mis_builder_security.xml',
         'report/mis_report_instance_qweb.xml',
         'report/mis_report_instance_xlsx.xml',
-        'views/mis_report_template.xml',
+    ],
+    'qweb': [
+        'static/src/xml/mis_report_widget.xml',
     ],
     'installable': True,
     'application': True,

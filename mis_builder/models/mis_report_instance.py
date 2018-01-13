@@ -1,4 +1,4 @@
-# Copyright 2014-2016 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2014-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import datetime
@@ -430,17 +430,6 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
-
-    @api.multi
-    def get_mis_report_view_html(self):
-        self.ensure_one()
-        mis_report_data = self.compute()
-        rcontext = {}
-        rcontext['mis_report_data'] = mis_report_data
-        rcontext['mis_report_data']['report_name'] = self.name
-        rcontext['mis_instance_id'] = self.id
-        return self.env.ref(
-            'mis_builder.MisReportInstance').render(rcontext)
 
     @api.onchange('company_id', 'multi_company')
     def _onchange_company(self):
