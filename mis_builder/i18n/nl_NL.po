@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-06 13:51+0000\n"
-"PO-Revision-Date: 2018-01-06 13:51+0000\n"
+"POT-Creation-Date: 2018-01-16 08:18+0000\n"
+"PO-Revision-Date: 2018-01-16 08:18+0000\n"
 "Last-Translator: Frank Schellenberg <opensource@schellenberg.nl>, 2018\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:506
+#: code:addons/mis_builder/models/mis_report.py:504
 #: code:addons/mis_builder/models/mis_report_instance.py:481
 #, python-format
 msgid "%s (copy)"
@@ -229,7 +229,7 @@ msgstr "automatisch uitbreiden"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:118
-#: code:addons/mis_builder/models/mis_report.py:401
+#: code:addons/mis_builder/models/mis_report.py:399
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -852,14 +852,14 @@ msgid "MIS report instance XLS report"
 msgstr "MIS rapportage instantie XLS rapport"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:403
+#: code:addons/mis_builder/models/mis_report.py:401
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Max"
 msgstr "Max"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:402
+#: code:addons/mis_builder/models/mis_report.py:400
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Min"
@@ -1030,7 +1030,7 @@ msgid "Print"
 msgstr "Print"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:684
+#: code:addons/mis_builder/models/mis_report.py:682
 #, python-format
 msgid ""
 "Probably not your fault... but I'm really curious to know how you managed to"
@@ -1213,7 +1213,7 @@ msgstr "Achtervoegsel overerven"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:117
-#: code:addons/mis_builder/models/mis_report.py:400
+#: code:addons/mis_builder/models/mis_report.py:398
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -1293,8 +1293,8 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:161
-#: code:addons/mis_builder/models/mis_report.py:288
-#: code:addons/mis_builder/models/mis_report.py:425
+#: code:addons/mis_builder/models/mis_report.py:286
+#: code:addons/mis_builder/models/mis_report.py:423
 #, python-format
 msgid "The name must be a valid python identifier"
 msgstr "De naam moet een geldige python identifier zijn"
