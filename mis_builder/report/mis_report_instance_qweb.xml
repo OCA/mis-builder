@@ -8,7 +8,13 @@
       <field name="report_name">mis_builder.report_mis_report_instance</field>
       <field name="report_type">qweb-pdf</field>
     </record>
-  
+
+    <template id="assets_report" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+          <link href="/mis_builder/static/src/css/report.css" rel="stylesheet"/>
+        </xpath>
+    </template>
+
     <!--
         TODO we use divs with css table layout, but this has drawbacks:
              (bad layout of first column, no colspan for first header row),
@@ -22,7 +28,6 @@
             <t t-set="matrix" t-value="o._compute_matrix()"/>
             <t t-set="style_obj" t-value="o.env['mis.report.style']"/>
             <div class="page">
-              <link href="/mis_builder/static/src/css/report.css" rel="stylesheet"/>
               <h3><span t-field="o.name" /><span> - </span>
                 <t t-foreach="o.query_company_ids" t-as="company">
                   <span t-field="company.name" /><span t-if="company != o.query_company_ids[-1]">, </span>
