@@ -87,7 +87,7 @@
                                 <group>
                                 </group>
                                 <field name="period_ids" nolabel="1" colspan="4" attrs="{'required': [('comparison_mode', '=', True)]}" context="{'default_report_instance_id': id}">
-                                    <tree colors="red:valid==False">
+                                    <tree decoration-danger="not valid">
                                         <field name="sequence" widget="handle"/>
                                         <field name="name"/>
                                         <field name="source"/>
