@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
@@ -164,7 +163,7 @@ class TestMisReportInstance(common.TransactionCase):
 
     def test_xlsx(self):
         test_reports.try_report(self.env.cr, self.env.uid,
-                                'mis.report.instance.xlsx',
+                                'mis_builder.mis_report_instance_xlsx',
                                 [self.report_instance.id],
                                 report_type='xlsx')
 

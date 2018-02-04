@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 """ A trivial immutable array that supports basic arithmetic operations.
@@ -83,8 +82,6 @@ Vector((0.5, 1.0))
 >>> print(v.x, v.y, v)
 2.0 1.0 Vector((2.0, 1.0))
 """
-
-from __future__ import print_function
 
 import itertools
 import operator

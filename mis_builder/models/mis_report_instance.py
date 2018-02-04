@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2014-2016 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2014-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import datetime
@@ -545,25 +544,28 @@ class MisReportInstance(models.Model):
     @api.multi
     def print_pdf(self):
         self.ensure_one()
+        context = dict(self.env.context, active_ids=self.ids)
         return {
             'name': 'MIS report instance QWEB PDF report',
             'model': 'mis.report.instance',
-            'type': 'ir.actions.report.xml',
+            'type': 'ir.actions.report',
             'report_name': 'mis_builder.report_mis_report_instance',
             'report_type': 'qweb-pdf',
-            'context': self.env.context,
+            'context': context,
         }
 
     @api.multi
     def export_xls(self):
         self.ensure_one()
+        context = dict(self.env.context, active_ids=self.ids)
         return {
             'name': 'MIS report instance XLSX report',
             'model': 'mis.report.instance',
-            'type': 'ir.actions.report.xml',
-            'report_name': 'mis.report.instance.xlsx',
+            'type': 'ir.actions.report',
+            'report_name': 'mis_builder.mis_report_instance_xlsx',
             'report_type': 'xlsx',
-            'context': self.env.context,
+            'report_file': 'mis_report_instance',
+            'context': context,
         }
 
     @api.multi
