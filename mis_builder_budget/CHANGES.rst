@@ -6,6 +6,12 @@ Changelog for mis_builder_budget
 ..
 .. *
 
+11.0.3.1.1 (2018-02-04)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Migration to Odoo 11. No new feature.
+(`#67 <https://github.com/OCA/mis-builder/pull/67>`_)
+
 10.0.3.1.0 (2017-11-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
