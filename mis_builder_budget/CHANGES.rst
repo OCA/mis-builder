@@ -6,6 +6,13 @@ Changelog for mis_builder_budget
 ..
 .. *
 
+10.0.3.1.x (unreleased)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- [FIX] #NAME error in out-of-order computation of non
+  budgetable items in budget columns
+  (`#68 <https://github.com/OCA/mis-builder/pull/69>`_)
+
 10.0.3.1.0 (2017-11-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
