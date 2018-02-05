@@ -42,13 +42,13 @@ Here are some presentations:
 
 [//]: # (addons)
 
-Unported addons
----------------
+Available addons
+----------------
 addon | version | summary
 --- | --- | ---
-[mis_builder](mis_builder/) | 10.0.3.1.1 (unported) | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 10.0.3.1.0 (unported) | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 10.0.3.0.0 (unported) | Demo addon for MIS Builder
+[mis_builder](mis_builder/) | 11.0.3.1.2 | Build 'Management Information System' Reports and Dashboards
+[mis_builder_budget](mis_builder_budget/) | 11.0.3.1.1 | Create budgets for MIS reports
+[mis_builder_demo](mis_builder_demo/) | 11.0.3.0.1 | Demo addon for MIS Builder
 
 [//]: # (end addons)
 
