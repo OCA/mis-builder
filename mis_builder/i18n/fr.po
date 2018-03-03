@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2018
+# Nicolas JEUDY <njeudy@panda-chi.io>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-13 15:37+0000\n"
-"PO-Revision-Date: 2018-01-13 15:37+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
+"POT-Creation-Date: 2018-02-10 07:59+0000\n"
+"PO-Revision-Date: 2018-02-10 07:59+0000\n"
+"Last-Translator: Nicolas JEUDY <njeudy@panda-chi.io>, 2018\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,7 +24,7 @@ msgstr ""
 #: code:addons/mis_builder/models/mis_report_instance.py:480
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s(copie)"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -409,7 +410,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_description
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi_description
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_kpi_accumulation_method
@@ -589,7 +590,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_date_from
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_manual_date_from
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -658,7 +659,7 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_kpi_expression_id
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_ids
@@ -734,7 +735,7 @@ msgstr "Dernière mise à jour le"
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
 msgid "MIS Budget"
-msgstr ""
+msgstr "MIS Budget"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_kpi_data
@@ -1245,7 +1246,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_date_to
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_manual_date_to
 msgid "To"
-msgstr ""
+msgstr "à "
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_kpi_data.py:107
@@ -1339,12 +1340,12 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance
 msgid "mis.report.instance"
-msgstr ""
+msgstr "mis.report.instance"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance_period
 msgid "mis.report.instance.period"
-msgstr ""
+msgstr "mis.report.instance.period"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance_period_sum
@@ -1354,12 +1355,12 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 msgid "mis.report.kpi"
-msgstr ""
+msgstr "mis.report.kpi"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
 msgid "mis.report.kpi.expression"
-msgstr ""
+msgstr "mis.report.kpi.expression"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_query
