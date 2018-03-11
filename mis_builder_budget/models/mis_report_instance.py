@@ -7,6 +7,7 @@ from odoo.osv import expression
 
 from odoo.addons.mis_builder.models.accounting_none import AccountingNone
 from odoo.addons.mis_builder.models.mis_safe_eval import mis_safe_eval
+from odoo.addons.mis_builder.models.data_error import NameDataError
 from .mis_report_instance_period import SRC_MIS_BUDGET
 
 
@@ -44,6 +45,8 @@ class MisReportInstance(models.Model):
                         }
                     elif expr.name:
                         val = mis_safe_eval(expr.name, locals_dict)
+                        if isinstance(val, NameDataError):
+                            name_error = True
                 vals.append(val)
                 drilldown_args.append(drilldown_arg)
             return vals, drilldown_args, name_error
