@@ -6,6 +6,12 @@ Changelog for mis_builder
 ..
 .. *
 
+10.0.3.1.x (unreleased)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] make subkpi ordering deterministic
+  (`#71 <https://github.com/OCA/mis-builder/issues/71>`_)
+
 10.0.3.1.1 (2017-11-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
 

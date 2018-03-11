@@ -264,7 +264,7 @@ class MisReportKpi(models.Model):
 
 class MisReportSubkpi(models.Model):
     _name = 'mis.report.subkpi'
-    _order = 'sequence'
+    _order = 'sequence, id'
 
     sequence = fields.Integer(default=1)
     report_id = fields.Many2one(
@@ -309,7 +309,7 @@ class MisReportKpiExpression(models.Model):
     """
 
     _name = 'mis.report.kpi.expression'
-    _order = 'sequence, name'
+    _order = 'sequence, name, id'
 
     sequence = fields.Integer(
         related='subkpi_id.sequence',
