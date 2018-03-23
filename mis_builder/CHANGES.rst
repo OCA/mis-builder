@@ -6,6 +6,12 @@ Changelog for mis_builder
 ..
 .. *
 
+9.0.3.1.2 (2017-12-29)
+~~~~~~~~~~~~~~~~~~~~~~
+
+* Forward port get_pdf() bug fix from v8.
+  `#63 <https://github.com/OCA/mis-builder/pull/63>`_
+
 9.0.3.1.1 (2017-11-14)
 ~~~~~~~~~~~~~~~~~~~~~~
 
