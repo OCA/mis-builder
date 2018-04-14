@@ -11,6 +11,10 @@ Changelog for mis_builder
 
 * [FIX] make subkpi ordering deterministic
   (`#71 <https://github.com/OCA/mis-builder/issues/71>`_)
+* [ADD] report instance level option to disable account expansion,
+  enabling the creation of detailed templates while deferring the decision
+  of rendering the details or not to the report instance
+  (`#74 <https://github.com/OCA/mis-builder/issues/74>`_)
 
 10.0.3.1.1 (2017-11-14)
 ~~~~~~~~~~~~~~~~~~~~~~~
