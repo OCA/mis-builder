@@ -138,7 +138,7 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
             ],
         ))
         matrix = self.instance._compute_matrix()
-        # None in last col because account details are not summed
+        # None in last col because account details are not summed by default
         assert_matrix(matrix, [
             [11, 13, 24],
             [11, 30, 41],
