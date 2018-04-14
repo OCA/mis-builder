@@ -66,7 +66,6 @@
                         <group>
                             <field name="report_id" string="Template"/>
                             <field name="currency_id" groups="base.group_multi_currency"/>
-                            <field name="landscape_pdf"/>
                             <field name="comparison_mode"/>
                         </group>
                         <group>
@@ -106,6 +105,12 @@
                                 <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"
                                         domain="[('id', 'child_of', company_id)]"
                                         attrs="{'invisible': [('multi_company', '=', False)]}"/>
+                            </group>
+                        </page>
+                        <page string="Layout">
+                            <group name="layout">
+                                <field name="landscape_pdf"/>
+                                <field name="no_auto_expand_accounts"/>
                             </group>
                         </page>
                     </notebook>
