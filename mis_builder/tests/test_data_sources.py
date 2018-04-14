@@ -189,6 +189,23 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
             [AccountingNone, 17, 17],
         ])
 
+    def test_actuals(self):
+        matrix = self.instance._compute_matrix()
+        assert_matrix(matrix, [
+            [11, 13],
+            [11, 30],
+            [11, 13],
+            [AccountingNone, 17],
+        ])
+
+    def test_actuals_disable_auto_expand_accounts(self):
+        self.instance.no_auto_expand_accounts = True
+        matrix = self.instance._compute_matrix()
+        assert_matrix(matrix, [
+            [11, 13],
+            [11, 30],
+        ])
+
     def test_actuals_alt(self):
         aml_model = self.env['ir.model'].\
             search([('name', '=', 'account.move.line')])

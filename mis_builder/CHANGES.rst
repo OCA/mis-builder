@@ -6,9 +6,18 @@ Changelog for mis_builder
 ..
 .. *
 
-11.0.3.1.2 (2018-02-04)
+10.0.3.1.x (unreleased)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
+* [FIX] make subkpi ordering deterministic
+  (`#71 <https://github.com/OCA/mis-builder/issues/71>`_)
+* [ADD] report instance level option to disable account expansion,
+  enabling the creation of detailed templates while deferring the decision
+  of rendering the details or not to the report instance
+  (`#74 <https://github.com/OCA/mis-builder/issues/74>`_)
+
+11.0.3.1.2 (2018-02-04)
+~~~~~~~~~~~~~~~~~~~~~~~
 Migration to Odoo 11. No new feature.
 (`#67 <https://github.com/OCA/mis-builder/pull/67>`_)
 
