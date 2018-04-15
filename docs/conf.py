@@ -92,6 +92,7 @@ html_theme_options = {
     'github_repo': 'mis-builder',
     'github_button': True,
     'github_banner': True,
+    'show_related': True,
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
