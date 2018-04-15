@@ -30,8 +30,8 @@ Revision History
 =========== =============== =============================================== ===================
 Rev.        Date            Description                                     Requested By
 =========== =============== =============================================== ===================
-1.0         2018/04/08      Initial Release and help content                Stéphane Bidoul
-2.0         2018/04/08      First version of the manual                     Eric Caudal
+1.0         2018/04/13      Initial Release and help content                Stéphane Bidoul
+2.0         2018/04/15      First version of the manual                     Eric Caudal
 =========== =============== =============================================== ===================
 
 

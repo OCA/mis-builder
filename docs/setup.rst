@@ -1,10 +1,12 @@
 Install the module in Odoo
 ==========================
-If you already have an Odoo instance up and running, your preferred way to install addons will work with `MIS Builder`.
+If you already have an Odoo instance up and running, your preferred way to install
+addons will work with `MIS Builder`.
 
 Using git
 *********
-The most common way to install the module is to clone the git repository in your server and add the directory to your odoo.conf:
+The most common way to install the module is to clone the git repository in your
+server and add the directory to your odoo.conf:
 
 #. Clone the git repository
 
@@ -36,9 +38,11 @@ An easy way to install it with all its dependencies is using pip:
 
 Fresh install with Docker
 *************************
-If you do not have any Odoo server installed, you can start your own Odoo in few minutes via Docker in command line.
+If you do not have any Odoo server installed, you can start your own Odoo in few
+minutes via Docker in command line.
 
-Here is the basic how-to (based on https://github.com/Elico-Corp/odoo-docker), valid for Ubuntu OS but could also easily be replicated in MacOS or Windows:
+Here is the basic how-to (based on https://github.com/Elico-Corp/odoo-docker), valid
+for Ubuntu OS but could also easily be replicated in MacOS or Windows:
 
 #. Install docker and docker-compose in your system
 #. Create the directory structure (assuming the base directory is `odoo`)
@@ -84,11 +88,12 @@ Here is the basic how-to (based on https://github.com/Elico-Corp/odoo-docker), v
 
       docker-compose up -d odoo
 
-#. Open a web browser and navigate the URL you have set up in your `docker-compose.yml` file
-   (http://127.0.0.1:8069 in this particular example)
+#. Open a web browser and navigate the URL you have set up in your `docker-compose.yml`
+   file (http://127.0.0.1:8069 in this particular example)
 #. Create a new database
 #. Update the addons list in your database
 #. Install the MIS Builder application.
-#. Improve your Odoo environment (add parameters, change default passwords etc.) under Docker: https://github.com/Elico-Corp/odoo-docker
+#. Improve your Odoo environment (add parameters, change default passwords etc.)
+   under Docker: https://github.com/Elico-Corp/odoo-docker
 
 More about `Odoo <https://www.odoo.com/documentation/11.0>`_.
