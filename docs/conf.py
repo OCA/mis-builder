@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'MIS Builder'
-copyright = u'2018, Odoo Community Association (OCA)'
+copyright = u'2018-today, Odoo Community Association (OCA)'
 author = u'Odoo Community Association (OCA)'
 
 # The short X.Y version
@@ -157,3 +157,7 @@ texinfo_documents = [
 
 
 # -- Extension configuration -------------------------------------------------
+rst_epilog = """
+Copyright: 2018-Today `Odoo Community Association <https://odoo-community.org>`_ under 
+      `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_
+"""
