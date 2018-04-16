@@ -4,7 +4,7 @@ If you already have an Odoo instance up and running, your preferred way to insta
 addons will work with `MIS Builder`.
 
 Using git
-*********
+---------
 The most common way to install the module is to clone the git repository in your
 server and add the directory to your odoo.conf:
 
@@ -23,7 +23,7 @@ server and add the directory to your odoo.conf:
 #. Install the MIS Builder application.
 
 Using pip
-*********
+---------
 An easy way to install it with all its dependencies is using pip:
 
 #. Recover the code from pip repository
@@ -37,7 +37,7 @@ An easy way to install it with all its dependencies is using pip:
 #. Install the MIS Builder application.
 
 Fresh install with Docker
-*************************
+-------------------------
 If you do not have any Odoo server installed, you can start your own Odoo in few
 minutes via Docker in command line.
 

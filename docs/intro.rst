@@ -21,9 +21,6 @@
 
     * This document is a Functional Documentation for Odoo set of modules.
     * Maintainer: `Odoo Community Association <https://odoo-community.org>`_
-    * OCA, or the Odoo Community Association, is a nonprofit organization whose
-      mission is to support the collaborative development of Odoo features and
-      promote its widespread use.
     * To contribute to this documentation, please visit
       https://odoo-community.org/page/Contribute.
     * This document is licensed under a `Creative Commons Attribution 4.0 International
@@ -55,7 +52,7 @@ It features the following key characteristics:
 - Easy-to-use API for developers for the accounting balance computation engine.
 
 Modules information
-*******************
+-------------------
 `MIS Builder` is a set of modules, part of `Odoo Business Suite of Applications <https://www.odoo.com>`_.
 
 The source code of the modules can be found in the `OCA Official Github repository <https://github.com/OCA/mis-builder/>`_:
@@ -79,7 +76,7 @@ The repository is licensed under `AGPLv3 <http://www.gnu.org/licenses/agpl-3.0-s
 * in both Community and Enterprise Edition.
 
 About this documentation
-************************
+------------------------
 This documentation intends to provide the basic knowledge for the user to create
 financial reports from the standard Odoo financial entries.
 

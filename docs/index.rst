@@ -18,6 +18,8 @@ beautiful, custom reports such as P&L, Balance Sheets and more.
    setup
    configuration
    usage
+   developer
+   credit
    footer
    changes
 
