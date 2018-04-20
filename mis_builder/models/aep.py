@@ -80,7 +80,7 @@ class AccountingExpressionProcessor(object):
     MODE_UNALLOCATED = 'u'
 
     _ACC_RE = re.compile(
-        r"(?P<field>\bbal|\bcrd|\bdeb)"
+        r"(?P<field>\bbal|\bpbal|\bnbal|\bcrd|\bdeb)"
         r"(?P<mode>[piseu])?"
         r"\s*"
         r"(?P<account_sel>_[a-zA-Z0-9]+|\[.*?\])"
@@ -384,6 +384,10 @@ class AccountingExpressionProcessor(object):
                                          (AccountingNone, AccountingNone))
                 if field == 'bal':
                     v += debit - credit
+                elif field == 'pbal' and debit >= credit:
+                    v += debit - credit
+                elif field == 'nbal' and debit < credit:
+                    v += debit - credit
                 elif field == 'deb':
                     v += debit
                 elif field == 'crd':
@@ -421,6 +425,16 @@ class AccountingExpressionProcessor(object):
                                      (AccountingNone, AccountingNone))
             if field == 'bal':
                 v = debit - credit
+            elif field == 'pbal':
+                if debit >= credit:
+                    v = debit - credit
+                else:
+                    v = AccountingNone
+            elif field == 'nbal':
+                if debit < credit:
+                    v = debit - credit
+                else:
+                    v = AccountingNone
             elif field == 'deb':
                 v = debit
             elif field == 'crd':
