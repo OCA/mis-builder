@@ -35,13 +35,15 @@ class AccountingExpressionProcessor(object):
 
     Expressions of the form <field><mode>[accounts][optional move line domain]
     are supported, where:
-        * field is bal, crd, deb
+        * field is bal, crd, deb, pbal (positive balances only),
+          nbal (negative balance only)
         * mode is i (initial balance), e (ending balance),
           p (moves over period)
         * there is also a special u mode (unallocated P&L) which computes
           the sum from the beginning until the beginning of the fiscal year
           of the period; it is only meaningful for P&L accounts
-        * accounts is a list of accounts, possibly containing % wildcards
+        * accounts is a list of accounts, possibly containing % wildcards,
+          or a domain expression on account.account
         * an optional domain on move lines allowing filters on eg analytic
           accounts or journal
 
@@ -68,9 +70,9 @@ class AccountingExpressionProcessor(object):
           strict minimum number of queries to the database (for each period,
           one query per domain and mode);
         * it queries using the orm read_group which reduces to a query with
-          sum on debit and credit and group by on account_id (note: it seems
-          the orm then does one query per account to fetch the account
-          name...);
+          sum on debit and credit and group by on account_id and company_id,
+          (note: it seems the orm then does one query per account to fetch
+          the account name...);
         * additionally, one query per view/consolidation account is done to
           discover the children accounts.
     """
