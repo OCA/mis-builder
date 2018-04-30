@@ -30,7 +30,7 @@ An easy way to install it with all its dependencies is using pip:
 
    .. code-block:: sh
 
-      pip install odoo10-addon-mis_builder odoo-autodiscover
+      pip install --pre odoo10-addon-mis_builder odoo-autodiscover
 
 #. Restart Odoo
 #. Update the addons list in your database
