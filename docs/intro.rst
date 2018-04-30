@@ -37,7 +37,7 @@ any other Odoo model.
 It features the following key characteristics:
 
 - User-friendly configuration: end users can create new report templates without
-  development, sing simple Excel-like formulas.
+  development, using simple Excel-like formulas.
 - Very fast balance reporting for accounting data, even on million-line databases
   with very complex account charts.
 - Reusability: Use the same template for different reports.

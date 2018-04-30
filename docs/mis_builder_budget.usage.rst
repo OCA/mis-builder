@@ -12,7 +12,7 @@ are transformed to match the reporting period.
 * **Sum**: values of shorter period are added, values of longest or partially overlapping
   periods are adjusted pro-rata temporis (eg monetary amount such as revenue).
 * **Average**: values of included period are averaged with a pro-rata temporis weight.
-  Typically used for values that do not accumulate over type (eg a number of employees).
+  Typically used for values that do not accumulate over time (eg a number of employees).
 
 When KPI are configured, you need to:
 
