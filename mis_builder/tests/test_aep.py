@@ -227,6 +227,16 @@ class TestAEP(common.TransactionCase):
             self.account_ar.id: 500,
             self.account_in.id: -500,
         })
+        variation = self._eval_by_account_id('pbalp[]')
+        self.assertEquals(variation, {
+            self.account_ar.id: 500,
+            self.account_in.id: AccountingNone,
+        })
+        variation = self._eval_by_account_id('nbalp[]')
+        self.assertEquals(variation, {
+            self.account_ar.id: AccountingNone,
+            self.account_in.id: -500,
+        })
         variation = self._eval_by_account_id('balp[700IN]')
         self.assertEquals(variation, {
             self.account_in.id: -500,
