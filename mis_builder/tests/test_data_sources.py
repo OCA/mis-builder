@@ -139,7 +139,7 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
             ],
         ))
         matrix = self.instance._compute_matrix()
-        # None in last col because account details are not summed
+        # None in last col because account details are not summed by default
         assert_matrix(matrix, [
             [11, 13, 24],
             [11, 30, 41],
@@ -188,6 +188,23 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
             [11, 30, 19],
             [11, 13, 2],
             [AccountingNone, 17, 17],
+        ])
+
+    def test_actuals(self):
+        matrix = self.instance._compute_matrix()
+        assert_matrix(matrix, [
+            [11, 13],
+            [11, 30],
+            [11, 13],
+            [AccountingNone, 17],
+        ])
+
+    def test_actuals_disable_auto_expand_accounts(self):
+        self.instance.no_auto_expand_accounts = True
+        matrix = self.instance._compute_matrix()
+        assert_matrix(matrix, [
+            [11, 13],
+            [11, 30],
         ])
 
     def test_actuals_alt(self):

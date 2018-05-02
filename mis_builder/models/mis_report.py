@@ -264,7 +264,7 @@ class MisReportKpi(models.Model):
 
 class MisReportSubkpi(models.Model):
     _name = 'mis.report.subkpi'
-    _order = 'sequence'
+    _order = 'sequence, id'
 
     sequence = fields.Integer(default=1)
     report_id = fields.Many2one(
@@ -309,7 +309,7 @@ class MisReportKpiExpression(models.Model):
     """
 
     _name = 'mis.report.kpi.expression'
-    _order = 'sequence, name'
+    _order = 'sequence, name, id'
 
     sequence = fields.Integer(
         related='subkpi_id.sequence',
@@ -626,7 +626,8 @@ class MisReport(models.Model):
                                  subkpis_filter,
                                  locals_dict,
                                  eval_expressions,
-                                 eval_expressions_by_account):
+                                 eval_expressions_by_account,
+                                 no_auto_expand_accounts=False):
         """This is the main computation loop.
 
         It evaluates the kpis and puts the results in the KpiMatrix.
@@ -691,6 +692,7 @@ class MisReport(models.Model):
                     kpi, col_key, vals, drilldown_args)
 
                 if name_error or \
+                        no_auto_expand_accounts or \
                         not kpi.auto_expand_accounts or \
                         not eval_expressions_by_account:
                     continue
@@ -724,7 +726,8 @@ class MisReport(models.Model):
                                    get_additional_move_line_filter=None,
                                    get_additional_query_filter=None,
                                    locals_dict=None,
-                                   aml_model=None):
+                                   aml_model=None,
+                                   no_auto_expand_accounts=False):
         """ Evaluate a report for a given period, populating a KpiMatrix.
 
         :param kpi_matrix: the KpiMatrix object to be populated created
@@ -814,7 +817,8 @@ class MisReport(models.Model):
 
         self._declare_and_compute_col(
             kpi_matrix, col_key, col_label, col_description, subkpis_filter,
-            locals_dict, eval_expressions, eval_expressions_by_account)
+            locals_dict, eval_expressions, eval_expressions_by_account,
+            no_auto_expand_accounts)
 
     def get_kpis_by_account_id(self, company):
         """ Return { account_id: set(kpi) } """

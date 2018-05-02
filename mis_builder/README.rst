@@ -19,7 +19,7 @@ Your preferred way to install addons will work with MIS Builder.
 
 An easy way to install it with all its dependencies is using pip:
 
-* ``pip install odoo9-addon-mis_builder odoo-autodiscover``
+* ``pip --pre install odoo9-addon-mis_builder odoo-autodiscover``
 * then restart Odoo, update the addons list in your database, and install
   the MIS Builder application.
 
@@ -28,25 +28,30 @@ Configuration and Usage
 
 To configure this module, you need to:
 
-* Go to Accounting > Configuration > Financial Reports > MIS Report Templates where
+* Go to Accounting > Configuration > MIS Reporting > MIS Report Templates where
   you can create report templates by defining KPI's. KPI's constitute the rows of your
   reports. Such report templates are time independent.
 
-.. figure:: static/description/ex_report_template.png
-   :scale: 80 %
+.. figure:: https://raw.githubusercontent.com/OCA/mis-builder/9.0/mis_builder/static/description/ex_report_template.png
    :alt: Sample report template
+   :width: 95 %
+   :align: center
 
-* Then in Accounting > Reporting > MIS Reports you can create report instance by
-  binding the templates to time period, hence defining the columns of your reports.
+* Then in Accounting > Reports > MIS Reporting > MIS Reports you can create report instance by
+  binding the templates to time periods, hence defining the columns of your reports.
 
-.. figure:: static/description/ex_report.png
+.. figure:: https://raw.githubusercontent.com/OCA/mis-builder/9.0/mis_builder/static/description/ex_report_settings.png
    :alt: Sample report configuration
+   :width: 95 %
+   :align: center
 
-* From the MIS Report view, you can preview the report, add it to and Odoo dashboard,
+* From the MIS Reports view, you can preview the report, add it to and Odoo dashboard,
   and export it to PDF or Excel.
 
-.. figure:: static/description/ex_dashboard.png
-   :alt: Sample dashboard view
+.. figure:: https://raw.githubusercontent.com/OCA/mis-builder/9.0/mis_builder/static/description/ex_report_preview.png
+   :alt: Sample preview
+   :width: 95 %
+   :align: center
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

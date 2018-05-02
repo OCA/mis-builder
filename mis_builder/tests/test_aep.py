@@ -189,12 +189,24 @@ class TestAEP(common.TransactionCase):
         # initial balance is the ending balance fo January
         self.assertEquals(self._eval('bali[400AR]'), 400)
         self.assertEquals(self._eval('bali[700IN]'), -300)
+        self.assertEquals(self._eval('pbali[400AR]'), 400)
+        self.assertEquals(self._eval('nbali[400AR]'), 0)
+        self.assertEquals(self._eval('nbali[700IN]'), -300)
+        self.assertEquals(self._eval('pbali[700IN]'), 0)
         # check variation
         self.assertEquals(self._eval('balp[400AR]'), 500)
         self.assertEquals(self._eval('balp[700IN]'), -500)
+        self.assertEquals(self._eval('nbalp[400AR]'), 0)
+        self.assertEquals(self._eval('pbalp[400AR]'), 500)
+        self.assertEquals(self._eval('nbalp[700IN]'), -500)
+        self.assertEquals(self._eval('pbalp[700IN]'), 0)
         # check ending balance
         self.assertEquals(self._eval('bale[400AR]'), 900)
+        self.assertEquals(self._eval('nbale[400AR]'), 0)
+        self.assertEquals(self._eval('pbale[400AR]'), 900)
         self.assertEquals(self._eval('bale[700IN]'), -800)
+        self.assertEquals(self._eval('nbale[700IN]'), -800)
+        self.assertEquals(self._eval('pbale[700IN]'), 0)
         # check some variant expressions, for coverage
         self.assertEquals(self._eval('crdp[700I%]'), 500)
         self.assertEquals(self._eval('debp[400A%]'), 500)
@@ -213,6 +225,16 @@ class TestAEP(common.TransactionCase):
         variation = self._eval_by_account_id('balp[]')
         self.assertEquals(variation, {
             self.account_ar.id: 500,
+            self.account_in.id: -500,
+        })
+        variation = self._eval_by_account_id('pbalp[]')
+        self.assertEquals(variation, {
+            self.account_ar.id: 500,
+            self.account_in.id: AccountingNone,
+        })
+        variation = self._eval_by_account_id('nbalp[]')
+        self.assertEquals(variation, {
+            self.account_ar.id: AccountingNone,
             self.account_in.id: -500,
         })
         variation = self._eval_by_account_id('balp[700IN]')
