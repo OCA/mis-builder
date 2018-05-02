@@ -27,7 +27,7 @@ copyright = u'%s, Odoo Community Association (OCA)' % year
 author = u'Odoo Community Association (OCA)'
 
 # The short X.Y version
-version = u'3.1'
+version = u'3.2'
 # The full version, including alpha/beta/rc tags
 release = version
 
