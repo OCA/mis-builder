@@ -1,6 +1,7 @@
 [![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/11.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
 [![Build Status](https://travis-ci.org/OCA/mis-builder.svg?branch=11.0)](https://travis-ci.org/OCA/mis-builder)
 [![codecov](https://codecov.io/gh/OCA/mis-builder/branch/11.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
+[![docs](https://media.readthedocs.org/static/projects/badges/passing.svg)](http://oca-mis-builder.readthedocs.io/en/11.0/)
 
 # MIS Builder
 

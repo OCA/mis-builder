@@ -421,6 +421,9 @@ class MisReportInstance(models.Model):
         required=False,
     )
     landscape_pdf = fields.Boolean(string='Landscape PDF')
+    no_auto_expand_accounts = fields.Boolean(
+        string='Disable account details expansion',
+    )
     comparison_mode = fields.Boolean(
         compute="_compute_comparison_mode",
         inverse="_inverse_comparison_mode")
@@ -459,7 +462,7 @@ class MisReportInstance(models.Model):
         res.update({
             'views': [(view.id, 'form')],
             'res_id': self.id,
-            })
+        })
         return res
 
     @api.model
@@ -469,7 +472,7 @@ class MisReportInstance(models.Model):
         reports = self.search([
             ('write_date', '<', clear_date),
             ('temporary', '=', True),
-            ])
+        ])
         _logger.debug('Vacuum %s Temporary MIS Builder Report', len(reports))
         return reports.unlink()
 
@@ -600,7 +603,9 @@ class MisReportInstance(models.Model):
             self.target_move,
             period.subkpi_ids,
             period._get_additional_move_line_filter,
-            period._get_additional_query_filter)
+            period._get_additional_query_filter,
+            no_auto_expand_accounts=self.no_auto_expand_accounts,
+        )
 
     def _add_column_actuals_alt(
             self, aep, kpi_matrix, period, label, description):
@@ -620,7 +625,9 @@ class MisReportInstance(models.Model):
             period.subkpi_ids,
             period._get_additional_move_line_filter,
             period._get_additional_query_filter,
-            aml_model=period.source_aml_model_id.model)
+            aml_model=period.source_aml_model_id.model,
+            no_auto_expand_accounts=self.no_auto_expand_accounts,
+        )
 
     def _add_column_sumcol(
             self, aep, kpi_matrix, period, label, description):
