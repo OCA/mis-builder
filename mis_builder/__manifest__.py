@@ -36,4 +36,6 @@
     'installable': True,
     'application': True,
     'license': 'AGPL-3',
+    'development_status': 'Production/Stable',
+    'maintainers': ['sbidoul'],
 }

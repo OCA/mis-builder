@@ -23,4 +23,6 @@
         'views/mis_budget.xml',
     ],
     'installable': True,
+    'development_status': 'Production/Stable',
+    'maintainers': ['sbidoul'],
 }

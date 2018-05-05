@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    'name': 'Mis Builder Demo',
+    'name': 'MIS Builder Demo',
     'summary': """
         Demo addon for MIS Builder""",
     'version': '10.0.3.0.0',
@@ -23,4 +23,6 @@
         'data/mis_report_instance.xml',
     ],
     'installable': True,
+    'maintainers': ['sbidoul'],
+    'development_status': 'Beta',
 }
