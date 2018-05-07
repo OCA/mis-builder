@@ -12,8 +12,15 @@ beautiful, custom reports such as P&L, Balance Sheets and more.
 .. toctree::
    :maxdepth: 3
    :caption: Contents:
-
+   :numbered:
+   
    intro
+   setup
+   configuration
+   usage
+   developer
+   credit
+   footer
    changes
 
 Indices and tables

@@ -177,3 +177,7 @@ texinfo_documents = [
 
 
 # -- Extension configuration -------------------------------------------------
+rst_epilog = """
+Copyright: 2018-Today `Odoo Community Association <https://odoo-community.org>`_ under 
+      `Creative Commons Attribution 4.0 International License <http://creativecommons.org/licenses/by/4.0/>`_
+"""
