@@ -1,12 +1,4 @@
-Changelog for mis_builder_budget
---------------------------------
-
-.. Future (?)
-.. ~~~~~~~~~~
-..
-.. *
-
-10.0.3.1.x (unreleased)
+10.0.3.2.0 (2018-05-02)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 - [FIX] #NAME error in out-of-order computation of non

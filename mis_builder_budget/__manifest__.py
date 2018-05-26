@@ -6,9 +6,9 @@
     'name': 'MIS Builder Budget',
     'summary': """
         Create budgets for MIS reports""",
-    'version': '10.0.3.1.0',
+    'version': '10.0.3.2.0',
     'license': 'AGPL-3',
-    'author': 'ACSONE SA/NV,'
+    'author': 'ACSONE SA/NV, '
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/mis-builder/',
     'depends': [
@@ -23,4 +23,6 @@
         'views/mis_budget.xml',
     ],
     'installable': True,
+    'development_status': 'Production/Stable',
+    'maintainers': ['sbidoul'],
 }

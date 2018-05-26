@@ -1,16 +1,16 @@
-Changelog for mis_builder
--------------------------
-
-.. Future (?)
-.. ~~~~~~~~~~
-..
-.. *
-
-10.0.3.1.x (unreleased)
+10.0.3.2.0 (2018-05-02)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] make subkpi ordering deterministic
   (`#71 <https://github.com/OCA/mis-builder/issues/71>`_)
+* [ADD] report instance level option to disable account expansion,
+  enabling the creation of detailed templates while deferring the decision
+  of rendering the details or not to the report instance
+  (`#74 <https://github.com/OCA/mis-builder/issues/74>`_)
+* [ADD] pbal and nbal accounting expressions, to sum positive
+  and negative balances respectively (ie ignoring accounts with negative,
+  resp positive balances)
+  (`#86 <https://github.com/OCA/mis-builder/issues/86>`_)
 
 10.0.3.1.1 (2017-11-14)
 ~~~~~~~~~~~~~~~~~~~~~~~

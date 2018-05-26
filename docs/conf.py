@@ -16,17 +16,20 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
+from datetime import datetime
+
 
 # -- Project information -----------------------------------------------------
 
 project = u'MIS Builder'
-copyright = u'2018, Odoo Community Association (OCA)'
+year = datetime.now().year
+copyright = u'%s, Odoo Community Association (OCA)' % year
 author = u'Odoo Community Association (OCA)'
 
 # The short X.Y version
-version = u'3.1'
+version = u'3.2'
 # The full version, including alpha/beta/rc tags
-release = u''
+release = version
 
 
 # -- General configuration ---------------------------------------------------
@@ -81,7 +84,16 @@ html_theme = 'alabaster'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'description': "Management Information System reports for Odoo",
+    'logo': 'logo.png',
+    'logo_name': True,
+    'github_user': 'OCA',
+    'github_repo': 'mis-builder',
+    'github_button': True,
+    'github_banner': True,
+    'show_related': True,
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -96,7 +108,15 @@ html_static_path = ['_static']
 # default: ``['localtoc.html', 'relations.html', 'sourcelink.html',
 # 'searchbox.html']``.
 #
-# html_sidebars = {}
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'relations.html',
+        'searchbox.html',
+        'donate.html',
+    ]
+}
 
 
 # -- Options for HTMLHelp output ---------------------------------------------
