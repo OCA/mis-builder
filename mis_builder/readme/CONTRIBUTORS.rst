@@ -11,7 +11,8 @@
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Luc De Meyer <luc.demeyer@noviat.com>
 * Benjamin Willig <benjamin.willig@acsone.eu>
-* Martronic SA <info@martronic.ch>  
+* Martronic SA <info@martronic.ch>
 * nicomacr <nmr@adhoc.com.ar>
 * Juan Jose Scarafia <jjs@adhoc.com.ar>
 * Richard deMeester <richard@willowit.com.au>
+* Eric Caudal <eric.caudal@elico-corp.com>

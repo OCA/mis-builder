@@ -1,1 +1,1 @@
-Demo addon for MIS Builder.
+The module provides multiple examples to develop your own reports with MIS Builder.
