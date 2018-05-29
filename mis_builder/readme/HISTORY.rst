@@ -1,4 +1,4 @@
-10.0.3.2.1 (unreleased)
+10.0.3.2.1 (2018-05-29)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Missing comparison operator for AccountingNone
