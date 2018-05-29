@@ -1,10 +1,9 @@
-Changelog for mis_builder
--------------------------
+9.0.3.2.1 (2018-05-29)
+~~~~~~~~~~~~~~~~~~~~~~
 
-.. Future (?)
-.. ~~~~~~~~~~
-..
-.. *
+* [FIX] Missing comparison operator for AccountingNone
+  leading to errors in pbal computations
+  (`#93 <https://github.com/OCA/mis-builder/issue/93>`_)
 
 9.0.3.2.0 (2018-05-02)
 ~~~~~~~~~~~~~~~~~~~~~~

@@ -14,7 +14,8 @@ beautiful, custom reports such as P&L, Balance Sheets and more.
    :caption: Contents:
 
    intro
-   changes
+   quickstart
+   history
 
 Indices and tables
 ==================

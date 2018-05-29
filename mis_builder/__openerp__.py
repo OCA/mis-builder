@@ -4,12 +4,12 @@
 
 {
     'name': 'MIS Builder',
-    'version': '9.0.3.2.0',
+    'version': '9.0.3.2.1',
     'category': 'Reporting',
     'summary': """
         Build 'Management Information System' Reports and Dashboards
     """,
-    'author': 'ACSONE SA/NV,'
+    'author': 'ACSONE SA/NV, '
               'Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/mis-builder/',
     'depends': [
@@ -35,4 +35,6 @@
     'installable': True,
     'application': True,
     'license': 'AGPL-3',
+    'development_status': 'Production/Stable',
+    'maintainers': ['sbidoul'],
 }
