@@ -28,8 +28,6 @@ Reports mainly fetch data from account moves, but can also combine data coming
 from arbitrary Odoo models. Reports can be exported to PDF, Excel and they
 can be added to Odoo dashboards.
 
-**Table of contents**
-
 .. contents::
    :local:
 

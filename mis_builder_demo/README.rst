@@ -24,8 +24,6 @@ MIS Builder Demo
 
 Demo addon for MIS Builder.
 
-**Table of contents**
-
 .. contents::
    :local:
 
