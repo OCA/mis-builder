@@ -29,12 +29,12 @@ New features:
   (`#2 <https://github.com/OCA/mis-builder/issues/2>`_)
 * [ADD] multi-company consolidation support, with currency conversion
   (the conversion rate date is the end of the reporting period)
-  (`#7 <https://github.com/OCA/mis-builder/issues/7>`_, 
+  (`#7 <https://github.com/OCA/mis-builder/issues/7>`_,
   `#3 <https://github.com/OCA/mis-builder/issues/3>`_)
-* [ADD] provide ref, datetime, dateutil, time, user in the evaluation 
-  context of move line domains; among other things, this allows using 
-  references to xml ids (such as account types or tax tags) when 
-  querying move lines 
+* [ADD] provide ref, datetime, dateutil, time, user in the evaluation
+  context of move line domains; among other things, this allows using
+  references to xml ids (such as account types or tax tags) when
+  querying move lines
   (`#26 <https://github.com/OCA/mis-builder/issues/26>`_).
 * [ADD] extended account selectors: you can now select accounts using
   any domain on account.account, not only account codes
@@ -47,7 +47,7 @@ New features:
 
 Bug fixes:
 
-* [FIX] fix error when saving periods in comparison mode on newly 
+* [FIX] fix error when saving periods in comparison mode on newly
   created (not yet saved) report instances.
   `#50 <https://github.com/OCA/mis-builder/pull/50>`_
 * [FIX] improve display of Base Date report instance view.
@@ -104,11 +104,11 @@ New features:
 
 Main bug fixes:
 
-* [FIX] deletion of templates and reports (cascade and retricts) 
+* [FIX] deletion of templates and reports (cascade and retricts)
   (https://github.com/OCA/account-financial-reporting/issues/281)
 * [FIX] copy of reports 
   (https://github.com/OCA/account-financial-reporting/issues/282)
-* [FIX] better error message when periods have wrong/missing dates 
+* [FIX] better error message when periods have wrong/missing dates
   (https://github.com/OCA/account-financial-reporting/issues/283)
 * [FIX] xlsx export of string types KPI 
   (https://github.com/OCA/account-financial-reporting/issues/285)
