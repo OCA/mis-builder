@@ -28,6 +28,8 @@ Reports mainly fetch data from account moves, but can also combine data coming
 from arbitrary Odoo models. Reports can be exported to PDF, Excel and they
 can be added to Odoo dashboards.
 
+**Table of contents**
+
 .. contents::
    :local:
 
@@ -91,6 +93,13 @@ be found on GitHub.
 
 Changelog
 =========
+
+10.0.3.2.1 (2018-05-29)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Missing comparison operator for AccountingNone
+  leading to errors in pbal computations
+  (`#93 <https://github.com/OCA/mis-builder/issue/93>`_)
 
 10.0.3.2.0 (2018-05-02)
 ~~~~~~~~~~~~~~~~~~~~~~~

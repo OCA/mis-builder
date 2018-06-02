@@ -14,6 +14,7 @@ beautiful, custom reports such as P&L, Balance Sheets and more.
    :caption: Contents:
 
    description
+   quickstart
    install
    configure
    usage

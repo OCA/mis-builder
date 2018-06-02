@@ -31,6 +31,8 @@ can then be selected as a data source for a MIS report column, and the report
 will show the budgeted values for each KPI, adjusted for the period of the 
 column.
 
+**Table of contents**
+
 .. contents::
    :local:
 
