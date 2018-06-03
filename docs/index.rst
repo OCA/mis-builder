@@ -16,7 +16,6 @@ beautiful, custom reports such as P&L, Balance Sheets and more.
    description
    quickstart
    install
-   configure
    usage
    develop
    roadmap

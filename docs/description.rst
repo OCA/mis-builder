@@ -1,6 +1,7 @@
 Introduction
 ============
-
+What is MIS Builder
+-------------------
 MIS Builder is an Odoo module that implements a class of Odoo reports where KPI
 (Key Performance Indicators) are displayed in rows, and time periods in columns.
 It focuses on very fast reporting on accounting data but can also use data from
