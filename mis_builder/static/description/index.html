@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
+<title>MIS Builder</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="mis-builder">
+<h1 class="title">MIS Builder</h1>
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/mis-builder/tree/11.0/mis_builder"><img alt="OCA/mis-builder" src="https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github" /></a> <a class="reference external" href="https://runbot.odoo-community.org/runbot/248/11.0"><img alt="Try me on Runbot" src="https://img.shields.io/badge/runbot-Try%20me-875A7B.png" /></a></p>
+<p>This module allows you to build Management Information Systems dashboards.
+Such style of reports presents KPI in rows and time periods in columns.
+Reports mainly fetch data from account moves, but can also combine data coming
+from arbitrary Odoo models. Reports can be exported to PDF, Excel and they
+can be added to Odoo dashboards.</p>
+<p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#installation" id="id28">Installation</a></li>
+<li><a class="reference internal" href="#usage" id="id29">Usage</a></li>
+<li><a class="reference internal" href="#development" id="id30">Development</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id31">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="id32">Changelog</a><ul>
+<li><a class="reference internal" href="#id1" id="id33">11.0.3.2.1 (2018-05-29)</a></li>
+<li><a class="reference internal" href="#id3" id="id34">10.0.3.2.0 (2018-05-02)</a></li>
+<li><a class="reference internal" href="#id7" id="id35">11.0.3.1.2 (2018-02-04)</a></li>
+<li><a class="reference internal" href="#id9" id="id36">10.0.3.1.1 (2017-11-14)</a></li>
+<li><a class="reference internal" href="#id18" id="id37">10.0.3.0.4 (2017-10-14)</a></li>
+<li><a class="reference internal" href="#id20" id="id38">10.0.3.0.3 (2017-10-03)</a></li>
+<li><a class="reference internal" href="#id22" id="id39">10.0.3.0.2 (2017-10-01)</a></li>
+<li><a class="reference internal" href="#unreleased" id="id40">10.0.2.0.3 (unreleased)</a></li>
+<li><a class="reference internal" href="#id23" id="id41">9.0.2.0.2 (2016-09-27)</a></li>
+<li><a class="reference internal" href="#id24" id="id42">9.0.2.0.1 (2016-05-26)</a></li>
+<li><a class="reference internal" href="#id25" id="id43">9.0.2.0.0 (2016-05-24)</a></li>
+<li><a class="reference internal" href="#id26" id="id44">8.0.1.0.0 (2016-04-27)</a></li>
+<li><a class="reference internal" href="#id27" id="id45">8.0.0.2.0</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bug-tracker" id="id46">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id47">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id48">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id49">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id50">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="installation">
+<h1><a class="toc-backref" href="#id28">Installation</a></h1>
+<p>Your preferred way to install addons will work with MIS Builder.</p>
+<p>An easy way to install it with all its dependencies is using pip:</p>
+<ul class="simple">
+<li><tt class="docutils literal">pip install <span class="pre">--pre</span> <span class="pre">odoo10-addon-mis_builder</span> <span class="pre">odoo-autodiscover</span></tt></li>
+<li>then restart Odoo, update the addons list in your database, and install
+the MIS Builder application.</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#id29">Usage</a></h1>
+<p>To configure this module, you need to:</p>
+<ul class="simple">
+<li>Go to Accounting &gt; Configuration &gt; MIS Reporting &gt; MIS Report Templates where
+you can create report templates by defining KPI’s. KPI’s constitute the rows of your
+reports. Such report templates are time independent.</li>
+</ul>
+<div class="figure align-center">
+<img alt="Sample report template" src="https://raw.githubusercontent.com/OCA/mis-builder/10.0/mis_builder/static/description/ex_report_template.png" style="width: 80%;" />
+</div>
+<ul class="simple">
+<li>Then in Accounting &gt; Reports &gt; MIS Reporting &gt; MIS Reports you can create report instance by
+binding the templates to time periods, hence defining the columns of your reports.</li>
+</ul>
+<div class="figure align-center">
+<img alt="Sample report configuration" src="https://raw.githubusercontent.com/OCA/mis-builder/10.0/mis_builder/static/description/ex_report_settings.png" style="width: 80%;" />
+</div>
+<ul class="simple">
+<li>From the MIS Reports view, you can preview the report, add it to and Odoo dashboard,
+and export it to PDF or Excel.</li>
+</ul>
+<div class="figure align-center">
+<img alt="Sample preview" src="https://raw.githubusercontent.com/OCA/mis-builder/10.0/mis_builder/static/description/ex_report_preview.png" style="width: 80%;" />
+</div>
+</div>
+<div class="section" id="development">
+<h1><a class="toc-backref" href="#id30">Development</a></h1>
+<p>A typical extension is to provide a mechanism to filter reports on analytic dimensions
+or operational units. To implement this, you can override _get_additional_move_line_filter
+and _get_additional_filter to further filter move lines or queries based on a user
+selection. A typical use case could be to add an analytic account field on mis.report.instance,
+or even on mis.report.instance.period if you want different columns to show different
+analytic accounts.</p>
+</div>
+<div class="section" id="known-issues-roadmap">
+<h1><a class="toc-backref" href="#id31">Known issues / Roadmap</a></h1>
+<p>The mis_builder <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">roadmap</a>
+and <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug">known issues</a> can
+be found on GitHub.</p>
+</div>
+<div class="section" id="changelog">
+<h1><a class="toc-backref" href="#id32">Changelog</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id33">11.0.3.2.1 (2018-05-29)</a></h2>
+<ul class="simple">
+<li>[FIX] Missing comparison operator for AccountingNone
+leading to errors in pbal computations
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issue/93">#93</a>)</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id34">10.0.3.2.0 (2018-05-02)</a></h2>
+<ul class="simple">
+<li>[FIX] make subkpi ordering deterministic
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/71">#71</a>)</li>
+<li>[ADD] report instance level option to disable account expansion,
+enabling the creation of detailed templates while deferring the decision
+of rendering the details or not to the report instance
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/74">#74</a>)</li>
+<li>[ADD] pbal and nbal accounting expressions, to sum positive
+and negative balances respectively (ie ignoring accounts with negative,
+resp positive balances)
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/86">#86</a>)</li>
+</ul>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id35">11.0.3.1.2 (2018-02-04)</a></h2>
+<p>Migration to Odoo 11. No new feature.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/pull/67">#67</a>)</p>
+</div>
+<div class="section" id="id9">
+<h2><a class="toc-backref" href="#id36">10.0.3.1.1 (2017-11-14)</a></h2>
+<p>New features:</p>
+<ul class="simple">
+<li>[ADD] month and year relative periods, easier to use than
+date ranges for the most common case.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/2">#2</a>)</li>
+<li>[ADD] multi-company consolidation support, with currency conversion
+(the conversion rate date is the end of the reporting period)
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/7">#7</a>,
+<a class="reference external" href="https://github.com/OCA/mis-builder/issues/3">#3</a>)</li>
+<li>[ADD] provide ref, datetime, dateutil, time, user in the evaluation
+context of move line domains; among other things, this allows using
+references to xml ids (such as account types or tax tags) when
+querying move lines
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/26">#26</a>).</li>
+<li>[ADD] extended account selectors: you can now select accounts using
+any domain on account.account, not only account codes
+<tt class="docutils literal"><span class="pre">balp[('user_type_id',</span> <span class="pre">'=',</span> <span class="pre">ref('account.data_account_type_receivable').id)]</span></tt>
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/4">#4</a>).</li>
+<li>[IMP] in the report instance configuration form, the filters are
+now grouped in a notebook page, this improves readability and
+extensibility
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/39">#39</a>).</li>
+</ul>
+<p>Bug fixes:</p>
+<ul class="simple">
+<li>[FIX] fix error when saving periods in comparison mode on newly
+created (not yet saved) report instances.
+<a class="reference external" href="https://github.com/OCA/mis-builder/pull/50">#50</a></li>
+<li>[FIX] improve display of Base Date report instance view.
+<a class="reference external" href="https://github.com/OCA/mis-builder/pull/51">#51</a></li>
+</ul>
+<p>Upgrading from 3.0 (breaking changes):</p>
+<ul class="simple">
+<li>Alternative move line data sources must have a company_id field.</li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h2><a class="toc-backref" href="#id37">10.0.3.0.4 (2017-10-14)</a></h2>
+<p>Bug fix:</p>
+<ul class="simple">
+<li>[FIX] issue with initial balance rounding.
+<a class="reference external" href="https://github.com/OCA/mis-builder/issues/30">#30</a></li>
+</ul>
+</div>
+<div class="section" id="id20">
+<h2><a class="toc-backref" href="#id38">10.0.3.0.3 (2017-10-03)</a></h2>
+<p>Bug fix:</p>
+<ul class="simple">
+<li>[FIX] fix error saving KPI on newly created reports.
+<a class="reference external" href="https://github.com/OCA/mis-builder/issues/18">#18</a></li>
+</ul>
+</div>
+<div class="section" id="id22">
+<h2><a class="toc-backref" href="#id39">10.0.3.0.2 (2017-10-01)</a></h2>
+<p>New features:</p>
+<ul class="simple">
+<li>[ADD] Alternative move line source per report column.
+This makes mis buidler accounting expressions work on any model
+that has debit, credit, account_id and date fields. Provided you can
+expose, say, committed purchases, or your budget as a view with
+debit, credit and account_id, this opens up a lot of possibilities</li>
+<li>[ADD] Comparison column source (more flexible than the previous,
+now deprecated, comparison mechanism).
+CAVEAT: there is no automated migration to the new mechanism.</li>
+<li>[ADD] Sum column source, to create columns that add/subtract
+other columns.</li>
+<li>[ADD] mis.kpi.data abstract model as a basis for manual KPI values
+supporting automatic ajustment to the reporting time period (the basis
+for budget item, but could also server other purposes, such as manually
+entering some KPI values, such as number of employee)</li>
+<li>[ADD] mis_builder_budget module providing a new budget data source</li>
+<li>[ADD] new “hide empty” style property</li>
+<li>[IMP] new AEP method to get accounts involved in an expression
+(this is useful to find which KPI relate to a given P&amp;L
+acount, to implement budget control)</li>
+<li>[IMP] many UI improvements</li>
+<li>[IMP] many code style improvements and some refactoring</li>
+<li>[IMP] add the column date_from, date_to in expression evaluation context,
+as well as time, datetime and dateutil modules</li>
+</ul>
+<p>Main bug fixes:</p>
+<ul class="simple">
+<li>[FIX] deletion of templates and reports (cascade and retricts)
+(<a class="reference external" href="https://github.com/OCA/account-financial-reporting/issues/281">https://github.com/OCA/account-financial-reporting/issues/281</a>)</li>
+<li>[FIX] copy of reports
+(<a class="reference external" href="https://github.com/OCA/account-financial-reporting/issues/282">https://github.com/OCA/account-financial-reporting/issues/282</a>)</li>
+<li>[FIX] better error message when periods have wrong/missing dates
+(<a class="reference external" href="https://github.com/OCA/account-financial-reporting/issues/283">https://github.com/OCA/account-financial-reporting/issues/283</a>)</li>
+<li>[FIX] xlsx export of string types KPI
+(<a class="reference external" href="https://github.com/OCA/account-financial-reporting/issues/285">https://github.com/OCA/account-financial-reporting/issues/285</a>)</li>
+<li>[FIX] sorting of detail by account</li>
+<li>[FIX] computation bug in detail by account when multiple accounting
+expressions were used in a KPI</li>
+<li>[FIX] permission issue when adding report to dashboard with non admin user</li>
+</ul>
+</div>
+<div class="section" id="unreleased">
+<h2><a class="toc-backref" href="#id40">10.0.2.0.3 (unreleased)</a></h2>
+<ul class="simple">
+<li>[IMP] more robust behaviour in presence of missing expressions</li>
+<li>[FIX] indent style</li>
+<li>[FIX] local variable ‘ctx’ referenced before assignment when generating
+reports with no objects</li>
+<li>[IMP] use fontawesome icons</li>
+<li>[MIG] migrate to 10.0</li>
+<li>[FIX] unicode error when exporting to Excel</li>
+<li>[IMP] provide full access to mis builder style for group Adviser.</li>
+</ul>
+</div>
+<div class="section" id="id23">
+<h2><a class="toc-backref" href="#id41">9.0.2.0.2 (2016-09-27)</a></h2>
+<ul class="simple">
+<li>[IMP] Add refresh button in mis report preview.</li>
+<li>[IMP] Widget code changes to allow to add fields in the widget more easily.</li>
+</ul>
+</div>
+<div class="section" id="id24">
+<h2><a class="toc-backref" href="#id42">9.0.2.0.1 (2016-05-26)</a></h2>
+<ul class="simple">
+<li>[IMP] remove unused argument in declare_and_compute_period()
+for a cleaner API. This is a breaking API changing merged in
+urgency before it is used by other modules.</li>
+</ul>
+</div>
+<div class="section" id="id25">
+<h2><a class="toc-backref" href="#id43">9.0.2.0.0 (2016-05-24)</a></h2>
+<p>Part of the work for this release has been done at the Sorrento sprint
+April 26-29, 2016. The rest (ie a major refactoring) has been done in
+the weeks after.</p>
+<ul class="simple">
+<li>[IMP] hide button box in edit mode on the report instance settings form</li>
+<li>[FIX] Fix sum aggregation of non-stored fields
+(<a class="reference external" href="https://github.com/OCA/account-financial-reporting/issues/178">https://github.com/OCA/account-financial-reporting/issues/178</a>)</li>
+<li>[IMP] There is now a default style at the report level</li>
+<li>[CHG] Number display properties (rounding, prefix, suffix, factor) are
+now defined in styles</li>
+<li>[CHG] Percentage difference are rounded to 1 digit instead of the kpi’s
+rounding, as the KPI rounding does not make sense in this case</li>
+<li>[CHG] The divider suffix (k, M, etc) is not inserted automatically anymore
+because it is inconsistent when working with prefixes; you need to add it
+manually in the suffix</li>
+<li>[IMP] AccountingExpressionProcessor now supports ‘balu’ expressions
+to obtain the unallocated profit/loss of previous fiscal years;
+get_unallocated_pl is the corresponding convenience method</li>
+<li>[IMP] AccountingExpressionProcessor now has easy methods to obtain
+balances by account: get_balances_initial, get_balances_end,
+get_balances_variation</li>
+<li>[IMP] there is now an auto-expand feature to automatically display
+a detail by account for selected kpis</li>
+<li>[IMP] the kpi and period lists are now manipulated through forms instead
+of directly in the tree views</li>
+<li>[IMP] it is now possible to create a report through a wizard, such
+reports are deemed temporary and available through a “Last Reports Generated”
+menu, they are garbaged collected automatically, unless saved permanently,
+which can be done using a Save button</li>
+<li>[IMP] there is now a beginner mode to configure simple reports with
+only one period</li>
+<li>[IMP] it is now easier to configure periods with fixed start/end dates</li>
+<li>[IMP] the new sub-kpi mechanism allows the creation of columns
+with multiple values, or columns with different values</li>
+<li>[IMP] thanks to the new style model, the Excel export is now styled</li>
+<li>[IMP] a new style model is now used to centralize style configuration</li>
+<li>[FIX] use =like instead of like to search for accounts, because
+the % are added by the user in the expressions</li>
+<li>[FIX] Correctly compute the initial balance of income and expense account
+based on the start of the fiscal year</li>
+<li>[IMP] Support date ranges (from OCA/server-tools/date_range) as a more
+flexible alternative to fiscal periods</li>
+<li>v9 migration: fiscal periods are removed, account charts are removed,
+consolidation accounts have been removed</li>
+</ul>
+</div>
+<div class="section" id="id26">
+<h2><a class="toc-backref" href="#id44">8.0.1.0.0 (2016-04-27)</a></h2>
+<ul class="simple">
+<li>The copy of a MIS Report Instance now copies period.
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/181">https://github.com/OCA/account-financial-reporting/pull/181</a></li>
+<li>The copy of a MIS Report Template now copies KPIs and queries.
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/177">https://github.com/OCA/account-financial-reporting/pull/177</a></li>
+<li>Usability: the default view for MIS Report instances is now the rendered preview,
+and the settings are accessible through a gear icon in the list view and
+a button in the preview.
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/170">https://github.com/OCA/account-financial-reporting/pull/170</a></li>
+<li>Display blank cells instead of 0.0 when there is no data.
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/169">https://github.com/OCA/account-financial-reporting/pull/169</a></li>
+<li>Usability: better layout of the MIS Report periods settings on small screens.
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/167">https://github.com/OCA/account-financial-reporting/pull/167</a></li>
+<li>Include the download buttons inside the MIS Builder widget, and refactor
+the widget to open the door to analytic filtering in the previews.
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/151">https://github.com/OCA/account-financial-reporting/pull/151</a></li>
+<li>Add KPI rendering prefixes (so you can print $ in front of the value).
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/158">https://github.com/OCA/account-financial-reporting/pull/158</a></li>
+<li>Add hooks for analytic filtering.
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/128">https://github.com/OCA/account-financial-reporting/pull/128</a>
+<a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/131">https://github.com/OCA/account-financial-reporting/pull/131</a></li>
+</ul>
+</div>
+<div class="section" id="id27">
+<h2><a class="toc-backref" href="#id45">8.0.0.2.0</a></h2>
+<p>Pre-history. Or rather, you need to look at the git log.</p>
+</div>
+</div>
+<div class="section" id="bug-tracker">
+<h1><a class="toc-backref" href="#id46">Bug Tracker</a></h1>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/mis-builder/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us smashing it by providing a detailed and welcomed feedback.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h1><a class="toc-backref" href="#id47">Credits</a></h1>
+<div class="section" id="authors">
+<h2><a class="toc-backref" href="#id48">Authors</a></h2>
+<ul class="simple">
+<li>ACSONE SA/NV</li>
+</ul>
+</div>
+<div class="section" id="contributors">
+<h2><a class="toc-backref" href="#id49">Contributors</a></h2>
+<ul class="simple">
+<li>Stéphane Bidoul &lt;<a class="reference external" href="mailto:stephane.bidoul&#64;acsone.eu">stephane.bidoul&#64;acsone.eu</a>&gt;</li>
+<li>Laetitia Gangloff &lt;<a class="reference external" href="mailto:laetitia.gangloff&#64;acsone.eu">laetitia.gangloff&#64;acsone.eu</a>&gt;</li>
+<li>Adrien Peiffer &lt;<a class="reference external" href="mailto:adrien.peiffer&#64;acsone.eu">adrien.peiffer&#64;acsone.eu</a>&gt;</li>
+<li>Alexis de Lattre &lt;<a class="reference external" href="mailto:alexis.delattre&#64;akretion.com">alexis.delattre&#64;akretion.com</a>&gt;</li>
+<li>Alexandre Fayolle &lt;<a class="reference external" href="mailto:alexandre.fayolle&#64;camptocamp.com">alexandre.fayolle&#64;camptocamp.com</a>&gt;</li>
+<li>Jordi Ballester &lt;<a class="reference external" href="mailto:jordi.ballester&#64;eficent.com">jordi.ballester&#64;eficent.com</a>&gt;</li>
+<li>Thomas Binsfeld &lt;<a class="reference external" href="mailto:thomas.binsfeld&#64;gmail.com">thomas.binsfeld&#64;gmail.com</a>&gt;</li>
+<li>Giovanni Capalbo &lt;<a class="reference external" href="mailto:giovanni&#64;therp.nl">giovanni&#64;therp.nl</a>&gt;</li>
+<li>Marco Calcagni &lt;<a class="reference external" href="mailto:mcalcagni&#64;dinamicheaziendali.it">mcalcagni&#64;dinamicheaziendali.it</a>&gt;</li>
+<li>Sébastien Beau &lt;<a class="reference external" href="mailto:sebastien.beau&#64;akretion.com">sebastien.beau&#64;akretion.com</a>&gt;</li>
+<li>Laurent Mignon &lt;<a class="reference external" href="mailto:laurent.mignon&#64;acsone.eu">laurent.mignon&#64;acsone.eu</a>&gt;</li>
+<li>Luc De Meyer &lt;<a class="reference external" href="mailto:luc.demeyer&#64;noviat.com">luc.demeyer&#64;noviat.com</a>&gt;</li>
+<li>Benjamin Willig &lt;<a class="reference external" href="mailto:benjamin.willig&#64;acsone.eu">benjamin.willig&#64;acsone.eu</a>&gt;</li>
+<li>Martronic SA &lt;<a class="reference external" href="mailto:info&#64;martronic.ch">info&#64;martronic.ch</a>&gt;</li>
+<li>nicomacr &lt;<a class="reference external" href="mailto:nmr&#64;adhoc.com.ar">nmr&#64;adhoc.com.ar</a>&gt;</li>
+<li>Juan Jose Scarafia &lt;<a class="reference external" href="mailto:jjs&#64;adhoc.com.ar">jjs&#64;adhoc.com.ar</a>&gt;</li>
+<li>Richard deMeester &lt;<a class="reference external" href="mailto:richard&#64;willowit.com.au">richard&#64;willowit.com.au</a>&gt;</li>
+</ul>
+</div>
+<div class="section" id="maintainers">
+<h2><a class="toc-backref" href="#id50">Maintainers</a></h2>
+<p>This module is maintained by the OCA.</p>
+<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<p>OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.</p>
+<p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
+<p><a class="reference external" href="https://github.com/sbidoul"><img alt="sbidoul" src="https://github.com/sbidoul.png?size=40px" /></a></p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/mis-builder/tree/11.0/mis_builder">OCA/mis-builder</a> project on GitHub.</p>
+<p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
+</div>
+</div>
+</div>
+</body>
+</html>
