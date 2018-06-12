@@ -13,8 +13,13 @@ beautiful, custom reports such as P&L, Balance Sheets and more.
    :maxdepth: 3
    :caption: Contents:
 
-   intro
+   description
    quickstart
+   install
+   usage
+   develop
+   roadmap
+   contributors
    history
 
 Indices and tables
