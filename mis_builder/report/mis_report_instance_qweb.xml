@@ -67,7 +67,7 @@
                 </div>
                 <div class="mis_tbody">
                   <t t-foreach="matrix.iter_rows()" t-as="row">
-                    <div t-if="not row.style_props.hide_empty or not row.is_empty()" class="mis_row">
+                    <div t-if="not ((row.style_props.hide_empty and row.is_empty()) or row.style_props.hide_always)" class="mis_row">
                       <div t-att-style="style_obj.to_css_style(row.style_props)" class="mis_cell mis_rowlabel">
                         <t t-esc="row.label"/>
                         <t t-if="row.description">

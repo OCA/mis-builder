@@ -447,7 +447,8 @@ class KpiMatrix(object):
 
         body = []
         for row in self.iter_rows():
-            if row.style_props.hide_empty and row.is_empty():
+            if (row.style_props.hide_empty and row.is_empty()) or \
+                    row.style_props.hide_always:
                 continue
             row_data = {
                 'row_id': row.row_id,
