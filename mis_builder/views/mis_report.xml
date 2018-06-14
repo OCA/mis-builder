@@ -114,7 +114,7 @@
                                      <p>Expressions can be any valid python expressions.</p>
                                      <p>
                                          The following special elements are recognized in the expressions to compute accounting data: 
-                                         <code>{bal|crd|deb|pbal|nbal}{pieu}[account selecor][journal items domain]</code>.
+                                         <code>{bal|crd|deb|pbal|nbal}{pieu}[account selector][journal items domain]</code>.
                                      </p>
                                      <ul>
                                          <li><b>bal, crd, deb, pbal, nbal</b>: balance, debit, credit, positive balance, negative balance.</li>

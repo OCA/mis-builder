@@ -167,7 +167,7 @@ Building your KPI
 Expressions can be any valid python expressions.
 
 The following special elements are recognized in the expressions to compute accounting
-data: {bal|crd|deb}{pieu}[account selecor][journal items domain].
+data: {bal|crd|deb}{pieu}[account selector][journal items domain].
 
 * bal, crd, deb: balance, debit, credit.
 * p, i, e: respectively variation over the period, initial balance, ending balance
