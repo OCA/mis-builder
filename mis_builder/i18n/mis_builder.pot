@@ -1207,7 +1207,7 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "The following special elements are recognized in the expressions to compute accounting data: \n"
-"                                         <code>{bal|crd|deb|pbal|nbal}{pieu}[account selecor][journal items domain]</code>."
+"                                         <code>{bal|crd|deb|pbal|nbal}{pieu}[account selector][journal items domain]</code>."
 msgstr ""
 
 #. module: mis_builder
