@@ -18,14 +18,11 @@ python:
 
 env:
   global:
-  - VERSION="9.0" TESTS="0" LINT_CHECK="0" TRANSIFEX="0"
-  - TRANSIFEX_USER='transbot@odoo-community.org'
-  - secure: "1WrdTvTbXTOUv84HyQFdIkxistruGhtYLb2DvlXsDd3pM+/nmtC/PLJ5lQVY0XPiiY3MefH3xvSttpe+QRJx8mzQpInm84H/CPASJdqes3AaXSm/0m4bxoQGkdDEHK3BFYDhk4BvJvBlJf/71TsgTQ+ByFWEaRByzmU6lDceyE21PhQ7EvwF7Zb47IbdX3s4lYv37dNFXqEGABOXJ0CdIYlf1/KdI/zEUFDdkawRHOgf9h6j7klXtVdyo/26no+O4MzUVgHDHHfdvRxoJCLd/CdIiFT6w95FiMSkjTai0h0j44A87ugBvuH59fdWI1/JhpooNNdvkR0h33tLChPcM+X+Bm/lHCvqm2xdcv37PmxTFahHPt/FPl/ptlOn+QpczSqJDVu683HTSPH4FwwxzPoA8aXg7sUA1im+flWBtTYt0yR1FJ3WQT5LP1jW+sJoo+VBvtkEocC1VcRBlKVJVeb/IziZNxy4rUg/CQBTT56QpA2fy0eV9ydhSd+1DHhyzgUGy6KKmC1/bivTUJYS4nC65qCUIkX9bMIrN+EzvHsl1mmIUpZX9oavYwbmoRvp1IoI72ZcbXc+0dsGTT66Ql8aSYJdnItT8NWeSCyY8My8AviniPJVUn/NFXk38JSPpOWpOYd8wizQnWaGm6HZTU4n019JfNy1CQPkQvgbJNw="
+  - VERSION="9.0" TESTS="0" LINT_CHECK="0"
 
   matrix:
   - LINT_CHECK="1"
-  - TRANSIFEX="1"
-  - TESTS="1" ODOO_REPO="odoo/odoo"
+  - TESTS="1" ODOO_REPO="odoo/odoo" MAKEPOT="1"
   - TESTS="1" ODOO_REPO="OCA/OCB"
 
 virtualenv:
@@ -36,7 +33,7 @@ before_install:
   - "sh -e /etc/init.d/xvfb start"
 
 install:
-  - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - git clone https://github.com/acsone/maintainer-quality-tools.git -b makepot ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
 
