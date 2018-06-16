@@ -10,14 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 07:59+0000\n"
-"PO-Revision-Date: 2018-02-10 07:59+0000\n"
-"Last-Translator: Nicolas JEUDY <njeudy@panda-chi.io>, 2018\n"
+"PO-Revision-Date: 2018-06-16 10:53+0000\n"
+"Last-Translator: Stéphane Bidoul (test) <stephane.bidoul@gmail.com>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.0.1\n"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:503
@@ -32,11 +33,13 @@ msgid ""
 "<b>AccountingNone</b>: a null value that behaves as 0 in arithmetic "
 "operations."
 msgstr ""
+"<b>AccountingNone</b>: une valeur nulle qui se comporte comme un zero dans "
+"les opérations arithmétiques."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>bal, crd, deb</b>: balance, debit, credit."
-msgstr ""
+msgstr "<b>1bal, crd, deb</b>: balance, débit, crédit."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
