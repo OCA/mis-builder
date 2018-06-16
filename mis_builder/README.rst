@@ -101,6 +101,13 @@ Changelog
   leading to errors in pbal computations
   (`#93 <https://github.com/OCA/mis-builder/issue/93>`_)
 
+10.0.3.2.1 (unreleased)
+~~~~~~~~~~~~~~~~~~~~~~~
+* [IMP] add "hide always" style property to make hidden KPI's
+  (for KPI that serve as basis for other formulas, but do not
+  need to be displayed).
+  (`#46 <https://github.com/OCA/mis-builder/issues/46>`_)
+
 10.0.3.2.0 (2018-05-02)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
