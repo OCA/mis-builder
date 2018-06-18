@@ -51,12 +51,6 @@ addon | version | summary
 
 [//]: # (end addons)
 
-Translation Status
-------------------
-[![Transifex Status](https://www.transifex.com/projects/p/OCA-mis-builder-10-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-mis-builder-10-0)
-
-----
-
 OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
