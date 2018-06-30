@@ -1,3 +1,14 @@
+11.0.3.2.2 (2018-06-30)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Fix bug in company_default_get call returning
+  id instead of recordset
+  (`#103 <https://github.com/OCA/mis-builder/pull/103>`_)
+* [IMP] add "hide always" style property to make hidden KPI's
+  (for KPI that serve as basis for other formulas, but do not
+  need to be displayed).
+  (`#46 <https://github.com/OCA/mis-builder/issues/46>`_)
+
 11.0.3.2.1 (2018-05-29)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
