@@ -365,7 +365,7 @@ class MisReportInstance(models.Model):
     @api.model
     def _default_company_id(self):
         default_company_id = self.env['res.company'].\
-            _company_default_get('mis.report.instance').id
+            _company_default_get('mis.report.instance')
         return default_company_id
 
     _name = 'mis.report.instance'

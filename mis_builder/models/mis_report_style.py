@@ -37,6 +37,7 @@ PROPS = [
     'dp',
     'divider',
     'hide_empty',
+    'hide_always',
 ]
 
 TYPE_NUM = 'num'
@@ -138,6 +139,8 @@ class MisReportKpiStyle(models.Model):
                                default='1')
     hide_empty_inherit = fields.Boolean(default=True)
     hide_empty = fields.Boolean(default=False)
+    hide_always_inherit = fields.Boolean(default=True)
+    hide_always = fields.Boolean(default=False)
 
     @api.model
     def merge(self, styles):

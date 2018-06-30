@@ -56,6 +56,10 @@ class MisBudgetItem(models.Model):
         store=True,
         readonly=True,
     )
+    analytic_tag_ids = fields.Many2many(
+        comodel_name='account.analytic.tag',
+        string='Analytic Tags',
+    )
 
     @api.onchange('date_range_id')
     def _onchange_date_range(self):

@@ -99,7 +99,8 @@ class MisBuilderXlsx(ReportXlsx):
 
         # rows
         for row in matrix.iter_rows():
-            if row.style_props.hide_empty and row.is_empty():
+            if (row.style_props.hide_empty and row.is_empty()) or \
+                    row.style_props.hide_always:
                 continue
             row_xlsx_style = style_obj.to_xlsx_style(row.style_props)
             row_format = workbook.add_format(row_xlsx_style)
