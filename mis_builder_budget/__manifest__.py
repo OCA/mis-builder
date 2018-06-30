@@ -13,6 +13,7 @@
     'website': 'https://github.com/OCA/mis-builder/',
     'depends': [
         'mis_builder',
+        'account',
     ],
     'data': [
         'views/mis_report_instance_period.xml',
