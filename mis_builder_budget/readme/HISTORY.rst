@@ -1,3 +1,9 @@
+10.0.3.2.1 (2018-06-30)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- [IMP] Support analytic tags in budget items
+  (`#100 <https://github.com/OCA/mis-builder/pull/100>`_)
+
 10.0.3.2.0 (2018-05-02)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
