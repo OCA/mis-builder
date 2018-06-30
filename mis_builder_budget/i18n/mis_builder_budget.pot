@@ -20,21 +20,26 @@ msgid "%s (copy)"
 msgstr ""
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:91
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:95
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr ""
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:98
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:102
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr ""
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:85
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:89
 #, python-format
 msgid "%s start date must not be after end date"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_tag_ids
+msgid "Analytic Tags"
 msgstr ""
 
 #. module: mis_builder_budget
