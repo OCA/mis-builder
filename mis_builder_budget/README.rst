@@ -71,6 +71,12 @@ be found on GitHub.
 Changelog
 =========
 
+9.0.3.2.1 (2018-06-30)
+~~~~~~~~~~~~~~~~~~~~~~
+
+- [IMP] Support analytic tags in budget items
+  (`#100 <https://github.com/OCA/mis-builder/pull/100>`_)
+
 9.0.3.2.0 (2018-05-02)
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -115,6 +121,7 @@ Contributors
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
 * Adrien Peiffer <adrien.peiffer@acsone.eu>
 * Benjamin Willig <benjamin.willig@acsone.eu>
+* Artem Kostyuk <a.kostyuk@mobilunity.com>
 
 Maintainers
 ~~~~~~~~~~~
