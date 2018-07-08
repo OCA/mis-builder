@@ -189,6 +189,8 @@ class AccountingExpressionProcessor(object):
 
     def done_parsing(self):
         """ Replace account domains by account ids in map """
+        account_model = self.env['account.account'].\
+            with_context(active_test=False)
         for key, acc_domains in self._map_account_ids.items():
             all_account_ids = set()
             for acc_domain in acc_domains:
@@ -196,7 +198,7 @@ class AccountingExpressionProcessor(object):
                     acc_domain,
                     [('company_id', 'in', self.companies.ids)],
                 ])
-                account_ids = self.env['account.account'].\
+                account_ids = account_model.\
                     search(acc_domain_with_company).ids
                 self._account_ids_by_acc_domain[acc_domain].\
                     update(account_ids)
@@ -320,6 +322,7 @@ class AccountingExpressionProcessor(object):
             aml_model = self.env['account.move.line']
         else:
             aml_model = self.env[aml_model]
+        aml_model = aml_model.with_context(active_test=False)
         company_rates = self._get_company_rates(date_to)
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(dict)
