@@ -54,3 +54,7 @@ addon | version | summary
 OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+Translation Status
+------------------
+[![Translation status](https://translation.odoo-community.org/widgets/mis-builder-10-0/-/multi-auto.svg)](https://translation.odoo-community.org/engage/mis-builder-10-0/?utm_source=widget)
