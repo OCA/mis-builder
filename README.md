@@ -34,6 +34,12 @@ It features the following key characteristics:
 - For developers, the accounting balance computation engine is exposed as an easy
   to use API.
 
+Here are some presentations:
+
+- Odoo Experience 2017 ([slides](https://www.slideshare.net/acsone/budget-control-with-misbuilder-3-2017), [video](https://youtu.be/0PpxGAf2l-0))
+- Odoo Experience 2016 ([slides](https://www.slideshare.net/acsone/misbuilder-2016))
+- Odoo Experience 2015 ([slides](https://www.slideshare.net/acsone/misbuilder))
+
 
 [//]: # (addons)
 
@@ -46,6 +52,12 @@ addon | version | summary
 [mis_builder_demo](mis_builder_demo/) | 9.0.3.0.0 | Demo addon for MIS Builder
 
 [//]: # (end addons)
+
+Translation Status
+------------------
+[![Translation status](https://translation.odoo-community.org/widgets/mis-builder-9-0/-/multi-auto.svg)](https://translation.odoo-community.org/engage/mis-builder-9-0/?utm_source=widget)
+
+----
 
 OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
