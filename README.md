@@ -43,7 +43,7 @@ addon | version | summary
 
 Translation Status
 ------------------
-[![Transifex Status](https://www.transifex.com/projects/p/OCA-mis-builder-8-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-mis-builder-8-0)
+[![Translation status](https://translation.odoo-community.org/widgets/mis-builder-8-0/-/multi-auto.svg)](https://translation.odoo-community.org/engage/mis-builder-8-0/?utm_source=widget)
 
 ----
 
