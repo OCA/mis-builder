@@ -77,7 +77,7 @@ class KpiMatrixRow(object):
 
 class KpiMatrixCol(object):
 
-    def __init__(self, key, label, description, locals_dict, subkpis):
+    def __init__(self, key, label, description, locals_dict, subkpis, date_from=None, date_to=None):
         self.key = key
         self.label = label
         self.description = description
@@ -85,6 +85,8 @@ class KpiMatrixCol(object):
         self.colspan = subkpis and len(subkpis) or 1
         self._subcols = []
         self.subkpis = subkpis
+        self.date_from = date_from
+        self.date_to = date_to
         if not subkpis:
             subcol = KpiMatrixSubCol(self, '', '', 0)
             self._subcols.append(subcol)
@@ -177,12 +179,12 @@ class KpiMatrix(object):
         self._detail_rows[kpi] = {}
 
     def declare_col(self, col_key, label, description,
-                    locals_dict, subkpis):
+                    locals_dict, subkpis, date_from, date_to):
         """ Declare a new column, giving it an identifier (key).
 
         Invoke the declare_* methods in display order.
         """
-        col = KpiMatrixCol(col_key, label, description, locals_dict, subkpis)
+        col = KpiMatrixCol(col_key, label, description, locals_dict, subkpis, date_from, date_to)
         self._cols[col_key] = col
         return col
 
@@ -486,3 +488,35 @@ class KpiMatrix(object):
             'header': header,
             'body': body,
         }
+
+    def as_value(self):
+        values = {}
+        columns = {col.key: {'label': col.label,
+                             'date_from': col.date_from,
+                             'date_to': col.date_to} for col in self.iter_cols()}
+        for row in self.iter_rows():
+            if (row.style_props.hide_empty and row.is_empty()) or \
+                    row.style_props.hide_always:
+                continue
+
+            values[row.label] = []
+
+            for cell in row.iter_cells():
+                if cell is not None:
+                    if cell.val is AccountingNone or \
+                            isinstance(cell.val, DataError):
+                        val = None
+                    else:
+                        val = cell.val
+                    key = None
+                    if cell.drilldown_arg:
+                        key = cell.drilldown_arg['period_id']
+                    elif cell.subcol.col:
+                        key = cell.subcol.col.key
+
+                    if key:
+                        cl = dict(columns[key])
+                        cl['val'] = val
+                        values[row.label].append(cl)
+
+        return values

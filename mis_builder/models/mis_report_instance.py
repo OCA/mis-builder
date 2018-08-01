@@ -694,6 +694,12 @@ class MisReportInstance(models.Model):
         return kpi_matrix.as_dict()
 
     @api.multi
+    def compute_values(self):
+        self.ensure_one()
+        kpi_matrix = self._compute_matrix()
+        return kpi_matrix.as_value()
+
+    @api.multi
     def drilldown(self, arg):
         self.ensure_one()
         period_id = arg.get('period_id')

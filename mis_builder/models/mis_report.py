@@ -627,7 +627,8 @@ class MisReport(models.Model):
                                  locals_dict,
                                  eval_expressions,
                                  eval_expressions_by_account,
-                                 no_auto_expand_accounts=False):
+                                 no_auto_expand_accounts=False,
+                                 date_from=None, date_to=None):
         """This is the main computation loop.
 
         It evaluates the kpis and puts the results in the KpiMatrix.
@@ -650,7 +651,7 @@ class MisReport(models.Model):
 
         col = kpi_matrix.declare_col(col_key,
                                      col_label, col_description,
-                                     locals_dict, subkpis)
+                                     locals_dict, subkpis, date_from, date_to)
 
         compute_queue = self.kpi_ids
         recompute_queue = []
@@ -829,7 +830,8 @@ class MisReport(models.Model):
         self._declare_and_compute_col(
             kpi_matrix, col_key, col_label, col_description, subkpis_filter,
             locals_dict, eval_expressions, eval_expressions_by_account,
-            no_auto_expand_accounts)
+            no_auto_expand_accounts, fields.Date.from_string(date_from),
+            fields.Date.from_string(date_to))
 
     def get_kpis_by_account_id(self, company):
         """ Return { account_id: set(kpi) } """
