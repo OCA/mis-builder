@@ -203,6 +203,9 @@ class AccountingNoneType(object):
     def __int__(self):
         return 0
 
+    def __round__(self):
+        return 0.0
+
 
 AccountingNone = AccountingNoneType()
 
