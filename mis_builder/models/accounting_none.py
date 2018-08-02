@@ -203,7 +203,7 @@ class AccountingNoneType(object):
     def __int__(self):
         return 0
 
-    def __round__(self):
+    def __round__(self, ndigits):
         return 0.0
 
 
