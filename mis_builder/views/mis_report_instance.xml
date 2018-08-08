@@ -77,6 +77,14 @@
                             </group>
                         </group>
                     </group>
+                <group>
+                    <group>
+                        <field name="date_field"/>
+                    </group>
+                    <group>
+                        <button type="object" name="apply_date" string="Apply" class="oe_inline"/>
+                    </group>
+                </group>
                     <notebook>
                         <page string="Columns" attrs="{'invisible': [('comparison_mode', '=', False)]}">
                             <group>
@@ -92,6 +100,7 @@
                                         <field name="source"/>
                                         <field name="date_from"/>
                                         <field name="date_to"/>
+                                        <field name="date_field"/>
                                         <field name="valid" invisible="1"/>
                                     </tree>
                                 </field>
@@ -184,6 +193,7 @@
                                domain="[('report_id', '=', parent.report_id)]"
                                widget="many2many_tags"
                                options="{'no_create': True}"/>
+                        <field name="date_field"/>
                         <field name="valid" invisible="1"/>
                         <field name="report_instance_id" invisible="1" attrs="{'required': [('id', '!=', False)]}"/>
                         <field name="report_id" invisible="1"/>

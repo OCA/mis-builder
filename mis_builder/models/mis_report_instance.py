@@ -257,6 +257,13 @@ class MisReportInstancePeriod(models.Model):
         comodel_name='mis.report.instance.period',
         string='Compare',
     )
+    date_field = fields.Many2one(
+        'ir.model.fields', 'Date Field',
+        domain="[('model_id', '=', 'account.move.line'), ('ttype', 'in', ['date'])]",
+        required=True,
+        default=lambda self: self.env['ir.model.fields'].search([
+            ('name', '=', 'date'), ('model_id', '=', 'account.move.line')]),
+        help="Date field used in target model to organize data per period.")
 
     _order = 'sequence, id'
 
@@ -433,6 +440,10 @@ class MisReportInstance(models.Model):
         string='Date Range')
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
+    date_field = fields.Many2one(
+        'ir.model.fields', 'Date Field',
+        domain="[('model_id', '=', 'account.move.line'), ('ttype', 'in', ['date'])]",
+        help="Date field used in target model to organize data per period.")
     temporary = fields.Boolean(default=False)
 
     @api.onchange('company_id', 'multi_company')
@@ -602,6 +613,7 @@ class MisReportInstance(models.Model):
             period.subkpi_ids,
             period._get_additional_move_line_filter,
             period._get_additional_query_filter,
+            date_field=period.date_field.name,
             no_auto_expand_accounts=self.no_auto_expand_accounts,
         )
 
@@ -721,3 +733,10 @@ class MisReportInstance(models.Model):
             }
         else:
             return False
+
+    @api.multi
+    def apply_date(self):
+        self.ensure_one()
+        if self.date_field:
+            self.period_ids.update({
+                'date_field': self.date_field.id})

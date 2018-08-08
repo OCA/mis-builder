@@ -727,7 +727,8 @@ class MisReport(models.Model):
                                    get_additional_query_filter=None,
                                    locals_dict=None,
                                    aml_model=None,
-                                   no_auto_expand_accounts=False):
+                                   no_auto_expand_accounts=False,
+                                   date_field='date'):
         """ Evaluate a report for a given period, populating a KpiMatrix.
 
         :param kpi_matrix: the KpiMatrix object to be populated created
@@ -769,7 +770,7 @@ class MisReport(models.Model):
         aep.do_queries(date_from, date_to,
                        target_move,
                        additional_move_line_filter,
-                       aml_model)
+                       aml_model, date_field)
 
         def eval_expressions(expressions, locals_dict):
             expressions = [e and e.name or 'AccountingNone'
