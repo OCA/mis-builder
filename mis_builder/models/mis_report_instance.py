@@ -424,6 +424,9 @@ class MisReportInstance(models.Model):
     no_auto_expand_accounts = fields.Boolean(
         string='Disable account details expansion',
     )
+    display_columns_description = fields.Boolean(
+        help="Display the date range details in the columns of the reports.",
+    )
     comparison_mode = fields.Boolean(
         compute="_compute_comparison_mode",
         inverse="_inverse_comparison_mode")
@@ -592,6 +595,10 @@ class MisReportInstance(models.Model):
             raise UserError(_("Column %s with actuals source "
                               "must have from/to dates.") %
                             (period.name,))
+
+        if not self.display_columns_description:
+            description = ''
+
         self.report_id.declare_and_compute_period(
             kpi_matrix,
             period.id,
