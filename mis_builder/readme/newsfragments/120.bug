@@ -1,0 +1,2 @@
+In the style form, hide the "Hide always" checkbox when "Hide always inherit"
+is checked, as for all other syle elements.
