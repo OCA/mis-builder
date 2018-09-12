@@ -368,6 +368,7 @@ Contributors
 * Juan Jose Scarafia <jjs@adhoc.com.ar>
 * Richard deMeester <richard@willowit.com.au>
 * Eric Caudal <eric.caudal@elico-corp.com>
+* Andrea Stirpe <a.stirpe@onestein.nl>
 
 Maintainers
 ~~~~~~~~~~~
