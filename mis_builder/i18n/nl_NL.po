@@ -21,7 +21,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:504
-#: code:addons/mis_builder/models/mis_report_instance.py:484
+#: code:addons/mis_builder/models/mis_report_instance.py:487
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (kopie)"
@@ -319,8 +319,8 @@ msgid "Column %s cannot be compared to itself."
 msgstr "Kolom %skan niet met zichzelf worden vergeleken."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:590
-#: code:addons/mis_builder/models/mis_report_instance.py:611
+#: code:addons/mis_builder/models/mis_report_instance.py:593
+#: code:addons/mis_builder/models/mis_report_instance.py:614
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "Kolom %s met Actuele waardes moet van/tot data hebben."
@@ -505,9 +505,19 @@ msgid "Display Name"
 msgstr "Weergavenaam"
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display columns description"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_auto_expand_accounts
 msgid "Display details by account"
 msgstr "Laat details per rekening zien"
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display the date range details in the column headers."
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_divider_inherit
@@ -1414,7 +1424,7 @@ msgid "add.mis.report.instance.dashboard.wizard"
 msgstr "add.mis.report.instance.dashboard.wizard"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:679
+#: code:addons/mis_builder/models/mis_report_instance.py:684
 #, python-format
 msgid "from %s to %s"
 msgstr "van %s tot %s"
