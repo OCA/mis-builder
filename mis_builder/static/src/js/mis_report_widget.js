@@ -1,9 +1,12 @@
 odoo.define('mis_builder.widget', function(require) {
 "use strict";
 
-    var AbstractField = require('web.AbstractField');
+    var FormCommon = require('web.form_common');
+    var Model = require('web.DataModel');
+    var AbstractField = FormCommon.AbstractField;
+
     var core = require('web.core');
-    var field_registry = require('web.field_registry');
+    var session = require('web.session');
 
     var MisReportWidget = AbstractField.extend({
 
@@ -24,21 +27,30 @@ odoo.define('mis_builder.widget', function(require) {
             'click .oe_mis_builder_refresh': 'refresh',
         }),
 
+        init: function(field_manager, node) {
+            var self = this;
+            self._super(field_manager, node);
+            self.MisReportInstance = new Model('mis.report.instance');
+        },
+
         /**
          * Return the id of the mis.report.instance to which the widget is bound.
          */
         _instance_id: function() {
-            if (this.value) {
-                return this.value;
+            var self = this;
+            var value = self.get('value');
+
+            if (value) {
+                return value;
             }
-            /* 
+            /*
              * This trick is needed because in a dashboard the view does
              * not seem to be bound to an instance: it seems to be a limitation
              * of Odoo dashboards that are not designed to contain forms but
              * rather tree views or charts.
              */
-            var context = this.getParent().state.context;
-            if (context['active_model'] == 'mis.report.instance') {
+            var context = self.get_context();
+            if (context['active_model'] === 'mis.report.instance') {
                 return context['active_id'];
             }
         },
@@ -49,23 +61,21 @@ odoo.define('mis_builder.widget', function(require) {
          */
         willStart: function () {
             var self = this;
-            var context = self.getParent().state.context;
+            var context = self.get_context();
 
-            var def1 = self._rpc({
-                model: 'mis.report.instance',
-                method: 'compute',
-                args: [self._instance_id()],
-                context: context,
-            }).then(function(result) {
+            var def1 = self.MisReportInstance.call(
+                'compute',
+                [self._instance_id(),],
+                {
+                    'context': context
+                }
+            ).then(function(result) {
                 self.mis_report_data = result;
             });
 
-            var def2 = self._rpc({
-                model: 'res.users',
-                method: 'has_group',
-                args: ['account.group_account_user'],
-                context: context,
-            }).then(function(result) {
+            var def2 = session.user_has_group(
+                'account.group_account_user'
+            ).then(function(result) {
                 self.show_settings = result;
             });
 
@@ -76,61 +86,70 @@ odoo.define('mis_builder.widget', function(require) {
             this.replace();
         },
 
+        get_context: function() {
+            var self = this;
+            return self.view.dataset.get_context();
+        },
+
         print_pdf: function() {
             var self = this;
-            var context = self.getParent().state.context;
-            this._rpc({
-                model: 'mis.report.instance',
-                method: 'print_pdf',
-                args: [this._instance_id()],
-                context: context,
-            }).then(function(result){
+            var context = self.get_context();
+            self.MisReportInstance.call(
+                'print_pdf',
+                [self._instance_id(),],
+                {
+                    'context': context
+                }
+            ).then(function(result){
                 self.do_action(result);
             });
         },
 
         export_xls: function() {
             var self = this;
-            var context = self.getParent().state.context;
-            this._rpc({
-                model: 'mis.report.instance',
-                method: 'export_xls',
-                args: [this._instance_id()],
-                context: context,
-            }).then(function(result){
+            var context = self.get_context();
+            self.MisReportInstance.call(
+                'export_xls',
+                [self._instance_id(),],
+                {
+                    'context': context
+                }
+            ).then(function(result){
                 self.do_action(result);
             });
         },
 
         display_settings: function() {
             var self = this;
-            var context = self.getParent().state.context;
-            this._rpc({
-                model: 'mis.report.instance',
-                method: 'display_settings',
-                args: [this._instance_id()],
-                context: context,
-            }).then(function(result){
+            var context = self.get_context();
+            self.MisReportInstance.call(
+                'display_settings',
+                [self._instance_id(),],
+                {
+                    'context': context
+                }
+            ).then(function(result){
                 self.do_action(result);
             });
         },
 
         drilldown: function(event) {
             var self = this;
-            var context = self.getParent().state.context;
+            var context = self.get_context();
             var drilldown = $(event.target).data("drilldown");
-            this._rpc({
-                model: 'mis.report.instance',
-                method: 'drilldown',
-                args: [this._instance_id(), drilldown],
-                context: context,
-            }).then(function(result){
+            self.MisReportInstance.call(
+                'drilldown',
+                [self._instance_id(), drilldown],
+                {
+                    'context': context
+                }
+            ).then(function(result){
                 self.do_action(result);
             });
         },
     });
 
-    field_registry.add("mis_report_widget", MisReportWidget);
+    core.form_widget_registry.add('mis_report_widget', MisReportWidget);
 
     return MisReportWidget;
 
