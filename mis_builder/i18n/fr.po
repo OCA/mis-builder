@@ -515,7 +515,7 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:9
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:9
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -1031,7 +1031,7 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:8
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:8
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -1060,7 +1060,7 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:7
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:7
 #, python-format
 msgid "Refresh"
 msgstr ""
@@ -1136,7 +1136,7 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:10
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
 #, python-format
 msgid "Settings"
 msgstr ""

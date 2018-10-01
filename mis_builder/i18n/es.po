@@ -551,7 +551,7 @@ msgstr "Ejemplos:"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:9
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:9
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -1073,7 +1073,7 @@ msgstr "Previsualizar"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:8
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:8
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -1104,7 +1104,7 @@ msgstr "Consultas de las compañías"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:7
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:7
 #, python-format
 msgid "Refresh"
 msgstr "Actualizar"
@@ -1182,7 +1182,7 @@ msgstr "Secuencia"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:10
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
 #, python-format
 msgid "Settings"
 msgstr "Configuración"
