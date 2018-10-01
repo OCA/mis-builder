@@ -6,6 +6,7 @@ import odoo.tests.common as common
 from odoo.tools import test_reports
 
 from ..models.mis_report import TYPE_STR
+from ..models.accounting_none import AccountingNone
 
 
 class TestMisReportInstance(common.TransactionCase):
@@ -122,6 +123,20 @@ class TestMisReportInstance(common.TransactionCase):
                 subkpi_id=self.report.subkpi_ids[1].id,
             ))],
         ))
+        # kpi that references another subkpi by name
+        self.env['mis.report.kpi'].create(dict(
+            report_id=self.report.id,
+            description='kpi 7',
+            name='k7',
+            multi=True,
+            expression_ids=[(0, 0, dict(
+                name='k3.sk1',
+                subkpi_id=self.report.subkpi_ids[0].id,
+            )), (0, 0, dict(
+                name='k3.sk2',
+                subkpi_id=self.report.subkpi_ids[1].id,
+            ))],
+        ))
         # create a report instance
         self.report_instance = self.env['mis.report.instance'].create(dict(
             name='test instance',
@@ -141,6 +156,20 @@ class TestMisReportInstance(common.TransactionCase):
         ))
         self.report_instance.period_ids[1].comparison_column_ids = \
             [(4, self.report_instance.period_ids[0].id, None)]
+
+    def test_compute(self):
+        matrix = self.report_instance._compute_matrix()
+        for row in matrix.iter_rows():
+            vals = [c.val for c in row.iter_cells()]
+            if row.kpi.name == 'k3':
+                # k3 is constant
+                self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
+            elif row.kpi.name == 'k6':
+                # k6 is a string kpi
+                self.assertEquals(vals, ["bla", "bla", "blabla"])
+            elif row.kpi.name == 'k7':
+                # k7 references k3 via subkpi names
+                self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
 
     def test_json(self):
         self.report_instance.compute()

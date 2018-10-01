@@ -24,7 +24,7 @@ from .aep import AccountingExpressionProcessor as AEP
 from .aggregate import _sum, _avg, _min, _max
 from .accounting_none import AccountingNone
 from .kpimatrix import KpiMatrix
-from .simple_array import SimpleArray
+from .simple_array import SimpleArray, named_simple_array
 from .mis_safe_eval import mis_safe_eval, DataError, NameDataError
 from .mis_report_style import (
     TYPE_NUM, TYPE_PCT, TYPE_STR, CMP_DIFF, CMP_PCT, CMP_NONE
@@ -642,6 +642,12 @@ class MisReport(models.Model):
         else:
             subkpis = self.subkpi_ids
 
+        SimpleArray_cls = named_simple_array(
+            'SimpleArray_{}'.format(col_key),
+            [subkpi.name for subkpi in subkpis],
+        )
+        locals_dict['SimpleArray'] = SimpleArray_cls
+
         col = kpi_matrix.declare_col(col_key,
                                      col_label, col_description,
                                      locals_dict, subkpis)
@@ -661,16 +667,16 @@ class MisReport(models.Model):
                 else:
                     # no error, set it in locals_dict so it can be used
                     # in computing other kpis
-                    if len(expressions) == 1:
+                    if not subkpis or not kpi.multi:
                         locals_dict[kpi.name] = vals[0]
                     else:
-                        locals_dict[kpi.name] = SimpleArray(vals)
+                        locals_dict[kpi.name] = SimpleArray_cls(vals)
 
                 # even in case of name error we set the result in the matrix
                 # so the name error will be displayed if it cannot be
                 # resolved by recomputing later
 
-                if len(expressions) == 1 and col.colspan > 1:
+                if subkpis and not kpi.multi:
                     # here we have one expression for this kpi, but
                     # multiple subkpis (so this kpi is most probably
                     # a sum or other operation on multi-valued kpis)
