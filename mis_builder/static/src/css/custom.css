@@ -28,3 +28,11 @@
 .oe_mis_builder_content {
   padding: 10px;
 }
+
+.oe_mis_builder_analytic_filter_box {
+  padding: 10px;
+}
+
+.oe_mis_builder_buttons {
+  margin: 0 !important;
+}
