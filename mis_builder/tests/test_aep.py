@@ -99,7 +99,6 @@ class TestAEP(common.TransactionCase):
             "     ('code', '=', '400AR')]")
         self.aep.parse_expr("bal_700IN")  # deprecated
         self.aep.parse_expr("bals[700IN]")  # deprecated
-        self.aep.done_parsing()
 
     def _create_move(self, date, amount, debit_acc, credit_acc):
         move = self.move_model.create({
@@ -140,6 +139,7 @@ class TestAEP(common.TransactionCase):
         self.assertEquals(self.company.fiscalyear_last_month, 12)
 
     def test_aep_basic(self):
+        self.aep.done_parsing()
         # let's query for december
         self._do_queries(
             datetime.date(self.prev_year, 12, 1),
@@ -219,6 +219,7 @@ class TestAEP(common.TransactionCase):
         # TODO allocate profits, and then...
 
     def test_aep_by_account(self):
+        self.aep.done_parsing()
         self._do_queries(
             datetime.date(self.curr_year, 3, 1),
             datetime.date(self.curr_year, 3, 31))
@@ -314,6 +315,7 @@ class TestAEP(common.TransactionCase):
         self.assertEquals(initial, {})
 
     def test_get_account_ids_for_expr(self):
+        self.aep.done_parsing()
         expr = 'balp[700IN]'
         account_ids = self.aep.get_account_ids_for_expr(expr)
         self.assertEquals(
@@ -328,6 +330,7 @@ class TestAEP(common.TransactionCase):
             account_ids, set([self.account_in.id, self.account_ar.id]))
 
     def test_get_aml_domain_for_expr(self):
+        self.aep.done_parsing()
         expr = 'balp[700IN]'
         domain = self.aep.get_aml_domain_for_expr(
             expr, '2017-01-01', '2017-03-31', target_move='posted')
@@ -374,3 +377,28 @@ class TestAEP(common.TransactionCase):
         self.assertFalse(_is_domain("123%"))
         self.assertFalse(_is_domain("123%,456"))
         self.assertFalse(_is_domain(""))
+
+    def test_inactive_tax(self):
+        expr = 'balp[][("tax_ids.name", "=", "test tax")]'
+        self.aep.parse_expr(expr)
+        self.aep.done_parsing()
+
+        tax = self.env['account.tax'].create(dict(
+            name='test tax',
+            active=False,
+            amount=0,
+        ))
+        move = self._create_move(
+            date=datetime.date(self.prev_year, 12, 1),
+            amount=100,
+            debit_acc=self.account_ar,
+            credit_acc=self.account_in)
+        for ml in move.line_ids:
+            if ml.credit:
+                ml.write(dict(tax_ids=[(6, 0, [tax.id])]))
+        # let's query for december 1st
+        self._do_queries(
+            datetime.date(self.prev_year, 12, 1),
+            datetime.date(self.prev_year, 12, 1))
+        # let's see if there was a match
+        self.assertEqual(self._eval(expr), -100)

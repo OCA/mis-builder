@@ -723,6 +723,7 @@ class MisReportInstance(models.Model):
                 'view_type': 'list',
                 'view_mode': 'list',
                 'target': 'current',
+                'context': {'active_test': False},
             }
         else:
             return False
