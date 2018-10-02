@@ -1,0 +1,1 @@
+Control visibility of analytic filter combo box in widget.

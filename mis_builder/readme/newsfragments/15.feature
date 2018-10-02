@@ -1,0 +1,1 @@
+Allow to filter data by analytic account.
