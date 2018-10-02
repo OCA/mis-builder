@@ -15,6 +15,13 @@ class Report(models.Model):
     @api.model
     def get_pdf(self, docids, report_name, html=None, data=None):
         ctx = self.env.context.copy()
+        if report_name == 'mis_builder.report_mis_report_instance':
+            if data.get('mis_report_remove_data'):
+                # Keep filters from the URL but regenerate data
+                data = None
+            active_ids = self.env.context.get('active_ids')
+            if not docids and active_ids:
+                docids = active_ids
         if docids:
             report = self._get_report_from_name(report_name)
             obj = self.env[report.model].browse(docids)[0]

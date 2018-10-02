@@ -571,6 +571,12 @@ class MisReportInstance(models.Model):
             'type': 'ir.actions.report.xml',
             'report_name': 'mis_builder.report_mis_report_instance',
             'report_type': 'qweb-pdf',
+            'data': {
+                # Providing a data attribute allows to propagate the context
+                # to the report download URL. The we can print a report
+                # using selected filters
+                'mis_report_remove_data': True,
+            },
             'context': self.env.context,
         }
 
