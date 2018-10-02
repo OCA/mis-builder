@@ -300,9 +300,10 @@ class MisReportInstancePeriod(models.Model):
         compatible with account.move.line."""
         self.ensure_one()
         filters = []
-        analytic_account_id = self.env.context.get('analytic_account_id')
-        if analytic_account_id:
-            filters.append(('analytic_account_id', '=', analytic_account_id))
+        mis_report_filters = self.env.context.get('mis_report_filters', {})
+        for filter, value in mis_report_filters.iteritems():
+            if value:
+                filters.append((filter, '=', value))
         return filters
 
     @api.multi
@@ -546,7 +547,9 @@ class MisReportInstance(models.Model):
         view_id = self.env.ref('mis_builder.'
                                'mis_report_instance_result_view_form')
         context = {
-            'analytic_account_id': self.analytic_account_id.id,
+            'mis_report_filters': {
+                'analytic_account_id': self.analytic_account_id.id,
+            }
         }
         return {
             'type': 'ir.actions.act_window',

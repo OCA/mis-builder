@@ -9,6 +9,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 pol.company_id AS company_id,
         pol.name AS name,
         po.date_planned as date,
+        pol.account_analytic_id as analytic_account_id,
         CASE
           WHEN (cast(split_part(ip.value_reference, ',', 2) AS INTEGER) IS NOT NULL) THEN cast(split_part(ip.value_reference, ',', 2) AS INTEGER)
           WHEN (cast(split_part(ipc.value_reference, ',', 2) AS INTEGER) IS NOT NULL) THEN cast(split_part(ipc.value_reference, ',', 2) AS INTEGER)
@@ -41,6 +42,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 ail.company_id AS company_id,
         ail.name AS name,
         ail.create_date as date,
+        ail.account_analytic_id as analytic_account_id,
         ail.account_id as account_id,
         CASE
           WHEN (ail.price_subtotal)::decimal(16,2) >= 0.0 THEN (ail.price_subtotal)::decimal(16,2)
