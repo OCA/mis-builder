@@ -23,6 +23,9 @@ odoo.define('mis_builder.widget', function (require) {
          * - mis_report_data: the result of mis.report.instance.compute()
          * - show_settings: a flag that controls the visibility of the Settings
          *   button
+         * - has_group_analytic_accounting
+         * - hide_analytic_filters: a flag that controls the visibility of the
+         *   analytic filters box
          */
 
         template: "MisReportWidgetTemplate",
@@ -45,6 +48,7 @@ odoo.define('mis_builder.widget', function (require) {
             self.analytic_account_id_label = _t("Analytic Account");
             self.analytic_account_id_m2o = undefined;
             self.has_group_analytic_accounting = false;
+            self.hide_analytic_filters = false;
             self.filter_values = {};
             self.init_filter_from_context();
         },
@@ -110,9 +114,18 @@ odoo.define('mis_builder.widget', function (require) {
                 self.has_group_analytic_accounting = result;
             });
 
+            var def_hide_analytic_filters = self.MisReportInstance.call(
+                'read',
+                [self._instance_id(), ['hide_analytic_filters']],
+                {'context': context}
+            ).then(function (result) {
+                var record = result[0];
+                self.hide_analytic_filters = record['hide_analytic_filters'];
+            });
+
             return $.when(
                 this._super.apply(this, arguments),
-                def1, def2, def3
+                def1, def2, def3, def_hide_analytic_filters
             );
         },
 
@@ -137,6 +150,9 @@ odoo.define('mis_builder.widget', function (require) {
 
         add_filters: function () {
             var self = this;
+            if (self.hide_analytic_filters) {
+                return;
+            }
             self.add_analytic_account_filter();
         },
 

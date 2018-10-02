@@ -62,11 +62,12 @@ class MisBuilderXlsx(ReportXlsx):
         row_pos += 2
 
         # filters
-        filters = objects.get_filter_descriptions_from_context()
-        for filter in filters:
-            sheet.write(row_pos, 0, filter, bold)
-            row_pos += 1
-        row_pos += 2
+        if not objects.hide_analytic_filters:
+            filters = objects.get_filter_descriptions_from_context()
+            for filter in filters:
+                sheet.write(row_pos, 0, filter, bold)
+                row_pos += 1
+            row_pos += 2
 
         # column headers
         sheet.write(row_pos, 0, '', header_format)
