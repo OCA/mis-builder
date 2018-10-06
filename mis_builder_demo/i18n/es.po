@@ -6,120 +6,122 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2018-10-06 11:16+0000\n"
+"Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_bud
 msgid "3 M Budget"
-msgstr ""
+msgstr "3 M Presupuesto"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_account_id
 msgid "Account"
-msgstr ""
+msgstr "Cuenta"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
 msgid "Available"
-msgstr ""
+msgstr "Disponible"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_commit
 msgid "Committed"
-msgstr ""
+msgstr "Comprometido"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_company_id
 msgid "Company"
-msgstr ""
+msgstr "Compañía"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_credit
 msgid "Credit"
-msgstr ""
+msgstr "Debe"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_date
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_debit
 msgid "Debit"
-msgstr ""
+msgstr "Debe"
 
 #. module: mis_builder_demo
 #: model:mis.report,name:mis_builder_demo.mis_report_expenses
 msgid "Demo Expenses"
-msgstr ""
+msgstr "Gastos de demostración"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance,name:mis_builder_demo.mis_report_instance_expenses
 msgid "Demo Expenses vs Budget"
-msgstr ""
+msgstr "Gastos de demostración vs presupuesto"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre mostrado"
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_equip
 msgid "Equipment"
-msgstr ""
+msgstr "Equipos"
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_exp
 msgid "Expenses"
-msgstr ""
+msgstr "Gastos"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación en"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_line_type
 msgid "Line type"
-msgstr ""
+msgstr "Tipo de línea"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_act_mm1
 msgid "M-1"
-msgstr ""
+msgstr "M-1"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_act_mm2
 msgid "M-2"
-msgstr ""
+msgstr "M-2"
 
 #. module: mis_builder_demo
 #: model:ir.model,name:mis_builder_demo.model_mis_committed_purchase
 msgid "MIS Committed Purchase"
-msgstr ""
+msgstr "Consignado a compra MIS"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_name
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_other
 msgid "Other"
-msgstr ""
+msgstr "Otro"
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
 msgid "Total"
-msgstr ""
+msgstr "Total"
