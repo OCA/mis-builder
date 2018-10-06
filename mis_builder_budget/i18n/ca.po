@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-10-06 12:12+0000\n"
+"PO-Revision-Date: 2018-10-07 13:04+0000\n"
 "Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: ca\n"
@@ -129,7 +129,7 @@ msgstr "Esborrany"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
 msgid "From"
-msgstr "De"
+msgstr "Des del"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_id
@@ -168,12 +168,12 @@ msgstr "Última actualització el"
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
 msgid "MIS Budget"
-msgstr "Pressupostos MIS"
+msgstr "Pressupost MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
 msgid "MIS Budget Item"
-msgstr "Objecte de pressupostos MIS"
+msgstr "Objecte de pressupost MIS"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
