@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-10-06 11:16+0000\n"
+"PO-Revision-Date: 2018-10-07 12:09+0000\n"
 "Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -34,7 +34,7 @@ msgstr "Disponible"
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_commit
 msgid "Committed"
-msgstr "Comprometido"
+msgstr "Consignado"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_company_id
@@ -44,7 +44,7 @@ msgstr "Compañía"
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_credit
 msgid "Credit"
-msgstr "Debe"
+msgstr "Haber"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_date
@@ -74,7 +74,7 @@ msgstr "Nombre mostrado"
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_equip
 msgid "Equipment"
-msgstr "Equipos"
+msgstr "Equipamiento"
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_exp
@@ -109,7 +109,7 @@ msgstr "M-2"
 #. module: mis_builder_demo
 #: model:ir.model,name:mis_builder_demo.model_mis_committed_purchase
 msgid "MIS Committed Purchase"
-msgstr "Consignado a compra MIS"
+msgstr "MIS Consignado a compra"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_name
