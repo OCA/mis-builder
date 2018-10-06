@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-10-06 10:21+0000\n"
+"PO-Revision-Date: 2018-10-07 13:03+0000\n"
 "Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -20,7 +20,7 @@ msgstr ""
 #: code:addons/mis_builder_budget/models/mis_budget.py:70
 #, python-format
 msgid "%s (copy)"
-msgstr "%s(copia)"
+msgstr "%s (copia)"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:95
@@ -38,7 +38,7 @@ msgstr "%s superpone %s en el presupuesto %s"
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:89
 #, python-format
 msgid "%s start date must not be after end date"
-msgstr "%s fecha de inicio no debe ser posterior a la fecha de fin"
+msgstr "La fecha de inicio de %s no puede ser posterior a la fecha de fin"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_tag_ids
@@ -118,7 +118,7 @@ msgstr "Descripción"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_display_name
 msgid "Display Name"
-msgstr "Mostrar nombre"
+msgstr "Nombre mostrado"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
@@ -129,7 +129,7 @@ msgstr "Borrador"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
 msgid "From"
-msgstr "De"
+msgstr "Desde"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_id
@@ -151,7 +151,7 @@ msgstr "KPI"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget___last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item___last_update
 msgid "Last Modified on"
-msgstr "Última vez modificado el"
+msgstr "Última modificación en"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_write_uid
@@ -163,7 +163,7 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_write_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_write_date
 msgid "Last Updated on"
-msgstr "Última vez actualizado el"
+msgstr "Última actualización en"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
@@ -211,7 +211,7 @@ msgstr "Estado"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_to
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_to
 msgid "To"
-msgstr "A"
+msgstr "a"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance
