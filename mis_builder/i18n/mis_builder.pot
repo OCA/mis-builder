@@ -15,7 +15,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:504
-#: code:addons/mis_builder/models/mis_report_instance.py:484
+#: code:addons/mis_builder/models/mis_report_instance.py:487
 #, python-format
 msgid "%s (copy)"
 msgstr ""
@@ -247,8 +247,8 @@ msgid "Column %s cannot be compared to itself."
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:590
-#: code:addons/mis_builder/models/mis_report_instance.py:611
+#: code:addons/mis_builder/models/mis_report_instance.py:593
+#: code:addons/mis_builder/models/mis_report_instance.py:614
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr ""
@@ -421,8 +421,18 @@ msgid "Display Name"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display columns description"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_auto_expand_accounts
 msgid "Display details by account"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display the date range details in the column headers."
 msgstr ""
 
 #. module: mis_builder
@@ -457,7 +467,7 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:9
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:9
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -469,11 +479,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_name
 msgid "Expression"
-msgstr ""
-
-#. module: mis_builder
-#: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-msgid "Expression can also involve other KPI and query results by name (eg kpi1 + kpi2)."
 msgstr ""
 
 #. module: mis_builder
@@ -490,6 +495,11 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Expressions can be any valid python expressions."
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid "Expressions can involve other KPI, sub KPI and query results by name (eg kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
 msgstr ""
 
 #. module: mis_builder
@@ -969,7 +979,7 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:8
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:8
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -978,7 +988,7 @@ msgid "Print"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:683
+#: code:addons/mis_builder/models/mis_report.py:689
 #, python-format
 msgid "Probably not your fault... but I'm really curious to know how you managed to raise this error so I can handle one more corner case!"
 msgstr ""
@@ -996,7 +1006,7 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:7
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:7
 #, python-format
 msgid "Refresh"
 msgstr ""
@@ -1066,7 +1076,7 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_widget.xml:10
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
 #, python-format
 msgid "Settings"
 msgstr ""
@@ -1286,7 +1296,7 @@ msgid "add.mis.report.instance.dashboard.wizard"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:679
+#: code:addons/mis_builder/models/mis_report_instance.py:684
 #, python-format
 msgid "from %s to %s"
 msgstr ""
