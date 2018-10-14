@@ -15,7 +15,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:503
-#: code:addons/mis_builder/models/mis_report_instance.py:483
+#: code:addons/mis_builder/models/mis_report_instance.py:486
 #, python-format
 msgid "%s (copy)"
 msgstr ""
@@ -248,8 +248,8 @@ msgid "Column %s cannot be compared to itself."
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:592
-#: code:addons/mis_builder/models/mis_report_instance.py:613
+#: code:addons/mis_builder/models/mis_report_instance.py:595
+#: code:addons/mis_builder/models/mis_report_instance.py:616
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr ""
@@ -407,6 +407,11 @@ msgid "Disable account details expansion"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display Columns Description"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard_display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_display_name
@@ -425,6 +430,11 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_auto_expand_accounts
 msgid "Display details by account"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_display_columns_description
+msgid "Display the date range details in the column headers."
 msgstr ""
 
 #. module: mis_builder
@@ -477,17 +487,17 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-msgid "Expression can also involve other KPI and query results by name (eg kpi1 + kpi2)."
-msgstr ""
-
-#. module: mis_builder
-#: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Expressions"
 msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Expressions can be any valid python expressions."
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid "Expressions can involve other KPI, sub KPI and query results by name (eg kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
 msgstr ""
 
 #. module: mis_builder
@@ -980,7 +990,7 @@ msgid "Print"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:682
+#: code:addons/mis_builder/models/mis_report.py:688
 #, python-format
 msgid "Probably not your fault... but I'm really curious to know how you managed to raise this error so I can handle one more corner case!"
 msgstr ""
@@ -1295,7 +1305,7 @@ msgid "add.mis.report.instance.dashboard.wizard"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:681
+#: code:addons/mis_builder/models/mis_report_instance.py:686
 #, python-format
 msgid "from %s to %s"
 msgstr ""
