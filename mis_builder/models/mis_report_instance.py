@@ -601,14 +601,13 @@ class MisReportInstance(models.Model):
     @api.multi
     def export_xls(self):
         self.ensure_one()
-        return {
-            'name': 'MIS report instance XLSX report',
-            'model': 'mis.report.instance',
-            'type': 'ir.actions.report.xml',
-            'report_name': 'mis.report.instance.xlsx',
-            'report_type': 'xlsx',
-            'context': self._context_with_filters(),
-        }
+        context = dict(
+            self._context_with_filters(),
+        )
+        return self.env['report'].with_context(context).get_action(
+            self,
+            'mis.report.instance.xlsx',
+        )
 
     @api.multi
     def display_settings(self):

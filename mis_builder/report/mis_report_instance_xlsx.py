@@ -31,11 +31,6 @@ MAX_COL_WIDTH = 50  # characters
 
 class MisBuilderXlsx(ReportXlsx):
 
-    def __init__(self, name, table, rml=False, parser=False, header=True,
-                 store=False):
-        super(MisBuilderXlsx, self).__init__(
-            name, table, rml, parser, header, store)
-
     def generate_xlsx_report(self, workbook, data, objects):
 
         # get the computed result of the report
@@ -63,9 +58,9 @@ class MisBuilderXlsx(ReportXlsx):
 
         # filters
         if not objects.hide_analytic_filters:
-            filters = objects.get_filter_descriptions_from_context()
-            for filter in filters:
-                sheet.write(row_pos, 0, filter, bold)
+            for filter_description in \
+                    objects.get_filter_descriptions_from_context():
+                sheet.write(row_pos, 0, filter_description, bold)
                 row_pos += 1
             row_pos += 2
 
