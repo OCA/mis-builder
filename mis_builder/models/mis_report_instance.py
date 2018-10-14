@@ -555,15 +555,25 @@ class MisReportInstance(models.Model):
                 self.date_range_id = False
 
     @api.multi
+    def _add_analytic_filters_to_context(self, context):
+        if self.analytic_account_id:
+            context['mis_report_filters']['analytic_account_id'] = \
+                self.analytic_account_id.id
+
+    @api.multi
+    def _context_with_filters(self):
+        if 'mis_report_filters' in self.env.context:
+            # analytic filters are already in context, do nothing
+            return self.env.context
+        context = dict(self.env.context, mis_report_filters={})
+        self._add_analytic_filters_to_context(context)
+        return context
+
+    @api.multi
     def preview(self):
         self.ensure_one()
         view_id = self.env.ref('mis_builder.'
                                'mis_report_instance_result_view_form')
-        context = {
-            'mis_report_filters': {
-                'analytic_account_id': self.analytic_account_id.id,
-            }
-        }
         return {
             'type': 'ir.actions.act_window',
             'res_model': 'mis.report.instance',
@@ -572,7 +582,7 @@ class MisReportInstance(models.Model):
             'view_type': 'form',
             'view_id': view_id.id,
             'target': 'current',
-            'context': context,
+            'context': self._context_with_filters(),
         }
 
     @api.multi
@@ -590,7 +600,7 @@ class MisReportInstance(models.Model):
                 # using selected filters
                 'mis_report_remove_data': True,
             },
-            'context': self.env.context,
+            'context': self._context_with_filters(),
         }
 
     @api.multi
@@ -602,7 +612,7 @@ class MisReportInstance(models.Model):
             'type': 'ir.actions.report.xml',
             'report_name': 'mis.report.instance.xlsx',
             'report_type': 'xlsx',
-            'context': self.env.context,
+            'context': self._context_with_filters(),
         }
 
     @api.multi
