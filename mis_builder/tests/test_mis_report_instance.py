@@ -171,6 +171,18 @@ class TestMisReportInstance(common.TransactionCase):
                 # k7 references k3 via subkpi names
                 self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
 
+    def test_evaluate(self):
+        company = self.env.ref('base.main_company')
+        aep = self.report._prepare_aep(company)
+        r = self.report.evaluate(
+            aep,
+            date_from='2014-01-01',
+            date_to='2014-12-31',
+        )
+        self.assertEqual(r['k3'], (AccountingNone, 1.0))
+        self.assertEqual(r['k6'], ("bla", "blabla"))
+        self.assertEqual(r['k7'], (AccountingNone, 1.0))
+
     def test_json(self):
         self.report_instance.compute()
 
