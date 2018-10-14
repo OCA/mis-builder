@@ -1,8 +1,10 @@
-odoo.define('mis_builder.widget', function(require) {
+/* Copyright 2014-2018 ACSONE SA/NV (<http://acsone.eu>)
+   License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). */
+
+odoo.define('mis_builder.widget', function (require) {
 "use strict";
 
     var AbstractField = require('web.AbstractField');
-    var core = require('web.core');
     var field_registry = require('web.field_registry');
 
     var MisReportWidget = AbstractField.extend({
@@ -11,7 +13,8 @@ odoo.define('mis_builder.widget', function(require) {
          * The following attributes are set after willStart() and are available
          * in the widget template:
          * - mis_report_data: the result of mis.report.instance.compute()
-         * - show_settings: a flag that controls the visibility of the Settings button
+         * - show_settings: a flag that controls the visibility of the Settings
+         *   button
          */
 
         template: "MisReportWidgetTemplate",
@@ -25,20 +28,22 @@ odoo.define('mis_builder.widget', function(require) {
         }),
 
         /**
-         * Return the id of the mis.report.instance to which the widget is bound.
+         * Return the id of the mis.report.instance to which the widget is
+         * bound.
          */
-        _instance_id: function() {
+        _instance_id: function () {
             if (this.value) {
                 return this.value;
             }
-            /* 
+
+            /*
              * This trick is needed because in a dashboard the view does
              * not seem to be bound to an instance: it seems to be a limitation
              * of Odoo dashboards that are not designed to contain forms but
              * rather tree views or charts.
              */
             var context = this.getParent().state.context;
-            if (context['active_model'] == 'mis.report.instance') {
+            if (context['active_model'] === 'mis.report.instance') {
                 return context['active_id'];
             }
         },
@@ -56,7 +61,7 @@ odoo.define('mis_builder.widget', function(require) {
                 method: 'compute',
                 args: [self._instance_id()],
                 context: context,
-            }).then(function(result) {
+            }).then(function (result) {
                 self.mis_report_data = result;
             });
 
@@ -65,18 +70,18 @@ odoo.define('mis_builder.widget', function(require) {
                 method: 'has_group',
                 args: ['account.group_account_user'],
                 context: context,
-            }).then(function(result) {
+            }).then(function (result) {
                 self.show_settings = result;
             });
 
             return $.when(this._super.apply(this, arguments), def1, def2);
         },
 
-        refresh: function() {
+        refresh: function () {
             this.replace();
         },
 
-        print_pdf: function() {
+        print_pdf: function () {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
@@ -84,12 +89,12 @@ odoo.define('mis_builder.widget', function(require) {
                 method: 'print_pdf',
                 args: [this._instance_id()],
                 context: context,
-            }).then(function(result){
+            }).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        export_xls: function() {
+        export_xls: function () {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
@@ -97,12 +102,12 @@ odoo.define('mis_builder.widget', function(require) {
                 method: 'export_xls',
                 args: [this._instance_id()],
                 context: context,
-            }).then(function(result){
+            }).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        display_settings: function() {
+        display_settings: function () {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
@@ -110,12 +115,12 @@ odoo.define('mis_builder.widget', function(require) {
                 method: 'display_settings',
                 args: [this._instance_id()],
                 context: context,
-            }).then(function(result){
+            }).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        drilldown: function(event) {
+        drilldown: function (event) {
             var self = this;
             var context = self.getParent().state.context;
             var drilldown = $(event.target).data("drilldown");
@@ -124,7 +129,7 @@ odoo.define('mis_builder.widget', function(require) {
                 method: 'drilldown',
                 args: [this._instance_id(), drilldown],
                 context: context,
-            }).then(function(result){
+            }).then(function (result) {
                 self.do_action(result);
             });
         },
