@@ -588,20 +588,15 @@ class MisReportInstance(models.Model):
     @api.multi
     def print_pdf(self):
         self.ensure_one()
-        return {
-            'name': 'MIS report instance QWEB PDF report',
-            'model': 'mis.report.instance',
-            'type': 'ir.actions.report.xml',
-            'report_name': 'mis_builder.report_mis_report_instance',
-            'report_type': 'qweb-pdf',
-            'data': {
-                # Providing a data attribute allows to propagate the context
-                # to the report download URL. The we can print a report
-                # using selected filters
-                'mis_report_remove_data': True,
-            },
-            'context': self._context_with_filters(),
-        }
+        context = dict(
+            self._context_with_filters(),
+            landscape=self.landscape_pdf,
+        )
+        return self.env['report'].with_context(context).get_action(
+            self,
+            'mis_builder.report_mis_report_instance',
+            data=dict(dummy=True),  # required to propagate context
+        )
 
     @api.multi
     def export_xls(self):
