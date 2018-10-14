@@ -1,5 +1,8 @@
-odoo.define('mis_builder.widget', function(require) {
-"use strict";
+/* Copyright 2014-2018 ACSONE SA/NV (<http://acsone.eu>)
+   License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). */
+
+odoo.define('mis_builder.widget', function (require) {
+    "use strict";
 
     var FormCommon = require('web.form_common');
     var Model = require('web.DataModel');
@@ -14,7 +17,8 @@ odoo.define('mis_builder.widget', function(require) {
          * The following attributes are set after willStart() and are available
          * in the widget template:
          * - mis_report_data: the result of mis.report.instance.compute()
-         * - show_settings: a flag that controls the visibility of the Settings button
+         * - show_settings: a flag that controls the visibility of the Settings
+         *   button
          */
 
         template: "MisReportWidgetTemplate",
@@ -27,22 +31,23 @@ odoo.define('mis_builder.widget', function(require) {
             'click .oe_mis_builder_refresh': 'refresh',
         }),
 
-        init: function(field_manager, node) {
+        init: function (field_manager, node) {
             var self = this;
             self._super(field_manager, node);
             self.MisReportInstance = new Model('mis.report.instance');
         },
 
         /**
-         * Return the id of the mis.report.instance to which the widget is bound.
+         * Return the id of the mis.report.instance to which the widget is
+         * bound.
          */
-        _instance_id: function() {
+        _instance_id: function () {
             var self = this;
             var value = self.get('value');
-
             if (value) {
                 return value;
             }
+
             /*
              * This trick is needed because in a dashboard the view does
              * not seem to be bound to an instance: it seems to be a limitation
@@ -65,85 +70,75 @@ odoo.define('mis_builder.widget', function(require) {
 
             var def1 = self.MisReportInstance.call(
                 'compute',
-                [self._instance_id(),],
-                {
-                    'context': context
-                }
-            ).then(function(result) {
+                [self._instance_id()],
+                {'context': context}
+            ).then(function (result) {
                 self.mis_report_data = result;
             });
 
             var def2 = session.user_has_group(
                 'account.group_account_user'
-            ).then(function(result) {
+            ).then(function (result) {
                 self.show_settings = result;
             });
 
             return $.when(this._super.apply(this, arguments), def1, def2);
         },
 
-        refresh: function() {
+        refresh: function () {
             this.replace();
         },
 
-        get_context: function() {
+        get_context: function () {
             var self = this;
             return self.view.dataset.get_context();
         },
 
-        print_pdf: function() {
+        print_pdf: function () {
             var self = this;
             var context = self.get_context();
             self.MisReportInstance.call(
                 'print_pdf',
-                [self._instance_id(),],
-                {
-                    'context': context
-                }
-            ).then(function(result){
+                [self._instance_id()],
+                {'context': context}
+            ).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        export_xls: function() {
+        export_xls: function () {
             var self = this;
             var context = self.get_context();
             self.MisReportInstance.call(
                 'export_xls',
-                [self._instance_id(),],
-                {
-                    'context': context
-                }
-            ).then(function(result){
+                [self._instance_id()],
+                {'context': context}
+            ).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        display_settings: function() {
+        display_settings: function () {
             var self = this;
             var context = self.get_context();
             self.MisReportInstance.call(
                 'display_settings',
-                [self._instance_id(),],
-                {
-                    'context': context
-                }
-            ).then(function(result){
+                [self._instance_id()],
+                {'context': context}
+            ).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        drilldown: function(event) {
+        drilldown: function (event) {
             var self = this;
             var context = self.get_context();
             var drilldown = $(event.target).data("drilldown");
             self.MisReportInstance.call(
                 'drilldown',
                 [self._instance_id(), drilldown],
-                {
-                    'context': context
-                }
-            ).then(function(result){
+                {'context': context}
+            ).then(function (result) {
                 self.do_action(result);
             });
         },
