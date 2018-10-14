@@ -4,7 +4,7 @@
         <template id="assets_backend" name="mis_builder" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/mis_builder/static/src/css/custom.css"/>
-                <script type="text/javascript" src="/mis_builder/static/src/js/mis_builder.js"></script>
+                <script type="text/javascript" src="/mis_builder/static/src/js/mis_report_widget.js"/>
             </xpath>
         </template>
 
@@ -14,7 +14,10 @@
             <field name="priority" eval="20 "/>
             <field name="arch" type="xml">
                 <form string="MIS Report Result" edit="false" create="false" delete="false" >
-                    <widget type="mis_report"></widget>
+                    <group colspan="4">
+                        <field name="id" widget="mis_report_widget"
+                               nolabel="1"/>
+                    </group>
                 </form>
             </field>
         </record>
@@ -111,6 +114,7 @@
                             <group name="layout">
                                 <field name="landscape_pdf"/>
                                 <field name="no_auto_expand_accounts"/>
+                                <field name="display_columns_description"/>
                             </group>
                         </page>
                     </notebook>

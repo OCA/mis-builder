@@ -24,7 +24,7 @@ from .aep import AccountingExpressionProcessor as AEP
 from .aggregate import _sum, _avg, _min, _max
 from .accounting_none import AccountingNone
 from .kpimatrix import KpiMatrix
-from .simple_array import SimpleArray
+from .simple_array import SimpleArray, named_simple_array
 from .mis_safe_eval import mis_safe_eval, DataError, NameDataError
 from .mis_report_style import (
     TYPE_NUM, TYPE_PCT, TYPE_STR, CMP_DIFF, CMP_PCT, CMP_NONE
@@ -642,6 +642,12 @@ class MisReport(models.Model):
         else:
             subkpis = self.subkpi_ids
 
+        SimpleArray_cls = named_simple_array(
+            'SimpleArray_{}'.format(col_key),
+            [subkpi.name for subkpi in subkpis],
+        )
+        locals_dict['SimpleArray'] = SimpleArray_cls
+
         col = kpi_matrix.declare_col(col_key,
                                      col_label, col_description,
                                      locals_dict, subkpis)
@@ -661,16 +667,16 @@ class MisReport(models.Model):
                 else:
                     # no error, set it in locals_dict so it can be used
                     # in computing other kpis
-                    if len(expressions) == 1:
+                    if not subkpis or not kpi.multi:
                         locals_dict[kpi.name] = vals[0]
                     else:
-                        locals_dict[kpi.name] = SimpleArray(vals)
+                        locals_dict[kpi.name] = SimpleArray_cls(vals)
 
                 # even in case of name error we set the result in the matrix
                 # so the name error will be displayed if it cannot be
                 # resolved by recomputing later
 
-                if len(expressions) == 1 and col.colspan > 1:
+                if subkpis and not kpi.multi:
                     # here we have one expression for this kpi, but
                     # multiple subkpis (so this kpi is most probably
                     # a sum or other operation on multi-valued kpis)
@@ -737,6 +743,8 @@ class MisReport(models.Model):
                     using _prepare_aep()
         :param date_from, date_to: the starting and ending date
         :param target_move: all|posted
+        :param subkpis_filter: a list of subkpis to include in the evaluation
+                               (if empty, use all subkpis)
         :param get_additional_move_line_filter: a bound method that takes
                                                 no arguments and returns
                                                 a domain compatible with
@@ -747,6 +755,9 @@ class MisReport(models.Model):
                                             underlying model
         :param locals_dict: personalized locals dictionary used as evaluation
                             context for the KPI expressions
+        :param aml_model: the name of a model that is compatible with
+                          account.move.line
+        :param no_auto_expand_accounts: disable expansion of account details
         """
         self.ensure_one()
 
@@ -832,3 +843,58 @@ class MisReport(models.Model):
                 for account_id in account_ids:
                     res[account_id].add(kpi)
         return res
+
+    @api.multi
+    def evaluate(
+            self,
+            aep,
+            date_from,
+            date_to,
+            target_move='posted',
+            aml_model=None,
+            subkpis_filter=None,
+            get_additional_move_line_filter=None,
+            get_additional_query_filter=None,
+    ):
+        """ Simplified method to evaluate a report over a time period.
+
+        :param aep: an AccountingExpressionProcessor instance created
+                    using _prepare_aep()
+        :param date_from, date_to: the starting and ending date
+        :param target_move: all|posted
+        :param aml_model: the name of a model that is compatible with
+                          account.move.line
+        :param subkpis_filter: a list of subkpis to include in the evaluation
+                               (if empty, use all subkpis)
+        :param get_additional_move_line_filter: a bound method that takes
+                                                no arguments and returns
+                                                a domain compatible with
+                                                account.move.line
+        :param get_additional_query_filter: a bound method that takes a single
+                                            query argument and returns a
+                                            domain compatible with the query
+                                            underlying model
+        :return: a dictionary where keys are KPI names, and values are the
+                 evaluated results; some additional keys might be present:
+                 these should be ignored as they might be removed in
+                 the future.
+        """
+        locals_dict = {}
+        kpi_matrix = self.prepare_kpi_matrix()
+        self.declare_and_compute_period(
+            kpi_matrix,
+            col_key=1,
+            col_label='',
+            col_description='',
+            aep=aep,
+            date_from=date_from,
+            date_to=date_to,
+            target_move=target_move,
+            subkpis_filter=subkpis_filter,
+            get_additional_move_line_filter=get_additional_move_line_filter,
+            get_additional_query_filter=get_additional_query_filter,
+            locals_dict=locals_dict,
+            aml_model=aml_model,
+            no_auto_expand_accounts=True,
+        )
+        return locals_dict
