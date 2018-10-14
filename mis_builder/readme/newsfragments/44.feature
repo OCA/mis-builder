@@ -1,1 +1,1 @@
-Show analytic filters in exported pdf and xls.
+Display analytic filters in the header of exported pdf and xls.
