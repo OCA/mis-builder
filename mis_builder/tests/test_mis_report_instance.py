@@ -2,11 +2,28 @@
 # Copyright 2016-2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import contextlib
+import shutil
+import tempfile
+
 import odoo.tests.common as common
 from odoo.tools import test_reports
+from odoo import tools
 
 from ..models.mis_report import TYPE_STR
 from ..models.accounting_none import AccountingNone
+
+
+@contextlib.contextmanager
+def enable_test_report_directory():
+    tmpdir = tempfile.mkdtemp()
+    prev_test_report_dir = tools.config['test_report_directory']
+    tools.config['test_report_directory'] = tmpdir
+    try:
+        yield tmpdir
+    finally:
+        shutil.rmtree(tmpdir)
+        tools.config['test_report_directory'] = prev_test_report_dir
 
 
 class TestMisReportInstance(common.TransactionCase):
@@ -198,16 +215,20 @@ class TestMisReportInstance(common.TransactionCase):
         self.assertEqual(action['res_model'], 'account.move.line')
 
     def test_qweb(self):
-        test_reports.try_report(self.env.cr, self.env.uid,
-                                'mis_builder.report_mis_report_instance',
-                                [self.report_instance.id],
-                                report_type='qweb-pdf')
+        with enable_test_report_directory():
+            self.report_instance.print_pdf()  # get action
+            test_reports.try_report(self.env.cr, self.env.uid,
+                                    'mis_builder.report_mis_report_instance',
+                                    [self.report_instance.id],
+                                    report_type='qweb-pdf')
 
     def test_xlsx(self):
-        test_reports.try_report(self.env.cr, self.env.uid,
-                                'mis.report.instance.xlsx',
-                                [self.report_instance.id],
-                                report_type='xlsx')
+        with enable_test_report_directory():
+            self.report_instance.export_xls()  # get action
+            test_reports.try_report(self.env.cr, self.env.uid,
+                                    'mis.report.instance.xlsx',
+                                    [self.report_instance.id],
+                                    report_type='xlsx')
 
     def test_get_kpis_by_account_id(self):
         account_ids = self.env['account.account'].\
