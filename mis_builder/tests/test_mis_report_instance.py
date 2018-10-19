@@ -26,7 +26,7 @@ def enable_test_report_directory():
         tools.config['test_report_directory'] = prev_test_report_dir
 
 
-class TestMisReportInstance(common.TransactionCase):
+class TestMisReportInstance(common.HttpCase):
     """ Basic integration test to exercise mis.report.instance.
 
     We don't check the actual results here too much as computation correctness
