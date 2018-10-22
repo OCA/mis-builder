@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="mis_builder_combined_analytic_axis_form_view">
+        <field name="name">mis.builder.combined.analytic.axis.form (in mis_builder)</field>
+        <field name="model">mis.builder.combined.analytic.axis</field>
+        <field name="arch" type="xml">
+            <form string="Mis Builder Combined Analytic Axis">
+                <group>
+                    <field name="template_id"/>
+                    <group>
+                        <field name="date_from"/>
+                    </group>
+                    <group>
+                        <field name="date_to"/>
+                    </group>
+                    <field name="account_analytic_id"/>
+                    <field name="org_entity_id"/>
+                    <field name="finance_source_id"/>
+                </group>
+                <footer>
+                    <button name="generate_xlsx_file"
+                            string="Generate File"
+                            class="btn-primary"
+                            type="object"/>
+                    <button string="Cancel"
+                            class="btn-default"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="mis_builder_combined_analytic_axis_act_window">
+        <field name="name">Combined Analytic Axis</field>
+        <field name="res_model">mis.builder.combined.analytic.axis</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{}</field>
+    </record>
+
+
+    <record model="ir.ui.menu" id="mis_builder_combined_analytic_axis_menu">
+        <field name="name">Combined Analytic Axis</field>
+        <field name="parent_id" ref="mis_report_finance_menu"/>
+        <field name="action" ref="mis_builder_combined_analytic_axis_act_window"/>
+    </record>
+</odoo>

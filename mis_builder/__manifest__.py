@@ -20,6 +20,7 @@
         'web_widget_color',  # OCA/web
     ],
     'data': [
+        'wizard/mis_builder_combined_analytic_axis.xml',
         'wizard/mis_builder_dashboard.xml',
         'views/mis_report.xml',
         'views/mis_report_instance.xml',
