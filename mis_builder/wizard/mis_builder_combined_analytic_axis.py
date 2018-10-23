@@ -6,18 +6,22 @@ import StringIO
 import base64
 import xlsxwriter
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models
 
 from ..models.accounting_none import AccountingNone
 from ..models.data_error import DataError
 
 HEADER_ROW_SHIFT = 1
 BODY_ROW_SHIFT = 2
-BODY_COL_SHIFT = 3
+BODY_COL_SHIFT = 4
 ROW_HEIGHT = 15  # xlsxwriter units
 COL_WIDTH = 0.9  # xlsxwriter units
 MIN_COL_WIDTH = 10  # characters
 MAX_COL_WIDTH = 50  # characters
+
+# TODO: improve xlsx style use
+# TODO: hide empty columns?
+# TODO: delete downloaded attachment?
 
 
 class MisBuilderCombinedAnalyticAxis(models.TransientModel):
@@ -37,13 +41,22 @@ class MisBuilderCombinedAnalyticAxis(models.TransientModel):
     account_analytic_id = fields.Many2one(
         comodel_name="account.analytic.account", string="Project"
     )
+    include_account_analytic_children = fields.Boolean(
+        string="Include Analytic Account children"
+    )
     org_entity_id = fields.Many2one(
         comodel_name="hr.department",
         string="Organizational Entity",
         index=True,
     )
+    include_org_entity_children = fields.Boolean(
+        string="Include Organizational Entity children"
+    )
     finance_source_id = fields.Many2one(
-        comodel_name="finance.source", string="Finances Sources"
+        comodel_name="finance.source", string="Finances Source"
+    )
+    include_finance_source_children = fields.Boolean(
+        string="Include Finances Source children"
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
@@ -55,9 +68,7 @@ class MisBuilderCombinedAnalyticAxis(models.TransientModel):
     @api.multi
     def get_cell_style(self, kpi_name):
         self.ensure_one()
-        kpi = self.template_id.kpi_ids.filtered(
-            lambda x: x.name == kpi_name
-        )
+        kpi = self.template_id.kpi_ids.filtered(lambda x: x.name == kpi_name)
         return kpi.style_id
 
     @api.multi
@@ -79,15 +90,16 @@ class MisBuilderCombinedAnalyticAxis(models.TransientModel):
         :param data: evaluated data from combined mis report
         """
         self.ensure_one()
-        style_obj = self.env['mis.report.style']
+        style_obj = self.env["mis.report.style"]
         for combination in rows:
             for kpi_name in header:
                 row_pos = rows.index(combination) + BODY_ROW_SHIFT
                 col_pos = header.index(kpi_name) + BODY_COL_SHIFT
                 val = data[combination][kpi_name]
                 cell_xlsx_style = style_obj.to_xlsx_style(
-                    self.get_cell_style(kpi_name))
-                cell_xlsx_style['align'] = 'right'
+                    self.get_cell_style(kpi_name)
+                )
+                cell_xlsx_style["align"] = "right"
                 cell_format = workbook.add_format(cell_xlsx_style)
                 if (
                     not val
@@ -107,6 +119,7 @@ class MisBuilderCombinedAnalyticAxis(models.TransientModel):
         :return: worksheet header index list
         """
         self.ensure_one()
+        # FIXME: filter with instance != bound method
         header = filter(
             lambda x: isinstance(x, unicode), data.values()[0].keys()
         )
@@ -133,8 +146,15 @@ class MisBuilderCombinedAnalyticAxis(models.TransientModel):
             account_analytic_id, org_entity_id, finance_source_id = combination
             row_pos = rows.index(combination) + BODY_ROW_SHIFT
             worksheet.write(row_pos, 0, account_analytic_id.name)
-            worksheet.write(row_pos, 1, org_entity_id.name)
-            worksheet.write(row_pos, 2, finance_source_id.name)
+            worksheet.write(
+                row_pos,
+                1,
+                account_analytic_id.parent_id.name
+                if account_analytic_id.parent_id
+                else "",
+            )
+            worksheet.write(row_pos, 2, org_entity_id.name)
+            worksheet.write(row_pos, 3, finance_source_id.name)
             worksheet.set_row(row_pos, ROW_HEIGHT)
 
     @api.multi
@@ -144,31 +164,43 @@ class MisBuilderCombinedAnalyticAxis(models.TransientModel):
         :param worksheet: xlsx worksheet object
         :return:
         """
-        model = self.env["ir.model"].search([("model", "=", self._name)])
-        account_analytic_label = model.field_id.filtered(
+        col_pos = 0
+        current_model = self.env["ir.model"].search(
+            [("model", "=", self._name)]
+        )
+        analytic_model = self.env["ir.model"].search(
+            [("model", "=", "account.analytic.account")]
+        )
+        account_analytic_label = current_model.field_id.filtered(
             lambda x: x.name == "account_analytic_id"
         ).field_description
         worksheet.write(
-            HEADER_ROW_SHIFT, 0, account_analytic_label, header_format
+            HEADER_ROW_SHIFT, col_pos, account_analytic_label, header_format
         )
-        col_width = min(MAX_COL_WIDTH, len(account_analytic_label))
-        worksheet.set_column(0, 0, col_width * COL_WIDTH)
-
-        org_entity_label = model.field_id.filtered(
+        col_pos += 1
+        account_analytic_parent_label = analytic_model.field_id.filtered(
+            lambda x: x.name == "parent_id"
+        ).field_description
+        worksheet.write(
+            HEADER_ROW_SHIFT,
+            col_pos,
+            account_analytic_parent_label,
+            header_format,
+        )
+        col_pos += 1
+        org_entity_label = current_model.field_id.filtered(
             lambda x: x.name == "org_entity_id"
         ).field_description
-        worksheet.write(HEADER_ROW_SHIFT, 1, org_entity_label, header_format)
-        col_width = min(MAX_COL_WIDTH, len(org_entity_label))
-        worksheet.set_column(1, 1, col_width * COL_WIDTH)
-
-        finance_source_label = model.field_id.filtered(
+        worksheet.write(
+            HEADER_ROW_SHIFT, col_pos, org_entity_label, header_format
+        )
+        col_pos += 1
+        finance_source_label = current_model.field_id.filtered(
             lambda x: x.name == "finance_source_id"
         ).field_description
         worksheet.write(
-            HEADER_ROW_SHIFT, 2, finance_source_label, header_format
+            HEADER_ROW_SHIFT, col_pos, finance_source_label, header_format
         )
-        col_width = min(MAX_COL_WIDTH, len(finance_source_label))
-        worksheet.set_column(2, 2, col_width * COL_WIDTH)
 
     @api.multi
     def _write_xlsx_combination_section(self, worksheet, data, header_format):
@@ -219,14 +251,21 @@ class MisBuilderCombinedAnalyticAxis(models.TransientModel):
             ("company_id", "=", self.company_id.id),
         ]
         if self.account_analytic_id:
+            operator = (
+                "child_of" if self.include_account_analytic_children else "="
+            )
             domain.append(
-                ("account_analytic_id", "=", self.account_analytic_id.id)
+                ("account_analytic_id", operator, self.account_analytic_id.id)
             )
         if self.org_entity_id:
-            domain.append(("org_entity_id", "=", self.org_entity_id.id))
+            operator = "child_of" if self.include_org_entity_children else "="
+            domain.append(("org_entity_id", operator, self.org_entity_id.id))
         if self.finance_source_id:
+            operator = (
+                "child_of" if self.include_finance_source_children else "="
+            )
             domain.append(
-                ("finance_source_id", "=", self.finance_source_id.id)
+                ("finance_source_id", operator, self.finance_source_id.id)
             )
         lines = self.env["account.move.line"].search(domain)
         possible_combinations = {}

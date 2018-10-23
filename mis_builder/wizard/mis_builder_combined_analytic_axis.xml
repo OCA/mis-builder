@@ -4,22 +4,51 @@
 
 <odoo>
 
-    <record model="ir.ui.view" id="mis_builder_combined_analytic_axis_form_view">
-        <field name="name">mis.builder.combined.analytic.axis.form (in mis_builder)</field>
+    <record model="ir.ui.view"
+            id="mis_builder_combined_analytic_axis_form_view">
+        <field name="name">mis.builder.combined.analytic.axis.form (in
+            mis_builder)
+        </field>
         <field name="model">mis.builder.combined.analytic.axis</field>
         <field name="arch" type="xml">
             <form string="Mis Builder Combined Analytic Axis">
                 <group>
                     <field name="template_id"/>
+                </group>
+                <group>
                     <group>
                         <field name="date_from"/>
                     </group>
                     <group>
                         <field name="date_to"/>
                     </group>
-                    <field name="account_analytic_id"/>
-                    <field name="org_entity_id"/>
-                    <field name="finance_source_id"/>
+                </group>
+                <group>
+                    <group>
+                        <field name="account_analytic_id"/>
+                    </group>
+                    <group>
+                        <field name="include_account_analytic_children"
+                        attrs="{'invisible': [('account_analytic_id', '=', False)]}"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="org_entity_id"/>
+                    </group>
+                    <group>
+                        <field name="include_org_entity_children"
+                        attrs="{'invisible': [('org_entity_id', '=', False)]}"/>
+                    </group>
+                </group>
+                <group>
+                    <group>
+                        <field name="finance_source_id"/>
+                    </group>
+                    <group>
+                        <field name="include_finance_source_children"
+                        attrs="{'invisible': [('finance_source_id', '=', False)]}"/>
+                    </group>
                 </group>
                 <footer>
                     <button name="generate_xlsx_file"
@@ -34,7 +63,8 @@
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="mis_builder_combined_analytic_axis_act_window">
+    <record model="ir.actions.act_window"
+            id="mis_builder_combined_analytic_axis_act_window">
         <field name="name">Combined Analytic Axis</field>
         <field name="res_model">mis.builder.combined.analytic.axis</field>
         <field name="view_mode">form</field>
@@ -46,6 +76,7 @@
     <record model="ir.ui.menu" id="mis_builder_combined_analytic_axis_menu">
         <field name="name">Combined Analytic Axis</field>
         <field name="parent_id" ref="mis_report_finance_menu"/>
-        <field name="action" ref="mis_builder_combined_analytic_axis_act_window"/>
+        <field name="action"
+               ref="mis_builder_combined_analytic_axis_act_window"/>
     </record>
 </odoo>
