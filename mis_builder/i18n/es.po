@@ -123,8 +123,9 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid ""
-"<b>p, i, e</b>: respectivelyl variation over the period, initial balance, "
+"<b>p, i, e</b>: respectively variation over the period, initial balance, "
 "ending balance"
 msgstr ""
 "<b>p, i, e</b>: variación sobre el periodo, sobre el saldo inicial o sobre "
@@ -519,7 +520,8 @@ msgstr "Mostrar detalles por cuenta"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_display_columns_description
 msgid "Display the date range details in the column headers."
-msgstr "Mostrar los detalles del rango de fecha en la cabecera de las columnas."
+msgstr ""
+"Mostrar los detalles del rango de fecha en la cabecera de las columnas."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_divider_inherit
@@ -1345,8 +1347,8 @@ msgid ""
 msgstr ""
 "Los siguientes elementos especiales se pueden reconocer en las expresiones "
 "para calcular datos contables:\n"
-"<code>{bal|crd|deb|pbal|nbal}{pieu}[selector de cuenta][dominio de "
-"apuntes]</code>."
+"<code>{bal|crd|deb|pbal|nbal}{pieu}[selector de cuenta][dominio de apuntes]</"
+"code>."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:161

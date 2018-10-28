@@ -125,8 +125,9 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid ""
-"<b>p, i, e</b>: respectivelyl variation over the period, initial balance, "
+"<b>p, i, e</b>: respectively variation over the period, initial balance, "
 "ending balance"
 msgstr ""
 "<b>p, i, e</b>: respectievelijk de variatie over; de periode, beginbalans, "
