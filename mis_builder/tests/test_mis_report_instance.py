@@ -305,7 +305,9 @@ class TestMisReportInstance(common.HttpCase):
         # existing account
         matrix = self.report_instance.with_context(
             mis_report_filters={
-                'analytic_account_id': 999,
+                'analytic_account_id': {
+                    'value': 999,
+                },
             }
         )._compute_matrix()
         for row in matrix.iter_rows():

@@ -56,11 +56,7 @@ odoo.define('mis_builder.widget', function (require) {
         init_filter_from_context: function() {
             var self = this;
             var filters = self.getParent().dataset.context['mis_report_filters'] || {};
-            if (filters) {
-                for (var filter_name in filters) {
-                    self.filter_values[filter_name] = filters[filter_name];
-                }
-            }
+            self.filter_values = filters;
         },
 
         /**
@@ -137,15 +133,38 @@ odoo.define('mis_builder.widget', function (require) {
 
         init_filter_value: function(field_object, attr_name) {
             var self = this;
-            var filter_value = self.filter_values[attr_name];
-            if (filter_value !== undefined) {
-                field_object.set_value(filter_value);
+            var filter = self.filter_values[attr_name];
+            if (filter !== undefined && filter['value'] !== undefined) {
+                field_object.set_value(filter['value']);
+            }
+        },
+
+        init_filter: function(filter_name) {
+            var self = this;
+            if(self.filter_values[filter_name] === undefined) {
+                self.filter_values[filter_name] = {};
             }
         },
 
         set_filter_value: function(field_object, attr_name) {
             var self = this;
-            self.filter_values[attr_name] = field_object.get_value();
+            self.init_filter(attr_name);
+            self.filter_values[attr_name]['value'] = field_object.get_value();
+        },
+
+        set_filter_operator: function(operator, attr_name) {
+            var self = this;
+            self.init_filter(attr_name);
+            self.filter_values[attr_name]['operator'] = operator;
+        },
+
+        get_filter_operator: function(attr_name) {
+            var self = this;
+            var operator = undefined;
+            if(self.filter_values[attr_name] !== undefined) {
+                operator = self.filter_values[attr_name]['operator'] || '=';
+            }
+            return operator;
         },
 
         add_filters: function () {

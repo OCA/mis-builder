@@ -301,9 +301,11 @@ class MisReportInstancePeriod(models.Model):
         self.ensure_one()
         filters = []
         mis_report_filters = self.env.context.get('mis_report_filters', {})
-        for filter_name, value in mis_report_filters.items():
-            if value:
-                filters.append((filter_name, '=', value))
+        for filter_name, values in mis_report_filters.items():
+            if values:
+                value = values.get('value')
+                operator = values.get('operator', '=')
+                filters.append((filter_name, operator, value))
         return filters
 
     @api.multi
@@ -468,7 +470,8 @@ class MisReportInstance(models.Model):
     @api.model
     def get_filter_descriptions_from_context(self):
         filters = self.env.context.get('mis_report_filters', {})
-        analytic_account_id = filters.get('analytic_account_id')
+        analytic_account = filters.get('analytic_account_id', {})
+        analytic_account_id = analytic_account.get('value')
         filter_descriptions = []
         if analytic_account_id:
             analytic_account = self.env['account.analytic.account'].browse(
@@ -557,8 +560,9 @@ class MisReportInstance(models.Model):
     @api.multi
     def _add_analytic_filters_to_context(self, context):
         if self.analytic_account_id:
-            context['mis_report_filters']['analytic_account_id'] = \
-                self.analytic_account_id.id
+            context['mis_report_filters']['analytic_account_id'] = {
+                'value': self.analytic_account_id.id,
+            }
 
     @api.multi
     def _context_with_filters(self):
