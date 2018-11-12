@@ -559,6 +559,7 @@ class MisReportInstance(models.Model):
 
     @api.multi
     def _add_analytic_filters_to_context(self, context):
+        self.ensure_one()
         if self.analytic_account_id:
             context['mis_report_filters']['analytic_account_id'] = {
                 'value': self.analytic_account_id.id,
@@ -566,6 +567,7 @@ class MisReportInstance(models.Model):
 
     @api.multi
     def _context_with_filters(self):
+        self.ensure_one()
         if 'mis_report_filters' in self.env.context:
             # analytic filters are already in context, do nothing
             return self.env.context
