@@ -296,6 +296,12 @@ class MisReportInstancePeriod(models.Model):
         to be inherited, and is useful to implement filtering
         on analytic dimensions or operational units.
 
+        The default filter is built from a ``mis_report_filters`` context
+        key, which is a list set by the analytic filtering mechanism
+        of the mis report widget::
+
+          [(field_name, {'value': value, 'operator': operator})]
+
         Returns an Odoo domain expression (a python list)
         compatible with account.move.line."""
         self.ensure_one()
