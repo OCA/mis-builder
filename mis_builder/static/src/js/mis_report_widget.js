@@ -199,6 +199,7 @@ odoo.define('mis_builder.widget', function (require) {
                     domain: self.analytic_account_id_domain,
                     context: {},
                     modifiers: '{}',
+                    options: '{"no_create": true}',
                 },
             });
             self.init_filter_value(analytic_account_id_m2o, field_name);
