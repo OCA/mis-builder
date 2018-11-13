@@ -287,6 +287,17 @@ class MisReportInstancePeriod(models.Model):
         if self.source in (SRC_SUMCOL, SRC_CMPCOL):
             self.mode = MODE_NONE
 
+    @api.model
+    def _get_filter_domain_from_context(self):
+        filters = []
+        mis_report_filters = self.env.context.get('mis_report_filters', {})
+        for filter_name, values in mis_report_filters.items():
+            if values:
+                value = values.get('value')
+                operator = values.get('operator', '=')
+                filters.append((filter_name, operator, value))
+        return filters
+
     @api.multi
     def _get_additional_move_line_filter(self):
         """ Prepare a filter to apply on all move lines
@@ -305,13 +316,7 @@ class MisReportInstancePeriod(models.Model):
         Returns an Odoo domain expression (a python list)
         compatible with account.move.line."""
         self.ensure_one()
-        filters = []
-        mis_report_filters = self.env.context.get('mis_report_filters', {})
-        for filter_name, values in mis_report_filters.items():
-            if values:
-                value = values.get('value')
-                operator = values.get('operator', '=')
-                filters.append((filter_name, operator, value))
+        filters = self._get_filter_domain_from_context()
         return filters
 
     @api.multi
