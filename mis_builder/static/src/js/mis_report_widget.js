@@ -149,7 +149,8 @@ odoo.define('mis_builder.widget', function (require) {
         set_filter_value: function(field_object, attr_name) {
             var self = this;
             self.init_filter(attr_name);
-            self.filter_values[attr_name]['value'] = field_object.get_value();
+            self.filter_values[attr_name]['value'] =
+                field_object.get_value() || undefined;
         },
 
         set_filter_operator: function(operator, attr_name) {
