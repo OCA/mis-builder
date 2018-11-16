@@ -108,6 +108,7 @@
                                 <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"
                                         domain="[('id', 'child_of', company_id)]"
                                         attrs="{'invisible': [('multi_company', '=', False)]}"/>
+                                <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                             </group>
                         </page>
                         <page string="Layout">
@@ -115,6 +116,7 @@
                                 <field name="landscape_pdf"/>
                                 <field name="no_auto_expand_accounts"/>
                                 <field name="display_columns_description"/>
+                                <field name="hide_analytic_filters"/>
                             </group>
                         </page>
                     </notebook>

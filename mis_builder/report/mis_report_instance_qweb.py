@@ -15,16 +15,26 @@ class Report(models.Model):
     @api.v7
     def get_pdf(self, cr, uid, ids, report_name, html=None, data=None,
                 context=None):
-        if ids:
-            report = self._get_report_from_name(cr, uid, report_name)
-            obj = self.pool[report.model].browse(cr, uid, ids,
-                                                 context=context)[0]
-            context = context.copy()
-            if hasattr(obj, 'landscape_pdf') and obj.landscape_pdf:
-                context.update({'landscape': True})
-        return super(Report, self).get_pdf(cr, uid, ids, report_name,
-                                           html=html, data=data,
-                                           context=context)
+        if report_name == 'mis_builder.report_mis_report_instance':
+            if not ids:
+                ids = context.get('active_ids')
+	    report = self._get_report_from_name(cr, uid, report_name)
+	    mis_report_instance = self.pool[mis.report.instance].browse(
+                cr, uid, ids, context=context)[0]
+	    context = dict(
+                mis_report_instance._context_with_filters(),
+                landscape=mis_report_instance.landscape_pdf,
+            )
+	    if hasattr(obj, 'landscape_pdf') and obj.landscape_pdf:
+	        context.update({'landscape': True})
+            # data=None, because it was there only to force Odoo
+            # to propagate context
+            return super(Report, self).get_pdf(cr, uid, ids, report_name,
+	                                       html=html, data=None,
+	                                       context=context)
+	return super(Report, self).get_pdf(cr, uid, ids, report_name,
+	                                   html=html, data=data,
+	                                   context=context)
 
     @api.v8
     def get_pdf(self, records, report_name, html=None, data=None):
