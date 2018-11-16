@@ -1,3 +1,11 @@
+10.0.3.3.0 (2018-11-16)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Support analytic filters. (`#15 <https://github.com/oca/mis-builder/issues/15>`_)
+
+
 10.0.3.2.1 (2018-06-30)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
