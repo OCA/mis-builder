@@ -21,7 +21,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:504
-#: code:addons/mis_builder/models/mis_report_instance.py:487
+#: code:addons/mis_builder/models/mis_report_instance.py:522
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (kopie)"
@@ -160,7 +160,7 @@ msgstr ""
 "datum, account_id en company_id velden"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:323
+#: code:addons/mis_builder/models/mis_report_instance.py:341
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Een datum filter is verplicht voor deze bron in kolom %s."
@@ -240,6 +240,20 @@ msgstr ""
 "dergelijke stijl wordt toegepast bovenop de regelstijl."
 
 #. module: mis_builder
+#. openerp-web
+#: code:addons/mis_builder/static/src/js/mis_report_widget.js:48
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_analytic_account_id
+#, python-format
+msgid "Analytic Account"
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report_instance.py:491
+#, python-format
+msgid "Analytic Account: %s"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Auto expand"
 msgstr "automatisch uitbreiden"
@@ -314,14 +328,14 @@ msgid "Column"
 msgstr "Kolom"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:342
+#: code:addons/mis_builder/models/mis_report_instance.py:360
 #, python-format
 msgid "Column %s cannot be compared to itself."
 msgstr "Kolom %skan niet met zichzelf worden vergeleken."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:593
-#: code:addons/mis_builder/models/mis_report_instance.py:614
+#: code:addons/mis_builder/models/mis_report_instance.py:647
+#: code:addons/mis_builder/models/mis_report_instance.py:668
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "Kolom %s met Actuele waardes moet van/tot data hebben."
@@ -332,7 +346,7 @@ msgid "Columns"
 msgstr "Kolommen"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:349
+#: code:addons/mis_builder/models/mis_report_instance.py:367
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr "Te vergelijken kolommen moeten tot hetzelfde rapport in %s behoren"
@@ -554,7 +568,7 @@ msgstr "Voorbeelden:"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:9
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:12
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -690,6 +704,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_hide_always_inherit
 #, fuzzy
 msgid "Hide always inherit"
+msgstr "Verberg leeg overerven"
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_hide_analytic_filters
+#, fuzzy
+msgid "Hide analytic filters"
 msgstr "Verberg leeg overerven"
 
 #. module: mis_builder
@@ -973,7 +993,7 @@ msgid "No date filter"
 msgstr "Geen datum filter"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:328
+#: code:addons/mis_builder/models/mis_report_instance.py:346
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr "Een datum filter is niet toegestaan voor deze bron in kolom %s."
@@ -1054,7 +1074,7 @@ msgid "Pivot date"
 msgstr "Uitgangsdatum"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:337
+#: code:addons/mis_builder/models/mis_report_instance.py:355
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Geef beide kolommen op om te vergelijken in %s."
@@ -1077,7 +1097,7 @@ msgstr "Voorbeeld"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:8
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:11
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -1109,7 +1129,7 @@ msgstr "Query bedrijf id's"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:7
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
 #, python-format
 msgid "Refresh"
 msgstr "Verversen"
@@ -1187,7 +1207,7 @@ msgstr "Reeks"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:13
 #, python-format
 msgid "Settings"
 msgstr "Instellingen"
@@ -1426,7 +1446,7 @@ msgid "add.mis.report.instance.dashboard.wizard"
 msgstr "add.mis.report.instance.dashboard.wizard"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:684
+#: code:addons/mis_builder/models/mis_report_instance.py:738
 #, python-format
 msgid "from %s to %s"
 msgstr "van %s tot %s"

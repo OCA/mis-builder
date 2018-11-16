@@ -21,7 +21,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:504
-#: code:addons/mis_builder/models/mis_report_instance.py:487
+#: code:addons/mis_builder/models/mis_report_instance.py:522
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (copie)"
@@ -72,9 +72,8 @@ msgid ""
 "id)][]</b>: variation of the balance of all receivable accounts over the "
 "period."
 msgstr ""
-"<b>balp[('user_type_id', '=', "
-"ref('account.data_account_type_receivable').id)][]</b>: variation de la "
-"balance des comptes clients durant la période."
+"<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
+"id)][]</b>: variation de la balance des comptes clients durant la période."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -161,7 +160,7 @@ msgstr ""
 "account_id et company_id."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:323
+#: code:addons/mis_builder/models/mis_report_instance.py:341
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Un filtre date est obligatoire pour cette source dans la colonne %s."
@@ -242,6 +241,20 @@ msgstr ""
 "style est appliqué au-dessus du style de la ligne."
 
 #. module: mis_builder
+#. openerp-web
+#: code:addons/mis_builder/static/src/js/mis_report_widget.js:48
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_analytic_account_id
+#, python-format
+msgid "Analytic Account"
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report_instance.py:491
+#, python-format
+msgid "Analytic Account: %s"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Auto expand"
 msgstr "Expansion automatique"
@@ -316,14 +329,14 @@ msgid "Column"
 msgstr "Colonne"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:342
+#: code:addons/mis_builder/models/mis_report_instance.py:360
 #, python-format
 msgid "Column %s cannot be compared to itself."
 msgstr "Colonne %s ne peut pas être comparée à elle-même."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:593
-#: code:addons/mis_builder/models/mis_report_instance.py:614
+#: code:addons/mis_builder/models/mis_report_instance.py:647
+#: code:addons/mis_builder/models/mis_report_instance.py:668
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "Colonne %s avec une source pour le réel doit avoir des dates de/à."
@@ -334,7 +347,7 @@ msgid "Columns"
 msgstr "Colonnes"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:349
+#: code:addons/mis_builder/models/mis_report_instance.py:367
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr "Les colonnes à comparer doivent appartenir au même rapport %s"
@@ -554,7 +567,7 @@ msgstr "Exemples :"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:9
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:12
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -582,7 +595,8 @@ msgstr "Expressions"
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Expressions can be any valid python expressions."
-msgstr "Les expressions peuvent être n'importe quelle expression python valide."
+msgstr ""
+"Les expressions peuvent être n'importe quelle expression python valide."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -686,6 +700,12 @@ msgstr "Cacher toujours"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_hide_always_inherit
 msgid "Hide always inherit"
+msgstr "Cacher toujours par défaut"
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_hide_analytic_filters
+#, fuzzy
+msgid "Hide analytic filters"
 msgstr "Cacher toujours par défaut"
 
 #. module: mis_builder
@@ -970,7 +990,7 @@ msgid "No date filter"
 msgstr "Pas de filtre date"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:328
+#: code:addons/mis_builder/models/mis_report_instance.py:346
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr "Aucun filtre date n'est autorisé pour cette source dans la colonne %s."
@@ -1051,7 +1071,7 @@ msgid "Pivot date"
 msgstr "Date pivot"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:337
+#: code:addons/mis_builder/models/mis_report_instance.py:355
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Merci de renseigner les 2 colonnes à comparer en %s."
@@ -1074,7 +1094,7 @@ msgstr "Prévisualisation"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:8
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:11
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
@@ -1106,7 +1126,7 @@ msgstr "Ids des sociétés de la requête"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:7
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
 #, python-format
 msgid "Refresh"
 msgstr "Rafraîchir"
@@ -1160,7 +1180,8 @@ msgstr "Sauvegarder"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_company_ids
 msgid "Select companies for which data will be searched."
-msgstr "Selectionnez les sociétés pour lesquelles les données seront cherchées."
+msgstr ""
+"Selectionnez les sociétés pour lesquelles les données seront cherchées."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_currency_id
@@ -1185,7 +1206,7 @@ msgstr "Séquence"
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:10
+#: code:addons/mis_builder/static/src/xml/mis_report_widget.xml:13
 #, python-format
 msgid "Settings"
 msgstr "Paramètres"
@@ -1327,8 +1348,8 @@ msgid ""
 "The <b>account selector</b> is a like expression on the account code (eg "
 "70%, etc)."
 msgstr ""
-"Le <b>sélecteur de compte</b> est une expression Like sur le code du compte ("
-"eg 70%, etc)."
+"Le <b>sélecteur de compte</b> est une expression Like sur le code du compte "
+"(eg 70%, etc)."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -1348,9 +1369,8 @@ msgid ""
 msgstr ""
 "Les éléments spéciaux suivants sont reconnus dans les expressions pour "
 "calculer des données comptables:\n"
-"                                          "
-"<code>{bal|crd|deb|pbal|nbal}{pieu}[account selector][journal items "
-"domain]</code>."
+"                                          <code>{bal|crd|deb|pbal|nbal}{pieu}"
+"[account selector][journal items domain]</code>."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:161
@@ -1426,7 +1446,7 @@ msgid "add.mis.report.instance.dashboard.wizard"
 msgstr "add.mis.report.instance.dashboard.wizard"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:684
+#: code:addons/mis_builder/models/mis_report_instance.py:738
 #, python-format
 msgid "from %s to %s"
 msgstr "de %s à %s"
