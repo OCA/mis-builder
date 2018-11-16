@@ -32,7 +32,19 @@ class MisReportInstancePeriod(models.Model):
         to be inherited, and is useful to implement filtering
         on analytic dimensions or operational units.
 
+        The default filter is built from a ``mis_report_filters context``
+        key, which is a list set by the analytic filtering mechanism
+        of the mis report widget::
+
+          [(field_name, {'value': value, 'operator': operator})]
+
+        This default filter is the same as the one set by
+        _get_additional_move_line_filter on mis.report.instance, so
+        a budget.item is expected to have the same analytic fields as
+        a move line.
+
         Returns an Odoo domain expression (a python list)
         compatible with mis.budget.item."""
         self.ensure_one()
-        return []
+        filters = self._get_filter_domain_from_context()
+        return filters

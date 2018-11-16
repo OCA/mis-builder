@@ -14,11 +14,18 @@ class Report(models.Model):
 
     @api.model
     def get_pdf(self, docids, report_name, html=None, data=None):
-        ctx = self.env.context.copy()
-        if docids:
-            report = self._get_report_from_name(report_name)
-            obj = self.env[report.model].browse(docids)[0]
-            if hasattr(obj, 'landscape_pdf') and obj.landscape_pdf:
-                ctx.update({'landscape': True})
-        return super(Report, self.with_context(ctx)).get_pdf(
-            docids, report_name, html=html, data=data)
+        if report_name == 'mis_builder.report_mis_report_instance':
+            if not docids:
+                docids = self.env.context.get('active_ids')
+            mis_report_instance = self.env['mis.report.instance'].\
+                browse(docids)[0]
+            context = dict(
+                mis_report_instance._context_with_filters(),
+                landscape=mis_report_instance.landscape_pdf,
+            )
+            # data=None, because it was there only to force Odoo
+            # to propagate context
+            return super(Report, self.with_context(context)).\
+                get_pdf(docids, report_name, html=html, data=None)
+        return super(Report, self).\
+            get_pdf(docids, report_name, html=html, data=data)
