@@ -10,7 +10,9 @@ odoo.define('mis_builder.widget', function (require) {
     var data = require('web.data');
     var session = require('web.session');
 
-    var FieldMany2One = core.form_widget_registry.get('many2one');
+    var relational_fields = require('web.relational_fields');
+    var FieldMany2One = relational_fields.FieldMany2One;
+    // var FieldMany2One = core.form_widget_registry.get('many2one');
     var _t = core._t;
 
     var MisReportWidget = AbstractField.extend({
@@ -36,27 +38,6 @@ odoo.define('mis_builder.widget', function (require) {
             'click .oe_mis_builder_refresh': 'refresh',
         }),
 
-        init: function (field_manager, node) {
-            var self = this;
-            self.analytic_account_id = undefined;
-            self.analytic_account_id_domain = [];
-            self.analytic_account_id_label = _t("Analytic Account");
-            self.analytic_account_id_m2o = undefined;
-            self.has_group_analytic_accounting = false;
-            self.hide_analytic_filters = false;
-            self.filter_values = {};
-            self.init_filter_from_context();
-        },
-
-        init_filter_from_context: function() {
-            var self = this;
-            var filters = self.getParent().dataset.context['mis_report_filters'] || {};
-            if (filters) {
-                for (var filter_name in filters) {
-                    self.filter_values[filter_name] = filters[filter_name];
-                }
-            }
-        },
 
         /**
          * Return the id of the mis.report.instance to which the widget is
@@ -79,6 +60,15 @@ odoo.define('mis_builder.widget', function (require) {
             }
         },
 
+        init_filter_from_context: function(context) {
+            var self = this;
+            var filters = context['mis_report_filters'] || {};
+            if (filters) {
+                for (var filter_name in filters) {
+                    self.filter_values[filter_name] = filters[filter_name];
+                }
+            }
+        },
         /**
          * Method called between @see init and @see start. Performs asynchronous
          * calls required by the rendering and the start method.
@@ -86,6 +76,14 @@ odoo.define('mis_builder.widget', function (require) {
         willStart: function () {
             var self = this;
             var context = self.getParent().state.context;
+            self.analytic_account_id = undefined;
+            self.analytic_account_id_domain = [];
+            self.analytic_account_id_label = _t("Analytic Account");
+            self.analytic_account_id_m2o = undefined;
+            self.has_group_analytic_accounting = false;
+            self.hide_analytic_filters = false;
+            self.filter_values = {};
+            self.init_filter_from_context(context);
 
             var def1 = self._rpc({
                 model: 'mis.report.instance',
@@ -111,11 +109,12 @@ odoo.define('mis_builder.widget', function (require) {
                 self.has_group_analytic_accounting = result;
             });
 
-            var def_hide_analytic_filters = self.MisReportInstance.call(
-                'read',
-                [self._instance_id(), ['hide_analytic_filters']],
-                {'context': context}
-            ).then(function (result) {
+            var def_hide_analytic_filters = self._rpc({
+                model: 'mis.report.instance',
+                method: 'read',
+                args: [self._instance_id(), ['hide_analytic_filters']],
+                context: context,
+            }).then(function (result) {
                 var record = result[0];
                 self.hide_analytic_filters = record['hide_analytic_filters'];
             });
@@ -155,36 +154,37 @@ odoo.define('mis_builder.widget', function (require) {
 
         add_analytic_account_filter: function () {
             var self = this;
-            if (!self.has_group_analytic_accounting) {
-                return;
-            }
-            if (self.analytic_account_id_m2o) {
-                // Prevent errors with autocomplete
-                self.analytic_account_id_m2o.destroy();
-            }
-            var field_name = 'analytic_account_id';
-            var dfm_object = {};
-            dfm_object[field_name] = {
-                relation: 'account.analytic.account',
-            };
-            self.dfm.extend_field_desc(dfm_object);
-            var analytic_account_id_m2o = new FieldMany2One(self.dfm, {
-                attrs: {
-                    placeholder: self.analytic_account_id_label,
-                    name: field_name,
-                    type: 'many2one',
-                    domain: self.analytic_account_id_domain,
-                    context: {},
-                    modifiers: '{}',
-                },
-            });
-            self.init_filter_value(analytic_account_id_m2o, field_name);
-            analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
-            analytic_account_id_m2o.$input.focusout(function () {
-                self.set_filter_value(analytic_account_id_m2o, field_name);
-            });
-            analytic_account_id_m2o.$follow_button.toggle();
-            self.analytic_account_id_m2o = analytic_account_id_m2o;
+            // if (!self.has_group_analytic_accounting) {
+            //     return;
+            // }
+            // if (self.analytic_account_id_m2o) {
+            //     // Prevent errors with autocomplete
+            //     self.analytic_account_id_m2o.destroy();
+            // }
+            // var field_name = 'analytic_account_id';
+            // // var dfm_object = {};
+            // // dfm_object[field_name] = {
+            // //     relation: 'account.analytic.account',
+            // // };
+            // // self.dfm.extend_field_desc(dfm_object);
+            // var analytic_account_id_m2o = new FieldMany2One(self, {
+            //     attrs: {
+            //         placeholder: self.analytic_account_id_label,
+            //         name: field_name,
+            //         type: 'many2one',
+            //         relation: 'account.analytic.account',
+            //         domain: self.analytic_account_id_domain,
+            //         context: {},
+            //         modifiers: '{}',
+            //     },
+            // });
+            // self.init_filter_value(analytic_account_id_m2o, field_name);
+            // analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
+            // analytic_account_id_m2o.$input.focusout(function () {
+            //     self.set_filter_value(analytic_account_id_m2o, field_name);
+            // });
+            // analytic_account_id_m2o.$follow_button.toggle();
+            // self.analytic_account_id_m2o = analytic_account_id_m2o;
         },
 
         refresh: function () {
