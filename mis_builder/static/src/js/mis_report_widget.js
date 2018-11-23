@@ -5,15 +5,18 @@ odoo.define('mis_builder.widget', function (require) {
 "use strict";
 
     var AbstractField = require('web.AbstractField');
+    var FieldManagerMixin = require('web.FieldManagerMixin');
+
     var field_registry = require('web.field_registry');
     var core = require('web.core');
     var data = require('web.data');
     var session = require('web.session');
 
-    var FieldMany2One = core.form_widget_registry.get('many2one');
+    var relational_fields = require('web.relational_fields');
+    var FieldMany2One = relational_fields.FieldMany2One;
     var _t = core._t;
 
-    var MisReportWidget = AbstractField.extend({
+    var MisReportWidget = AbstractField.extend(FieldManagerMixin, {
 
         /*
          * The following attributes are set after willStart() and are available
@@ -36,28 +39,11 @@ odoo.define('mis_builder.widget', function (require) {
             'click .oe_mis_builder_refresh': 'refresh',
         }),
 
-        init: function (field_manager, node) {
-            var self = this;
-            self.analytic_account_id = undefined;
-            self.analytic_account_id_domain = [];
-            self.analytic_account_id_label = _t("Analytic Account");
-            self.analytic_account_id_m2o = undefined;
-            self.has_group_analytic_accounting = false;
-            self.hide_analytic_filters = false;
-            self.filter_values = {};
-            self.init_filter_from_context();
-        },
 
-        init_filter_from_context: function() {
-            var self = this;
-            var filters = self.getParent().dataset.context['mis_report_filters'] || {};
-            if (filters) {
-                for (var filter_name in filters) {
-                    self.filter_values[filter_name] = filters[filter_name];
-                }
-            }
+        init: function (parent, model, state) {
+            this._super(parent);
+            FieldManagerMixin.init.call(this);
         },
-
         /**
          * Return the id of the mis.report.instance to which the widget is
          * bound.
@@ -76,9 +62,18 @@ odoo.define('mis_builder.widget', function (require) {
             var context = this.getParent().state.context;
             if (context['active_model'] === 'mis.report.instance') {
                 return context['active_id'];
-            }
+            };
         },
 
+        init_filter_from_context: function(context) {
+            var self = this;
+            var filters = context['mis_report_filters'] || {};
+            if (filters) {
+                for (var filter_name in filters) {
+                    self.filter_values[filter_name] = filters[filter_name];
+                }
+            }
+        },
         /**
          * Method called between @see init and @see start. Performs asynchronous
          * calls required by the rendering and the start method.
@@ -86,6 +81,14 @@ odoo.define('mis_builder.widget', function (require) {
         willStart: function () {
             var self = this;
             var context = self.getParent().state.context;
+            self.analytic_account_id = undefined;
+            self.analytic_account_id_domain = [];
+            self.analytic_account_id_label = _t("Analytic Account");
+            self.analytic_account_id_m2o = undefined;
+            self.has_group_analytic_accounting = false;
+            self.hide_analytic_filters = false;
+            self.filter_values = {};
+            self.init_filter_from_context(context);
 
             var def1 = self._rpc({
                 model: 'mis.report.instance',
@@ -111,11 +114,12 @@ odoo.define('mis_builder.widget', function (require) {
                 self.has_group_analytic_accounting = result;
             });
 
-            var def_hide_analytic_filters = self.MisReportInstance.call(
-                'read',
-                [self._instance_id(), ['hide_analytic_filters']],
-                {'context': context}
-            ).then(function (result) {
+            var def_hide_analytic_filters = self._rpc({
+                model: 'mis.report.instance',
+                method: 'read',
+                args: [self._instance_id(), ['hide_analytic_filters']],
+                context: context,
+            }).then(function (result) {
                 var record = result[0];
                 self.hide_analytic_filters = record['hide_analytic_filters'];
             });
@@ -163,16 +167,13 @@ odoo.define('mis_builder.widget', function (require) {
                 self.analytic_account_id_m2o.destroy();
             }
             var field_name = 'analytic_account_id';
-            var dfm_object = {};
-            dfm_object[field_name] = {
-                relation: 'account.analytic.account',
-            };
-            self.dfm.extend_field_desc(dfm_object);
-            var analytic_account_id_m2o = new FieldMany2One(self.dfm, {
+            var analytic_account_id_m2o = new FieldMany2One(self,
+            {
                 attrs: {
                     placeholder: self.analytic_account_id_label,
                     name: field_name,
                     type: 'many2one',
+                    relation: 'account.analytic.account',
                     domain: self.analytic_account_id_domain,
                     context: {},
                     modifiers: '{}',
