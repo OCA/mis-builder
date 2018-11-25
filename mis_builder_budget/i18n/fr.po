@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * mis_builder_budget
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2018
 # Nicolas JEUDY <njeudy@panda-chi.io>, 2018
@@ -27,22 +27,28 @@ msgid "%s (copy)"
 msgstr "%s (copie)"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:90
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:94
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr "%s n'est pas dans les limites de la période budgétaire %s."
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:97
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:101
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr "%s chevauche %s dans le budget %s"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:84
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:88
 #, python-format
 msgid "%s start date must not be after end date"
 msgstr "la date de début de %s ne doit pas être après la date de fin"
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_tag_ids
+#, fuzzy
+msgid "Analytic Tags"
+msgstr "Compte analytique"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_account_id

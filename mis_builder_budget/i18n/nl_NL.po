@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * mis_builder_budget
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2018
 # Frank Schellenberg <opensource@schellenberg.nl>, 2018
@@ -12,11 +12,12 @@ msgstr ""
 "POT-Creation-Date: 2018-01-13 15:37+0000\n"
 "PO-Revision-Date: 2018-01-13 15:37+0000\n"
 "Last-Translator: Frank Schellenberg <opensource@schellenberg.nl>, 2018\n"
-"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
+"Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/"
+"teams/23907/nl_NL/)\n"
+"Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mis_builder_budget
@@ -26,22 +27,28 @@ msgid "%s (copy)"
 msgstr "%s (kopie)"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:90
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:94
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr "%s valt niet binnen het datumbereik van begroting %s."
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:97
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:101
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr "%s overlapt %s in begroting %s"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:84
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:88
 #, python-format
 msgid "%s start date must not be after end date"
 msgstr "%s start datum moet voor de einddatum liggen"
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_tag_ids
+#, fuzzy
+msgid "Analytic Tags"
+msgstr "Analytische rekening"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_account_id
