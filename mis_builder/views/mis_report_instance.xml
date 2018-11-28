@@ -5,6 +5,10 @@
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/mis_builder/static/src/css/custom.css"/>
                 <script type="text/javascript" src="/mis_builder/static/src/js/mis_report_widget.js"/>
+                <script type="text/javascript" src="/mis_builder/static/src/js/mis_report/mis_report_controller.js"/>
+                <script type="text/javascript" src="/mis_builder/static/src/js/mis_report/mis_report_model.js"/>
+                <script type="text/javascript" src="/mis_builder/static/src/js/mis_report/mis_report_renderer.js"/>
+                <script type="text/javascript" src="/mis_builder/static/src/js/mis_report/mis_report_view.js"/>
             </xpath>
         </template>
 
@@ -123,12 +127,23 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="mis_report_instance_view_mis_report">
+          <field name="name">mis.report.instance.view.mis_report</field>
+          <field name="model">mis.report.instance</field>
+          <!-- <field name="priority" eval="15"/> -->
+          <field name="arch" type="xml">
+            <mis_report name="Report Preview">
+              <field name="name"/>
+            </mis_report>
+          </field>
+        </record>
+
         <record model="ir.actions.act_window" id="mis_report_instance_view_action">
             <field name="name">MIS Reports</field>
             <field name="view_id" ref="mis_report_instance_view_tree"/>
             <field name="res_model">mis.report.instance</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,mis_report</field>
             <field name="domain">[('temporary', '=', False)]</field>
         </record>
 
