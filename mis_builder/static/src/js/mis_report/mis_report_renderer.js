@@ -14,7 +14,6 @@ odoo.define('web.MisReportRenderer', function (require) {
 
         _getReportData: function (){
             var self = this;
-            var context = this.getParent().initialState.context;
             return this._rpc({
                 model: 'mis.report.instance',
                 method: 'compute',
@@ -38,7 +37,7 @@ odoo.define('web.MisReportRenderer', function (require) {
         },
 
         willStart: function () {
-            this.instance_id = this.getParent().initialState.res_id;
+            this.instance_id = this.getParent().initialState.res_ids[0];
             this.instance_context = this.getParent().initialState.context;
             return $.when(
                 this._getReportData(),

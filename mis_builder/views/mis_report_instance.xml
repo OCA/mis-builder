@@ -4,7 +4,6 @@
         <template id="assets_backend" name="mis_builder" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <link rel="stylesheet" href="/mis_builder/static/src/css/custom.css"/>
-                <script type="text/javascript" src="/mis_builder/static/src/js/mis_report_widget.js"/>
                 <script type="text/javascript" src="/mis_builder/static/src/js/mis_report/mis_report_controller.js"/>
                 <script type="text/javascript" src="/mis_builder/static/src/js/mis_report/mis_report_model.js"/>
                 <script type="text/javascript" src="/mis_builder/static/src/js/mis_report/mis_report_renderer.js"/>
@@ -54,7 +53,6 @@
                 <sheet>
                     <field name="temporary" invisible="1"/>
                     <div class="oe_read_only oe_right oe_button_box" name="buttons">
-                        <button type="object" name="preview" string="Preview" icon="fa-search" />
                         <button type="object" name="print_pdf" string="Print" icon="fa-print" />
                         <button type="object" name="export_xls" string="Export" icon="fa-download" />
                         <button type="action" name="%(mis_report_instance_add_to_dashboard_action)d" string="Add to dashboard" icon="fa-plus" attrs="{'invisible': [('temporary', '=', True)]}"/>
@@ -130,10 +128,8 @@
         <record model="ir.ui.view" id="mis_report_instance_view_mis_report">
           <field name="name">mis.report.instance.view.mis_report</field>
           <field name="model">mis.report.instance</field>
-          <!-- <field name="priority" eval="15"/> -->
           <field name="arch" type="xml">
             <mis_report name="Report Preview">
-              <field name="name"/>
             </mis_report>
           </field>
         </record>
