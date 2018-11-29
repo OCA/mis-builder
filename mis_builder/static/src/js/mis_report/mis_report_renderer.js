@@ -36,9 +36,13 @@ odoo.define('web.MisReportRenderer', function (require) {
             });
         },
 
+        init: function (parent, state, params) {
+            this.instance_id = state.data.id;
+            this.instance_context = state.context;
+            this._super.apply(this, arguments);
+        },
+
         willStart: function () {
-            this.instance_id = this.getParent().initialState.res_ids[0];
-            this.instance_context = this.getParent().initialState.context;
             return $.when(
                 this._getReportData(),
                 this._getSettings(),

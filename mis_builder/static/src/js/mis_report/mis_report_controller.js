@@ -5,8 +5,17 @@ odoo.define('web.MisReportController', function (require) {
     var core = require('web.core');
 
     var MisReportController = BasicController.extend({
-        init: function (parent, model, renderer, params) {
-            this._super.apply(this, arguments);
+
+        update: function (params, options) {
+            params = _.extend({viewType: 'mis_report'}, params);
+            return this._super(params, options);
+        },
+
+        _pushState: function (state) {
+            state = state || {};
+            var env = this.model.get(this.handle, {env: true});
+            state.id = env.currentId;
+            this._super(state);
         },
     });
 

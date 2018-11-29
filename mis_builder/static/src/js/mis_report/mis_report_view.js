@@ -14,18 +14,16 @@ odoo.define('web.MisReportView', function(require) {
         icon: 'fa-tasks',
         multi_record: false,
         searchable: false,
+        viewType: 'mis_report',
         config: _.extend({}, BasicView.prototype.config, {
             Controller: MisReportController,
             Renderer: MisReportRenderer,
         }),
 
-        // init: function(viewInfo, params) {
-        //     this._super.apply(this, arguments);
-        //     this.loadParams.type = 'record';
-        //     this.controllerParams.disableAutofocus = params.disable_autofocus;
-        //     this.controllerParams.hasSidebar = params.sidebar;
-        //     this.controllerParams.toolbarActions = viewInfo.toolbar;
-        // },
+        init: function (viewInfo, params) {
+            this._super.apply(this, arguments);
+            this.loadParams.type = 'record';
+        },
 
     });
 

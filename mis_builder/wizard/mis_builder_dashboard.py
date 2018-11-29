@@ -31,17 +31,18 @@ class AddMisReportInstanceDashboard(models.TransientModel):
         assert self.env.context.get('active_id', False), \
             "active_id missing in context"
         # create the act_window corresponding to this report
-        self.env.ref('mis_builder.mis_report_instance_result_view_form')
         view = self.env.ref(
-            'mis_builder.mis_report_instance_result_view_form')
+            'mis_builder.mis_report_instance_view_mis_report')
         report_result = self.env['ir.actions.act_window'].sudo().create({
             'name': 'mis.report.instance.result.view.action.%d' %
                     self.env.context['active_id'],
             'res_model': 'mis.report.instance',
+            'type': 'ir.actions.act_window',
             'res_id': self.env.context['active_id'],
             'target': 'current',
-            'view_mode': 'form',
-            'view_id': view.id
+            'view_mode': 'mis_report',
+            'view_id': view.id,
+            'context': str(self.env.context),
         })
         # add this result in the selected dashboard
         last_customization = self.env['ir.ui.view.custom'].search(
