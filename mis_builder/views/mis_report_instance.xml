@@ -131,6 +131,7 @@
           <field name="model">mis.report.instance</field>
           <field name="arch" type="xml">
             <mis_report name="Report Preview">
+              <field name="analytic_account_id"/>
             </mis_report>
           </field>
         </record>

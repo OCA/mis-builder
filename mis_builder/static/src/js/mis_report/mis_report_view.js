@@ -23,6 +23,7 @@ odoo.define('web.MisReportView', function(require) {
         init: function (viewInfo, params) {
             this._super.apply(this, arguments);
             this.loadParams.type = 'record';
+            this.rendererParams.foo = 'bar';
         },
 
     });

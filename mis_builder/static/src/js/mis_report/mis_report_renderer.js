@@ -3,6 +3,9 @@ odoo.define('web.MisReportRenderer', function(require) {
 
     var BasicRenderer = require('web.BasicRenderer');
     var FieldManagerMixin = require('web.FieldManagerMixin');
+    var session = require('web.session');
+    var Dialog = require('web.Dialog');
+    var Widget = require('web.Widget');
 
     var relational_fields = require('web.relational_fields');
     var Data = require('web.data');
@@ -10,7 +13,7 @@ odoo.define('web.MisReportRenderer', function(require) {
     var Session = require('web.session');
     var _t = Core._t;
 
-    var MisReportRenderer = BasicRenderer.extend(FieldManagerMixin, {
+    var MisReportRenderer = BasicRenderer.extend({
         template: 'MisReportView',
         events: _.extend({}, BasicRenderer.prototype.events, {
             'click .mis_builder_drilldown': '_drilldown',
@@ -18,14 +21,60 @@ odoo.define('web.MisReportRenderer', function(require) {
             'click .oe_mis_builder_export': '_export_xls',
             'click .oe_mis_builder_refresh': '_refresh',
         }),
+        custom_events: _.extend({}, BasicRenderer.prototype.custom_events, {
+            changeFilter: '_onChangeFilter',
+        }),
+
+        init: function(parent, state, params) {
+            this._super.apply(this, arguments);
+            this.state = state;
+            this.instance_id = state.data.id;
+            this.instance_context = state.context;
+        },
+
+        get_instance_id: function () {
+            var self = this;
+            var context = self.get_context();
+            if (this.instance_id) {
+                return this.instance_id;
+            } else if (context['active_model'] === 'mis.report.instance') {
+                return context['active_id'];
+            };
+        },
+
+        get_context: function () {
+            var self = this;
+            return _.extend({}, self.instance_context, {
+                mis_report_filters: self.filter_values,
+            });
+        },
+
+        _render: function() {
+            var self = this;
+            return this._super().then(function() {
+                var record = self.getParent().model.get(self.getParent().handle);
+                var options = {
+                    record: record,
+                    fields: self.state.fields,
+                    fieldName: 'analytic_account_id',
+                };
+                var filter = new SidebarFilter(self, options);
+                filter.prependTo(self.$el);
+            });
+        },
+
+        _onChangeFilter: function (event) {
+            this.set_filter_value(event.data);
+            this._refresh();
+        },
 
         _getReportData: function() {
             var self = this;
             return this._rpc({
                 model: 'mis.report.instance',
                 method: 'compute',
-                args: [self.instance_id],
-                context: self.context,
+                args: [self.get_instance_id()],
+                context: self.get_context(),
             }).then(function(result) {
                 self.mis_report_data = result;
             });
@@ -37,17 +86,10 @@ odoo.define('web.MisReportRenderer', function(require) {
                 model: 'res.users',
                 method: 'has_group',
                 args: ['account.group_account_user'],
-                context: self.instance_context,
+                context: self.get_context(),
             }).then(function(result) {
                 self.show_settings = result;
             });
-        },
-
-        init: function(parent, state, params) {
-            this.state = state;
-            this.instance_id = state.data.id;
-            this.instance_context = state.context;
-            this._super.apply(this, arguments);
         },
 
         _checkAccessAnalytic: function() {
@@ -64,7 +106,7 @@ odoo.define('web.MisReportRenderer', function(require) {
             return this._rpc({
                 model: 'mis.report.instance',
                 method: 'read',
-                args: [self.instance_id, ['hide_analytic_filters']],
+                args: [self.get_instance_id(), ['hide_analytic_filters']],
                 context: self.instance_context,
             }).then(function(result) {
                 var record = result[0];
@@ -73,10 +115,6 @@ odoo.define('web.MisReportRenderer', function(require) {
         },
 
         willStart: function() {
-            this.analytic_account_id = undefined;
-            this.analytic_account_id_domain = [];
-            this.analytic_account_id_label = _t("Analytic Account");
-            this.analytic_account_id_m2o = undefined;
             this.has_group_analytic_accounting = false;
             this.hide_analytic_filters = false;
             this.filter_values = {};
@@ -92,6 +130,7 @@ odoo.define('web.MisReportRenderer', function(require) {
 
         start: function() {
             this._super();
+            this.model = this.getParent().model;
             this.add_filters();
         },
 
@@ -110,11 +149,10 @@ odoo.define('web.MisReportRenderer', function(require) {
             }
         },
 
-        set_filter_value: function(field_object, attr_name) {
+        set_filter_value: function(filter) {
             var self = this;
-            self.init_filter(attr_name);
-            self.filter_values[attr_name]['value'] =
-                field_object.value || undefined;
+            self.init_filter(filter.fieldName);
+            self.filter_values[filter.fieldName] = filter;
         },
 
         set_filter_operator: function(operator, attr_name) {
@@ -137,51 +175,14 @@ odoo.define('web.MisReportRenderer', function(require) {
             if (self.hide_analytic_filters) {
                 return;
             }
-            self.add_analytic_account_filter();
+            // FIXME
+            // self.add_analytic_account_filter();
         },
 
         init_filter_from_context: function() {
             var self = this;
             var filters = this.instance_context['mis_report_filters'] || {};
             self.filter_values = filters;
-        },
-
-        add_analytic_account_filter: function() {
-            var self = this;
-            if (!self.has_group_analytic_accounting) {
-                return;
-            }
-            if (self.analytic_account_id_m2o) {
-                // Prevent errors with autocomplete
-                self.analytic_account_id_m2o.destroy();
-            }
-            var field_name = 'analytic_account_id';
-            var record = this.getParent().model.get(this.getParent().handle);
-            var analytic_account_id_m2o = new relational_fields.FieldMany2One(self,
-                field_name,
-                record, {
-                    mode: 'edit',
-                    attrs: {
-                        placeholder: self.analytic_account_id_label,
-                        // name: field_name,
-                        // type: 'many2one',
-                        domain: self.analytic_account_id_domain,
-                        // context: {},
-                        // modifiers: '{}',
-                        options: '{"no_create": true}',
-                    },
-                }
-            );
-            self.fields = {
-                field_name: analytic_account_id_m2o
-            };
-            self.init_filter_value(analytic_account_id_m2o, field_name);
-            analytic_account_id_m2o.appendTo(self.get_mis_builder_filter_box());
-            analytic_account_id_m2o.$input.focusout(function() {
-                self.set_filter_value(analytic_account_id_m2o, field_name);
-            });
-            analytic_account_id_m2o.$external_button.toggle();
-            self.analytic_account_id_m2o = analytic_account_id_m2o;
         },
 
         get_mis_builder_filter_box: function () {
@@ -191,6 +192,7 @@ odoo.define('web.MisReportRenderer', function(require) {
 
         _refresh: function() {
             this.replace();
+            this._getReportData();
         },
 
         _print_pdf: function() {
@@ -198,8 +200,8 @@ odoo.define('web.MisReportRenderer', function(require) {
             this._rpc({
                 model: 'mis.report.instance',
                 method: 'print_pdf',
-                args: [self.instance_id],
-                context: self.instance_context,
+                args: [self.get_instance_id()],
+                context: self.get_context(),
             }).then(function(result) {
                 self.do_action(result);
             });
@@ -210,8 +212,8 @@ odoo.define('web.MisReportRenderer', function(require) {
             this._rpc({
                 model: 'mis.report.instance',
                 method: 'export_xls',
-                args: [self.instance_id],
-                context: self.instance_context,
+                args: [self.get_instance_id()],
+                context: self.get_context(),
             }).then(function(result) {
                 self.do_action(result);
             });
@@ -223,13 +225,84 @@ odoo.define('web.MisReportRenderer', function(require) {
             this._rpc({
                 model: 'mis.report.instance',
                 method: 'drilldown',
-                args: [self.instance_id, drilldown],
-                context: self.instance_context,
+                args: [self.get_instance_id(), drilldown],
+                context: self.get_context(),
             }).then(function(result) {
                 self.do_action(result);
             });
         },
 
+    });
+
+    var SidebarFilter = Widget.extend(FieldManagerMixin, {
+        tagName: 'div',
+        custom_events: _.extend({}, FieldManagerMixin.custom_events, {
+            field_changed: '_onFieldChanged',
+        }),
+        /**
+        * @constructor
+        * @param {Widget} parent
+        * @param {Object} options
+        * @param {string} options.fieldName
+        * @param {Object[]} options.filters A filter is an object with the
+        *   following keys: id, value, label, active, avatar_model, color,
+        *   can_be_removed
+        * @param {Object} [options.favorite] this is an object with the following
+        *   keys: fieldName, model, fieldModel
+        */
+        init: function (parent, options) {
+            this._super.apply(this, arguments);
+            FieldManagerMixin.init.call(this);
+
+            this.fields = options.fields;
+            this.fieldName = options.fieldName;
+            this.record = options.record;
+        },
+
+        willStart: function () {
+            var self = this;
+
+            return this._super().then(function () {
+                self.many2one = new relational_fields.FieldMany2One(
+                    self,
+                    self.fieldName,
+                    self.record,
+                    {
+                        mode: 'edit',
+                        can_create: false,
+                        viewType: 'mis_report',
+                        attrs: {
+                            string: 'Analytic Account',
+                            type: 'many2one',
+                        }
+                    }
+                );
+            });
+
+        },
+        start: function () {
+            this._super();
+            if (this.many2one) {
+                this.many2one.appendTo(this.$el);
+            }
+        },
+
+        //--------------------------------------------------------------------------
+        // Handlers
+        //--------------------------------------------------------------------------
+
+        /**
+        * @param {OdooEvent} event
+        */
+        _onFieldChanged: function (event) {
+            var self = this;
+            event.stopPropagation();
+            var value = event.data.changes[this.fieldName].id;
+            self.trigger_up('changeFilter', {
+                'fieldName': self.fieldName,
+                'value': value,
+            });
+        },
     });
 
     return MisReportRenderer;

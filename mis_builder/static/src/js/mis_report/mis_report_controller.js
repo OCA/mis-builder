@@ -18,12 +18,12 @@ odoo.define('web.MisReportController', function (require) {
             this._super(state);
         },
 
-        getContext: function () {
-            var state = this.model.get();
-            return {
-                state: state,
-            };
-        },
+        // getContext: function () {
+        //     var state = this.model.get();
+        //     return {
+        //         state: state,
+        //     };
+        // },
 
     });
 
