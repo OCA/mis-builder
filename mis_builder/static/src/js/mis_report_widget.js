@@ -5,6 +5,8 @@ odoo.define('mis_builder.widget', function (require) {
 "use strict";
 
     var AbstractField = require('web.AbstractField');
+    var FieldManagerMixin = require('web.FieldManagerMixin');
+
     var field_registry = require('web.field_registry');
     var core = require('web.core');
     var data = require('web.data');
@@ -12,10 +14,9 @@ odoo.define('mis_builder.widget', function (require) {
 
     var relational_fields = require('web.relational_fields');
     var FieldMany2One = relational_fields.FieldMany2One;
-    // var FieldMany2One = core.form_widget_registry.get('many2one');
     var _t = core._t;
 
-    var MisReportWidget = AbstractField.extend({
+    var MisReportWidget = AbstractField.extend(FieldManagerMixin, {
 
         /*
          * The following attributes are set after willStart() and are available
@@ -39,6 +40,10 @@ odoo.define('mis_builder.widget', function (require) {
         }),
 
 
+        init: function (parent, model, state) {
+            this._super(parent);
+            FieldManagerMixin.init.call(this);
+        },
         /**
          * Return the id of the mis.report.instance to which the widget is
          * bound.
@@ -57,7 +62,7 @@ odoo.define('mis_builder.widget', function (require) {
             var context = this.getParent().state.context;
             if (context['active_model'] === 'mis.report.instance') {
                 return context['active_id'];
-            }
+            };
         },
 
         init_filter_from_context: function(context) {
@@ -154,37 +159,33 @@ odoo.define('mis_builder.widget', function (require) {
 
         add_analytic_account_filter: function () {
             var self = this;
-            // if (!self.has_group_analytic_accounting) {
-            //     return;
-            // }
-            // if (self.analytic_account_id_m2o) {
-            //     // Prevent errors with autocomplete
-            //     self.analytic_account_id_m2o.destroy();
-            // }
-            // var field_name = 'analytic_account_id';
-            // // var dfm_object = {};
-            // // dfm_object[field_name] = {
-            // //     relation: 'account.analytic.account',
-            // // };
-            // // self.dfm.extend_field_desc(dfm_object);
-            // var analytic_account_id_m2o = new FieldMany2One(self, {
-            //     attrs: {
-            //         placeholder: self.analytic_account_id_label,
-            //         name: field_name,
-            //         type: 'many2one',
-            //         relation: 'account.analytic.account',
-            //         domain: self.analytic_account_id_domain,
-            //         context: {},
-            //         modifiers: '{}',
-            //     },
-            // });
-            // self.init_filter_value(analytic_account_id_m2o, field_name);
-            // analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
-            // analytic_account_id_m2o.$input.focusout(function () {
-            //     self.set_filter_value(analytic_account_id_m2o, field_name);
-            // });
-            // analytic_account_id_m2o.$follow_button.toggle();
-            // self.analytic_account_id_m2o = analytic_account_id_m2o;
+            if (!self.has_group_analytic_accounting) {
+                return;
+            }
+            if (self.analytic_account_id_m2o) {
+                // Prevent errors with autocomplete
+                self.analytic_account_id_m2o.destroy();
+            }
+            var field_name = 'analytic_account_id';
+            var analytic_account_id_m2o = new FieldMany2One(self,
+            {
+                attrs: {
+                    placeholder: self.analytic_account_id_label,
+                    name: field_name,
+                    type: 'many2one',
+                    relation: 'account.analytic.account',
+                    domain: self.analytic_account_id_domain,
+                    context: {},
+                    modifiers: '{}',
+                },
+            });
+            self.init_filter_value(analytic_account_id_m2o, field_name);
+            analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
+            analytic_account_id_m2o.$input.focusout(function () {
+                self.set_filter_value(analytic_account_id_m2o, field_name);
+            });
+            analytic_account_id_m2o.$follow_button.toggle();
+            self.analytic_account_id_m2o = analytic_account_id_m2o;
         },
 
         refresh: function () {
