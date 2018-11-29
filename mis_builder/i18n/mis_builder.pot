@@ -1102,7 +1102,7 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_style_id
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_id_4980
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_id_4981
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
 msgid "Style"
 msgstr ""
