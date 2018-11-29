@@ -50,8 +50,8 @@ msgid ""
 "<b>bal[70]</b>: variation of the balance of account 70 over the period (it "
 "is the same as balp[70]."
 msgstr ""
-"<b>1bal[70]</b>2: variation de la balance des comptes 70 de la période ("
-"similaire à  balp[70]."
+"<b>1bal[70]</b>2: variation de la balance des comptes 70 de la période "
+"(similaire à  balp[70]."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -72,9 +72,8 @@ msgid ""
 "id)][]</b>: variation of the balance of all receivable accounts over the "
 "period."
 msgstr ""
-"<b>balp[('user_type_id', '=', "
-"ref('account.data_account_type_receivable').id)][]</b>: variation de la "
-"balance des comptes clients durant la période."
+"<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
+"id)][]</b>: variation de la balance des comptes clients durant la période."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -576,7 +575,8 @@ msgstr "Expressions"
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Expressions can be any valid python expressions."
-msgstr "Les expressions peuvent être n'importe quelle expression python valide."
+msgstr ""
+"Les expressions peuvent être n'importe quelle expression python valide."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -1149,7 +1149,8 @@ msgstr "Sauvegarder"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_company_ids
 msgid "Select companies for which data will be searched."
-msgstr "Selectionnez les sociétés pour lesquelles les données seront cherchées."
+msgstr ""
+"Selectionnez les sociétés pour lesquelles les données seront cherchées."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_currency_id
@@ -1199,7 +1200,7 @@ msgstr "Chaîne de caractères"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_style_id
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_id_4980
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_id_4981
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
 msgid "Style"
 msgstr "Style"
@@ -1316,8 +1317,8 @@ msgid ""
 "The <b>account selector</b> is a like expression on the account code (eg "
 "70%, etc)."
 msgstr ""
-"Le <b>sélecteur de compte</b> est une expression Like sur le code du compte ("
-"eg 70%, etc)."
+"Le <b>sélecteur de compte</b> est une expression Like sur le code du compte "
+"(eg 70%, etc)."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
