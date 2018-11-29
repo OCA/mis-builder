@@ -17,6 +17,14 @@ odoo.define('web.MisReportController', function (require) {
             state.id = env.currentId;
             this._super(state);
         },
+
+        getContext: function () {
+            var state = this.model.get();
+            return {
+                state: state,
+            };
+        },
+
     });
 
     return MisReportController;
