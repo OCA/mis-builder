@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-11 01:36+0000\n"
-"PO-Revision-Date: 2018-11-14 11:18+0000\n"
+"PO-Revision-Date: 2018-11-30 07:38+0000\n"
 "Last-Translator: Sandrine (ACSONE) <sandrine.ravet@acsone.eu>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
@@ -246,13 +246,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_analytic_account_id
 #, python-format
 msgid "Analytic Account"
-msgstr ""
+msgstr "Compte analytique"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:491
 #, python-format
 msgid "Analytic Account: %s"
-msgstr ""
+msgstr "Compte analytique:%s"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -704,9 +704,8 @@ msgstr "Cacher toujours par défaut"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_hide_analytic_filters
-#, fuzzy
 msgid "Hide analytic filters"
-msgstr "Cacher toujours par défaut"
+msgstr "Cacher les filtres analytiques"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_hide_empty
@@ -856,7 +855,7 @@ msgstr "MIS Budget"
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_kpi_data
 msgid "MIS Kpi Data Abtract class"
-msgstr ""
+msgstr "Classe abstraite de données MIS KPI"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_form
