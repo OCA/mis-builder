@@ -614,6 +614,8 @@ class MisReportInstance(models.Model):
             'report_type': 'xlsx',
             'report_file': 'mis_report_instance',
             'context': context,
+            # https://github.com/OCA/reporting-engine/pull/259
+            'data': {'__make_report_controller_work__': 1},
         }
 
     @api.multi
