@@ -5,7 +5,6 @@ odoo.define('mis_builder.widget', function (require) {
 "use strict";
 
     var AbstractField = require('web.AbstractField');
-    var FieldManagerMixin = require('web.FieldManagerMixin');
 
     var field_registry = require('web.field_registry');
     var core = require('web.core');
@@ -16,7 +15,11 @@ odoo.define('mis_builder.widget', function (require) {
     var FieldMany2One = relational_fields.FieldMany2One;
     var _t = core._t;
 
-    var MisReportWidget = AbstractField.extend(FieldManagerMixin, {
+    var Widget = require('web.Widget');
+    var StandaloneFieldManagerMixin = require('web.StandaloneFieldManagerMixin');
+
+
+    var MisReportWidget = AbstractField.extend(StandaloneFieldManagerMixin, {
 
         /*
          * The following attributes are set after willStart() and are available
@@ -38,11 +41,14 @@ odoo.define('mis_builder.widget', function (require) {
             'click .oe_mis_builder_settings': 'display_settings',
             'click .oe_mis_builder_refresh': 'refresh',
         }),
+        custom_events: _.extend({}, AbstractField.prototype.custom_events, {
+            // 'field_changed': 'set_filter_value',
+        }),
 
-
-        init: function (parent, model, state) {
-            this._super(parent);
-            FieldManagerMixin.init.call(this);
+        init: function (parent, name, record, options) {
+            this._super(parent, name, record, options);
+            StandaloneFieldManagerMixin.init.call(this, parent);
+            this.record = record;
         },
         /**
          * Return the id of the mis.report.instance to which the widget is
@@ -81,6 +87,7 @@ odoo.define('mis_builder.widget', function (require) {
         willStart: function () {
             var self = this;
             var context = self.getParent().state.context;
+            self.m2o_name = 'analytic_account_id';
             self.analytic_account_id = undefined;
             self.analytic_account_id_domain = [];
             self.analytic_account_id_label = _t("Analytic Account");
@@ -132,21 +139,26 @@ odoo.define('mis_builder.widget', function (require) {
 
         start: function () {
             var self = this;
-            self._super.apply(self, arguments);
-            self.add_filters();
+            return this._super.apply(this, arguments).then(function() {
+                self.add_filters();
+            });
         },
 
-        init_filter_value: function(field_object, attr_name) {
-            var self = this;
-            var filter_value = self.filter_values[attr_name];
-            if (filter_value !== undefined) {
-                field_object.set_value(filter_value);
+        // init_filter_value: function(field_object, attr_name) {
+        //     var self = this;
+        //     var filter_value = self.filter_values[attr_name];
+        //     if (filter_value !== undefined) {
+        //         field_object.reinitialize(filter_value);
+        //     }
+        // },
+
+        set_filter_value: function(evt) {
+            if (evt.target !== this.analytic_account_id_m2o) {
+                return;
             }
-        },
-
-        set_filter_value: function(field_object, attr_name) {
-            var self = this;
-            self.filter_values[attr_name] = field_object.get_value();
+            evt.stopPropagation();
+            this.filter_values[this.m2o_name] = evt.data.changes[this.m2o_name].id;
+            this.analytic_account_id_m2o.reinitialize(this.filter_values[this.m2o_name]);
         },
 
         add_filters: function () {
@@ -166,26 +178,32 @@ odoo.define('mis_builder.widget', function (require) {
                 // Prevent errors with autocomplete
                 self.analytic_account_id_m2o.destroy();
             }
-            var field_name = 'analytic_account_id';
-            var analytic_account_id_m2o = new FieldMany2One(self,
-            {
-                attrs: {
+            self.analytic_account_id_m2o = new FieldMany2One(
+                self, self.m2o_name, self.record, 
+                {
+                    mode: 'edit',
+                    viewType: this.getParent().viewType,
                     placeholder: self.analytic_account_id_label,
-                    name: field_name,
+                    name: self.m2o_name,
                     type: 'many2one',
                     relation: 'account.analytic.account',
                     domain: self.analytic_account_id_domain,
                     context: {},
                     modifiers: '{}',
-                },
-            });
-            self.init_filter_value(analytic_account_id_m2o, field_name);
-            analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
-            analytic_account_id_m2o.$input.focusout(function () {
-                self.set_filter_value(analytic_account_id_m2o, field_name);
-            });
-            analytic_account_id_m2o.$follow_button.toggle();
-            self.analytic_account_id_m2o = analytic_account_id_m2o;
+                    can_create: false
+                }
+            );
+            self._registerWidget(self.record.id, self.m2o_name, self.analytic_account_id_m2o);
+            // self.init_filter_value(self.analytic_account_id_m2o, field_name);
+            self.analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
+            // analytic_account_id_m2o.$input.focusout(function () {
+            //     self.set_filter_value(analytic_account_id_m2o, field_name);
+            // });
+            // analytic_account_id_m2o.on('field_changed', function () {
+            //     self.set_filter_value(analytic_account_id_m2o, field_name);
+            // });
+            // TODO: check if we need this and how it works on new API
+            // analytic_account_id_m2o.$follow_button.toggle();
         },
 
         refresh: function () {
