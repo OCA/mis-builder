@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Tecnativa - Ernesto Tejeda
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <data>
+        <record id="mis_account_analytic_line_view_tree" model="ir.ui.view">
+            <field name="name">mis.account.analytic.line.tree</field>
+            <field name="model">mis.account.analytic.line</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                    <field name="analytic_line_id"/>
+                    <field name="date"/>
+                    <field name="company_id"/>
+                    <field name="account_id"/>
+                    <field name="credit"/>
+                    <field name="debit"/>
+                    <field name="balance"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="mis_account_analytic_line_view_form" model="ir.ui.view">
+            <field name="name">mis.account.analytic.line.form</field>
+            <field name="model">mis.account.analytic.line</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false" delete="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="analytic_line_id"/>
+                                <field name="date"/>
+                                <field name="company_id"/>
+                                <field name="account_id"/>
+                            </group>
+                            <group>
+                                <field name="credit"/>
+                                <field name="debit"/>
+                                <field name="balance"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
