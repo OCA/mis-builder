@@ -44,6 +44,8 @@ class TestMisReportInstance(common.HttpCase):
         # create a report with 2 subkpis and one query
         self.report = self.env['mis.report'].create(dict(
             name='test report',
+            move_lines_source=self.env['ir.model'].search(
+                [('model', '=', 'account.move.line')]).id,
             subkpi_ids=[(0, 0, dict(
                 name='sk1',
                 description='subkpi 1',
@@ -87,6 +89,7 @@ class TestMisReportInstance(common.HttpCase):
                 sequence=2,
             ))]
         ))
+        self.report._compute_account_model()
         # kpi with accounting formulas
         self.kpi1 = self.env['mis.report.kpi'].create(dict(
             report_id=self.report.id,

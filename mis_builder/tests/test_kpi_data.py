@@ -22,7 +22,10 @@ class TestKpiData(SavepointCase):
 
         report = cls.env['mis.report'].create(dict(
             name='test report',
+            move_lines_source=cls.env['ir.model'].search(
+                [('model', '=', 'account.move.line')]).id,
         ))
+        report._compute_account_model()
         cls.kpi1 = cls.env['mis.report.kpi'].create(dict(
             report_id=report.id,
             name='k1',

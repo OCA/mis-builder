@@ -21,7 +21,10 @@ class TestPeriodDates(common.TransactionCase):
         self.period_obj = self.env['mis.report.instance.period']
         self.report = self.report_obj.create(dict(
             name='test-report',
+            move_lines_source=self.env['ir.model'].search(
+                [('model', '=', 'account.move.line')]).id,
         ))
+        self.report._compute_account_model()
         self.instance = self.instance_obj.create(dict(
             name='test-instance',
             report_id=self.report.id,

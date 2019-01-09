@@ -85,6 +85,8 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
         # create report
         self.report = self.env['mis.report'].create(dict(
             name='test report',
+            move_lines_source=self.env['ir.model'].search(
+                [('model', '=', 'account.move.line')]).id,
         ))
         self.kpi1 = self.env['mis.report.kpi'].create(dict(
             report_id=self.report.id,

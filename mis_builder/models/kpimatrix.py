@@ -147,12 +147,12 @@ class KpiMatrixCell(object):
 
 class KpiMatrix(object):
 
-    def __init__(self, env):
+    def __init__(self, env, account_model=None):
         # cache language id for faster rendering
         lang_model = env['res.lang']
         self.lang = lang_model._lang_get(env.user.lang)
         self._style_model = env['mis.report.style']
-        self._account_model = env['account.account']
+        self._account_model = env[account_model or 'account.account']
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
