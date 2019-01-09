@@ -284,6 +284,20 @@ class MisReportInstancePeriod(models.Model):
          'Period name should be unique by report'),
     ]
 
+    @api.constrains('source_aml_model_id')
+    def _check_source_aml_model_id(self):
+        for record in self:
+            if record.source_aml_model_id:
+                record_model = record.source_aml_model_id.field_id.filtered(
+                    lambda r: r.name == 'account_id').relation
+                report_account_model = record.report_id.account_model
+                if record_model != report_account_model:
+                    raise ValidationError(_(
+                        'Actual (alternative) models used in columns must '
+                        'have the same account model in account_id and must '
+                        'be the same defined in the '
+                        'Template: %s') % report_account_model)
+
     @api.onchange('date_range_id')
     def _onchange_date_range(self):
         if self.date_range_id:
@@ -681,6 +695,7 @@ class MisReportInstance(models.Model):
             period.subkpi_ids,
             period._get_additional_move_line_filter,
             period._get_additional_query_filter,
+            aml_model=self.report_id.move_lines_source.model,
             no_auto_expand_accounts=self.no_auto_expand_accounts,
         )
 
@@ -777,7 +792,8 @@ class MisReportInstance(models.Model):
         account_id = arg.get('account_id')
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env['mis.report.instance.period'].browse(period_id)
-            aep = AEP(self.query_company_ids, self.currency_id)
+            aep = AEP(self.query_company_ids, self.currency_id,
+                      self.report_id.account_model)
             aep.parse_expr(expr)
             aep.done_parsing()
             domain = aep.get_aml_domain_for_expr(
@@ -789,7 +805,7 @@ class MisReportInstance(models.Model):
             if period.source == SRC_ACTUALS_ALT:
                 aml_model_name = period.source_aml_model_id.model
             else:
-                aml_model_name = 'account.move.line'
+                aml_model_name = self.report_id.move_lines_source.model
             return {
                 'name': u'{} - {}'.format(expr, period.name),
                 'domain': domain,

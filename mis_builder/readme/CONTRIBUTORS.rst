@@ -18,3 +18,7 @@
 * Eric Caudal <eric.caudal@elico-corp.com>
 * Andrea Stirpe <a.stirpe@onestein.nl>
 * Maxence Groine <mgroine@fiefmanage.ch>
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+  * Ernesto Tejeda
+  * Pedro M. Baeza
