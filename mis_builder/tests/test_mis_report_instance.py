@@ -1,14 +1,31 @@
 # Copyright 2016-2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import contextlib
+import shutil
+import tempfile
+
 import odoo.tests.common as common
 from odoo.tools import test_reports
+from odoo import tools
 
 from ..models.mis_report import TYPE_STR
 from ..models.accounting_none import AccountingNone
 
 
-class TestMisReportInstance(common.TransactionCase):
+@contextlib.contextmanager
+def enable_test_report_directory():
+    tmpdir = tempfile.mkdtemp()
+    prev_test_report_dir = tools.config['test_report_directory']
+    tools.config['test_report_directory'] = tmpdir
+    try:
+        yield tmpdir
+    finally:
+        shutil.rmtree(tmpdir)
+        tools.config['test_report_directory'] = prev_test_report_dir
+
+
+class TestMisReportInstance(common.HttpCase):
     """ Basic integration test to exercise mis.report.instance.
 
     We don't check the actual results here too much as computation correctness
@@ -197,16 +214,20 @@ class TestMisReportInstance(common.TransactionCase):
         self.assertEqual(action['res_model'], 'account.move.line')
 
     def test_qweb(self):
-        test_reports.try_report(self.env.cr, self.env.uid,
-                                'mis_builder.report_mis_report_instance',
-                                [self.report_instance.id],
-                                report_type='qweb-pdf')
+        with enable_test_report_directory():
+            self.report_instance.print_pdf()  # get action
+            test_reports.try_report(self.env.cr, self.env.uid,
+                                    'mis_builder.report_mis_report_instance',
+                                    [self.report_instance.id],
+                                    report_type='qweb-pdf')
 
     def test_xlsx(self):
-        test_reports.try_report(self.env.cr, self.env.uid,
-                                'mis_builder.mis_report_instance_xlsx',
-                                [self.report_instance.id],
-                                report_type='xlsx')
+        with enable_test_report_directory():
+            self.report_instance.export_xls()  # get action
+            test_reports.try_report(self.env.cr, self.env.uid,
+                                    'mis_builder.mis_report_instance_xlsx',
+                                    [self.report_instance.id],
+                                    report_type='xlsx')
 
     def test_get_kpis_by_account_id(self):
         account_ids = self.env['account.account'].\
@@ -277,3 +298,23 @@ class TestMisReportInstance(common.TransactionCase):
             self.report_instance.company_id)
         self.report_instance._onchange_company()
         self.assertFalse(self.report_instance.company_ids)
+
+    def test_mis_report_analytic_filters(self):
+        # Check that matrix has no values when using a filter with a non
+        # existing account
+        matrix = self.report_instance.with_context(
+            mis_report_filters={
+                'analytic_account_id': {
+                    'value': 999,
+                },
+            }
+        )._compute_matrix()
+        for row in matrix.iter_rows():
+            vals = [c.val for c in row.iter_cells()]
+            if row.kpi.name == 'k1':
+                self.assertEquals(
+                    vals, [AccountingNone, AccountingNone, AccountingNone])
+            elif row.kpi.name == 'k2':
+                self.assertEquals(vals, [AccountingNone, AccountingNone, None])
+            elif row.kpi.name == 'k4':
+                self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
