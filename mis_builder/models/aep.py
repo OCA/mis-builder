@@ -274,7 +274,7 @@ class AccountingExpressionProcessor(object):
             # TODO this takes the fy from the first company
             # make that user controllable (nice to have)?
             fy_date_from = \
-                self.companies.\
+                self.companies[0].\
                 compute_fiscalyear_dates(date_from_date)['date_from']
             domain = ['|',
                       ('date', '>=', fields.Date.to_string(fy_date_from)),
@@ -288,7 +288,7 @@ class AccountingExpressionProcessor(object):
             # TODO this takes the fy from the first company
             # make that user controllable (nice to have)?
             fy_date_from = \
-                self.companies.\
+                self.companies[0].\
                 compute_fiscalyear_dates(date_from_date)['date_from']
             domain = [('date', '<', fields.Date.to_string(fy_date_from)),
                       ('user_type_id.include_initial_balance', '=', False)]
