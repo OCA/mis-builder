@@ -283,6 +283,13 @@ class MisReport(models.Model):
     kpi_ids = fields.One2many('mis.report.kpi', 'report_id',
                               string='KPI\'s',
                               copy=True)
+    code = fields.Char(size=32, string='Code', translate=True)
+
+    @api.onchange('name')
+    def _onchange_name_code(self):
+        """ Construct code from Name"""
+        if self.name and not self.code:
+            self.code = _python_var(self.name)
 
     @api.one
     def copy(self, default=None):

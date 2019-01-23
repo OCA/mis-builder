@@ -15,6 +15,7 @@
             <field name="arch" type="xml">
                 <tree string="MIS Reports">
                     <field name="name"/>
+                    <field name="code"/>
                     <field name="description"/>
                 </tree>
             </field>
@@ -28,6 +29,7 @@
                 <sheet>
                     <group col="2">
                         <field name="name"/>
+                        <field name="code"/>
                         <field name="description"/>
                     </group>
                     <group string="Queries">
