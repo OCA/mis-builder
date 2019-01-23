@@ -382,7 +382,9 @@ class MisReport(models.Model):
                  target_move,
                  get_additional_move_line_filter=None,
                  get_additional_query_filter=None,
-                 period_id=None):
+                 period_id=None,
+                 report_instance_id=None,
+                 ):
         """ Evaluate a report for a given period.
 
         It returns a dictionary keyed on kpi.name with the following values:
@@ -424,6 +426,8 @@ class MisReport(models.Model):
         self.ensure_one()
         res = {}
 
+        recomputed_dict = {}
+
         localdict = {
             'registry': self.pool,
             'sum': _sum,
@@ -446,20 +450,36 @@ class MisReport(models.Model):
                        additional_move_line_filter)
 
         compute_queue = self.kpi_ids
+        recompute_inherit = {}
         recompute_queue = []
         while True:
             for kpi in compute_queue:
                 try:
                     kpi_val_comment = kpi.name + " = " + kpi.expression
                     kpi_eval_expression = aep.replace_expr(kpi.expression)
-                    kpi_val = safe_eval(kpi_eval_expression, localdict)
+
+                    if recomputed_dict:
+                        kpi_val = recomputed_dict.get(kpi_eval_expression)
+                        recomputed_dict = {}
+                    else:
+                        kpi_val = safe_eval(kpi_eval_expression, localdict)
+
                     localdict[kpi.name] = kpi_val
                 except ZeroDivisionError:
                     kpi_val = None
                     kpi_val_rendered = '#DIV/0'
                     kpi_val_comment += '\n\n%s' % (traceback.format_exc(),)
                 except (NameError, ValueError):
-                    recompute_queue.append(kpi)
+                    if '.' in kpi.expression:
+                        report_descript, kpi_name = kpi.expression.split('.')
+                        inherit = kpi.search(
+                            [('report_id.description', '=', report_descript),
+                             ('name', '=', kpi_name)]
+                        )
+                        recompute_inherit[inherit.report_id.id] = inherit.report_id
+
+                    else:
+                        recompute_queue.append(kpi)
                     kpi_val = None
                     kpi_val_rendered = '#ERR'
                     kpi_val_comment += '\n\n%s' % (traceback.format_exc(),)
@@ -496,6 +516,32 @@ class MisReport(models.Model):
                     'drilldown': drilldown,
                 }
 
+            for idx, inherit_record in recompute_inherit.items():
+                inherit_result = report_instance_id._compute(
+                    report_id=inherit_record,
+                    kpi_ids=inherit_record.kpi_ids,
+                )
+
+                report_descript, kpi_name = kpi.expression.split('.')
+
+                inherit = kpi.search(
+                    [('report_id.description', '=', report_descript),
+                     ('name', '=', kpi_name)]
+                )
+
+                kpi_inherit_val = ''
+                for kpi_content in inherit_result.get('content'):
+                    if inherit.description == kpi_content.get('kpi_name'):
+                        kpi_inherit_val = kpi_content.get('cols')[0].get('val')
+                        break
+
+                if kpi_inherit_val:
+                    recomputed_dict[kpi.expression] = kpi_inherit_val
+                    recompute_queue.append(kpi)
+                    compute_queue -= kpi
+
+            recompute_inherit = {}
+
             if len(recompute_queue) == 0:
                 # nothing to recompute, we are done
                 break
@@ -505,6 +551,7 @@ class MisReport(models.Model):
                 # so we stop trying
                 break
             # try again
+
             compute_queue = recompute_queue
             recompute_queue = []
 
@@ -675,9 +722,9 @@ class MisReportInstancePeriod(models.Model):
             return False
 
     @api.multi
-    def _compute(self, lang_id, aep):
+    def _compute(self, report_id, lang_id, aep):
         self.ensure_one()
-        return self.report_instance_id.report_id._compute(
+        return report_id._compute(
             lang_id, aep,
             self.date_from, self.date_to,
             self.period_from, self.period_to,
@@ -685,6 +732,7 @@ class MisReportInstancePeriod(models.Model):
             self._get_additional_move_line_filter,
             self._get_additional_query_filter,
             period_id=self.id,
+            report_instance_id=self.report_instance_id,
         )
 
 
@@ -806,8 +854,14 @@ class MisReportInstance(models.Model):
     @api.multi
     def compute(self):
         self.ensure_one()
+        return self._compute(
+            report_id=self.report_id,
+            kpi_ids=self.report_id.kpi_ids,
+        )
 
-        aep = self.report_id._prepare_aep(self.root_account)
+    def _compute(self, report_id, kpi_ids):
+
+        aep = report_id._prepare_aep(self.root_account)
 
         # fetch user language only once
         # TODO: is this necessary?
@@ -818,10 +872,11 @@ class MisReportInstance(models.Model):
 
         # compute kpi values for each period
         kpi_values_by_period_ids = {}
+
         for period in self.period_ids:
             if not period.valid:
                 continue
-            kpi_values = period._compute(lang_id, aep)
+            kpi_values = period._compute(report_id, lang_id, aep)
             kpi_values_by_period_ids[period.id] = kpi_values
 
         # prepare header and content
@@ -832,7 +887,8 @@ class MisReportInstance(models.Model):
         })
         content = []
         rows_by_kpi_name = {}
-        for kpi in self.report_id.kpi_ids:
+
+        for kpi in kpi_ids:
             rows_by_kpi_name[kpi.name] = {
                 'kpi_name': kpi.description,
                 'cols': [],
@@ -877,7 +933,7 @@ class MisReportInstance(models.Model):
                                                    compare_col.name),
                              date=''))
                     # add comparison values
-                    for kpi in self.report_id.kpi_ids:
+                    for kpi in report_id.kpi_ids:
                         rows_by_kpi_name[kpi.name]['cols'].append({
                             'val_r': kpi.render_comparison(
                                 lang_id,
