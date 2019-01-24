@@ -514,6 +514,8 @@ class MisReport(models.Model):
                                     kpi.css_style, exc_info=True)
                     kpi_style = None
 
+                redirect = ''
+
                 drilldown = (kpi_val is not None and
                              AEP.has_account_var(kpi.expression))
 
@@ -529,6 +531,7 @@ class MisReport(models.Model):
                     'period_id': period_id,
                     'expr': kpi.expression,
                     'drilldown': drilldown,
+                    'sub_report_id': 3,
                 }
 
             for report_id, subreport_kpi_itens in subreport.items():
@@ -725,6 +728,29 @@ class MisReportInstancePeriod(models.Model):
             return False
 
     @api.multi
+    def sub_report(self, val, sub_report_id):
+        assert len(self) == 1
+        view_id = self.env.ref('mis_builder.'
+                               'mis_report_instance_result_view_form')
+
+        context = dict(self.env.context)
+        context.update({
+            'sub_report_id': sub_report_id,
+        })
+
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'mis.report.instance',
+            'res_id': 8,  # TODO
+            'view_mode': 'form',
+            'view_type': 'form',
+            'views': [(view_id.id, 'form')],
+            'view_id': view_id.id,
+            'target': 'current',
+            'context': context,
+        }
+
+    @api.multi
     def _compute(self, report_id, lang_id, aep):
         self.ensure_one()
         return report_id._compute(
@@ -857,9 +883,19 @@ class MisReportInstance(models.Model):
     @api.multi
     def compute(self):
         self.ensure_one()
+
+        print self.env.context.get('sub_report_id')
+
+        sub_report_id = self.env.context.get('sub_report_id')
+
+        if sub_report_id:
+            report_id= self.env['mis.report'].browse(sub_report_id)
+        else:
+            report_id = self.report_id
+
         return self._compute(
-            report_id=self.report_id,
-            kpi_ids=self.report_id.kpi_ids,
+            report_id=report_id,
+            kpi_ids=report_id.kpi_ids,
         )
 
     def _compute(self, report_id, kpi_ids):

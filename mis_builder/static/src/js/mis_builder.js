@@ -103,6 +103,7 @@ openerp.mis_builder = function(instance) {
         },
         events: {
             "click a.mis_builder_drilldown": "drilldown",
+            "click a.mis_builder_sub_report": "sub_report",
         },
 
         drilldown: function(event) {
@@ -115,6 +116,25 @@ openerp.mis_builder = function(instance) {
                 new instance.web.Model("mis.report.instance.period").call(
                     "drilldown",
                     [period_id, val_c],
+                    {'context': context}
+                ).then(function(result) {
+                    if (result) {
+                        self.do_action(result);
+                    }
+                });
+            }
+        },
+        sub_report: function(event) {
+            var self = this;
+            var sub_report = JSON.parse($(event.target).data("sub-report-id"));
+            if (sub_report) {
+                var period_id = JSON.parse($(event.target).data("period-id"));
+                var val_c = JSON.parse($(event.target).data("expr"));
+                var sub_report_id = JSON.parse($(event.target).data("sub-report-id"));
+                context = new instance.web.CompoundContext(self.build_context(), self.get_context()|| {})
+                new instance.web.Model("mis.report.instance.period").call(
+                    "sub_report",
+                    [period_id, val_c, sub_report_id],
                     {'context': context}
                 ).then(function(result) {
                     if (result) {
