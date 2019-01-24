@@ -426,8 +426,6 @@ class MisReport(models.Model):
         self.ensure_one()
         res = {}
 
-        recomputed_dict = {}
-
         localdict = {
             'registry': self.pool,
             'sum': _sum,
@@ -450,36 +448,53 @@ class MisReport(models.Model):
                        additional_move_line_filter)
 
         compute_queue = self.kpi_ids
-        recompute_inherit = {}
         recompute_queue = self.env['mis.report.kpi']
+        subreport = {}
         while True:
             for kpi in compute_queue:
                 try:
                     kpi_val_comment = kpi.name + " = " + kpi.expression
                     kpi_eval_expression = aep.replace_expr(kpi.expression)
 
-                    if recomputed_dict:
-                        kpi_val = recomputed_dict.get(kpi_eval_expression)
-                        recomputed_dict = {}
-                    else:
-                        kpi_val = safe_eval(kpi_eval_expression, localdict)
+                    if '.' in kpi.expression:
+                        #
+                        # Sub report search
+                        #
+                        report_descript, kpi_name = kpi.expression.split('.')
+                        inherit_report_id = kpi.search(
+                            [('report_id.code', '=', report_descript),
+                             ('name', '=', kpi_name)]
+                        )
+                        if (inherit_report_id and
+                                subreport.get(inherit_report_id.report_id) and
+                                subreport[inherit_report_id.report_id].get(kpi.expression)):
+                            kpi_eval_expression = aep.replace_expr(str(
+                                subreport[inherit_report_id.report_id].get(kpi.expression)
+                            ))
 
+                    kpi_val = safe_eval(kpi_eval_expression, localdict)
                     localdict[kpi.name] = kpi_val
+
                 except ZeroDivisionError:
                     kpi_val = None
                     kpi_val_rendered = '#DIV/0'
                     kpi_val_comment += '\n\n%s' % (traceback.format_exc(),)
                 except (NameError, ValueError):
-                    if '.' in kpi.expression:
-                        report_descript, kpi_name = kpi.expression.split('.')
-                        inherit = kpi.search(
-                            [('report_id.code', '=', report_descript),
-                             ('name', '=', kpi_name)]
-                        )
-                        recompute_inherit[inherit.report_id.id] = inherit.report_id
 
-                    else:
-                        recompute_queue += kpi
+                    if inherit_report_id and subreport.get(inherit_report_id.report_id):
+                        if subreport[inherit_report_id.report_id].get(kpi.expression):
+                            kpi_val = subreport[inherit_report_id.report_id].get(kpi.expression)
+                            localdict[kpi.name] = kpi_val
+                        else:
+                            subreport[inherit_report_id.report_id][
+                                kpi.expression] = None
+                    elif inherit_report_id:
+                        subreport[inherit_report_id.report_id] = {
+                            kpi.expression: None,
+                        }
+
+                    inherit_report_id = False
+                    recompute_queue |= kpi
                     kpi_val = None
                     kpi_val_rendered = '#ERR'
                     kpi_val_comment += '\n\n%s' % (traceback.format_exc(),)
@@ -516,31 +531,20 @@ class MisReport(models.Model):
                     'drilldown': drilldown,
                 }
 
-            for idx, inherit_record in recompute_inherit.items():
-                inherit_result = report_instance_id._compute(
-                    report_id=inherit_record,
-                    kpi_ids=inherit_record.kpi_ids,
-                )
-
-                report_descript, kpi_name = kpi.expression.split('.')
-
-                inherit = kpi.search(
-                    [('report_id.code', '=', report_descript),
-                     ('name', '=', kpi_name)]
-                )
-
-                kpi_inherit_val = ''
-                for kpi_content in inherit_result.get('content'):
-                    if inherit.description == kpi_content.get('kpi_name'):
-                        kpi_inherit_val = kpi_content.get('cols')[0].get('val')
-                        break
-
-                if kpi_inherit_val:
-                    recomputed_dict[kpi.expression] = kpi_inherit_val
-                    recompute_queue += kpi
-                    compute_queue -= kpi
-
-            recompute_inherit = {}
+            for report_id, subreport_kpi_itens in subreport.items():
+                subreport_result = report_instance_id._compute(
+                        report_id=report_id,
+                        kpi_ids=report_id.kpi_ids,
+                    )
+                for subreport_item in subreport_kpi_itens.keys():
+                    report_descript, kpi_name = subreport_item.split('.')
+                    for kpi_content in subreport_result.get('content'):
+                        if kpi_name == kpi_content.get('kpi_name'):
+                            subreport_kpi_itens[subreport_item] = kpi_content.get('cols')[0].get('val')
+            else:
+                # Avoid break when all kpis of the report are from subreport
+                if len(recompute_queue) == len(compute_queue):
+                    continue
 
             if len(recompute_queue) == 0:
                 # nothing to recompute, we are done
@@ -552,7 +556,7 @@ class MisReport(models.Model):
                 break
             # try again
             compute_queue = recompute_queue
-            recompute_queue = []
+            recompute_queue = self.env['mis.report.kpi']
 
         return res
 
