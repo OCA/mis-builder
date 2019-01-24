@@ -451,7 +451,7 @@ class MisReport(models.Model):
 
         compute_queue = self.kpi_ids
         recompute_inherit = {}
-        recompute_queue = []
+        recompute_queue = self.env['mis.report.kpi']
         while True:
             for kpi in compute_queue:
                 try:
@@ -479,7 +479,7 @@ class MisReport(models.Model):
                         recompute_inherit[inherit.report_id.id] = inherit.report_id
 
                     else:
-                        recompute_queue.append(kpi)
+                        recompute_queue += kpi
                     kpi_val = None
                     kpi_val_rendered = '#ERR'
                     kpi_val_comment += '\n\n%s' % (traceback.format_exc(),)
@@ -537,7 +537,7 @@ class MisReport(models.Model):
 
                 if kpi_inherit_val:
                     recomputed_dict[kpi.expression] = kpi_inherit_val
-                    recompute_queue.append(kpi)
+                    recompute_queue += kpi
                     compute_queue -= kpi
 
             recompute_inherit = {}
