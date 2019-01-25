@@ -36,7 +36,7 @@ class TestMisBuilder(common.TransactionCase):
         # account.analytic.balance
         data = self.registry('mis.report.instance').compute(
             self.cr, self.uid,
-            self.ref('mis_builder.mis_report_instance_test'))
+            self.ref('mis_builder.mis_report_instance_test'))[0]
         self.assertDictContainsSubset(
             {'content':
                 [{'kpi_name': u'total test',
