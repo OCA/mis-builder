@@ -10,7 +10,6 @@ class MisCashFlow(models.Model):
     _description = 'MIS Cash Flow'
     _auto = False
 
-    # line_type = fields.Char()
     line_type = fields.Selection(
         [('forecast_line', 'Forecast Line'), ('move_line', 'Journal Item')],
         index=True,

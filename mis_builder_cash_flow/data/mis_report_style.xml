@@ -5,7 +5,7 @@
 <odoo noupdate="True">
 
   <record id="mis_style_cash_flow" model="mis.report.style">
-    <field name="name">Cash flow</field>
+    <field name="name">Cash Flow</field>
     <field name="hide_empty_inherit" eval="False"/>
     <field name="hide_empty" eval="True"/>
   </record>

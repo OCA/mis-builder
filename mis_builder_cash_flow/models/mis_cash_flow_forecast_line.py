@@ -37,7 +37,7 @@ class MisCashFlowForecastLine(models.Model):
 
     @api.multi
     @api.constrains('company_id', 'account_id')
-    def _check_company_id_employee_id(self):
+    def _check_company_id_account_id(self):
         if self.filtered(lambda x: x.company_id != x.account_id.company_id):
             raise ValidationError(_(
                 'The Company and the Company of the Account must be the '
