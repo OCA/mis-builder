@@ -68,7 +68,7 @@ class MisCashFlow(models.Model):
     def init(self):
         query = """
             SELECT
-                -- we use neagative id to avoid duplicates and we don't use
+                -- we use negative id to avoid duplicates and we don't use
                 -- ROW_NUMBER() because the performance was very poor
                 -aml.id as id,
                 CAST('move_line' AS varchar) as line_type,
@@ -81,14 +81,8 @@ class MisCashFlow(models.Model):
                 aml.company_id as company_id,
                 aml.user_type_id as user_type_id,
                 aml.name as name,
-                CASE
-                    WHEN aat.type IN ('receivable', 'payable') and
-                        aml.date_maturity is not null
-                            THEN aml.date_maturity
-                    ELSE aml.date
-                END AS date
+                aml.date_maturity as date
             FROM account_move_line as aml
-            JOIN account_account_type aat ON aml.user_type_id = aat.id
             UNION ALL
             SELECT
                 fl.id as id,
@@ -108,11 +102,11 @@ class MisCashFlow(models.Model):
                 Null as reconciled,
                 Null as full_reconcile_id,
                 fl.company_id as company_id,
-                aa.user_type_id as user_type_id,
+                -- we dont need this field on forecast lines
+                Null as user_type_id,
                 fl.name as name,
                 fl.date as date
             FROM mis_cash_flow_forecast_line as fl
-            JOIN account_account aa ON aa.id = fl.account_id
         """
         tools.drop_view_if_exists(self.env.cr, self._table)
         self._cr.execute(
