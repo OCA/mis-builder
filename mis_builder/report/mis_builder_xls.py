@@ -60,19 +60,26 @@ class MisBuilderXls(report_xls):
         row_pos += 1
 
         # get the computed result of the report
-        data = self.pool.get('mis.report.instance').compute(
+        tables = self.pool.get('mis.report.instance').compute(
             self.cr, self.uid, objects[0].id, self.context)
 
-        # Column headers
-        header_name_list = ['']
-        col_specs_template = {'': {'header': [1, 30, 'text', ''],
-                                   'header_date': [1, 1, 'text', '']}}
-        for col in data['header'][0]['cols']:
-            col_specs_template[col['name']] = {'header': [1, 30, 'text',
-                                                          col['name']],
-                                               'header_date': [1, 1, 'text',
-                                                               col['date']]}
-            header_name_list.append(col['name'])
+        header_name_list = []
+        col_specs_template = {}
+
+        for data in tables:
+
+            # Column headers
+            header_name_list += [data['header'][0]['kpi_name']]
+            col_specs_template.update({data['header'][0]['kpi_name']: {
+                'header': [1, 30, 'text', data['header'][0]['kpi_name']],
+                'header_date': [1, 1, 'text', '']
+            }})
+            for col in data['header'][0]['cols']:
+                col_specs_template[col['name']] = {
+                    'header': [1, 30, 'text', col['name']],
+                    'header_date': [1, 1, 'text', col['date']]
+                }
+                header_name_list.append(col['name'])
         c_specs = map(
             lambda x: self.render(x, col_specs_template, 'header'),
             header_name_list)
@@ -86,33 +93,36 @@ class MisBuilderXls(report_xls):
         row_pos = self.xls_write_row(
             ws, row_pos, row_data, row_style=self.rh_cell_style_date)
 
-        ws.set_horz_split_pos(row_pos)
-        ws.set_vert_split_pos(1)
+        for data in tables:
 
-        for line in data['content']:
-            col = 0
-            ws.write(row_pos, col, line['kpi_name'], self.mis_rh_cell_style)
-            for value in line['cols']:
-                col += 1
-                num_format_str = '#'
-                if value.get('dp'):
-                    num_format_str += '.'
-                    num_format_str += '0' * int(value['dp'])
-                if value.get('prefix'):
-                    num_format_str = '"%s"' % value['prefix'] + num_format_str
-                if value.get('suffix'):
-                    num_format_str += ' "%s"' % value['suffix']
-                kpi_cell_style = xlwt.easyxf(
-                    _xs['borders_all'] + _xs['right'],
-                    num_format_str=num_format_str)
-                if value.get('val'):
-                    val = value['val']
-                    if value.get('is_percentage'):
-                        val = val / 0.01
-                    ws.write(row_pos, col, val, kpi_cell_style)
-                else:
-                    ws.write(row_pos, col, value['val_r'], kpi_cell_style)
-            row_pos += 1
+            ws.set_horz_split_pos(row_pos)
+            ws.set_vert_split_pos(1)
+
+            for line in data['content']:
+                col = tables.index(data) * (len(line['cols']) + 1)
+                ws.write(row_pos, col, line['kpi_name'], self.mis_rh_cell_style)
+                for value in line['cols']:
+                    col += 1
+                    num_format_str = '#'
+                    if value.get('dp'):
+                        num_format_str += '.'
+                        num_format_str += '0' * int(value['dp'])
+                    if value.get('prefix'):
+                        num_format_str = '"%s"' % value['prefix'] + num_format_str
+                    if value.get('suffix'):
+                        num_format_str += ' "%s"' % value['suffix']
+                    kpi_cell_style = xlwt.easyxf(
+                        _xs['borders_all'] + _xs['right'],
+                        num_format_str=num_format_str)
+                    if value.get('val'):
+                        val = value['val']
+                        if value.get('is_percentage'):
+                            val = val / 0.01
+                        ws.write(row_pos, col, val, kpi_cell_style)
+                    else:
+                        ws.write(row_pos, col, value['val_r'], kpi_cell_style)
+                row_pos += 1
+            row_pos -= len(data['content'])
 
 
 MisBuilderXls('report.mis.report.instance.xls',

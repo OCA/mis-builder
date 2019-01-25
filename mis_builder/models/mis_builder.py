@@ -69,6 +69,8 @@ class MisReportKpi(models.Model):
     description = fields.Char(required=True,
                               string='Description',
                               translate=True)
+    column = fields.Integer(string='Column',
+                            default=1)
     expression = fields.Char(required=True,
                              string='Expression')
     default_css_style = fields.Char(string='Default CSS style')
@@ -818,18 +820,18 @@ class MisReportInstance(models.Model):
             kpi_values_by_period_ids[period.id] = kpi_values
 
         # prepare header and content
-        header = []
-        header.append({
+        header = [{
             'kpi_name': '',
             'cols': []
-        })
+        }]
         content = []
         rows_by_kpi_name = {}
         for kpi in self.report_id.kpi_ids:
             rows_by_kpi_name[kpi.name] = {
                 'kpi_name': kpi.description,
                 'cols': [],
-                'default_style': kpi.default_css_style
+                'default_style': kpi.default_css_style,
+                'column': kpi.column,
             }
             content.append(rows_by_kpi_name[kpi.name])
 
@@ -880,5 +882,27 @@ class MisReportInstance(models.Model):
                                 compare_col.normalize_factor)
                         })
 
-        return {'header': header,
-                'content': content}
+        columns = set(self.report_id.kpi_ids.mapped('column'))
+        columns_header = {column: self.report_id.kpi_ids.filtered(
+            lambda k: k.column == column and k.name == 'header_%s' % column)
+            for column in columns}
+
+        if len(columns) > 1:
+            result = []
+            for column in columns:
+                header_column = header[0]
+                header_column['kpi_name'] = columns_header[column] and \
+                    columns_header[column].description or ''
+                if columns_header[column]:
+                    content.remove(
+                        rows_by_kpi_name[columns_header[column].name])
+                result.append({
+                    'header': [dict(header_column)],
+                    'content': [
+                        row for row in content
+                        if row['column'] == column],
+                })
+            return result
+
+        return [{'header': header,
+                'content': content}]

@@ -49,6 +49,7 @@
                                 <field name="sequence" widget="handle"/>
                                 <field name="description"/>
                                 <field name="name"/>
+                                <field name="column"/>
                                 <field name="expression"/>
                                 <field name="type"/>
                                 <field name="dp" attrs="{'invisible': [('type', '=', 'str')]}"/>
@@ -90,6 +91,49 @@
                     </group>
                 </sheet>
                 </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mis_report_kpi_form_view">
+            <field name="name">mis.report.kpi.form</field>
+            <field name="model">mis.report.kpi</field>
+            <field name="arch" type="xml">
+                <form name="MIS report KPI">
+                    <group>
+                        <field name="sequence" widget="handle"/>
+                        <field name="description"/>
+                        <field name="name"/>
+                        <field name="column"/>
+                        <field name="expression"/>
+                        <field name="type"/>
+                        <field name="dp"/>
+                        <field name="divider"/>
+                        <field name="prefix"/>
+                        <field name="suffix"/>
+                        <field name="compare_method"/>
+                        <field name="default_css_style"/>
+                        <field name="css_style"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="mis_report_kpi_tree_view">
+            <field name="name">mis.report.kpi.tree</field>
+            <field name="model">mis.report.kpi</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="description"/>
+                    <field name="name"/>
+                    <field name="column"/>
+                    <field name="type"/>
+                    <field name="dp"/>
+                    <field name="divider"/>
+                    <field name="prefix"/>
+                    <field name="suffix"/>
+                    <field name="compare_method"/>
+                </tree>
             </field>
         </record>
 
