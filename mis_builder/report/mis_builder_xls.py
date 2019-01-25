@@ -100,7 +100,8 @@ class MisBuilderXls(report_xls):
 
             for line in data['content']:
                 col = tables.index(data) * (len(line['cols']) + 1)
-                ws.write(row_pos, col, line['kpi_name'], self.mis_rh_cell_style)
+                ws.write(row_pos, col, line['kpi_name'],
+                         self.mis_rh_cell_style)
                 for value in line['cols']:
                     col += 1
                     num_format_str = '#'
@@ -108,7 +109,8 @@ class MisBuilderXls(report_xls):
                         num_format_str += '.'
                         num_format_str += '0' * int(value['dp'])
                     if value.get('prefix'):
-                        num_format_str = '"%s"' % value['prefix'] + num_format_str
+                        num_format_str = '"%s"' % value['prefix'] + \
+                                         num_format_str
                     if value.get('suffix'):
                         num_format_str += ' "%s"' % value['suffix']
                     kpi_cell_style = xlwt.easyxf(
