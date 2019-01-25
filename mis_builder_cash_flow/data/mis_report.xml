@@ -9,24 +9,6 @@
     <field name="style_id" ref="mis_style_cash_flow"/>
   </record>
 
-  <record id="mis_kpi_acum_accounting" model="mis.report.kpi">
-    <field name="report_id" ref="mis_report_cash_flow"/>
-    <field name="name">acum_accounting</field>
-    <field name="description">Acum Accountiong</field>
-    <field name="style_id" ref="mis_style_hidden"/>
-    <field name="sequence">10</field>
-    <field name="expression">bale[][('line_type', '=', 'move_line'), '|', ('account_id.internal_type', '=', 'liquidity'), ('account_id.internal_type', 'in', ('receivable', 'payable')), ('full_reconcile_id', '=', False)]</field>
-  </record>
-
-  <record id="mis_kpi_acum_forecast" model="mis.report.kpi">
-    <field name="report_id" ref="mis_report_cash_flow"/>
-    <field name="name">acum_forecast</field>
-    <field name="description">Acum forecast</field>
-    <field name="style_id" ref="mis_style_hidden"/>
-    <field name="sequence">15</field>
-    <field name="expression">bale[][('line_type', '=', 'forecast_line')]</field>
-  </record>
-
   <record id="mis_kpi_aliquidity" model="mis.report.kpi">
     <field name="report_id" ref="mis_report_cash_flow"/>
     <field name="name">liquidity</field>
@@ -116,7 +98,7 @@
     <field name="description">BALANCE</field>
     <field name="style_id" ref="mis_style_account_total"/>
     <field name="sequence">150</field>
-    <field name="expression">acum_accounting + acum_forecast</field>
+    <field name="expression">bale[]['|', ('line_type', '=', 'forecast_line'), ('line_type', '=', 'move_line'), '|', ('account_id.internal_type', '=', 'liquidity'), ('account_id.internal_type', 'in', ('receivable', 'payable')), ('full_reconcile_id', '=', False)]</field>
     <field name="style_expression">'Cash Flow - Good' if balance >= 0.0 else 'Cash Flow - Bad'</field>
   </record>
 

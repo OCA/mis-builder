@@ -50,12 +50,6 @@
     <field name="font_weight">bold</field>
   </record>
 
-  <record id="mis_style_hidden" model="mis.report.style">
-    <field name="name">Cash Flow - hidden</field>
-    <field name="hide_always_inherit" eval="False"/>
-    <field name="hide_always" eval="True"/>
-  </record>
-
   <record id="mis_style_good" model="mis.report.style">
     <field name="name">Cash Flow - Good</field>
     <field name="color_inherit" eval="False"/>
