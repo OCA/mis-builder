@@ -25,19 +25,19 @@ msgid "%s (copy)"
 msgstr "%s (Kopie)"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:105
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:107
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr "%s ist nicht im Budget %s Datumsbereich."
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:112
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:114
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr "%s überlappt %s in Budget %s"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:99
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:101
 #, python-format
 msgid "%s start date must not be after end date"
 msgstr "%s Startdatum darf nicht nach dem Ende-Datum sein"
@@ -68,6 +68,18 @@ msgstr "Kostenstelle"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period_source_mis_budget_id
 msgid "Budget"
 msgstr "Budget"
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
+#, fuzzy
+msgid "Budget Date From"
+msgstr "Budgetposten"
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_to
+#, fuzzy
+msgid "Budget Date To"
+msgstr "Budgetposten"
 
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
@@ -160,7 +172,6 @@ msgstr "Beobachter (Partner)"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_from
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_date_from
 msgid "From"
 msgstr "Von"
@@ -241,6 +252,29 @@ msgid "MIS Budgets"
 msgstr "MIS Budgets"
 
 #. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_report_instance
+#, fuzzy
+msgid "MIS Report Instance"
+msgstr "MIS Berichtsvorlage"
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
+#, fuzzy
+msgid "MIS Report Instance Period"
+msgstr "mis.report.instance.period"
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_report_kpi
+#, fuzzy
+msgid "MIS Report KPI"
+msgstr "MIS Berichtsvorlage"
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_report_kpi_expression
+msgid "MIS Report KPI Expression"
+msgstr ""
+
+#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_report_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_report_id
 msgid "MIS Report Template"
@@ -290,7 +324,6 @@ msgstr "Status"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_to
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_to
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_date_to
 msgid "To"
 msgstr "bis"
@@ -305,22 +338,11 @@ msgstr "Ungelesene Nachrichten"
 msgid "Unread Messages Counter"
 msgstr "Zähler ungelesener Nachrichten"
 
-#. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_report_instance
-msgid "mis.report.instance"
-msgstr "mis.report.instance"
+#~ msgid "mis.report.instance"
+#~ msgstr "mis.report.instance"
 
-#. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
-msgid "mis.report.instance.period"
-msgstr "mis.report.instance.period"
+#~ msgid "mis.report.kpi"
+#~ msgstr "mis.report.kpi"
 
-#. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_report_kpi
-msgid "mis.report.kpi"
-msgstr "mis.report.kpi"
-
-#. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_report_kpi_expression
-msgid "mis.report.kpi.expression"
-msgstr "mis.report.kpi.expression"
+#~ msgid "mis.report.kpi.expression"
+#~ msgstr "mis.report.kpi.expression"
