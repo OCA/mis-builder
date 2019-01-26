@@ -26,19 +26,19 @@ msgid "%s (copy)"
 msgstr "%s (kopie)"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:95
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:97
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr ""
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:102
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:104
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr ""
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:89
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:91
 #, python-format
 msgid "%s start date must not be after end date"
 msgstr ""
@@ -57,6 +57,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period_source_mis_budget_id
 msgid "Budget"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
+msgid "Budget Date From"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_to
+msgid "Budget Date To"
 msgstr ""
 
 #. module: mis_builder_budget
@@ -130,7 +140,6 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_from
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
 msgid "From"
 msgstr "Van"
 
@@ -190,6 +199,28 @@ msgid "MIS Budgets"
 msgstr ""
 
 #. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_report_instance
+#, fuzzy
+msgid "MIS Report Instance"
+msgstr "mis.report.instance"
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
+#, fuzzy
+msgid "MIS Report Instance Period"
+msgstr "mis.report.instance.period"
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_report_kpi
+msgid "MIS Report KPI"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_report_kpi_expression
+msgid "MIS Report KPI Expression"
+msgstr ""
+
+#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_report_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_report_id
 msgid "MIS Report Template"
@@ -212,26 +243,11 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_to
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_to
 msgid "To"
 msgstr "Tot"
 
-#. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_report_instance
-msgid "mis.report.instance"
-msgstr "mis.report.instance"
+#~ msgid "mis.report.kpi"
+#~ msgstr "mis.report.kpi"
 
-#. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
-msgid "mis.report.instance.period"
-msgstr "mis.report.instance.period"
-
-#. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_report_kpi
-msgid "mis.report.kpi"
-msgstr "mis.report.kpi"
-
-#. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_report_kpi_expression
-msgid "mis.report.kpi.expression"
-msgstr "mis.report.kpi.expression"
+#~ msgid "mis.report.kpi.expression"
+#~ msgstr "mis.report.kpi.expression"
