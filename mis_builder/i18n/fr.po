@@ -20,8 +20,8 @@ msgstr ""
 "X-Generator: Weblate 3.2.2\n"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:504
-#: code:addons/mis_builder/models/mis_report_instance.py:522
+#: code:addons/mis_builder/models/mis_report.py:512
+#: code:addons/mis_builder/models/mis_report_instance.py:528
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (copie)"
@@ -160,7 +160,7 @@ msgstr ""
 "account_id et company_id."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:341
+#: code:addons/mis_builder/models/mis_report_instance.py:345
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Un filtre date est obligatoire pour cette source dans la colonne %s."
@@ -249,7 +249,7 @@ msgid "Analytic Account"
 msgstr "Compte analytique"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:491
+#: code:addons/mis_builder/models/mis_report_instance.py:497
 #, python-format
 msgid "Analytic Account: %s"
 msgstr "Compte analytique:%s"
@@ -260,8 +260,8 @@ msgid "Auto expand"
 msgstr "Expansion automatique"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:118
-#: code:addons/mis_builder/models/mis_report.py:399
+#: code:addons/mis_builder/models/mis_report.py:122
+#: code:addons/mis_builder/models/mis_report.py:406
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -294,7 +294,7 @@ msgid "Bold"
 msgstr "Gras"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:192
+#: code:addons/mis_builder/models/mis_report.py:196
 #, python-format
 msgid "Can not update a multi kpi from the kpi line"
 msgstr "Vous ne pouvez pas mettre à jour un kpi multi depuis la ligne de kpi"
@@ -329,14 +329,14 @@ msgid "Column"
 msgstr "Colonne"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:360
-#, python-format
-msgid "Column %s cannot be compared to itself."
+#: code:addons/mis_builder/models/mis_report_instance.py:365
+#, fuzzy, python-format
+msgid "Column %s cannot be compared to itrec."
 msgstr "Colonne %s ne peut pas être comparée à elle-même."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:647
-#: code:addons/mis_builder/models/mis_report_instance.py:668
+#: code:addons/mis_builder/models/mis_report_instance.py:653
+#: code:addons/mis_builder/models/mis_report_instance.py:674
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "Colonne %s avec une source pour le réel doit avoir des dates de/à."
@@ -347,7 +347,7 @@ msgid "Columns"
 msgstr "Colonnes"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:367
+#: code:addons/mis_builder/models/mis_report_instance.py:372
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr "Les colonnes à comparer doivent appartenir au même rapport %s"
@@ -437,7 +437,7 @@ msgid "Dashboard"
 msgstr "Tableau de bord"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:179
+#: code:addons/mis_builder/models/mis_report_instance.py:182
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_date_range_id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_date_range_id
 #: selection:mis.report.instance.period,type:0
@@ -461,7 +461,7 @@ msgid "Dates"
 msgstr "Dates"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:175
+#: code:addons/mis_builder/models/mis_report_instance.py:178
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Day"
@@ -492,7 +492,7 @@ msgstr ""
 "Moyenne : moyenne au pro-rata temporis des valeurs incluses dans la période."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:110
+#: code:addons/mis_builder/models/mis_report.py:114
 #: selection:mis.report.kpi,compare_method:0
 #, python-format
 msgid "Difference"
@@ -582,12 +582,12 @@ msgid "Expression"
 msgstr "Expression"
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_ids
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi_expression_ids
 msgid "Expression ids"
 msgstr "Expression ids"
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_ids
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Expressions"
 msgstr "Expressions"
@@ -682,10 +682,14 @@ msgstr "Poids de police par défaut"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_date_from
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_date_from
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_date_from
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_date_from
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_manual_date_from
 msgid "From"
 msgstr "De"
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_date_from
+msgid "From (computed)"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -757,7 +761,7 @@ msgid "Indent level inherit"
 msgstr "Niveau de retrait par défaut"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_style.py:60
+#: code:addons/mis_builder/models/mis_report_style.py:61
 #, python-format
 msgid "Indent level must be greater than or equal to 0"
 msgstr "Le niveau de retrait doit être plus grand ou égal à 0"
@@ -771,6 +775,13 @@ msgstr "Italique"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_kpi_expression_id
 msgid "KPI"
 msgstr "KPI"
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq1
+#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq1
+#, fuzzy
+msgid "KPI Sequence"
+msgstr "Séquence"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_ids
@@ -863,8 +874,27 @@ msgid "MIS Report"
 msgstr "MIS Report"
 
 #. module: mis_builder
+#: model:ir.model,name:mis_builder.model_add_mis_report_instance_dashboard_wizard
+#, fuzzy
+msgid "MIS Report Add to Dashboard Wizard"
+msgstr "Ajouter au tableau de bord"
+
+#. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report_instance
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 msgid "MIS Report Instance"
+msgstr "Instance MIS report"
+
+#. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report_instance_period
+#, fuzzy
+msgid "MIS Report Instance Period"
+msgstr "Instance MIS report"
+
+#. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report_instance_period_sum
+#, fuzzy
+msgid "MIS Report Instance Period Sum"
 msgstr "Instance MIS report"
 
 #. module: mis_builder
@@ -873,9 +903,22 @@ msgid "MIS Report Instances"
 msgstr "Instances MIS report"
 
 #. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "MIS Report KPI"
 msgstr "MIS Report KPI"
+
+#. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
+#, fuzzy
+msgid "MIS Report KPI Expression"
+msgstr "MIS Report KPI"
+
+#. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report_query
+#, fuzzy
+msgid "MIS Report Query"
+msgstr "MIS Report"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_result_view_form
@@ -883,6 +926,7 @@ msgid "MIS Report Result"
 msgstr "Résultat MIS Report"
 
 #. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report_style
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
 msgid "MIS Report Style"
 msgstr "Style MIS Report"
@@ -893,6 +937,18 @@ msgstr "Style MIS Report"
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_style_view_tree
 msgid "MIS Report Styles"
 msgstr "Styles MIS Report"
+
+#. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report_subkpi
+#, fuzzy
+msgid "MIS Report Sub-KPI"
+msgstr "MIS Report KPI"
+
+#. module: mis_builder
+#: model:ir.model,name:mis_builder.model_mis_report
+#, fuzzy
+msgid "MIS Report Template"
+msgstr "Modèles MIS Report"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_view_action
@@ -924,14 +980,14 @@ msgid "MIS report instance XLS report"
 msgstr "Instance MIS report XLS report"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:401
+#: code:addons/mis_builder/models/mis_report.py:408
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Max"
 msgstr "Max"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:400
+#: code:addons/mis_builder/models/mis_report.py:407
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Min"
@@ -948,7 +1004,7 @@ msgid "Model"
 msgstr "Modèle"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:177
+#: code:addons/mis_builder/models/mis_report_instance.py:180
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Month"
@@ -989,14 +1045,14 @@ msgid "No date filter"
 msgstr "Pas de filtre date"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:346
+#: code:addons/mis_builder/models/mis_report_instance.py:350
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr "Aucun filtre date n'est autorisé pour cette source dans la colonne %s."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:112
-#: code:addons/mis_builder/models/mis_report.py:119
+#: code:addons/mis_builder/models/mis_report.py:116
+#: code:addons/mis_builder/models/mis_report.py:123
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.kpi,compare_method:0
 #, python-format
@@ -1020,7 +1076,7 @@ msgid "Number of periods"
 msgstr "Nombre de périodes"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:104
+#: code:addons/mis_builder/models/mis_report.py:108
 #: selection:mis.report.kpi,type:0
 #, python-format
 msgid "Numeric"
@@ -1042,8 +1098,8 @@ msgid "Parent column"
 msgstr "Colonne parent"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:105
-#: code:addons/mis_builder/models/mis_report.py:111
+#: code:addons/mis_builder/models/mis_report.py:109
+#: code:addons/mis_builder/models/mis_report.py:115
 #: selection:mis.report.kpi,compare_method:0 selection:mis.report.kpi,type:0
 #, python-format
 msgid "Percentage"
@@ -1070,7 +1126,7 @@ msgid "Pivot date"
 msgstr "Date pivot"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:355
+#: code:addons/mis_builder/models/mis_report_instance.py:360
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Merci de renseigner les 2 colonnes à comparer en %s."
@@ -1087,6 +1143,7 @@ msgstr "Préfixe par défaut"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
+#: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
 msgid "Preview"
 msgstr "Prévisualisation"
@@ -1102,7 +1159,7 @@ msgid "Print"
 msgstr "Imprimer"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:689
+#: code:addons/mis_builder/models/mis_report.py:697
 #, python-format
 msgid ""
 "Probably not your fault... but I'm really curious to know how you managed to "
@@ -1192,10 +1249,6 @@ msgstr ""
 "devises différentes."
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq1
-#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq2
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq1
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq2
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sequence
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_sequence
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_sequence
@@ -1222,7 +1275,7 @@ msgid "Source"
 msgstr "Source"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:106
+#: code:addons/mis_builder/models/mis_report.py:110
 #: selection:mis.report.kpi,type:0
 #, python-format
 msgid "String"
@@ -1272,6 +1325,13 @@ msgid "Sub KPI's"
 msgstr "Sous KPI's"
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq2
+#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq2
+#, fuzzy
+msgid "Sub-KPI Sequence"
+msgstr "Séquence"
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_subkpi_id
 msgid "Subkpi id"
 msgstr "Subkpi id"
@@ -1287,8 +1347,8 @@ msgid "Suffix inherit"
 msgstr "Suffixe par défaut"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:117
-#: code:addons/mis_builder/models/mis_report.py:398
+#: code:addons/mis_builder/models/mis_report.py:121
+#: code:addons/mis_builder/models/mis_report.py:405
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -1372,9 +1432,9 @@ msgstr ""
 "[account selector][journal items domain]</code>."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:161
-#: code:addons/mis_builder/models/mis_report.py:286
-#: code:addons/mis_builder/models/mis_report.py:423
+#: code:addons/mis_builder/models/mis_report.py:165
+#: code:addons/mis_builder/models/mis_report.py:291
+#: code:addons/mis_builder/models/mis_report.py:430
 #, python-format
 msgid "The name must be a valid python identifier"
 msgstr "Le nom doit être un identifiant python valide"
@@ -1383,13 +1443,17 @@ msgstr "Le nom doit être un identifiant python valide"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_date_to
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_date_to
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_date_to
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_date_to
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_manual_date_to
 msgid "To"
 msgstr "à"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_kpi_data.py:108
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_date_to
+msgid "To (computed)"
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_kpi_data.py:110
 #, python-format
 msgid "Unexpected accumulation method %s for %s."
 msgstr "Méthode d'accumulation inattendue %s pour %s."
@@ -1410,7 +1474,7 @@ msgid "Visibility"
 msgstr "Visibilité"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:176
+#: code:addons/mis_builder/models/mis_report_instance.py:179
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Week"
@@ -1427,25 +1491,20 @@ msgid "Wrong normalize factor, it must be positive!"
 msgstr "Facteur de normalisation incorrect, il doit être positif !"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:178
+#: code:addons/mis_builder/models/mis_report_instance.py:181
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Year"
 msgstr "Année"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:63
+#: code:addons/mis_builder/models/mis_report_instance.py:65
 #, python-format
 msgid "You cannot sum period %s with itself."
 msgstr "Vous ne pouvez pas additionner la période %s avec elle-meme."
 
 #. module: mis_builder
-#: model:ir.model,name:mis_builder.model_add_mis_report_instance_dashboard_wizard
-msgid "add.mis.report.instance.dashboard.wizard"
-msgstr "add.mis.report.instance.dashboard.wizard"
-
-#. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:738
+#: code:addons/mis_builder/models/mis_report_instance.py:744
 #, python-format
 msgid "from %s to %s"
 msgstr "de %s à %s"
@@ -1461,58 +1520,13 @@ msgid "medium"
 msgstr "moyen"
 
 #. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report
-msgid "mis.report"
-msgstr "mis.report"
-
-#. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report_instance
-msgid "mis.report.instance"
-msgstr "mis.report.instance"
-
-#. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report_instance_period
-msgid "mis.report.instance.period"
-msgstr "mis.report.instance.period"
-
-#. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report_instance_period_sum
-msgid "mis.report.instance.period.sum"
-msgstr "mis.report.instance.period.sum"
-
-#. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report_kpi
-msgid "mis.report.kpi"
-msgstr "mis.report.kpi"
-
-#. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
-msgid "mis.report.kpi.expression"
-msgstr "mis.report.kpi.expression"
-
-#. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report_query
-msgid "mis.report.query"
-msgstr "mis.report.query"
-
-#. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report_style
-msgid "mis.report.style"
-msgstr "mis.report.style"
-
-#. module: mis_builder
-#: model:ir.model,name:mis_builder.model_mis_report_subkpi
-msgid "mis.report.subkpi"
-msgstr "mis.report.subkpi"
-
-#. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_add_to_dashboard_form_view
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
 msgid "or"
 msgstr "ou"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_style.py:218
+#: code:addons/mis_builder/models/mis_report_style.py:219
 #, python-format
 msgid "pp"
 msgstr "pp"
@@ -1546,3 +1560,33 @@ msgstr "xx-grand"
 #: selection:mis.report.style,font_size:0
 msgid "xx-small"
 msgstr "xx-petit"
+
+#~ msgid "add.mis.report.instance.dashboard.wizard"
+#~ msgstr "add.mis.report.instance.dashboard.wizard"
+
+#~ msgid "mis.report"
+#~ msgstr "mis.report"
+
+#~ msgid "mis.report.instance"
+#~ msgstr "mis.report.instance"
+
+#~ msgid "mis.report.instance.period"
+#~ msgstr "mis.report.instance.period"
+
+#~ msgid "mis.report.instance.period.sum"
+#~ msgstr "mis.report.instance.period.sum"
+
+#~ msgid "mis.report.kpi"
+#~ msgstr "mis.report.kpi"
+
+#~ msgid "mis.report.kpi.expression"
+#~ msgstr "mis.report.kpi.expression"
+
+#~ msgid "mis.report.query"
+#~ msgstr "mis.report.query"
+
+#~ msgid "mis.report.style"
+#~ msgstr "mis.report.style"
+
+#~ msgid "mis.report.subkpi"
+#~ msgstr "mis.report.subkpi"
