@@ -27,7 +27,7 @@
             <field name="model">mis.report.instance</field>
             <field name="arch" type="xml">
                 <tree string="MIS Report Instances">
-                    <button name="preview" type="object" icon="fa-search" />
+                    <button type="object" name="preview" string="Preview" icon="fa-search" />
                     <button type="object" name="print_pdf" string="Print" icon="fa-print" />
                     <button type="object" name="export_xls" string="Export" icon="fa-download" />
                     <field name="name"/>
