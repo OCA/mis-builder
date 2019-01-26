@@ -1,6 +1,8 @@
 # Copyright 2017-2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import datetime
+
 from odoo.tests.common import TransactionCase
 
 from odoo.addons.mis_builder.tests.common import assert_matrix
@@ -104,8 +106,8 @@ class TestMisBudget(TransactionCase):
         ))
         self.assertEqual(act['res_model'], 'mis.budget.item')
         self.assertEqual(act['domain'], [
-            ('date_from', '<=', '2017-01-31'),
-            ('date_to', '>=', '2017-01-01'),
+            ('date_from', '<=', datetime.date(2017, 1, 31)),
+            ('date_to', '>=', datetime.date(2017, 1, 1)),
             ('kpi_expression_id', '=', self.expr1.id),
             ('budget_id', '=', self.budget.id),
         ])
