@@ -1,7 +1,11 @@
-11.0.3.3.0 (2019-01-13)
+11.0.3.3.0 (2019-01-26)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 **Features**
+
+*Dynamic analytic filters in report preview are not yet available in 11,
+this requires an update to the JS widget that proved difficult to implement
+so far. Help welcome.*
 
 - Analytic account filters. On a report, an analytic
   account can be selected for filtering. The filter will
