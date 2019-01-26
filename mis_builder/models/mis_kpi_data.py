@@ -44,11 +44,13 @@ class MisKpiData(models.AbstractModel):
         related='kpi_expression_id.kpi_id.sequence',
         store=True,
         readonly=True,
+        string="KPI Sequence",
     )
     seq2 = fields.Integer(
         related='kpi_expression_id.subkpi_id.sequence',
         store=True,
         readonly=True,
+        string="Sub-KPI Sequence",
     )
 
     @api.depends('kpi_expression_id.subkpi_id.name',

@@ -193,8 +193,8 @@ class MisReportInstancePeriod(models.Model):
     duration = fields.Integer(string='Duration',
                               help='Number of periods',
                               default=1)
-    date_from = fields.Date(compute='_compute_dates', string="From")
-    date_to = fields.Date(compute='_compute_dates', string="To")
+    date_from = fields.Date(compute='_compute_dates', string="From (computed)")
+    date_to = fields.Date(compute='_compute_dates', string="To (computed)")
     manual_date_from = fields.Date(string="From")
     manual_date_to = fields.Date(string="To")
     date_range_id = fields.Many2one(

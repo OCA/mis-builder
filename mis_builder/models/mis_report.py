@@ -81,11 +81,14 @@ class MisReportKpi(models.Model):
     multi = fields.Boolean()
     expression = fields.Char(
         compute='_compute_expression',
-        inverse='_inverse_expression')
+        inverse='_inverse_expression',
+        string="Expression",
+    )
     expression_ids = fields.One2many(
         comodel_name='mis.report.kpi.expression',
         inverse_name='kpi_id',
         copy=True,
+        string="Expressions",
     )
     auto_expand_accounts = fields.Boolean(string='Display details by account')
     auto_expand_accounts_style_id = fields.Many2one(
