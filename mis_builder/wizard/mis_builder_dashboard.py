@@ -8,6 +8,7 @@ from lxml import etree
 
 class AddMisReportInstanceDashboard(models.TransientModel):
     _name = "add.mis.report.instance.dashboard.wizard"
+    _description = "MIS Report Add to Dashboard Wizard"
 
     name = fields.Char('Name', size=32, required=True)
 

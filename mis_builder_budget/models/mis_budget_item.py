@@ -23,10 +23,12 @@ class MisBudgetItem(models.Model):
     budget_date_from = fields.Date(
         related='budget_id.date_from',
         readonly=True,
+        string="Budget Date From"
     )
     budget_date_to = fields.Date(
         related='budget_id.date_to',
         readonly=True,
+        string="Budget Date To"
     )
     report_id = fields.Many2one(
         related='budget_id.report_id',
