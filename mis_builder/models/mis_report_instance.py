@@ -36,6 +36,7 @@ class DateFilterForbidden(ValidationError):
 class MisReportInstancePeriodSum(models.Model):
 
     _name = "mis.report.instance.period.sum"
+    _description = 'MIS Report Instance Period Sum'
 
     period_id = fields.Many2one(
         comodel_name='mis.report.instance.period',
@@ -162,6 +163,7 @@ class MisReportInstancePeriod(models.Model):
                         record.valid = True
 
     _name = 'mis.report.instance.period'
+    _description = 'MIS Report Instance Period'
 
     name = fields.Char(size=32, required=True,
                        string='Label', translate=True)
@@ -390,6 +392,7 @@ class MisReportInstance(models.Model):
         return default_company_id
 
     _name = 'mis.report.instance'
+    _description = 'MIS Report Instance'
 
     name = fields.Char(required=True,
                        string='Name', translate=True)

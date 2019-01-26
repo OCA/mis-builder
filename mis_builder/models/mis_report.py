@@ -71,6 +71,7 @@ class MisReportKpi(models.Model):
     """
 
     _name = 'mis.report.kpi'
+    _description = 'MIS Report KPI'
 
     name = fields.Char(size=32, required=True,
                        string='Name')
@@ -264,6 +265,7 @@ class MisReportKpi(models.Model):
 
 class MisReportSubkpi(models.Model):
     _name = 'mis.report.subkpi'
+    _description = 'MIS Report Sub-KPI'
     _order = 'sequence, id'
 
     sequence = fields.Integer(default=1)
@@ -309,6 +311,7 @@ class MisReportKpiExpression(models.Model):
     """
 
     _name = 'mis.report.kpi.expression'
+    _description = 'MIS Report KPI Expression'
     _order = 'sequence, name, id'
 
     sequence = fields.Integer(
@@ -379,6 +382,7 @@ class MisReportQuery(models.Model):
     """
 
     _name = 'mis.report.query'
+    _description = 'MIS Report Query'
 
     @api.depends('field_ids')
     def _compute_field_names(self):
@@ -439,6 +443,7 @@ class MisReport(models.Model):
     """
 
     _name = 'mis.report'
+    _description = 'MIS Report Template'
 
     name = fields.Char(required=True,
                        string='Name', translate=True)

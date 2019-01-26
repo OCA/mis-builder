@@ -52,6 +52,7 @@ CMP_NONE = 'none'
 class MisReportKpiStyle(models.Model):
 
     _name = 'mis.report.style'
+    _description = 'MIS Report Style'
 
     @api.constrains('indent_level')
     def check_positive_val(self):
