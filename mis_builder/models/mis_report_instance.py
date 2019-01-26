@@ -58,10 +58,11 @@ class MisReportInstancePeriodSum(models.Model):
 
     @api.constrains('period_id', 'period_to_sum_id')
     def _check_period_to_sum(self):
-        if self.period_id == self.period_to_sum_id:
-            raise ValidationError(
-                _("You cannot sum period %s with itself.") %
-                self.period_id.name)
+        for rec in self:
+            if rec.period_id == rec.period_to_sum_id:
+                raise ValidationError(
+                    _("You cannot sum period %s with itself.") %
+                    rec.period_id.name)
 
 
 class MisReportInstancePeriod(models.Model):
@@ -335,37 +336,39 @@ class MisReportInstancePeriod(models.Model):
 
     @api.constrains('mode', 'source')
     def _check_mode_source(self):
-        if self.source in (SRC_ACTUALS, SRC_ACTUALS_ALT):
-            if self.mode == MODE_NONE:
-                raise DateFilterRequired(
-                    _("A date filter is mandatory for this source "
-                      "in column %s.") % self.name)
-        elif self.source in (SRC_SUMCOL, SRC_CMPCOL):
-            if self.mode != MODE_NONE:
-                raise DateFilterForbidden(
-                    _("No date filter is allowed for this source "
-                      "in column %s.") % self.name)
+        for rec in self:
+            if rec.source in (SRC_ACTUALS, SRC_ACTUALS_ALT):
+                if rec.mode == MODE_NONE:
+                    raise DateFilterRequired(
+                        _("A date filter is mandatory for this source "
+                          "in column %s.") % rec.name)
+            elif rec.source in (SRC_SUMCOL, SRC_CMPCOL):
+                if rec.mode != MODE_NONE:
+                    raise DateFilterForbidden(
+                        _("No date filter is allowed for this source "
+                          "in column %s.") % rec.name)
 
     @api.constrains('source', 'source_cmpcol_from_id', 'source_cmpcol_to_id')
     def _check_source_cmpcol(self):
-        if self.source == SRC_CMPCOL:
-            if not self.source_cmpcol_from_id or \
-                    not self.source_cmpcol_to_id:
-                raise ValidationError(
-                    _("Please provide both columns to compare in %s.") %
-                    self.name)
-            if self.source_cmpcol_from_id == self or \
-                    self.source_cmpcol_to_id == self:
-                raise ValidationError(
-                    _("Column %s cannot be compared to itself.") %
-                    self.name)
-            if self.source_cmpcol_from_id.report_instance_id != \
-                    self.report_instance_id or \
-                    self.source_cmpcol_to_id.report_instance_id != \
-                    self.report_instance_id:
-                raise ValidationError(
-                    _("Columns to compare must belong to the same report "
-                      "in %s") % self.name)
+        for rec in self:
+            if rec.source == SRC_CMPCOL:
+                if not rec.source_cmpcol_from_id or \
+                        not rec.source_cmpcol_to_id:
+                    raise ValidationError(
+                        _("Please provide both columns to compare in %s.") %
+                        rec.name)
+                if rec.source_cmpcol_from_id == rec or \
+                        rec.source_cmpcol_to_id == rec:
+                    raise ValidationError(
+                        _("Column %s cannot be compared to itrec.") %
+                        rec.name)
+                if rec.source_cmpcol_from_id.report_instance_id != \
+                        rec.report_instance_id or \
+                        rec.source_cmpcol_to_id.report_instance_id != \
+                        rec.report_instance_id:
+                    raise ValidationError(
+                        _("Columns to compare must belong to the same report "
+                          "in %s") % rec.name)
 
 
 class MisReportInstance(models.Model):
