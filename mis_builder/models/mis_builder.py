@@ -457,6 +457,8 @@ class MisReport(models.Model):
 
         while True:
             for kpi in compute_queue:
+                inherit_report_id = False
+                inherit_active_subreport_ids = self.env['mis.report']
                 try:
                     kpi_val_comment = kpi.name + " = " + kpi.expression
                     kpi_eval_expression = aep.replace_expr(kpi.expression)
@@ -487,6 +489,11 @@ class MisReport(models.Model):
                                 kpi_eval_expression = \
                                     re.sub(r'([a-zA-Z]\w+)\.([a-zA-Z]\w+)',
                                            r'\1_\2', kpi_eval_expression)
+
+                                # Append the inherit_report_id ID to the
+                                # list containing all the MisReports used
+                                # in sub_expressions expressions
+                                inherit_active_subreport_ids |= inherit_report_id
 
                                 # If the inherit_subreport_vals DICT does not
                                 # contains an entry for inherit_report_id.code
@@ -550,15 +557,9 @@ class MisReport(models.Model):
                                     kpi.css_style, exc_info=True)
                     kpi_style = None
 
-                drilldown = (kpi_val is not None and
+                drilldown = (not inherit_active_subreport_ids and
+                             kpi_val is not None and
                              AEP.has_account_var(kpi.expression))
-
-                sub_report_id = False
-                if inherit_subreport_vals.keys():
-                    sub_report_id = self.search([
-                        ('code', '=', inherit_subreport_vals.keys()[0])
-                    ])
-                    drilldown = False
 
                 res[kpi.name] = {
                     'val': None if kpi_val is AccountingNone else kpi_val,
@@ -572,8 +573,8 @@ class MisReport(models.Model):
                     'period_id': period_id,
                     'expr': kpi.expression,
                     'drilldown': drilldown,
-                    'sub_report_id': sub_report_id.id if
-                    sub_report_id else False,
+                    'sub_report_ids': inherit_active_subreport_ids.ids or
+                                      False,
                     'inherit_subreport_vals': inherit_subreport_vals
                 }
 
@@ -756,27 +757,50 @@ class MisReportInstancePeriod(models.Model):
             return False
 
     @api.multi
-    def sub_report(self, val, sub_report_id):
+    def sub_report(self, val, sub_report_ids):
         assert len(self) == 1
-        view_id = self.env.ref('mis_builder.'
-                               'mis_report_instance_result_view_form')
 
         context = dict(self.env.context)
         context.update({
-            'sub_report_id': sub_report_id,
+            'sub_report_ids': sub_report_ids,
         })
 
-        return {
-            'type': 'ir.actions.act_window',
-            'res_model': 'mis.report.instance',
-            'res_id': 8,  # TODO
-            'view_mode': 'form',
-            'view_type': 'form',
-            'views': [(view_id.id, 'form')],
-            'view_id': view_id.id,
-            'target': 'current',
-            'context': context,
-        }
+        report_ids = self.env['mis.report.instance'].search([
+            ('report_id', 'in', sub_report_ids)
+        ])
+
+        id_tree = self.env.ref('mis_builder.'
+                               'mis_report_instance_view_tree')
+
+        id_form = self.env.ref('mis_builder.'
+                               'mis_report_instance_result_view_form')
+
+        if len(sub_report_ids) > 1:
+            action = {
+                'type': 'ir.actions.act_window',
+                'res_model': 'mis.report.instance',
+                'view_mode': 'list',
+                'view_type': 'list',
+                'views': [(False, 'list'), (False, 'form')],
+                'view_id': False,
+                'domain': str([('id', 'in', sub_report_ids)]),
+                'target': 'new',
+                'context': context,
+            }
+        else:
+            action = {
+                'type': 'ir.actions.act_window',
+                'res_model': 'mis.report.instance',
+                'res_id': report_ids[0].id,
+                'view_mode': 'form',
+                'view_type': 'form',
+                'views': [(id_form.id, 'form')],
+                'view_id': id_form.id,
+                'target': 'current',
+                'context': context,
+            }
+
+        return action
 
     @api.multi
     def _compute(self, report_id, lang_id, aep):
@@ -912,10 +936,10 @@ class MisReportInstance(models.Model):
     def compute(self):
         self.ensure_one()
 
-        sub_report_id = self.env.context.get('sub_report_id')
+        sub_report_ids = self.env.context.get('sub_report_ids')
 
-        if sub_report_id:
-            report_id = self.env['mis.report'].browse(sub_report_id)
+        if sub_report_ids:
+            report_id = self.env['mis.report'].browse(sub_report_ids)
         else:
             report_id = self.report_id
 

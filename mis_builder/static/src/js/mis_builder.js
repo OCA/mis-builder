@@ -112,7 +112,7 @@ openerp.mis_builder = function(instance) {
             if (drilldown) {
                 var period_id = JSON.parse($(event.target).data("period-id"));
                 var val_c = JSON.parse($(event.target).data("expr"));
-                context = new instance.web.CompoundContext(self.build_context(), self.get_context()|| {}) 
+                context = new instance.web.CompoundContext(self.build_context(), self.get_context()|| {});
                 new instance.web.Model("mis.report.instance.period").call(
                     "drilldown",
                     [period_id, val_c],
@@ -126,15 +126,14 @@ openerp.mis_builder = function(instance) {
         },
         sub_report: function(event) {
             var self = this;
-            var sub_report = JSON.parse($(event.target).data("sub-report-id"));
-            if (sub_report) {
+            var sub_report_ids = $(event.target).data("sub-report-ids");
+            if (sub_report_ids) {
                 var period_id = JSON.parse($(event.target).data("period-id"));
                 var val_c = JSON.parse($(event.target).data("expr"));
-                var sub_report_id = JSON.parse($(event.target).data("sub-report-id"));
-                context = new instance.web.CompoundContext(self.build_context(), self.get_context()|| {})
+                context = new instance.web.CompoundContext(self.build_context(), self.get_context()|| {});
                 new instance.web.Model("mis.report.instance.period").call(
                     "sub_report",
-                    [period_id, val_c, sub_report_id],
+                    [period_id, val_c, sub_report_ids],
                     {'context': context}
                 ).then(function(result) {
                     if (result) {
