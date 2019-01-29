@@ -769,9 +769,6 @@ class MisReportInstancePeriod(models.Model):
             ('report_id', 'in', sub_report_ids)
         ])
 
-        id_tree = self.env.ref('mis_builder.'
-                               'mis_report_instance_view_tree')
-
         id_form = self.env.ref('mis_builder.'
                                'mis_report_instance_result_view_form')
 
@@ -783,7 +780,7 @@ class MisReportInstancePeriod(models.Model):
                 'view_type': 'list',
                 'views': [(False, 'list'), (False, 'form')],
                 'view_id': False,
-                'domain': str([('id', 'in', sub_report_ids)]),
+                'domain': str([('id', 'in', report_ids.ids)]),
                 'target': 'new',
                 'context': context,
             }
