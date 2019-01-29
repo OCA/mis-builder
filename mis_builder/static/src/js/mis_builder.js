@@ -78,7 +78,13 @@ openerp.mis_builder = function(instance) {
         },
         generate_content: function() {
             var self = this
-            context = new instance.web.CompoundContext(self.build_context(), self.get_context()|| {}) 
+
+            old_context = self.field_manager.ViewManager.ActionManager.inner_action.context;
+            if (old_context.sub_report_ids)
+                context = old_context;
+            else
+                context = new instance.web.CompoundContext(self.build_context(), self.get_context()|| {});
+
             new instance.web.Model("mis.report.instance").call(
                 "compute", 
                 [self.mis_report_instance_id], 
