@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * mis_builder_demo
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2018
 msgid ""
@@ -27,6 +27,12 @@ msgstr "3 M Presupuesto"
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_account_id
 msgid "Account"
+msgstr "Cuenta"
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_analytic_account_id
+#, fuzzy
+msgid "Analytic Account"
 msgstr "Cuenta"
 
 #. module: mis_builder_demo

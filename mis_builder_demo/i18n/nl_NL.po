@@ -31,6 +31,12 @@ msgid "Account"
 msgstr "Rekening"
 
 #. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_analytic_account_id
+#, fuzzy
+msgid "Analytic Account"
+msgstr "Rekening"
+
+#. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
 msgid "Available"
 msgstr "Beschikbaar"

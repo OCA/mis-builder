@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mis_builder_demo
+# 	* mis_builder_demo
 #
 msgid ""
 msgstr ""
@@ -24,6 +24,12 @@ msgstr "3 M Pressupost"
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_account_id
 msgid "Account"
+msgstr "Compte"
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_analytic_account_id
+#, fuzzy
+msgid "Analytic Account"
 msgstr "Compte"
 
 #. module: mis_builder_demo
