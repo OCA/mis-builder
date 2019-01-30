@@ -781,7 +781,7 @@ class MisReportInstancePeriod(models.Model):
                 'views': [(False, 'list'), (False, 'form')],
                 'view_id': False,
                 'domain': str([('id', 'in', report_ids.ids)]),
-                'target': 'new',
+                'target': 'current',
                 'context': context,
             }
         else:
@@ -936,7 +936,11 @@ class MisReportInstance(models.Model):
         sub_report_ids = self.env.context.get('sub_report_ids')
 
         if sub_report_ids:
-            report_id = self.env['mis.report'].browse(sub_report_ids)
+            for sub_report_id in sub_report_ids:
+                sub_report = self.search([('report_id', '=', sub_report_id)])
+                if self == sub_report:
+                    report_id = self.env['mis.report'].browse(sub_report_id)
+                    break
         else:
             report_id = self.report_id
 
