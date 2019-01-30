@@ -43,7 +43,7 @@ Your preferred way to install addons will work with MIS Builder.
 
 An easy way to install it with all its dependencies is using pip:
 
-* ``pip install --pre odoo10-addon-mis_builder odoo-autodiscover``
+* ``pip install --pre odoo11-addon-mis_builder odoo-autodiscover``
 * then restart Odoo, update the addons list in your database, and install
   the MIS Builder application.
 
@@ -96,6 +96,51 @@ be found on GitHub.
 
 Changelog
 =========
+
+11.0.3.3.0 (2019-01-26)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+*Dynamic analytic filters in report preview are not yet available in 11,
+this requires an update to the JS widget that proved difficult to implement
+so far. Help welcome.*
+
+- Analytic account filters. On a report, an analytic
+  account can be selected for filtering. The filter will
+  be applied to move lines queries. A filter box is also
+  available in the widget to let the user select the analytic
+  account during report preview. (`#15 <https://github.com/oca/mis-builder/issues/15>`_)
+- Control visibility of analytic filter combo box in widget.
+  This is useful to hide the analytic filters on reports where
+  they do not make sense, such as balance sheet reports. (`#42 <https://github.com/oca/mis-builder/issues/42>`_)
+- Display analytic filters in the header of exported pdf and xls. (`#44 <https://github.com/oca/mis-builder/issues/44>`_)
+- Replace the last old gtk icons with fontawesome icons. (`#104 <https://github.com/oca/mis-builder/issues/104>`_)
+- Use active_test=False in AEP queries.
+  This is important for reports involving inactive taxes.
+  This should not negatively effect existing reports, because
+  an accounting report must take into account all existing move lines
+  even if they reference objects such as taxes, journals, accounts types
+  that have been deactivated since their creation. (`#107 <https://github.com/oca/mis-builder/issues/107>`_)
+- int(), float() and round() support for AccountingNone. (`#108 <https://github.com/oca/mis-builder/issues/108>`_)
+- Allow referencing subkpis by name by writing `kpi_x.subkpi_y` in expressions. (`#114 <https://github.com/oca/mis-builder/issues/114>`_)
+- Add an option to control the display of the start/end dates in the
+  column headers. It is disabled by default (this is a change compared
+  to previous behaviour). (`#118 <https://github.com/oca/mis-builder/issues/118>`_)
+- Add evaluate method to mis.report. This is a simplified
+  method to evaluate kpis of a report over a time period,
+  without creating a mis.report.instance. (`#123 <https://github.com/oca/mis-builder/issues/123>`_)
+
+**Bugs**
+
+- In the style form, hide the "Hide always" checkbox when "Hide always inherit"
+  is checked, as for all other syle elements. (`#121 <https://github.com/OCA/mis-builder/pull/121>`)
+
+**Upgrading from 3.2 (breaking changes)**
+
+If you use ``Actuals (alternative)`` data source in combination with analytic
+filters, the underlying model must now have an ``analytic_account_id`` field.
+
 
 11.0.3.2.2 (2018-06-30)
 ~~~~~~~~~~~~~~~~~~~~~~~
