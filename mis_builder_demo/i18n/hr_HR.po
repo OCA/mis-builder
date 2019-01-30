@@ -26,8 +26,13 @@ msgid "3 M Budget"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_account_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__account_id
 msgid "Account"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_account_id
+msgid "Analytic Account"
 msgstr ""
 
 #. module: mis_builder_demo
@@ -41,22 +46,22 @@ msgid "Committed"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_company_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__company_id
 msgid "Company"
 msgstr "Tvrtka"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_credit
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__credit
 msgid "Credit"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_date
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__date
 msgid "Date"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_debit
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__debit
 msgid "Debit"
 msgstr ""
 
@@ -71,7 +76,7 @@ msgid "Demo Expenses vs Budget"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_display_name
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__display_name
 msgid "Display Name"
 msgstr "Naziv "
 
@@ -86,17 +91,17 @@ msgid "Expenses"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase___last_update
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_line_type
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__line_type
 msgid "Line Type"
 msgstr ""
 
@@ -116,7 +121,7 @@ msgid "MIS Committed Purchase"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_name
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__name
 msgid "Name"
 msgstr "Naziv"
 

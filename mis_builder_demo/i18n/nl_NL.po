@@ -26,8 +26,14 @@ msgid "3 M Budget"
 msgstr "3 M Begroting"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_account_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__account_id
 msgid "Account"
+msgstr "Rekening"
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_account_id
+#, fuzzy
+msgid "Analytic Account"
 msgstr "Rekening"
 
 #. module: mis_builder_demo
@@ -41,22 +47,22 @@ msgid "Committed"
 msgstr "Vastgelegd"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_company_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__company_id
 msgid "Company"
 msgstr "Bedrijf"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_credit
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__credit
 msgid "Credit"
 msgstr "Credit"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_date
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__date
 msgid "Date"
 msgstr "Datum"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_debit
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__debit
 msgid "Debit"
 msgstr "Debet"
 
@@ -71,7 +77,7 @@ msgid "Demo Expenses vs Budget"
 msgstr "Demo Uitgaven vs Begroting"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_display_name
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__display_name
 msgid "Display Name"
 msgstr "Weergavenaam"
 
@@ -86,17 +92,17 @@ msgid "Expenses"
 msgstr "Uitgaven"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase___last_update
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase____last_update
 msgid "Last Modified on"
 msgstr "Voor het laatst aangepast op"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_line_type
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__line_type
 msgid "Line Type"
 msgstr "Regel Type"
 
@@ -116,7 +122,7 @@ msgid "MIS Committed Purchase"
 msgstr "MIS Vastgelegde Inkoop"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_name
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__name
 msgid "Name"
 msgstr "Naam"
 
