@@ -935,14 +935,14 @@ class MisReportInstance(models.Model):
 
         sub_report_ids = self.env.context.get('sub_report_ids')
 
+        report_id = self.report_id
+
         if sub_report_ids:
             for sub_report_id in sub_report_ids:
                 sub_report = self.search([('report_id', '=', sub_report_id)])
                 if self == sub_report:
                     report_id = self.env['mis.report'].browse(sub_report_id)
                     break
-        else:
-            report_id = self.report_id
 
         return self._compute(
             report_id=report_id,
