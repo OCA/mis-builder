@@ -43,7 +43,7 @@ Your preferred way to install addons will work with MIS Builder.
 
 An easy way to install it with all its dependencies is using pip:
 
-* ``pip install --pre odoo11-addon-mis_builder odoo-autodiscover``
+* ``pip install --pre odoo11-addon-mis_builder``
 * then restart Odoo, update the addons list in your database, and install
   the MIS Builder application.
 
@@ -134,7 +134,7 @@ so far. Help welcome.*
 **Bugs**
 
 - In the style form, hide the "Hide always" checkbox when "Hide always inherit"
-  is checked, as for all other syle elements. (`#121 <https://github.com/OCA/mis-builder/pull/121>`)
+  is checked, as for all other syle elements. (`#121 <https://github.com/OCA/mis-builder/pull/121>`_)
 
 **Upgrading from 3.2 (breaking changes)**
 
