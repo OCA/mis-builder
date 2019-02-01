@@ -35,7 +35,7 @@ so far. Help welcome.*
 **Bugs**
 
 - In the style form, hide the "Hide always" checkbox when "Hide always inherit"
-  is checked, as for all other syle elements. (`#121 <https://github.com/OCA/mis-builder/pull/121>`)
+  is checked, as for all other syle elements. (`#121 <https://github.com/OCA/mis-builder/pull/121>`_)
 
 **Upgrading from 3.2 (breaking changes)**
 
