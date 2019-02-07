@@ -10,6 +10,9 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError, UserError
 
 from .aep import AccountingExpressionProcessor as AEP
+from .mis_report_style import (
+    CMP_DIFF, CMP_PCT, CMP_NONE
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -259,7 +262,10 @@ class MisReportInstancePeriod(models.Model):
         comodel_name='mis.report.instance.period',
         string='Compare',
     )
-
+    compare_method = fields.Selection([(CMP_DIFF, _('Difference')),
+                                       (CMP_PCT, _('Percentage')),
+                                       (CMP_NONE, _('None'))],
+                                      string='Comparison Method')
     _order = 'sequence, id'
 
     _sql_constraints = [
@@ -706,7 +712,7 @@ class MisReportInstance(models.Model):
         kpi_matrix.declare_comparison(
             period.id,
             period.source_cmpcol_to_id.id, period.source_cmpcol_from_id.id,
-            label, description)
+            label, description, period.compare_method)
 
     def _add_column(self, aep, kpi_matrix, period, label, description):
         if period.source == SRC_ACTUALS:

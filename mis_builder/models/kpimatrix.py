@@ -186,13 +186,13 @@ class KpiMatrix(object):
         return col
 
     def declare_comparison(self, cmpcol_key, col_key, base_col_key,
-                           label, description=None):
+                           label, description=None, compare_method=None):
         """ Declare a new comparison column.
 
         Invoke the declare_* methods in display order.
         """
         self._comparison_todo[cmpcol_key] = \
-            (col_key, base_col_key, label, description)
+            (col_key, base_col_key, label, description, compare_method)
         self._cols[cmpcol_key] = None  # reserve slot in insertion order
 
     def declare_sum(self, sumcol_key, col_to_sum_keys,
@@ -288,8 +288,8 @@ class KpiMatrix(object):
 
         Invoke this after setting all values.
         """
-        for cmpcol_key, (col_key, base_col_key, label, description) in \
-                self._comparison_todo.items():
+        for cmpcol_key, (col_key, base_col_key, label, description,
+                         compare_method) in self._comparison_todo.items():
             col = self._cols[col_key]
             base_col = self._cols[base_col_key]
             common_subkpis = self._common_subkpis([col, base_col])
@@ -327,10 +327,11 @@ class KpiMatrix(object):
                 for val, base_val, comparison_subcol in \
                         zip(vals, base_vals, comparison_col.iter_subcols()):
                     # TODO FIXME average factors
+                    compare_method = compare_method or row.kpi.compare_method
                     delta, delta_r, style_r = \
                         self._style_model.compare_and_render(
                             self.lang, row.style_props,
-                            row.kpi.type, row.kpi.compare_method,
+                            row.kpi.type, compare_method,
                             val, base_val, 1, 1)
                     comparison_cell_tuple.append(KpiMatrixCell(
                         row, comparison_subcol, delta, delta_r, None,
