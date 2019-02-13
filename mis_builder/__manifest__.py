@@ -15,7 +15,7 @@
         'account',
         'board',
         'report_xlsx',  # OCA/reporting-engine
-        'date_range',  # OCA/server-tools
+        'date_range',  # OCA/server-ux
         'web_widget_color',  # OCA/web
     ],
     'data': [
