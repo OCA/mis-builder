@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-05 01:43+0000\n"
-"PO-Revision-Date: 2019-02-14 18:00+0000\n"
+"PO-Revision-Date: 2019-02-14 19:58+0000\n"
 "Last-Translator: Thorsten Vocks <thorsten.vocks@big-consulting.net>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
@@ -32,16 +32,16 @@ msgid ""
 "<b>AccountingNone</b>: a null value that behaves as 0 in arithmetic "
 "operations."
 msgstr ""
-"<b>BuchhaltungsNull</b>: Ein Null-Wert, der sich wie 0 in arithmetischen "
+"<b>AccountingNone</b>: Ein Null-Wert, der sich wie 0 in arithmetischen "
 "Berechnungen verhält."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-#, fuzzy
 msgid ""
 "<b>bal, crd, deb, pbal, nbal</b>: balance, debit, credit, positive balance, "
 "negative balance."
-msgstr "<b>bal, crd, deb</b>: Saldo, Haben, Soll."
+msgstr ""
+"<b>bal, crd, deb</b>: Saldo, Haben, Soll, positiver Saldo, negativer Saldo."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -49,8 +49,8 @@ msgid ""
 "<b>bal[70]</b>: variation of the balance of account 70 over the period (it "
 "is the same as balp[70]."
 msgstr ""
-"<b>bal[70]</b>: Abwandlung des Saldo von Konto 70 über die Zeit (Dies "
-"entspricht balp[70])."
+"<b>bal[70]</b>: Saldoveränderung von Konto 70 im Zeitraum (zum gleichen "
+"Resultat führt balp[70])."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -70,8 +70,9 @@ msgid ""
 "id)][]</b>: variation of the balance of all receivable accounts over the "
 "period."
 msgstr ""
-"<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
-"id)][]</b>: Abwandlung des Saldo aller Forderungskonten über die Zeit."
+"<b>balp[('user_type_id', '=', "
+"ref('account.data_account_type_receivable').id)][]</b>: Saldoveränderung "
+"aller Forderungskonten im Zeitraum."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -98,8 +99,8 @@ msgid ""
 "<b>crdp[40%]</b>: sum of all credits on accounts starting with 40 during the "
 "period."
 msgstr ""
-"<b>crdp[40%]</b>: Summe aller Haben auf Konten, die mit 40 beginnen, über "
-"die Zeit."
+"<b>crdp[40%]</b>: Summe aller Haben Positionen auf Konten, die mit 40 "
+"beginnen, während des Zeitraums."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -117,17 +118,15 @@ msgid ""
 "<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: sum of all debits on "
 "accounts 55 and journal BNK1 during the period."
 msgstr ""
-"<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: Die Summe aller Soll der "
-"Konten 55 und Journal BNK1 über die Periode.."
+"<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: Die Summe aller Soll "
+"Positionen der Konten 55 und Journal BNK1 über den Zeitraum."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-#, fuzzy
 msgid ""
 "<b>p, i, e</b>: respectively variation over the period, initial balance, "
 "ending balance"
-msgstr ""
-"<b>p, i, e</b>: jeweilige Abwandlung über Zeit, Eröffnungssaldo, Endsaldo"
+msgstr "<b>p, i, e</b>: Veränderung im Zeitraum, Eröffnungssaldo, Endsaldo"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -155,6 +154,8 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields."
 msgstr ""
+"Ein \"Buchungsjournal ähnliches Modell\", z.B. mit den Feldern Soll, Haben, "
+"Datum, Konto und Unternehmen."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:344
@@ -214,7 +215,7 @@ msgstr "Zusammenfassen"
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
 msgid "All Entries"
-msgstr "Alle"
+msgstr "Alle Einträge"
 
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
@@ -234,7 +235,7 @@ msgid ""
 "applied on top of the row style."
 msgstr ""
 "Ein Ausdruck, der abhängig vom KPI-Wert einen Stil zurückgibt. Ein solcher "
-"Stil wird über dem Zeilenstil angewendet."
+"Stil wird über den Zeilenstil angewendet."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_analytic_account_id
@@ -536,9 +537,8 @@ msgstr "Divisor Vererbung"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query_domain
-#, fuzzy
 msgid "Domain"
-msgstr "Gebiet"
+msgstr "Filter"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_dp_inherit
@@ -632,7 +632,7 @@ msgstr "Filter"
 #. module: mis_builder
 #: selection:mis.report.instance.period,mode:0
 msgid "Fixed dates"
-msgstr "Feste Termine"
+msgstr "Festgelegter Zeitraum"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
@@ -815,7 +815,7 @@ msgstr "Geändert am"
 #: model:ir.actions.act_window,name:mis_builder.last_mis_report_instance_view_action
 #: model:ir.ui.menu,name:mis_builder.last_wizard_mis_report_instance_view_menu
 msgid "Last Reports Generated"
-msgstr "Letzter Bericht erstellt am"
+msgstr "Berichtshistorie"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard_write_uid
