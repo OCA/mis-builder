@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-05 01:43+0000\n"
-"PO-Revision-Date: 2019-02-14 19:58+0000\n"
+"PO-Revision-Date: 2019-02-14 20:36+0000\n"
 "Last-Translator: Thorsten Vocks <thorsten.vocks@big-consulting.net>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
@@ -210,7 +210,7 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query_aggregate
 msgid "Aggregate"
-msgstr "Zusammenfassen"
+msgstr "Aggregation"
 
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
@@ -381,7 +381,7 @@ msgstr "Vergleichen"
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
 msgid "Compare columns"
-msgstr "Spalten vergleichen"
+msgstr "Vergleichsspalten"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_compare_method
