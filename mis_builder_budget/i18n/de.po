@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-05 01:43+0000\n"
-"PO-Revision-Date: 2019-02-14 19:01+0000\n"
+"PO-Revision-Date: 2019-02-14 22:50+0000\n"
 "Last-Translator: Thorsten Vocks <thorsten.vocks@big-consulting.net>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
@@ -77,7 +77,7 @@ msgstr "Budgetpositionen"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi_budgetable
 msgid "Budgetable"
-msgstr "Budgetfähig"
+msgstr "Planbar"
 
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
@@ -97,12 +97,12 @@ msgstr "Unternehmen"
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Confirm"
-msgstr "Bestätigen"
+msgstr "Genehmigen"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Confirmed"
-msgstr "Bestätigt"
+msgstr "Genehmigt"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_create_uid
