@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-05 01:43+0000\n"
-"PO-Revision-Date: 2018-02-05 01:43+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2018\n"
+"PO-Revision-Date: 2019-02-14 19:01+0000\n"
+"Last-Translator: Thorsten Vocks <thorsten.vocks@big-consulting.net>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.4\n"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget.py:69
@@ -28,29 +29,29 @@ msgstr "%s (Kopie)"
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:96
 #, python-format
 msgid "%s is not within budget %s date range."
-msgstr ""
+msgstr "%s ist nicht im Zeitraum %s des Budgets"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:103
 #, python-format
 msgid "%s overlaps %s in budget %s"
-msgstr ""
+msgstr "%s überlappt %s im Budget %s"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:90
 #, python-format
 msgid "%s start date must not be after end date"
-msgstr ""
+msgstr "Das Startdatum %s sollte nicht später als das Enddatum sein"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_tag_ids
 msgid "Analytic Tags"
-msgstr ""
+msgstr "Kostenstellen-Stichwörter"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_account_id
 msgid "Analytic account"
-msgstr ""
+msgstr "Kostenstelle"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_id
@@ -61,120 +62,120 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
 msgid "Budget Date From"
-msgstr ""
+msgstr "Budget von"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_to
 msgid "Budget Date To"
-msgstr ""
+msgstr "Budget bis"
 
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Budget items"
-msgstr ""
+msgstr "Budgetpositionen"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi_budgetable
 msgid "Budgetable"
-msgstr ""
+msgstr "Budgetfähig"
 
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Abgebrochen"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_company_id
 msgid "Company"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Confirm"
-msgstr ""
+msgstr "Bestätigen"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Confirmed"
-msgstr ""
+msgstr "Bestätigt"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_create_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_create_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_range_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_date_range_id
 msgid "Date range"
-msgstr ""
+msgstr "Zeitraum"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_description
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Bezeichnung"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Entwurf"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_from
 msgid "From"
-msgstr ""
+msgstr "Von"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_ids
 msgid "Item"
-msgstr ""
+msgstr "Buchung"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_kpi_expression_id
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget___last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Geändert am"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Aktualisiert von"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_write_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Aktualisiert am"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
@@ -184,28 +185,28 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
 msgid "MIS Budget Item"
-msgstr ""
+msgstr "MIS Budget Position"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
 msgid "MIS Budget Items"
-msgstr ""
+msgstr "MIS Budget Positionen"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
 msgid "MIS Budgets"
-msgstr ""
+msgstr "MIS Budgets"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance
 msgid "MIS Report Instance"
-msgstr ""
+msgstr "MIS Reportbeleg"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
 msgid "MIS Report Instance Period"
-msgstr ""
+msgstr "MIS Reportbeleg Zeitraum"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_kpi
@@ -215,13 +216,13 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_kpi_expression
 msgid "MIS Report KPI Expression"
-msgstr ""
+msgstr "MIS Report KPI Ausdruck"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_report_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_report_id
 msgid "MIS Report Template"
-msgstr ""
+msgstr "MIS Report Vorlage"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_name
@@ -231,14 +232,14 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Set draft"
-msgstr ""
+msgstr "Zurücksetzen"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_state
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_to
 msgid "To"
-msgstr ""
+msgstr "Bis"
