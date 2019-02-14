@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-02-14 19:02+0000\n"
+"PO-Revision-Date: 2019-02-14 20:35+0000\n"
 "Last-Translator: Thorsten Vocks <thorsten.vocks@big-consulting.net>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -35,12 +35,12 @@ msgstr "Kostenstelle"
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
 msgid "Available"
-msgstr "Verfügbar"
+msgstr "Überschuss"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_commit
 msgid "Committed"
-msgstr "Bestätigt"
+msgstr "Genehmigt"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_company_id
@@ -65,12 +65,12 @@ msgstr "Soll"
 #. module: mis_builder_demo
 #: model:mis.report,name:mis_builder_demo.mis_report_expenses
 msgid "Demo Expenses"
-msgstr "Beispiel Kosten"
+msgstr "Beispiel Ausgaben"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance,name:mis_builder_demo.mis_report_instance_expenses
 msgid "Demo Expenses vs Budget"
-msgstr "Demo Kosten vs. Budget"
+msgstr "Demo Ausgaben vs. Budget"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_display_name
@@ -80,12 +80,12 @@ msgstr "Bezeichnung"
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_equip
 msgid "Equipment"
-msgstr "Anlage"
+msgstr ""
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_exp
 msgid "Expenses"
-msgstr "Kosten"
+msgstr "Ausgaben"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_id
@@ -115,7 +115,7 @@ msgstr ""
 #. module: mis_builder_demo
 #: model:ir.model,name:mis_builder_demo.model_mis_committed_purchase
 msgid "MIS Committed Purchase"
-msgstr "MIS Einkauf"
+msgstr "MIS genehmigte Einkäufe"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_name
@@ -125,7 +125,7 @@ msgstr "Name"
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_other
 msgid "Other"
-msgstr "Andere"
+msgstr "Sonstige"
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
