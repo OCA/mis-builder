@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="mis_report_subkpi_template_view_tree">
+        <field name="name">mis.report.subkpi.template.view.tree</field>
+        <field name="model">mis.report.subkpi.template</field>
+        <field name="arch" type="xml">
+            <tree string="MIS Report Sub-KPI Template">
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="mis_report_subkpip_template_view_form">
+        <field name="name">mis.report.subkpi.template.view.form</field>
+        <field name="model">mis.report.subkpi.template</field>
+        <field name="arch" type="xml">
+            <form string="MIS Report Sub-KPI Template">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                    </group>
+                    <notebook>
+                        <page string="Template lines">
+                            <field name="subkpi_template_line_ids" context="{'default_subkpi_template_id': id}">
+                                <tree editable="top">
+                                    <field name="sequence" widget="handle" />
+                                    <field name="description" />
+                                    <field name="name" />
+                                    <field name="move_line_domain" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="mis_report_subkpi_template_view_action">
+        <field name="name">MIS Report Sub-KPI Templates</field>
+        <field name="view_id" ref="mis_report_subkpi_template_view_tree"/>
+        <field name="res_model">mis.report.subkpi.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="mis_report_subkpi_template_view_menu" parent="mis_builder.mis_report_conf_menu" name="MIS Report Sub-KPI Templates" action="mis_report_subkpi_template_view_action" sequence="22"/>
+</odoo>

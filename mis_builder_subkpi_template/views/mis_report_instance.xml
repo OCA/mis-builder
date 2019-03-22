@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record model="ir.ui.view" id="mis_report_instance_view_form_inherit">
+        <field name="name">mis.report.instance.view.form.inherit</field>
+        <field name="model">mis.report.instance</field>
+        <field name="inherit_id" ref="mis_builder.mis_report_instance_view_form" />
+        <field name="arch" type="xml">
+            <field name="company_ids" position="after">
+                <field name="report_subkpis" invisible="1" />
+                <field name="subkpis_filter_active" attrs="{'invisible': [('report_subkpis', '=', False)]}" /> <!-- TODO add attrs invisible -->
+                <field name="filter_subkpi_ids" widget="many2many_tags" domain="[('report_id', '=', report_id)]" attrs="{'invisible': [('subkpis_filter_active', '=', False)]}" options="{'no_create_edit': True, 'no_open': True}"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mis_report_instance_period_view_form_inherit">
+        <field name="model">mis.report.instance.period.view.form.inherit</field>
+        <field name="model">mis.report.instance.period</field>
+        <field name="inherit_id" ref="mis_builder.mis_report_instance_period_view_form" />
+        <field name="arch" type="xml">
+            <field name="subkpi_ids" position="after">
+                <field name="subkpis_filter_active" invisible="1" />
+                <span attrs="{'invisible': [('subkpis_filter_active', '=', False)]}"><i>Sub KPI Filter is automatically computed according to Sub KPI filter at instance level.</i></span>
+            </field>
+            <field name="subkpi_ids" position="attributes">
+                <attribute name="attrs">{'readonly': [('subkpis_filter_active', '=', True)]}</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
