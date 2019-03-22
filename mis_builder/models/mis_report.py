@@ -216,10 +216,7 @@ class MisReportKpi(models.Model):
             else:
                 expressions = []
                 for subkpi in kpi.report_id.subkpi_ids:
-                    expressions.append((0, 0, {
-                        'name': kpi.expression,
-                        'subkpi_id': subkpi.id,
-                        }))
+                    expressions.append((0, 0, subkpi._prepare_expression(kpi)))
                 kpi.expression_ids = expressions
 
     @api.onchange('description')
@@ -305,6 +302,13 @@ class MisReportSubkpi(models.Model):
         """ construct name from description """
         if self.description and not self.name:
             self.name = _python_var(self.description)
+
+    def _prepare_expression(self, kpi):
+        self.ensure_one()
+        return {
+            'name': kpi.expression,
+            'subkpi_id': self.id,
+        }
 
 
 class MisReportKpiExpression(models.Model):
