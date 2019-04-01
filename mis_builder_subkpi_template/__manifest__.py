@@ -17,6 +17,5 @@
         'security/ir.model.access.csv',
         "views/mis_report.xml",
         "views/mis_report_subkpi_template.xml",
-        "views/mis_report_instance.xml",
     ],
 }
