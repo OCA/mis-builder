@@ -108,6 +108,9 @@
                                 <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"
                                         domain="[('id', 'child_of', company_id)]"
                                         attrs="{'invisible': [('multi_company', '=', False)]}"/>
+                                <field name="report_subkpis" invisible="1" />
+                                <field name="subkpis_filter_active" attrs="{'invisible': [('report_subkpis', '=', False)]}" />
+                                <field name="filter_subkpi_ids" widget="many2many_tags" domain="[('report_id', '=', report_id)]" attrs="{'invisible': [('subkpis_filter_active', '=', False)]}" options="{'no_create_edit': True, 'no_open': True}"/>
                                 <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                             </group>
                         </page>
@@ -189,7 +192,10 @@
                         <field name="subkpi_ids"
                                domain="[('report_id', '=', parent.report_id)]"
                                widget="many2many_tags"
-                               options="{'no_create': True}"/>
+                               options="{'no_create': True}"
+                               attrs="{'readonly': [('subkpis_filter_active', '=', True)]}" />
+                        <field name="subkpis_filter_active" invisible="1" />
+                        <span attrs="{'invisible': [('subkpis_filter_active', '=', False)]}"><i>Sub KPI Filter is automatically computed according to Sub KPI filter at instance level.</i></span>
                         <field name="valid" invisible="1"/>
                         <field name="report_instance_id" invisible="1" attrs="{'required': [('id', '!=', False)]}"/>
                         <field name="report_id" invisible="1"/>

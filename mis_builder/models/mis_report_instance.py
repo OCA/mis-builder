@@ -259,6 +259,9 @@ class MisReportInstancePeriod(models.Model):
         comodel_name='mis.report.instance.period',
         string='Compare',
     )
+    subkpis_filter_active = fields.Boolean(
+        related='report_instance_id.subkpis_filter_active'
+    )
 
     _order = 'sequence, id'
 
@@ -464,6 +467,18 @@ class MisReportInstance(models.Model):
         comodel_name='account.analytic.account', string='Analytic Account',
         oldname='account_analytic_id')
     hide_analytic_filters = fields.Boolean(default=True)
+    report_subkpis = fields.Boolean(
+        compute='_compute_report_subkpis',
+        store=True,
+    )
+    subkpis_filter_active = fields.Boolean(
+        string='Sub-KPIs filter active',
+        default=False,
+    )
+    filter_subkpi_ids = fields.Many2many(
+        'mis.report.subkpi',
+        string='Sub-KPIs to display',
+    )
 
     @api.onchange('company_id', 'multi_company')
     def _onchange_company(self):
@@ -790,3 +805,45 @@ class MisReportInstance(models.Model):
             }
         else:
             return False
+
+    @api.depends('report_id', 'report_id.subkpi_ids')
+    def _compute_report_subkpis(self):
+        for instance in self:
+            subkpis = instance.report_id.subkpi_ids
+            instance.report_subkpis = bool(subkpis)
+
+    @api.onchange('report_id')
+    def _onchange_report_id(self):
+        self.subkpis_filter_active = False
+
+    @api.onchange('subkpis_filter_active')
+    def _onchange_subkpis_filter_active(self):
+        if self.subkpis_filter_active:
+            self.filter_subkpi_ids = self.report_id.subkpi_ids
+        else:
+            self.filter_subkpi_ids = None
+
+    @api.multi
+    def update_columns_subkpi_filter(self):
+        self.ensure_one()
+        self.period_ids.write({
+            'subkpi_ids': [(6, False, self.filter_subkpi_ids.ids)]
+        })
+
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        if res.subkpis_filter_active:
+            res.update_columns_subkpi_filter()
+        return res
+
+    @api.multi
+    def write(self, vals):
+        res = super().write(vals)
+        fields_to_watch = [
+            'subkpis_filter_active', 'filter_subkpi_ids', 'period_ids'
+        ]
+        if set(vals).intersection(fields_to_watch):
+            for instance in self:
+                instance.update_columns_subkpi_filter()
+        return res

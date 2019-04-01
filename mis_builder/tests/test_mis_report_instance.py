@@ -318,3 +318,20 @@ class TestMisReportInstance(common.HttpCase):
                 self.assertEquals(vals, [AccountingNone, AccountingNone, None])
             elif row.kpi.name == 'k4':
                 self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
+
+    def test_mis_report_subkpi_filter(self):
+        self.assertTrue(self.report_instance.report_subkpis)
+        self.report_instance.subkpis_filter_active = True
+        self.report_instance._onchange_subkpis_filter_active()
+        self.assertEqual(self.report.subkpi_ids,
+                         self.report_instance.filter_subkpi_ids)
+        for period in self.report_instance.period_ids:
+            self.assertEqual(period.subkpi_ids, self.report.subkpi_ids)
+        first_subkpi = self.report.subkpi_ids[0]
+        second_subkpi = self.report.subkpi_ids[1]
+        self.report_instance.write({
+            'filter_subkpi_ids': [(6, 0, [first_subkpi.id])],
+        })
+        for period in self.report_instance.period_ids:
+            self.assertEqual(first_subkpi, period.subkpi_ids)
+            self.assertNotIn(second_subkpi, period.subkpi_ids)
