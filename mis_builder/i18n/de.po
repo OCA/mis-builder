@@ -70,9 +70,8 @@ msgid ""
 "id)][]</b>: variation of the balance of all receivable accounts over the "
 "period."
 msgstr ""
-"<b>balp[('user_type_id', '=', "
-"ref('account.data_account_type_receivable').id)][]</b>: Saldoveränderung "
-"aller Forderungskonten im Zeitraum."
+"<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
+"id)][]</b>: Saldoveränderung aller Forderungskonten im Zeitraum."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -1260,7 +1259,7 @@ msgstr "Zeichenkette"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_style_id
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_id_4981
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_id_4983
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
 msgid "Style"
 msgstr "Stil"
@@ -1404,8 +1403,8 @@ msgid ""
 msgstr ""
 "Diese speziellen Ausdrücke können in den Ausdrücken zur Abfrage von "
 "Buchungsdaten verwendet werde: \n"
-"                                         <code>{bal|crd|deb|pbal|nbal}{pieu}["
-"account selector][journal items domain]</code>."
+"                                         <code>{bal|crd|deb|pbal|nbal}{pieu}"
+"[account selector][journal items domain]</code>."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:164
