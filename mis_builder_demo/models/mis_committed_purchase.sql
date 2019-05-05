@@ -8,7 +8,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
         'uninvoiced purchase' AS line_type,
                 pol.company_id AS company_id,
         pol.name AS name,
-        po.date_planned as date,
+        po.date_planned::date as date,
         pol.account_analytic_id as analytic_account_id,
         CASE
           WHEN (cast(split_part(ip.value_reference, ',', 2) AS INTEGER) IS NOT NULL) THEN cast(split_part(ip.value_reference, ',', 2) AS INTEGER)
@@ -41,7 +41,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
         'draft invoice' AS line_type,
                 ail.company_id AS company_id,
         ail.name AS name,
-        ail.create_date as date,
+        ail.create_date::date as date,
         ail.account_analytic_id as analytic_account_id,
         ail.account_id as account_id,
         CASE
