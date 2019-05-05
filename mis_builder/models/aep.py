@@ -246,9 +246,9 @@ class AccountingExpressionProcessor(object):
                 else:
                     continue
             if field == 'crd':
-                aml_domain.append(('credit', '>', 0))
+                aml_domain.append(('credit', '<>', 0.0))
             elif field == 'deb':
-                aml_domain.append(('debit', '>', 0))
+                aml_domain.append(('debit', '<>', 0.0))
             aml_domains.append(expression.normalize_domain(aml_domain))
             if mode not in date_domain_by_mode:
                 date_domain_by_mode[mode] = \

@@ -351,11 +351,11 @@ class TestAEP(common.TransactionCase):
                 # debi[700IN]
                 '&',
                 ('account_id', 'in', (self.account_in.id, )),
-                ('debit', '>', 0),
+                ('debit', '<>', 0.0),
                 # crdi[400AR]
                 '&',
                 ('account_id', 'in', (self.account_ar.id, )),
-                ('credit', '>', 0),
+                ('credit', '<>', 0.0),
                 '&',
                 # for P&L accounts, only after fy start
                 '|',
