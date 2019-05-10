@@ -7,6 +7,8 @@ import logging
 import numbers
 
 from odoo.report import report_sxw
+from odoo import _, fields
+from datetime import datetime
 
 from ..models.accounting_none import AccountingNone
 from ..models.data_error import DataError
@@ -141,6 +143,21 @@ class MisBuilderXlsx(ReportXlsx):
                 col_width[col_pos] = max(col_width[col_pos],
                                          len(cell.val_rendered or ''))
             row_pos += 1
+
+        # Add date/time footer
+        row_pos += 1
+        footer_format = workbook.add_format({
+            'italic': True, 'font_color': '#202020', 'size': 9})
+        lang_model = self.env['res.lang']
+        lang = lang_model._lang_get(self.env.user.lang)
+
+        now_tz = fields.Datetime.context_timestamp(
+            self.env['res.users'],
+            datetime.now())
+        create_date = _("Generated on {} at {}").format(
+            now_tz.strftime(lang.date_format),
+            now_tz.strftime(lang.time_format))
+        sheet.write(row_pos, 0, create_date, footer_format)
 
         # adjust col widths
         sheet.set_column(0, 0, min(label_col_width, MAX_COL_WIDTH) * COL_WIDTH)
