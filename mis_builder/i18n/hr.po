@@ -194,7 +194,6 @@ msgid "All Posted Entries"
 msgstr "Sve proknjižene stavke"
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_amount
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_amount
 msgid "Amount"
 msgstr ""
@@ -322,7 +321,7 @@ msgid "Columns to sum"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/kpimatrix.py:298
+#: code:addons/mis_builder/models/kpimatrix.py:299
 #, python-format
 msgid "Columns {} and {} are not comparable"
 msgstr ""
@@ -635,7 +634,6 @@ msgid "Font weight inherit"
 msgstr ""
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_date_from
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_date_from
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_date_from
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_manual_date_from
@@ -728,12 +726,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_kpi_expression_id
 msgid "KPI"
-msgstr ""
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq1
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq1
-msgid "KPI Sequence"
 msgstr ""
 
 #. module: mis_builder
@@ -973,7 +965,6 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard_name
-#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_name
@@ -1222,7 +1213,7 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_style_id
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_id_4835
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_id_4623
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
 msgid "Style"
 msgstr ""
@@ -1263,12 +1254,6 @@ msgid "Sub KPI's"
 msgstr ""
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq2
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq2
-msgid "Sub-KPI Sequence"
-msgstr ""
-
-#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_subkpi_id
 msgid "Subkpi id"
 msgstr ""
@@ -1298,7 +1283,7 @@ msgid "Sum account details"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/kpimatrix.py:354
+#: code:addons/mis_builder/models/kpimatrix.py:355
 #, python-format
 msgid ""
 "Sum cannot be computed in column {} because the columns to sum have no "
@@ -1367,7 +1352,6 @@ msgid "The name must be a valid python identifier"
 msgstr ""
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_date_to
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_date_to
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_date_to
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_manual_date_to
@@ -1380,7 +1364,7 @@ msgid "To (computed)"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_kpi_data.py:110
+#: code:addons/mis_builder/models/mis_kpi_data.py:98
 #, python-format
 msgid "Unexpected accumulation method %s for %s."
 msgstr ""
