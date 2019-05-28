@@ -295,7 +295,7 @@ class MisReportInstancePeriod(models.Model):
         mis_report_filters = self.env.context.get('mis_report_filters', {})
         for filter_name, values in mis_report_filters.items():
             if values:
-                value = values.get('value')
+                value = values.get('value')[0]
                 operator = values.get('operator', '=')
                 filters.append((filter_name, operator, value))
         return filters
@@ -463,6 +463,9 @@ class MisReportInstance(models.Model):
     analytic_account_id = fields.Many2one(
         comodel_name='account.analytic.account', string='Analytic Account',
         oldname='account_analytic_id')
+    analytic_account_filter_id = fields.Many2one(
+        comodel_name='account.analytic.account',
+        string='Analytic Account Filter')
     hide_analytic_filters = fields.Boolean(default=True)
 
     @api.onchange('company_id', 'multi_company')
@@ -487,7 +490,7 @@ class MisReportInstance(models.Model):
     def get_filter_descriptions_from_context(self):
         filters = self.env.context.get('mis_report_filters', {})
         analytic_account = filters.get('analytic_account_id', {})
-        analytic_account_id = analytic_account.get('value')
+        analytic_account_id = analytic_account.get('value')[0]
         filter_descriptions = []
         if analytic_account_id:
             analytic_account = self.env['account.analytic.account'].browse(
@@ -578,7 +581,10 @@ class MisReportInstance(models.Model):
         self.ensure_one()
         if self.analytic_account_id:
             context['mis_report_filters']['analytic_account_id'] = {
-                'value': self.analytic_account_id.id,
+                'value': [
+                    self.analytic_account_id.id,
+                    self.analytic_account_id.display_name
+                ]
             }
 
     @api.multi
