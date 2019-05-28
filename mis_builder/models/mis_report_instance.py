@@ -490,7 +490,8 @@ class MisReportInstance(models.Model):
     def get_filter_descriptions_from_context(self):
         filters = self.env.context.get('mis_report_filters', {})
         analytic_account = filters.get('analytic_account_id', {})
-        analytic_account_id = analytic_account.get('value')[0]
+        analytic_account_id = analytic_account.get('value') and \
+            analytic_account.get('value')[0]
         filter_descriptions = []
         if analytic_account_id:
             analytic_account = self.env['account.analytic.account'].browse(
