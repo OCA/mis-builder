@@ -252,7 +252,7 @@ class MisReportKpiStyle(models.Model):
 
     @api.model
     def to_xlsx_style(self, props, no_indent=False):
-        num_format = u'0'
+        num_format = u'#,##0'
         if props.dp:
             num_format += u'.'
             num_format += u'0' * props.dp

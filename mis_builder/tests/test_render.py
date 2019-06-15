@@ -277,7 +277,7 @@ class TestRendering(common.TransactionCase):
             'size': 9,
             'font_color': u'#FF0000',
             'bg_color': u'#0000FF',
-            'num_format': u'"p "0.00" s"',
+            'num_format': u'"p "#,##0.00" s"',
             'indent': 2,
         })
         xlsx = self.style_obj.to_xlsx_style(style_props, no_indent=True)
@@ -287,5 +287,5 @@ class TestRendering(common.TransactionCase):
             'size': 9,
             'font_color': u'#FF0000',
             'bg_color': u'#0000FF',
-            'num_format': u'"p "0.00" s"',
+            'num_format': u'"p "#,##0.00" s"',
         })
