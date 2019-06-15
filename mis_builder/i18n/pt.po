@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:512
+#: code:addons/mis_builder/models/mis_report.py:520
 #: code:addons/mis_builder/models/mis_report_instance.py:528
 #, python-format
 msgid "%s (copy)"
@@ -224,8 +224,8 @@ msgid "Auto expand"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:122
-#: code:addons/mis_builder/models/mis_report.py:406
+#: code:addons/mis_builder/models/mis_report.py:130
+#: code:addons/mis_builder/models/mis_report.py:414
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -258,7 +258,7 @@ msgid "Bold"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:196
+#: code:addons/mis_builder/models/mis_report.py:204
 #, python-format
 msgid "Can not update a multi kpi from the kpi line"
 msgstr ""
@@ -451,7 +451,7 @@ msgid ""
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:114
+#: code:addons/mis_builder/models/mis_report.py:122
 #: selection:mis.report.kpi,compare_method:0
 #, python-format
 msgid "Difference"
@@ -729,6 +729,27 @@ msgid "KPI"
 msgstr ""
 
 #. module: mis_builder
+#: code:addons/mis_builder/models/mis_report.py:714
+#, python-format
+msgid ""
+"KPI \"{}\" has type {} while a tuple was expected.\n"
+"\n"
+"This can be fixed by either:\n"
+"\t- Changing the KPI value to a tuple of length {}\n"
+"or\n"
+"\t- Changing the KPI to `multi` mode and giving an explicit value for each "
+"sub-KPI."
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report.py:703
+#, python-format
+msgid ""
+"KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
+"expected."
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq1
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq1
 msgid "KPI Sequence"
@@ -924,14 +945,14 @@ msgid "MIS report instance XLS report"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:408
+#: code:addons/mis_builder/models/mis_report.py:416
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Max"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:407
+#: code:addons/mis_builder/models/mis_report.py:415
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Min"
@@ -995,8 +1016,8 @@ msgid "No date filter is allowed for this source in column %s."
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:116
-#: code:addons/mis_builder/models/mis_report.py:123
+#: code:addons/mis_builder/models/mis_report.py:124
+#: code:addons/mis_builder/models/mis_report.py:131
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.kpi,compare_method:0
 #, python-format
@@ -1020,7 +1041,7 @@ msgid "Number of periods"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:108
+#: code:addons/mis_builder/models/mis_report.py:116
 #: selection:mis.report.kpi,type:0
 #, python-format
 msgid "Numeric"
@@ -1042,8 +1063,8 @@ msgid "Parent column"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:109
-#: code:addons/mis_builder/models/mis_report.py:115
+#: code:addons/mis_builder/models/mis_report.py:117
+#: code:addons/mis_builder/models/mis_report.py:123
 #: selection:mis.report.kpi,compare_method:0 selection:mis.report.kpi,type:0
 #, python-format
 msgid "Percentage"
@@ -1100,14 +1121,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
 #, python-format
 msgid "Print"
-msgstr ""
-
-#. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:697
-#, python-format
-msgid ""
-"Probably not your fault... but I'm really curious to know how you managed to "
-"raise this error so I can handle one more corner case!"
 msgstr ""
 
 #. module: mis_builder
@@ -1212,7 +1225,7 @@ msgid "Source"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:110
+#: code:addons/mis_builder/models/mis_report.py:118
 #: selection:mis.report.kpi,type:0
 #, python-format
 msgid "String"
@@ -1282,8 +1295,8 @@ msgid "Suffix inherit"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:121
-#: code:addons/mis_builder/models/mis_report.py:405
+#: code:addons/mis_builder/models/mis_report.py:129
+#: code:addons/mis_builder/models/mis_report.py:413
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -1357,9 +1370,9 @@ msgid ""
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:165
-#: code:addons/mis_builder/models/mis_report.py:291
-#: code:addons/mis_builder/models/mis_report.py:430
+#: code:addons/mis_builder/models/mis_report.py:173
+#: code:addons/mis_builder/models/mis_report.py:299
+#: code:addons/mis_builder/models/mis_report.py:438
 #, python-format
 msgid "The name must be a valid python identifier"
 msgstr ""

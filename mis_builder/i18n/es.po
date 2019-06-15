@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: Weblate 3.2.2\n"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:512
+#: code:addons/mis_builder/models/mis_report.py:520
 #: code:addons/mis_builder/models/mis_report_instance.py:528
 #, python-format
 msgid "%s (copy)"
@@ -262,8 +262,8 @@ msgid "Auto expand"
 msgstr "Auto expandir"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:122
-#: code:addons/mis_builder/models/mis_report.py:406
+#: code:addons/mis_builder/models/mis_report.py:130
+#: code:addons/mis_builder/models/mis_report.py:414
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -296,7 +296,7 @@ msgid "Bold"
 msgstr "Negrita"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:196
+#: code:addons/mis_builder/models/mis_report.py:204
 #, python-format
 msgid "Can not update a multi kpi from the kpi line"
 msgstr "No se puede actualizar un kpi múltiple desde una línea de kpi"
@@ -494,7 +494,7 @@ msgstr ""
 "prorrateo temporal."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:114
+#: code:addons/mis_builder/models/mis_report.py:122
 #: selection:mis.report.kpi,compare_method:0
 #, python-format
 msgid "Difference"
@@ -779,6 +779,27 @@ msgid "KPI"
 msgstr "KPI"
 
 #. module: mis_builder
+#: code:addons/mis_builder/models/mis_report.py:714
+#, python-format
+msgid ""
+"KPI \"{}\" has type {} while a tuple was expected.\n"
+"\n"
+"This can be fixed by either:\n"
+"\t- Changing the KPI value to a tuple of length {}\n"
+"or\n"
+"\t- Changing the KPI to `multi` mode and giving an explicit value for each "
+"sub-KPI."
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report.py:703
+#, python-format
+msgid ""
+"KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
+"expected."
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq1
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq1
 #, fuzzy
@@ -982,14 +1003,14 @@ msgid "MIS report instance XLS report"
 msgstr "Informe XLS de instancia de informe MIS"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:408
+#: code:addons/mis_builder/models/mis_report.py:416
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Max"
 msgstr "Máx"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:407
+#: code:addons/mis_builder/models/mis_report.py:415
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Min"
@@ -1053,8 +1074,8 @@ msgid "No date filter is allowed for this source in column %s."
 msgstr "No se permite un filtro de fecha para esta fuente en la columna %s."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:116
-#: code:addons/mis_builder/models/mis_report.py:123
+#: code:addons/mis_builder/models/mis_report.py:124
+#: code:addons/mis_builder/models/mis_report.py:131
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.kpi,compare_method:0
 #, python-format
@@ -1078,7 +1099,7 @@ msgid "Number of periods"
 msgstr "Nº de periodos"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:108
+#: code:addons/mis_builder/models/mis_report.py:116
 #: selection:mis.report.kpi,type:0
 #, python-format
 msgid "Numeric"
@@ -1100,8 +1121,8 @@ msgid "Parent column"
 msgstr "Columna padre"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:109
-#: code:addons/mis_builder/models/mis_report.py:115
+#: code:addons/mis_builder/models/mis_report.py:117
+#: code:addons/mis_builder/models/mis_report.py:123
 #: selection:mis.report.kpi,compare_method:0 selection:mis.report.kpi,type:0
 #, python-format
 msgid "Percentage"
@@ -1159,16 +1180,6 @@ msgstr "Previsualizar"
 #, python-format
 msgid "Print"
 msgstr "Imprimir"
-
-#. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:697
-#, python-format
-msgid ""
-"Probably not your fault... but I'm really curious to know how you managed to "
-"raise this error so I can handle one more corner case!"
-msgstr ""
-"Probablemente no es su culpa... ¡pero realmente hay curiosidad por saber "
-"cómo ha conseguido este error para poder manejar un caso extremo más!"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query_ids
@@ -1274,7 +1285,7 @@ msgid "Source"
 msgstr "Origen"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:110
+#: code:addons/mis_builder/models/mis_report.py:118
 #: selection:mis.report.kpi,type:0
 #, python-format
 msgid "String"
@@ -1345,8 +1356,8 @@ msgid "Suffix inherit"
 msgstr "Sufijo heredado"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:121
-#: code:addons/mis_builder/models/mis_report.py:405
+#: code:addons/mis_builder/models/mis_report.py:129
+#: code:addons/mis_builder/models/mis_report.py:413
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -1429,9 +1440,9 @@ msgstr ""
 "code>."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:165
-#: code:addons/mis_builder/models/mis_report.py:291
-#: code:addons/mis_builder/models/mis_report.py:430
+#: code:addons/mis_builder/models/mis_report.py:173
+#: code:addons/mis_builder/models/mis_report.py:299
+#: code:addons/mis_builder/models/mis_report.py:438
 #, python-format
 msgid "The name must be a valid python identifier"
 msgstr "El nombre debe ser un identificador Python válido."
@@ -1557,6 +1568,13 @@ msgstr "extra-súper-grande"
 #: selection:mis.report.style,font_size:0
 msgid "xx-small"
 msgstr "extra-súper-pequeña"
+
+#~ msgid ""
+#~ "Probably not your fault... but I'm really curious to know how you managed "
+#~ "to raise this error so I can handle one more corner case!"
+#~ msgstr ""
+#~ "Probablemente no es su culpa... ¡pero realmente hay curiosidad por saber "
+#~ "cómo ha conseguido este error para poder manejar un caso extremo más!"
 
 #~ msgid "add.mis.report.instance.dashboard.wizard"
 #~ msgstr "add.mis.report.instance.dashboard.wizard"
