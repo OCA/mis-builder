@@ -688,6 +688,12 @@ msgid "From (computed)"
 msgstr "De (computado)"
 
 #. module: mis_builder
+#: code:addons/mis_builder/report/mis_report_instance_xlsx.py:157
+#, python-format
+msgid "Generated on {} at {}"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Help (for KPI expressions)"
 msgstr "Ajuda (para expressões KPI)"
