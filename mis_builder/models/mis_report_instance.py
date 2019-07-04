@@ -3,6 +3,7 @@
 
 import datetime
 import logging
+import babel
 
 from dateutil.relativedelta import relativedelta
 
@@ -372,6 +373,24 @@ class MisReportInstancePeriod(models.Model):
                           "in %s") % rec.name)
 
 
+class AutomaticPeriod(object):
+
+    def __init__(self, period_id, name, date_from, date_to):
+        self.id = period_id
+        self.name = name
+        self.date_from = date_from
+        self.date_to = date_to
+        self.subkpi_ids = None
+        self.mode = MODE_NONE
+        self.source = SRC_ACTUALS
+
+    def _get_additional_query_filter(self, query):
+        return []
+    
+    def _get_additional_move_line_filter(self):
+        return []
+
+
 class MisReportInstance(models.Model):
     """The MIS report instance combines everything to compute
     a MIS report template for a set of periods."""
@@ -405,6 +424,20 @@ class MisReportInstance(models.Model):
     report_id = fields.Many2one('mis.report',
                                 required=True,
                                 string='Report')
+    use_automatic_periods = fields.Boolean(string='Use Automatic Periods',
+                                           default=False)
+    subdivision = fields.Selection(
+        [('no',_('No')),
+         ('week', _('Week')),
+         ('month', _('Month')),
+         ('year', _('Year'))], string='Default subdivision', default='no')
+    default_period = fields.Selection(
+        [('current_year', _('Current Year')),
+         ('last_year', _('Last Year')),
+         ('current_month', _('Current Month')),
+         ('last_month', _('Last Month')),
+         ('custom',_('Custom'))
+         ], string='Default period', default='current_year')
     period_ids = fields.One2many(comodel_name='mis.report.instance.period',
                                  inverse_name='report_instance_id',
                                  required=True,
@@ -540,12 +573,13 @@ class MisReportInstance(models.Model):
     def _compute_comparison_mode(self):
         for instance in self:
             instance.comparison_mode = bool(instance.period_ids) and\
-                not bool(instance.date_from)
+                not bool(instance.date_from) and\
+                not bool(instance.use_automatic_periods)
 
     @api.multi
     def _inverse_comparison_mode(self):
         for record in self:
-            if not record.comparison_mode:
+            if not record.comparison_mode and not record.use_automatic_periods:
                 if not record.date_from:
                     record.date_from = fields.Date.context_today(self)
                 if not record.date_to:
@@ -722,6 +756,108 @@ class MisReportInstance(models.Model):
             return self._add_column_cmpcol(
                 aep, kpi_matrix, period, label, description)
 
+
+    @api.multi
+    def get_periods(self):
+        self.ensure_one()
+        automatic_periods = []
+        period = self.env.context.get('period', self.default_period)
+        date_from = self.env.context.get('date_from')
+        if not date_from:
+            date_from = self.date_from
+        date_to = self.env.context.get('date_to')
+        if not date_to:
+            date_to = self.date_to
+        lang_code = self._context.get('lang') or 'en_US'
+        user_lang = self.env['res.lang']._lang_get(lang_code)
+        locale = babel.Locale.parse(user_lang.code)
+        subdivision = self.env.context.get('subdivision')
+        if not subdivision:
+            subdivision = self.subdivision
+        if not period or period != 'custom' or not date_to:
+            today = datetime.date.today()
+            if period == 'current_year':
+                date_from = today.replace(month=1, day=1)
+                date_to = today.replace(month=12, day=31)
+            elif period == 'last_year':
+                date_from = today.replace(year=today.year-1, month=1, day=1)
+                date_to = today.replace(year=today.year-1, month=12, day=31)
+            elif period == 'current_month':
+                date_from = today.replace(day=1)
+                date_to = today+relativedelta(day=31)
+            elif period == 'last_month':
+                last_month = today.replace(day=1) - datetime.timedelta(days=1)
+                date_from = last_month.replace(day=1)
+                date_to = last_month+relativedelta(day=31)
+            elif not date_from:
+                acc_lines = self.env['account.move.line'].search([])
+                if acc_lines:
+                    date_from = self.env['account.move.line'].search([])[-1].date
+                    date_from = fields.Date.from_string(date_from)
+                else:
+                    date_from = today.replace(month=1, day=1)
+                if date_to:
+                    date_to = fields.Date.from_string(date_to)
+                else:
+                    date_to = today.replace(month=12, day=31)
+        else:
+            if not date_from:
+                date_from = self.env['account.move.line'].search([])[-1].date
+            date_from = fields.Date.from_string(date_from)
+            date_to = fields.Date.from_string(date_to)
+        assert date_from <= date_to
+        if subdivision == 'no' or date_from == date_to:
+            date_from_str = fields.Date.to_string(date_from)
+            date_to_str = fields.Date.to_string(date_to)
+            if date_from_str == date_to_str or not self.env.context.get('date_from', self.date_from):
+                name = date_to_str
+            else:
+                name = date_from_str+' - '+date_to_str
+            period = AutomaticPeriod(
+                period_id = len(automatic_periods)+1,
+                name = name,
+                date_from = date_from_str,
+                date_to = date_to_str)
+            automatic_periods.append(period)
+        elif subdivision == 'week':
+            while date_from <= date_to:
+                start = date_from - datetime.timedelta(days=date_from.weekday())
+                end = start + datetime.timedelta(days=6)
+                start_str = fields.Date.to_string(start)
+                end_str = fields.Date.to_string(end)
+                automatic_periods.append(AutomaticPeriod(
+                    period_id = len(automatic_periods)+1,
+                    name = start_str+' - '+end_str,
+                    date_from = start_str,
+                    date_to = end_str))
+                date_from+=datetime.timedelta(days=7)
+        elif subdivision == 'month':
+            while date_from <= date_to:
+                start = date_from.replace(day=1)
+                end = start + relativedelta(day=31)
+                start_str = fields.Date.to_string(start)
+                end_str = fields.Date.to_string(end)
+                automatic_periods.append(AutomaticPeriod(
+                    period_id = len(automatic_periods)+1,
+                    #name = start.strftime('%B %y'),
+                    name = babel.dates.format_date(start, 'MMM yy', locale=locale),
+                    date_from = start_str,
+                    date_to = end_str))
+                date_from+=relativedelta(months=1)
+        elif subdivision == 'year':
+            while date_from <= date_to:
+                start = date_from.replace(month=1, day=1)
+                end = date_from.replace(month=12, day=31)
+                start_str = fields.Date.to_string(start)
+                end_str = fields.Date.to_string(end)
+                automatic_periods.append(AutomaticPeriod(
+                    period_id = len(automatic_periods)+1,
+                    name = start.strftime('%Y'),
+                    date_from = start_str,
+                    date_to = end_str))
+                date_from+=relativedelta(years=1)
+        return automatic_periods
+
     @api.multi
     def _compute_matrix(self):
         """ Compute a report and return a KpiMatrix.
@@ -733,7 +869,11 @@ class MisReportInstance(models.Model):
         aep = self.report_id._prepare_aep(
             self.query_company_ids, self.currency_id)
         kpi_matrix = self.report_id.prepare_kpi_matrix()
-        for period in self.period_ids:
+        if not self.use_automatic_periods:
+            periods = self.period_ids
+        else:
+            periods = self.get_periods()
+        for period in periods:
             description = None
             if period.mode == MODE_NONE:
                 pass
@@ -763,7 +903,10 @@ class MisReportInstance(models.Model):
         expr = arg.get('expr')
         account_id = arg.get('account_id')
         if period_id and expr and AEP.has_account_var(expr):
-            period = self.env['mis.report.instance.period'].browse(period_id)
+            if not self.use_automatic_periods:
+                period = self.env['mis.report.instance.period'].browse(period_id)
+            else:
+                period = self.get_periods()[period_id-1]
             aep = AEP(self.query_company_ids, self.currency_id)
             aep.parse_expr(expr)
             aep.done_parsing()

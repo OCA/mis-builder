@@ -70,13 +70,16 @@
                             <field name="report_id" string="Template"/>
                             <field name="currency_id" groups="base.group_multi_currency"/>
                             <field name="comparison_mode"/>
+                            <field name="use_automatic_periods" attrs="{'invisible': [('comparison_mode', '=', True)]}"/>
                         </group>
                         <group>
                             <group name="simple_mode"
                                    attrs="{'invisible': [('comparison_mode', '=', True)]}" colspan="4">
-                                <field name="date_range_id"/>
-                                <field name="date_from" attrs="{'required': [('comparison_mode', '=', False)]}"/>
-                                <field name="date_to" attrs="{'required': [('comparison_mode', '=', False)]}"/>
+                                <field name="default_period" attrs="{'invisible': [('use_automatic_periods', '=', False)]}"/>
+                                <field name="date_range_id" attrs="{'invisible':[('use_automatic_periods', '!=', False),('default_period', '!=', 'custom')]}"/>
+                                <field name="date_from" attrs="{'required': [('comparison_mode', '=', False), ('use_automatic_periods', '=', False)], 'invisible':[('use_automatic_periods', '!=', False),('default_period','!=','custom')]}"/>
+                                <field name="date_to" attrs="{'required': [('comparison_mode', '=', False), ('use_automatic_periods', '=', False)], 'invisible':[('use_automatic_periods', '!=', False),('default_period','!=','custom')]}"/>
+                                <field name="subdivision" attrs="{'invisible': [('use_automatic_periods', '=', False)]}"/>
                             </group>
                         </group>
                     </group>
