@@ -2,9 +2,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    'name': 'MIS Builder Demo',
+    'name': 'MIS Builder Generic Account Reports',
     'summary': """
-        Demo addon for MIS Builder""",
+        Generic Profit & Loss and Balance Sheet for MIS Builder""",
     'version': '11.0.3.0.1',
     'license': 'AGPL-3',
     'author': 'Martronic SA, '
@@ -22,6 +22,6 @@
         'data/menus.xml',
     ],
     'installable': True,
-    'maintainers': ['Martronic-SA','sbidoul'],
+    'maintainers': ['Martronic-SA', 'sbidoul'],
     'development_status': 'Beta',
 }
