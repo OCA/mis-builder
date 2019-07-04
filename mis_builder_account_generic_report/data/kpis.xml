@@ -7,7 +7,7 @@
         <field name="sequence">1</field>
         <field name="name">income</field>
         <field name="description">Income</field>
-        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_revenue').id)]</field>
+        <field name="expression">-balp[('user_type_id','=',ref('account.data_account_type_revenue').id)]</field>
         <field name="type">num</field>
         <field name="accumulation_method">sum</field>
         <field name="budgetable">False</field>
@@ -22,7 +22,7 @@
         <field name="sequence">2</field>
         <field name="name">cost_of_revenue</field>
         <field name="description">Cost of Revenue</field>
-        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_direct_costs').id)]</field>
+        <field name="expression">-balp[('user_type_id','=',ref('account.data_account_type_direct_costs').id)]</field>
         <field name="type">num</field>
         <field name="accumulation_method">sum</field>
         <field name="budgetable">False</field>
@@ -50,7 +50,7 @@
         <field name="sequence">4</field>
         <field name="name">other_income</field>
         <field name="description">Other Income</field>
-        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_other_income').id)]</field>
+        <field name="expression">-balp[('user_type_id','=',ref('account.data_account_type_other_income').id)]</field>
         <field name="type">num</field>
         <field name="accumulation_method">sum</field>
         <field name="budgetable">False</field>
@@ -64,7 +64,7 @@
         <field name="sequence">5</field>
         <field name="name">expenses</field>
         <field name="description">Expenses</field>
-        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_expenses').id)]</field>
+        <field name="expression">-balp[('user_type_id','=',ref('account.data_account_type_expenses').id)]</field>
         <field name="type">num</field>
         <field name="accumulation_method">sum</field>
         <field name="budgetable">False</field>
@@ -78,7 +78,7 @@
         <field name="sequence">6</field>
         <field name="name">depreciation</field>
         <field name="description">Depreciation</field>
-        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_depreciation').id)]</field>
+        <field name="expression">-balp[('user_type_id','=',ref('account.data_account_type_depreciation').id)]</field>
         <field name="type">num</field>
         <field name="accumulation_method">sum</field>
         <field name="budgetable">False</field>

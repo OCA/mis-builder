@@ -26,7 +26,7 @@ from .kpimatrix import KpiMatrix
 from .simple_array import SimpleArray, named_simple_array
 from .mis_safe_eval import mis_safe_eval, DataError, NameDataError
 from .mis_report_style import (
-    TYPE_NUM, TYPE_PCT, TYPE_STR, CMP_DIFF, CMP_PCT, CMP_NONE
+    TYPE_MON, TYPE_NUM, TYPE_PCT, TYPE_STR, CMP_DIFF, CMP_PCT, CMP_NONE
 )
 from .mis_kpi_data import (
     ACC_SUM, ACC_AVG, ACC_NONE
@@ -104,7 +104,8 @@ class MisReportKpi(models.Model):
         string='Style expression',
         help='An expression that returns a style depending on the KPI value. '
              'Such style is applied on top of the row style.')
-    type = fields.Selection([(TYPE_NUM, _('Numeric')),
+    type = fields.Selection([(TYPE_MON, _('Monetary')),
+                             (TYPE_NUM, _('Numeric')),
                              (TYPE_PCT, _('Percentage')),
                              (TYPE_STR, _('String'))],
                             required=True,
