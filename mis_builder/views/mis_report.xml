@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="mis_report_view_tree">
+        <field name="name">mis.report.view.tree</field>
+        <field name="model">mis.report</field>
+        <field name="arch" type="xml">
+            <tree string="MIS Reports">
+                <field name="name"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mis_report_view_form">
+        <field name="name">mis.report.view.form</field>
+        <field name="model">mis.report</field>
+        <field name="arch" type="xml">
+            <form string="MIS Report">
+                <sheet>
+                    <group col="2">
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="style_id"/>
+                    </group>
+                    <notebook>
+                        <page string="KPI's">
+                            <field name="kpi_ids" nolabel="1" colspan="2" context="{'default_report_id': id}">
+                                <tree string="KPI's">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="description"/>
+                                    <field name="name"/>
+                                    <field name="type"/>
+                                    <field name="compare_method" attrs="{'invisible': [('type', '=', 'str')]}"/>
+                                    <field name="accumulation_method" attrs="{'invisible': [('type', '=', 'str')]}"/>
+                                    <field name="expression"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Queries">
+                            <field name="query_ids" nolabel="1" colspan="2" context="{'default_report_id': id}">
+                                <tree string="Queries" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="model_id"/>
+                                    <field name="field_ids" domain="[('model_id', '=', model_id)]" widget="many2many_tags"/>
+                                    <field name="field_names"/>
+                                    <field name="aggregate"/>
+                                    <field name="date_field" domain="[('model_id', '=', model_id), ('ttype', 'in', ('date', 'datetime'))]"/>
+                                    <field name="domain"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Sub KPI's">
+                            <field name="subkpi_ids" nolabel="1" colspan="2">
+                                <tree string="Sub KPI's" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="description"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mis_report_view_kpi_form" model="ir.ui.view">
+        <field name="name">mis.report.view.kpi.form</field>
+        <field name="model">mis.report.kpi</field>
+        <field name="arch" type="xml">
+            <form string="MIS Report KPI">
+                <group col="4">
+                    <field name="description"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <newline/>
+                    <field name="compare_method"/>
+                    <field name="accumulation_method"/>
+                    <field name="style_id"/>
+                    <field name="style_expression"/>
+                    <field name='id' invisible='1'/>
+                    <field name="report_id"
+                           invisible="1"
+                           attrs="{'required': [('id', '!=', False)]}"/>
+                </group>
+                <notebook>
+                    <page string="Expressions">
+                        <group col="2">
+                            <field name="multi"/>
+                            <newline/>
+                            <field name="expression_ids" colspan="2" nolabel="1"
+                                   attrs="{'invisible': [('multi', '=', False)]}">
+                                <tree editable="bottom">
+                                    <field name="subkpi_id" domain="[('report_id', '=', parent.report_id)]"/>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                            <field name="expression" colspan="2" nolabel="1"
+                                   attrs="{'invisible': [('multi', '=', True)],
+                                           'readonly': [('multi', '=', True)]}"
+                                   placeholder="Enter expression here, for example balp[70%]. See also help tab."/>
+                        </group>
+                        <group col="4" string="Auto expand">
+                            <field name="auto_expand_accounts"/>
+                            <field name="auto_expand_accounts_style_id"
+                                   attrs="{'invisible': [('auto_expand_accounts', '!=', True)]}"/>
+                        </group>
+                    </page>
+                    <page string="Help (for KPI expressions)">
+                        <group>
+                            <group>
+                                 <div>
+                                     <p>Expressions can be any valid python expressions.</p>
+                                     <p>
+                                         The following special elements are recognized in the expressions to compute accounting data: 
+                                         <code>{bal|crd|deb|pbal|nbal}{pieu}[account selector][journal items domain]</code>.
+                                     </p>
+                                     <ul>
+                                         <li><b>bal, crd, deb, pbal, nbal</b>: balance, debit, credit, positive balance, negative balance.</li>
+                                         <li><b>p, i, e</b>: respectively variation over the period, initial balance, ending balance</li>
+                                         <li>The <b>account selector</b> is a like expression on the account code (eg 70%, etc).</li>
+                                         <li>The <b>journal items domain</b> is an Odoo domain filter on journal items.</li>
+                                         <li><b>balu[]</b>: (u for unallocated) is a special expression that shows the unallocated profit/loss of previous
+                                           fiscal years.</li>
+                                     </ul>
+                                     <p>Expressions can involve other KPI, sub KPI and query results by name (eg kpi1 + kpi2, kpi2.subkpi1, query1.field1).</p>
+                                     <p>Additionally following variables are available in the evaluation context:</p>
+                                     <ul>
+                                         <li><b>sum, min, max, len, avg</b>: behave as expected, very similar to the python builtins.</li>
+                                         <li><b>datetime, datetime, dateutil</b>: the python modules.</li>
+                                         <li><b>date_from, date_to</b>: beginning and end date of the period.</li>
+                                         <li><b>AccountingNone</b>: a null value that behaves as 0 in arithmetic operations.</li>
+                                     </ul>
+                                 </div>
+                            </group>
+                            <group>
+                                <div>
+                                    <p>Examples:</p>
+                                    <ul>
+                                        <li><b>bal[70]</b>: variation of the balance of account 70 over the period (it is the same as balp[70].</li>
+                                        <li><b>bali[70,60]</b>: initial balance of accounts 70 and 60.</li>
+                                        <li><b>bale[1%%]</b>: balance of accounts starting with 1 at end of period.</li>
+                                        <li><b>crdp[40%]</b>: sum of all credits on accounts starting with 40 during the period.</li>
+                                        <li><b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: sum of all debits on accounts 55 and journal BNK1 during the period.</li>
+                                        <li><b>balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)][]</b>: variation of the balance of all receivable accounts over the period.</li>
+                                        <li><b>balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]</b>: balance of move lines related to tax grid 56.</li>
+                                        <li><b>pbale[55%]</b>: sum of all ending balances of accounts starting with 55 whose
+                                          ending balance is positive.</li>
+                                    </ul>
+                                </div>
+                            </group>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="mis_report_view_action">
+        <field name="name">MIS Report Templates</field>
+        <field name="view_id" ref="mis_report_view_tree"/>
+        <field name="res_model">mis.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="mis_report_conf_menu" parent="account.menu_finance_configuration" name="MIS Reporting" sequence="90"/>
+    <menuitem id="mis_report_view_menu" parent="mis_report_conf_menu" name="MIS Report Templates" action="mis_report_view_action" sequence="21"/>
+
+</odoo>
