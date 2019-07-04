@@ -179,7 +179,7 @@ class MisReportKpiStyle(models.Model):
 
     @api.model
     def render_mon(self, lang, value, prefix=None, suffix=None,
-            currency=None):
+                   currency=None):
         # format number following user language
         if value is None:
             return u''
