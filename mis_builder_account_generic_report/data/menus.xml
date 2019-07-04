@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="1">
+
+    <record model="ir.actions.act_window" id="mis_report_pl_action">
+        <field name="name">Profit &amp; Loss</field>
+        <field name="view_id" ref="mis_builder.mis_report_instance_result_view_form"/>
+        <field name="res_id" ref="mis_builder_account_generic_report.mis_instance_pl"/>
+        <field name="res_model">mis.report.instance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('mis_builder.mis_report_instance_result_view_form')})]"/>
+        <field name="target">current</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="mis_report_bs_action">
+        <field name="name">Balance Sheet</field>
+        <field name="view_id" ref="mis_builder.mis_report_instance_result_view_form"/>
+        <field name="res_id" ref="mis_builder_account_generic_report.mis_instance_bs"/>
+        <field name="res_model">mis.report.instance</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('mis_builder.mis_report_instance_result_view_form')})]"/>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="mis_report_pl_menu" parent="account.menu_finance_reports" name="Profit &amp; Loss" action="mis_report_pl_action" sequence="0"/>
+    <menuitem id="mis_report_bs_menu" parent="account.menu_finance_reports" name="Balance Sheet" action="mis_report_bs_action" sequence="0"/>
+
+</odoo>

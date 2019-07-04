@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <record id="mis_instance_pl" model="mis.report.instance">
+        <field name="name">Profit &amp; Loss</field>
+        <field name="report_id" ref="mis_report_pl"/>
+    </record>
+
+    <record id="mis_instance_pl_period" model="mis.report.instance.period">
+        <field name="name" eval="datetime.now().strftime('%Y')"/>
+        <field name="report_instance_id" ref="mis_instance_pl"/>
+        <field name="source">actuals</field>
+        <field name="mode">fix</field>
+        <field name="manual_date_from" eval="datetime.now().date().replace(day=1, month=1).isoformat()"/>
+        <field name="manual_date_to" eval="datetime.now().date().replace(day=31, month=12).isoformat()"/>
+    </record>
+
+    <record id="mis_instance_bs" model="mis.report.instance">
+        <field name="name">Balance Sheet</field>
+        <field name="report_id" ref="mis_report_bs"/>
+    </record>
+
+    <record id="mis_instance_bs_period" model="mis.report.instance.period">
+        <field name="name" eval="datetime.now().strftime('%Y')"/>
+        <field name="report_instance_id" ref="mis_instance_bs"/>
+        <field name="source">actuals</field>
+        <field name="mode">fix</field>
+        <field name="manual_date_from" eval="datetime.now().date().replace(day=1, month=1).isoformat()"/>
+        <field name="manual_date_to" eval="datetime.now().date().replace(day=31, month=12).isoformat()"/>
+    </record>
+
+</odoo>

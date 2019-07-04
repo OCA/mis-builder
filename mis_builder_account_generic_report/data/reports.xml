@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <record id="mis_report_pl" model="mis.report">
+        <field name="name">Profit &amp; Loss</field>
+    </record>
+
+    <record id="mis_report_bs" model="mis.report">
+        <field name="name">Balance Sheet</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,144 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* mis_accounting_reports
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-17 07:04+0000\n"
+"PO-Revision-Date: 2019-05-17 07:04+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_assets
+msgid "Assets"
+msgstr "Actifs"
+
+#. module: mis_accounting_reports
+#: model:ir.actions.act_window,name:mis_accounting_reports.mis_report_bs_action
+#: model:ir.ui.menu,name:mis_accounting_reports.mis_report_bs_menu
+#: model:mis.report,name:mis_accounting_reports.mis_report_bs
+#: model:mis.report.instance,name:mis_accounting_reports.mis_instance_bs
+msgid "Balance Sheet"
+msgstr "Bilan"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_bank_cash
+msgid "Bank and Cash"
+msgstr "Banque et Cash"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_cost_of_revenue
+msgid "Cost of Revenue"
+msgstr "Coût des produits vendus"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_credit_card
+msgid "Credit Card"
+msgstr "Carte de crédit"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_current_assets
+msgid "Current Assets"
+msgstr "Actifs circulants"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_current_liabilities
+msgid "Current Liabilities"
+msgstr "Passifs à court terme"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_depreciation
+msgid "Depreciation"
+msgstr "Amortissements et ajustements"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_equity
+msgid "Equity"
+msgstr "Capitaux propres"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_expenses
+msgid "Expenses"
+msgstr "Charges"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_fixed_assets
+msgid "Fixed Assets"
+msgstr "Actifs immobilisés"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_gross_profit
+msgid "Gross Profit"
+msgstr "Marge brute"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_income
+msgid "Income"
+msgstr "Revenus"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_liabilities
+msgid "Liabilities"
+msgstr "Passifs"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_net_assets
+msgid "Net Assets"
+msgstr "Actifs nets"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_net_profit
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_net_profit_bs
+msgid "Net Profit"
+msgstr "Revenu net"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_non_current_assets
+msgid "Non-Current Assets"
+msgstr "Stocks et actifs à long terme"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_non_current_liabilities
+msgid "Non-Current Liabilities"
+msgstr "Passifs à long terme"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_other_income
+msgid "Other Income"
+msgstr "Autre revenus"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_payable
+msgid "Payable Accounts"
+msgstr "Créanciers"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_prepayments
+msgid "Prepayments"
+msgstr "Paiements d'avance"
+
+#. module: mis_accounting_reports
+#: model:ir.actions.act_window,name:mis_accounting_reports.mis_report_pl_action
+#: model:ir.ui.menu,name:mis_accounting_reports.mis_report_pl_menu
+#: model:mis.report,name:mis_accounting_reports.mis_report_pl
+#: model:mis.report.instance,name:mis_accounting_reports.mis_instance_pl
+msgid "Profit & Loss"
+msgstr "Compte de résultat"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_receivable
+msgid "Receivable Accounts"
+msgstr "Débiteurs"
+
+#. module: mis_accounting_reports
+#: model:mis.report.kpi,description:mis_accounting_reports.mis_report_kpi_total_equity
+msgid "Total Equity"
+msgstr "Total des capitaux propres"
+

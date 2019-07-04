@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <record id="title" model="mis.report.style">
+        <field name="background_color_inherit">True</field>
+        <field name="color_inherit">True</field>
+        <field name="divider_inherit">True</field>
+        <field name="dp_inherit">True</field>
+        <field name="divider">1</field>
+        <field name="font_size_inherit">True</field>
+        <field name="font_style"></field>
+        <field name="font_style_inherit">True</field>
+        <field name="font_weight">bold</field>
+        <field name="font_weight_inherit">False</field>
+        <field name="hide_empty">False</field>
+        <field name="hide_empty_inherit">True</field>
+        <field name="indent_level">0</field>
+        <field name="indent_level_inherit">True</field>
+        <field name="prefix"></field>
+        <field name="prefix_inherit">True</field>
+        <field name="dp">0</field>
+        <field name="name">Title</field>
+        <field name="suffix"></field>
+        <field name="suffix_inherit">True</field>
+    </record>
+
+    <record id="level1" model="mis.report.style">
+        <field name="background_color_inherit">True</field>
+        <field name="color_inherit">True</field>
+        <field name="divider_inherit">True</field>
+        <field name="dp_inherit">True</field>
+        <field name="divider">1</field>
+        <field name="font_size_inherit">True</field>
+        <field name="font_style"></field>
+        <field name="font_style_inherit">True</field>
+        <field name="font_weight_inherit">True</field>
+        <field name="hide_empty">False</field>
+        <field name="hide_empty_inherit">True</field>
+        <field name="indent_level">1</field>
+        <field name="indent_level_inherit">False</field>
+        <field name="prefix"></field>
+        <field name="prefix_inherit">True</field>
+        <field name="dp">0</field>
+        <field name="name">Level 1</field>
+        <field name="suffix"></field>
+        <field name="suffix_inherit">True</field>
+    </record>
+
+    <record id="details" model="mis.report.style">
+        <field name="background_color_inherit">True</field>
+        <field name="color_inherit">True</field>
+        <field name="divider_inherit">True</field>
+        <field name="dp_inherit">True</field>
+        <field name="divider">1</field>
+        <field name="font_size">small</field>
+        <field name="font_size_inherit">False</field>
+        <field name="font_style"></field>
+        <field name="font_style_inherit">True</field>
+        <field name="font_weight_inherit">True</field>
+        <field name="hide_empty">False</field>
+        <field name="hide_empty_inherit">True</field>
+        <field name="indent_level">2</field>
+        <field name="indent_level_inherit">False</field>
+        <field name="prefix"></field>
+        <field name="prefix_inherit">True</field>
+        <field name="dp">0</field>
+        <field name="name">Details</field>
+        <field name="suffix"></field>
+        <field name="suffix_inherit">True</field>
+    </record>
+
+</odoo>

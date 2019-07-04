@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+<odoo noupdate="1">
+
+    <!-- Profit & Loss -->
+    <record id="mis_report_kpi_income" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_pl')"/>
+        <field name="sequence">1</field>
+        <field name="name">income</field>
+        <field name="description">Income</field>
+        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_revenue').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.title')"/>
+    </record>
+
+    <record id="mis_report_kpi_cost_of_revenue" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_pl')"/>
+        <field name="sequence">2</field>
+        <field name="name">cost_of_revenue</field>
+        <field name="description">Cost of Revenue</field>
+        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_direct_costs').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+    </record>
+
+    <record id="mis_report_kpi_gross_profit" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_pl')"/>
+        <field name="sequence">3</field>
+        <field name="name">gross_profit</field>
+        <field name="description">Gross Profit</field>
+        <field name="expression">income+cost_of_revenue</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">False</field>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.title')"/>
+    </record>
+
+    <record id="mis_report_kpi_other_income" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_pl')"/>
+        <field name="sequence">4</field>
+        <field name="name">other_income</field>
+        <field name="description">Other Income</field>
+        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_other_income').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+    </record>
+
+    <record id="mis_report_kpi_expenses" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_pl')"/>
+        <field name="sequence">5</field>
+        <field name="name">expenses</field>
+        <field name="description">Expenses</field>
+        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_expenses').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+    </record>
+
+    <record id="mis_report_kpi_depreciation" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_pl')"/>
+        <field name="sequence">6</field>
+        <field name="name">depreciation</field>
+        <field name="description">Depreciation</field>
+        <field name="expression">-bale[('user_type_id','=',ref('account.data_account_type_depreciation').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+    </record>
+
+    <record id="mis_report_kpi_net_profit" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_pl')"/>
+        <field name="sequence">7</field>
+        <field name="name">net_profit</field>
+        <field name="description">Net Profit</field>
+        <field name="expression">gross_profit+other_income+expenses+depreciation</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">False</field>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.title')"/>
+    </record>
+
+    <!-- Balance Sheet -->
+    <record id="mis_report_kpi_assets" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">1</field>
+        <field name="name">assets</field>
+        <field name="description">Assets</field>
+        <field name="expression">current_assets+receivable+prepayments+bank_cash+fixed_assets+non_current_assets</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">False</field>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.title')"/>
+    </record>
+
+    <record id="mis_report_kpi_current_assets" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">2</field>
+        <field name="name">current_assets</field>
+        <field name="description">Current Assets</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_current_assets').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_receivable" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">3</field>
+        <field name="name">receivable</field>
+        <field name="description">Receivable Accounts</field>
+        <field name="expression">bale[('internal_type','=','receivable')]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_prepayments" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">4</field>
+        <field name="name">prepayments</field>
+        <field name="description">Prepayments</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_prepayments').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_bank_cash" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">5</field>
+        <field name="name">bank_cash</field>
+        <field name="description">Bank and Cash</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_liquidity').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_fixed_assets" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">6</field>
+        <field name="name">fixed_assets</field>
+        <field name="description">Fixed Assets</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_fixed_assets').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_non_current_assets" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">7</field>
+        <field name="name">non_current_assets</field>
+        <field name="description">Non-Current Assets</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_non_current_assets').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_liabilities" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">8</field>
+        <field name="name">liabilities</field>
+        <field name="description">Liabilities</field>
+        <field name="expression">current_liabilities+credit_card+payable+non_current_liabilities</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">False</field>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.title')"/>
+    </record>
+
+    <record id="mis_report_kpi_current_liabilities" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">9</field>
+        <field name="name">current_liabilities</field>
+        <field name="description">Current Liabilities</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_current_liabilities').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_credit_card" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">10</field>
+        <field name="name">credit_card</field>
+        <field name="description">Credit Card</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_credit_card').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_payable" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">11</field>
+        <field name="name">payable</field>
+        <field name="description">Payable Accounts</field>
+        <field name="expression">bale[('internal_type','=','payable')]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_non_current_liabilities" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">12</field>
+        <field name="name">non_current_liabilities</field>
+        <field name="description">Non-Current Liabilities</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_non_current_liabilities').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.level1')"/>
+    </record>
+
+    <record id="mis_report_kpi_net_assets" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">13</field>
+        <field name="name">net_assets</field>
+        <field name="description">Net Assets</field>
+        <field name="expression">assets+liabilities</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">False</field>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.title')"/>
+    </record>
+
+    <record id="mis_report_kpi_equity" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">14</field>
+        <field name="name">equity</field>
+        <field name="description">Equity</field>
+        <field name="expression">bale[('user_type_id','=',ref('account.data_account_type_equity').id)]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" eval="ref('mis_builder_account_generic_report.details')"/>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.title')"/>
+    </record>
+
+    <record id="mis_report_kpi_net_profit_bs" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">15</field>
+        <field name="name">net_profit</field>
+        <field name="description">Net Profit</field>
+        <field name="expression">-bale[('user_type_id','in',(ref('account.data_account_type_other_income').id,ref('account.data_account_type_revenue').id,ref('account.data_account_type_depreciation').id,ref('account.data_account_type_expenses').id,ref('account.data_account_type_direct_costs').id))]</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">False</field>
+    </record>
+
+    <record id="mis_report_kpi_total_equity" model="mis.report.kpi">
+        <field name="report_id" eval="ref('mis_builder_account_generic_report.mis_report_bs')"/>
+        <field name="sequence">16</field>
+        <field name="name">total_equity</field>
+        <field name="description">Total Equity</field>
+        <field name="expression">net_assets+equity+net_profit</field>
+        <field name="type">num</field>
+        <field name="accumulation_method">sum</field>
+        <field name="budgetable">False</field>
+        <field name="compare_method">pct</field>
+        <field name="auto_expand_accounts">False</field>
+        <field name="style_id" eval="ref('mis_builder_account_generic_report.title')"/>
+    </record>
+
+</odoo>
