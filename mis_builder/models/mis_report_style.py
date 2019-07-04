@@ -42,7 +42,6 @@ PROPS = [
 TYPE_NUM = 'num'
 TYPE_PCT = 'pct'
 TYPE_STR = 'str'
-TYPE_MON = 'mon'
 
 CMP_DIFF = 'diff'
 CMP_PCT = 'pct'
@@ -219,7 +218,7 @@ class MisReportKpiStyle(models.Model):
                     divider=0.01, prefix='', suffix=_('pp')))
             else:
                 delta = AccountingNone
-        elif type in [TYPE_NUM, TYPE_MON]:
+        elif type == TYPE_NUM:
             if value and average_value:
                 # pylint: disable=redefined-variable-type
                 value = value / float(average_value)
