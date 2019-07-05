@@ -164,6 +164,8 @@ class KpiMatrix(object):
         self._sum_todo = {}
         # { account_id: account_name }
         self._account_names = {}
+        # id of the currency
+        self.currency_id = None
 
     def declare_kpi(self, kpi):
         """ Declare a new kpi (row) in the matrix.
@@ -239,7 +241,8 @@ class KpiMatrix(object):
                 val_comment = val.msg
             else:
                 val_rendered = self._style_model.render(
-                    self.lang, row.style_props, kpi.type, val)
+                    self.lang, row.style_props, kpi.type, val,
+                    self.currency_id)
                 if row.kpi.multi and subcol.subkpi:
                     val_comment = u'{}.{} = {}'.format(
                         row.kpi.name,

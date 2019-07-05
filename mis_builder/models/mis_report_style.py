@@ -176,6 +176,8 @@ class MisReportKpiStyle(models.Model):
             return u''
         if not currency:
             currency = self.env.user.company_id.currency_id
+        elif isinstance(currency, int):
+            currency = self.env['res.currency'].browse(currency)
         fmt = "%.{0}f".format(currency.decimal_places)
         r = lang.format(
             fmt, currency.round(value),

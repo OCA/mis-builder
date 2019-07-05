@@ -56,12 +56,11 @@ class TestRendering(common.TransactionCase):
         self.assertEquals(u'12,345.67', self._render(12345.67))
 
     def test_render_mon(self):
-        eur = self.env['res.currency'].search([('name', '=', 'EUR')])[0]
-        self.assertEquals(u'1.00 EUR', self._render_mon(1))
-        self.assertEquals(u'1.10 EUR', self._render_mon(1.1))
-        self.assertEquals(u'1.60 EUR', self._render_mon(1.6))
-        self.assertEquals(u'1.61 EUR', self._render(1.606))
-        self.assertEquals(u'12,345.67', self._render(12345.67))
+        self.assertEquals(u'1.00 €', self._render_mon(1))
+        self.assertEquals(u'1.10 €', self._render_mon(1.1))
+        self.assertEquals(u'1.60 €', self._render(1.604))
+        self.assertEquals(u'1.61 €', self._render(1.606))
+        self.assertEquals(u"12'345.67 €", self._render(12345.67))
 
     def test_render_negative(self):
         # non breaking hyphen
