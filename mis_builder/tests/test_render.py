@@ -6,7 +6,7 @@ import odoo.tests.common as common
 
 from ..models.accounting_none import AccountingNone
 from ..models.mis_report_style import (
-    TYPE_NUM, TYPE_PCT, TYPE_STR, CMP_DIFF, CMP_PCT
+    TYPE_MON, TYPE_NUM, TYPE_PCT, TYPE_STR, CMP_DIFF, CMP_PCT
 )
 from ..models.data_error import DataError
 
@@ -25,6 +25,12 @@ class TestRendering(common.TransactionCase):
     def _render(self, value, type=TYPE_NUM):
         style_props = self.style_obj.merge([self.style])
         return self.style_obj.render(self.lang, style_props, type, value)
+
+    def _render_mon(self, value, type=TYPE_MON):
+        eur = self.env['res.currency'].search([('name', '=', 'EUR')])[0]
+        style_props = self.style_obj.merge([self.style])
+        return self.style_obj.render(self.lang, style_props, type, value,
+                                     currency=eur)
 
     def _compare_and_render(self, value, base_value,
                             type=TYPE_NUM, compare_method=CMP_PCT):
@@ -47,6 +53,14 @@ class TestRendering(common.TransactionCase):
         self.assertEquals(u'1.10', self._render(1.1))
         self.assertEquals(u'1.60', self._render(1.6))
         self.assertEquals(u'1.61', self._render(1.606))
+        self.assertEquals(u'12,345.67', self._render(12345.67))
+
+    def test_render_mon(self):
+        eur = self.env['res.currency'].search([('name', '=', 'EUR')])[0]
+        self.assertEquals(u'1.00 EUR', self._render_mon(1))
+        self.assertEquals(u'1.10 EUR', self._render_mon(1.1))
+        self.assertEquals(u'1.60 EUR', self._render_mon(1.6))
+        self.assertEquals(u'1.61 EUR', self._render(1.606))
         self.assertEquals(u'12,345.67', self._render(12345.67))
 
     def test_render_negative(self):
