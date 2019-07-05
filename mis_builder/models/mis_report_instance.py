@@ -430,6 +430,8 @@ class MisReportInstance(models.Model):
         [('no', _('No')),
          ('week', _('Week')),
          ('month', _('Month')),
+         ('month3', _('3 Months')),
+         ('month6', _('6 Months')),
          ('year', _('Year'))], string='Default subdivision', default='no')
     default_period = fields.Selection(
         [('current_year', _('Current Year')),
@@ -833,19 +835,35 @@ class MisReportInstance(models.Model):
                     date_from=start_str,
                     date_to=end_str))
                 date_from += datetime.timedelta(days=7)
-        elif subdivision == 'month':
+        elif 'month' in subdivision:
+            if subdivision == 'month':
+                monthnum = 1
+            else:
+                monthnum = int(subdivision.replace('month', ''))
             while date_from <= date_to:
                 start = date_from.replace(day=1)
-                end = start + relativedelta(day=31)
+                end = start + relativedelta(months=monthnum-1, day=31)
                 start_str = fields.Date.to_string(start)
                 end_str = fields.Date.to_string(end)
+                if monthnum == 1:
+                    name = babel.dates.format_date(start, 'MMM yy',
+                                                          locale=locale)
+                else:
+                    if start.year != end.year:
+                        startformat = 'MMM yy'
+                    else:
+                        startformat = 'MMM'
+                    period_names = [babel.dates.format_date(start, startformat,
+                                                            locale=locale),
+                                    babel.dates.format_date(end, 'MMM yy',
+                                                            locale=locale)]
+                    name = ' - '.join(period_names)
                 automatic_periods.append(AutomaticPeriod(
                     period_id=len(automatic_periods)+1,
-                    name=babel.dates.format_date(start, 'MMM yy',
-                                                 locale=locale),
+                    name=name,
                     date_from=start_str,
                     date_to=end_str))
-                date_from += relativedelta(months=1)
+                date_from += relativedelta(months=monthnum)
         elif subdivision == 'year':
             while date_from <= date_to:
                 start = date_from.replace(month=1, day=1)
