@@ -180,17 +180,16 @@ class MisReportKpiStyle(models.Model):
     @api.model
     def render_mon(self, lang, value, prefix=None, suffix=None,
                    currency=None):
-        # format number following user language
-        if value is None:
+        # format number following user given or user currency
+        if value is None or value is AccountingNone:
             return u''
-        elif value is AccountingNone:
-            value = 0.0
         if not currency:
             currency = self.env.user.company_id.currency_id
         fmt = "%.{0}f".format(currency.decimal_places)
         r = lang.format(
             fmt, currency.round(value),
             grouping=True, monetary=True).replace(r' ', u'\N{NO-BREAK SPACE}')
+        r = r.replace('-', u'\N{NON-BREAKING HYPHEN}')
         if not prefix:
             prefix = u''
         if not suffix:
