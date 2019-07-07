@@ -21,7 +21,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:520
-#: code:addons/mis_builder/models/mis_report_instance.py:528
+#: code:addons/mis_builder/models/mis_report_instance.py:537
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (copie)"
@@ -160,7 +160,7 @@ msgstr ""
 "account_id et company_id."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:345
+#: code:addons/mis_builder/models/mis_report_instance.py:354
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Un filtre date est obligatoire pour cette source dans la colonne %s."
@@ -249,7 +249,7 @@ msgid "Analytic Account"
 msgstr "Compte analytique"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:497
+#: code:addons/mis_builder/models/mis_report_instance.py:506
 #, python-format
 msgid "Analytic Account: %s"
 msgstr "Compte analytique:%s"
@@ -329,14 +329,14 @@ msgid "Column"
 msgstr "Colonne"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:365
+#: code:addons/mis_builder/models/mis_report_instance.py:374
 #, fuzzy, python-format
 msgid "Column %s cannot be compared to itrec."
 msgstr "Colonne %s ne peut pas être comparée à elle-même."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:653
-#: code:addons/mis_builder/models/mis_report_instance.py:674
+#: code:addons/mis_builder/models/mis_report_instance.py:662
+#: code:addons/mis_builder/models/mis_report_instance.py:683
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "Colonne %s avec une source pour le réel doit avoir des dates de/à."
@@ -347,7 +347,7 @@ msgid "Columns"
 msgstr "Colonnes"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:372
+#: code:addons/mis_builder/models/mis_report_instance.py:381
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr "Les colonnes à comparer doivent appartenir au même rapport %s"
@@ -437,7 +437,7 @@ msgid "Dashboard"
 msgstr "Tableau de bord"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:182
+#: code:addons/mis_builder/models/mis_report_instance.py:186
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_date_range_id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_date_range_id
 #: selection:mis.report.instance.period,type:0
@@ -461,7 +461,7 @@ msgid "Dates"
 msgstr "Dates"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:178
+#: code:addons/mis_builder/models/mis_report_instance.py:182
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Day"
@@ -677,6 +677,11 @@ msgstr "Poids de police de caractères"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_font_weight_inherit
 msgid "Font weight inherit"
 msgstr "Poids de police par défaut"
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period_is_ytd
+msgid "Forces the start date to Jan 1st of the relevant year"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_date_from
@@ -1031,7 +1036,7 @@ msgid "Model"
 msgstr "Modèle"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:180
+#: code:addons/mis_builder/models/mis_report_instance.py:184
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Month"
@@ -1072,7 +1077,7 @@ msgid "No date filter"
 msgstr "Pas de filtre date"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:350
+#: code:addons/mis_builder/models/mis_report_instance.py:359
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr "Aucun filtre date n'est autorisé pour cette source dans la colonne %s."
@@ -1153,7 +1158,7 @@ msgid "Pivot date"
 msgstr "Date pivot"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:360
+#: code:addons/mis_builder/models/mis_report_instance.py:369
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Merci de renseigner les 2 colonnes à comparer en %s."
@@ -1490,7 +1495,7 @@ msgid "Visibility"
 msgstr "Visibilité"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:179
+#: code:addons/mis_builder/models/mis_report_instance.py:183
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Week"
@@ -1507,11 +1512,16 @@ msgid "Wrong normalize factor, it must be positive!"
 msgstr "Facteur de normalisation incorrect, il doit être positif !"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:181
+#: code:addons/mis_builder/models/mis_report_instance.py:185
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Year"
 msgstr "Année"
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_is_ytd
+msgid "Year to date"
+msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:65
@@ -1520,7 +1530,7 @@ msgid "You cannot sum period %s with itself."
 msgstr "Vous ne pouvez pas additionner la période %s avec elle-meme."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:744
+#: code:addons/mis_builder/models/mis_report_instance.py:753
 #, python-format
 msgid "from %s to %s"
 msgstr "de %s à %s"
