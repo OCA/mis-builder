@@ -5,10 +5,12 @@ from collections import defaultdict
 import logging
 import numbers
 
-from odoo import models
+from odoo import models, fields, _
+from datetime import datetime
 
 from ..models.accounting_none import AccountingNone
 from ..models.data_error import DataError
+from ..models.mis_report_style import TYPE_STR
 
 _logger = logging.getLogger(__name__)
 
@@ -97,7 +99,7 @@ class MisBuilderXlsx(models.AbstractModel):
             if (row.style_props.hide_empty and row.is_empty()) or \
                     row.style_props.hide_always:
                 continue
-            row_xlsx_style = style_obj.to_xlsx_style(row.style_props)
+            row_xlsx_style = style_obj.to_xlsx_style(TYPE_STR, row.style_props)
             row_format = workbook.add_format(row_xlsx_style)
             col_pos = 0
             label = row.label
@@ -115,7 +117,7 @@ class MisBuilderXlsx(models.AbstractModel):
                     sheet.write(row_pos, col_pos, '', row_format)
                     continue
                 cell_xlsx_style = style_obj.to_xlsx_style(
-                    cell.style_props, no_indent=True)
+                    row.kpi.type, cell.style_props, no_indent=True)
                 cell_xlsx_style['align'] = 'right'
                 cell_format = workbook.add_format(cell_xlsx_style)
                 if isinstance(cell.val, DataError):
@@ -133,6 +135,21 @@ class MisBuilderXlsx(models.AbstractModel):
                 col_width[col_pos] = max(col_width[col_pos],
                                          len(cell.val_rendered or ''))
             row_pos += 1
+
+        # Add date/time footer
+        row_pos += 1
+        footer_format = workbook.add_format({
+            'italic': True, 'font_color': '#202020', 'size': 9})
+        lang_model = self.env['res.lang']
+        lang = lang_model._lang_get(self.env.user.lang)
+
+        now_tz = fields.Datetime.context_timestamp(
+            self.env['res.users'],
+            datetime.now())
+        create_date = _("Generated on {} at {}").format(
+            now_tz.strftime(lang.date_format),
+            now_tz.strftime(lang.time_format))
+        sheet.write(row_pos, 0, create_date, footer_format)
 
         # adjust col widths
         sheet.set_column(0, 0, min(label_col_width, MAX_COL_WIDTH) * COL_WIDTH)

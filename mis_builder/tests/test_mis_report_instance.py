@@ -4,7 +4,8 @@
 import odoo.tests.common as common
 from odoo.tools import test_reports
 
-from ..models.mis_report import TYPE_STR
+from ..models.mis_report import \
+    TYPE_STR, SubKPITupleLengthError, SubKPIUnknownTypeError
 from ..models.accounting_none import AccountingNone
 
 
@@ -42,6 +43,32 @@ class TestMisReportInstance(common.HttpCase):
                 date_field=partner_create_date_field_id,
                 aggregate='sum',
             ))],
+        ))
+        # create another report with 2 subkpis, no query
+        self.report_2 = self.env['mis.report'].create(dict(
+            name='another test report',
+            subkpi_ids=[(0, 0, dict(
+                name='subkpi1_report2',
+                description='subkpi 1, report 2',
+                sequence=1,
+            )), (0, 0, dict(
+                name='subkpi2_report2',
+                description='subkpi 2, report 2',
+                sequence=2,
+            ))]
+        ))
+        # Third report, 2 subkpis, no query
+        self.report_3 = self.env['mis.report'].create(dict(
+            name='test report 3',
+            subkpi_ids=[(0, 0, dict(
+                name='subkpi1_report3',
+                description='subkpi 1, report 3',
+                sequence=1,
+            )), (0, 0, dict(
+                name='subkpi2_report3',
+                description='subkpi 2, report 3',
+                sequence=2,
+            ))]
         ))
         # kpi with accounting formulas
         self.kpi1 = self.env['mis.report.kpi'].create(dict(
@@ -136,6 +163,49 @@ class TestMisReportInstance(common.HttpCase):
                 subkpi_id=self.report.subkpi_ids[1].id,
             ))],
         ))
+        # Report 2 : kpi with AccountingNone value
+        self.env['mis.report.kpi'].create(dict(
+            report_id=self.report_2.id,
+            description='AccountingNone kpi',
+            name='AccountingNoneKPI',
+            multi=False,
+        ))
+        # Report 2 : 'classic' kpi with values for each sub-KPI
+        self.env['mis.report.kpi'].create(dict(
+            report_id=self.report_2.id,
+            description='Classic kpi',
+            name='classic_kpi_r2',
+            multi=True,
+            expression_ids=[(0, 0, dict(
+                name='bale[200%]',
+                subkpi_id=self.report_2.subkpi_ids[0].id,
+            )), (0, 0, dict(
+                name='balp[200%]',
+                subkpi_id=self.report_2.subkpi_ids[1].id,
+            ))]
+        ))
+        # Report 3 : kpi with wrong tuple length
+        self.env['mis.report.kpi'].create(dict(
+            report_id=self.report_3.id,
+            description='Wrong tuple length kpi',
+            name='wrongTupleLen',
+            multi=False,
+            expression="('hello', 'does', 'this', 'work')"
+        ))
+        # Report 3 : 'classic' kpi
+        self.env['mis.report.kpi'].create(dict(
+            report_id=self.report_3.id,
+            description='Classic kpi',
+            name='classic_kpi_r2',
+            multi=True,
+            expression_ids=[(0, 0, dict(
+                name='bale[200%]',
+                subkpi_id=self.report_3.subkpi_ids[0].id,
+            )), (0, 0, dict(
+                name='balp[200%]',
+                subkpi_id=self.report_3.subkpi_ids[1].id,
+            ))]
+        ))
         # create a report instance
         self.report_instance = self.env['mis.report.instance'].create(dict(
             name='test instance',
@@ -155,6 +225,30 @@ class TestMisReportInstance(common.HttpCase):
         ))
         self.report_instance.period_ids[1].comparison_column_ids = \
             [(4, self.report_instance.period_ids[0].id, None)]
+        # same for report 2
+        self.report_instance_2 = self.env['mis.report.instance'].create(dict(
+            name='test instance 2',
+            report_id=self.report_2.id,
+            company_id=self.env.ref('base.main_company').id,
+            period_ids=[(0, 0, dict(
+                name='p3',
+                mode='fix',
+                manual_date_from='2019-01-01',
+                manual_date_to='2019-12-31',
+            ))],
+        ))
+        # and for report 3
+        self.report_instance_3 = self.env['mis.report.instance'].create(dict(
+            name='test instance 3',
+            report_id=self.report_3.id,
+            company_id=self.env.ref('base.main_company').id,
+            period_ids=[(0, 0, dict(
+                name='p4',
+                mode='fix',
+                manual_date_from='2019-01-01',
+                manual_date_to='2019-12-31',
+            ))]
+        ))
 
     def test_compute(self):
         matrix = self.report_instance._compute_matrix()
@@ -299,3 +393,11 @@ class TestMisReportInstance(common.HttpCase):
                 self.assertEquals(vals, [AccountingNone, AccountingNone, None])
             elif row.kpi.name == 'k4':
                 self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
+
+    def test_raise_when_unknown_kpi_value_type(self):
+        with self.assertRaises(SubKPIUnknownTypeError):
+            self.report_instance_2.compute()
+
+    def test_raise_when_wrong_tuple_length_with_subkpis(self):
+        with self.assertRaises(SubKPITupleLengthError):
+            self.report_instance_3.compute()
