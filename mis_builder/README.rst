@@ -97,6 +97,27 @@ be found on GitHub.
 Changelog
 =========
 
+12.0.3.4.0 (2019-07-09)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- New year-to-date mode for defining periods. (`#165 <https://github.com/oca/mis-builder/issues/165>`_)
+- Add support for move lines with negative debit or credit.
+  Used by some for storno accounting. Not officially supported. (`#175 <https://github.com/oca/mis-builder/issues/175>`_)
+- In Excel export, use a number format with thousands separator. The
+  specific separator used depends on the Excel configuration (eg regional
+  settings). (`#190 <https://github.com/oca/mis-builder/issues/190>`_)
+- Add generation date/time at the end of the XLS export. (`#191 <https://github.com/oca/mis-builder/issues/191>`_)
+- In presence of Sub KPIs, report more informative user errors when
+  non-multi expressions yield tuples of incorrect lenght. (`#196 <https://github.com/oca/mis-builder/issues/196>`_)
+
+
+**Bugfixes**
+
+- Fix rendering of percentage types in Excel export. (`#192 <https://github.com/oca/mis-builder/issues/192>`_)
+
+
 12.0.3.3.0 (2019-01-26)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -420,6 +441,7 @@ Contributors
 * Richard deMeester <richard@willowit.com.au>
 * Eric Caudal <eric.caudal@elico-corp.com>
 * Andrea Stirpe <a.stirpe@onestein.nl>
+* Maxence Groine <mgroine@fiefmanage.ch>
 
 Maintainers
 ~~~~~~~~~~~
