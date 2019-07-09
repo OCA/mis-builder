@@ -78,7 +78,8 @@ class MisReportInstancePeriod(models.Model):
                  'report_instance_id.comparison_mode',
                  'date_range_type_id',
                  'type', 'offset', 'duration', 'mode',
-                 'manual_date_from', 'manual_date_to')
+                 'manual_date_from', 'manual_date_to',
+                 'is_ytd')
     def _compute_dates(self):
         for record in self:
             record.date_from = False
@@ -160,6 +161,9 @@ class MisReportInstancePeriod(models.Model):
                         record.date_from = periods[0].date_start
                         record.date_to = periods[-1].date_end
                         record.valid = True
+            if record.mode == MODE_REL and record.valid and record.is_ytd:
+                record.date_from = fields.Date.from_string(record.date_to)\
+                    .replace(day=1, month=1)
 
     _name = 'mis.report.instance.period'
     _description = 'MIS Report Instance Period'
@@ -180,6 +184,11 @@ class MisReportInstancePeriod(models.Model):
          ('y', _('Year')),
          ('date_range', _('Date Range'))],
         string='Period type'
+    )
+    is_ytd = fields.Boolean(
+        default=False,
+        string='Year to date',
+        help='Forces the start date to Jan 1st of the relevant year'
     )
     date_range_type_id = fields.Many2one(
         comodel_name='date.range.type',

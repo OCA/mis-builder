@@ -35,6 +35,14 @@ from .mis_kpi_data import (
 _logger = logging.getLogger(__name__)
 
 
+class SubKPITupleLengthError(UserError):
+    pass
+
+
+class SubKPIUnknownTypeError(UserError):
+    pass
+
+
 class AutoStruct(object):
 
     def __init__(self, **kwargs):
@@ -689,15 +697,29 @@ class MisReport(models.Model):
                     # a sum or other operation on multi-valued kpis)
                     if isinstance(vals[0], tuple):
                         vals = vals[0]
-                        assert len(vals) == col.colspan
+                        if len(vals) != col.colspan:
+                            raise SubKPITupleLengthError(
+                                _("KPI \"{}\" is valued as a tuple of "
+                                  "length {} while a tuple of length {} "
+                                  "is expected.")
+                                .format(kpi.description,
+                                        len(vals),
+                                        col.colspan)
+                            )
                     elif isinstance(vals[0], DataError):
                         vals = (vals[0],) * col.colspan
                     else:
-                        raise UserError(_("Probably not your fault... but I'm "
-                                          "really curious to know how you "
-                                          "managed to raise this error so "
-                                          "I can handle one more corner "
-                                          "case!"))
+                        raise SubKPIUnknownTypeError(
+                            _("KPI \"{}\" has type {} while a tuple was "
+                              "expected.\n\nThis can be fixed by either:\n\t- "
+                              "Changing the KPI value to a tuple of length "
+                              "{}\nor\n\t- Changing the "
+                              "KPI to `multi` mode and giving an explicit "
+                              "value for each sub-KPI.")
+                            .format(kpi.description,
+                                    type(vals[0]),
+                                    col.colspan)
+                            )
                 if len(drilldown_args) != col.colspan:
                     drilldown_args = [None] * col.colspan
 
