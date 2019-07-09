@@ -12,6 +12,7 @@ from datetime import datetime
 
 from ..models.accounting_none import AccountingNone
 from ..models.data_error import DataError
+from ..models.mis_report_style import TYPE_STR
 
 _logger = logging.getLogger(__name__)
 
@@ -107,7 +108,7 @@ class MisBuilderXlsx(ReportXlsx):
             if (row.style_props.hide_empty and row.is_empty()) or \
                     row.style_props.hide_always:
                 continue
-            row_xlsx_style = style_obj.to_xlsx_style(row.style_props)
+            row_xlsx_style = style_obj.to_xlsx_style(TYPE_STR, row.style_props)
             row_format = workbook.add_format(row_xlsx_style)
             col_pos = 0
             label = row.label
@@ -125,7 +126,7 @@ class MisBuilderXlsx(ReportXlsx):
                     sheet.write(row_pos, col_pos, '', row_format)
                     continue
                 cell_xlsx_style = style_obj.to_xlsx_style(
-                    cell.style_props, no_indent=True)
+                    row.kpi.type, cell.style_props, no_indent=True)
                 cell_xlsx_style['align'] = 'right'
                 cell_format = workbook.add_format(cell_xlsx_style)
                 if isinstance(cell.val, DataError):
