@@ -99,8 +99,8 @@ class TestPeriodDates(common.TransactionCase):
             offset='-2',
             is_ytd=True,
         ))
-        self.assertEqual(self.period.date_from, '2019-01-01')
-        self.assertEqual(self.period.date_to, '2019-05-01')
+        self.assertDateEqual(self.period.date_from, '2019-01-01')
+        self.assertDateEqual(self.period.date_to, '2019-05-01')
         self.assertTrue(self.period.valid)
 
     def test_rel_week(self):
@@ -131,8 +131,8 @@ class TestPeriodDates(common.TransactionCase):
             duration=2,
             is_ytd=True,
         ))
-        self.assertEqual(self.period.date_from, '2019-01-01')
-        self.assertEqual(self.period.date_to, '2019-06-16')
+        self.assertDateEqual(self.period.date_from, '2019-01-01')
+        self.assertDateEqual(self.period.date_to, '2019-06-16')
         self.assertTrue(self.period.valid)
 
     def test_rel_month(self):
@@ -160,8 +160,8 @@ class TestPeriodDates(common.TransactionCase):
             offset='-1',
             is_ytd=True,
         ))
-        self.assertEqual(self.period.date_from, '2019-01-01')
-        self.assertEqual(self.period.date_to, '2019-04-30')
+        self.assertDateEqual(self.period.date_from, '2019-01-01')
+        self.assertDateEqual(self.period.date_to, '2019-04-30')
         self.assertTrue(self.period.valid)
 
     def test_rel_year(self):
