@@ -150,7 +150,8 @@ class MisBuilderXlsx(ReportXlsx):
         footer_format = workbook.add_format({
             'italic': True, 'font_color': '#202020', 'size': 9})
         lang_model = self.env['res.lang']
-        lang = lang_model._lang_get(self.env.user.lang)
+        lang_id = lang_model._lang_get(self.env.user.lang)
+        lang = lang_model.browse(lang_id)
 
         now_tz = fields.Datetime.context_timestamp(
             self.env['res.users'],
