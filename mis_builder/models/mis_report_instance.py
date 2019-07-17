@@ -252,6 +252,10 @@ class MisReportInstancePeriod(models.Model):
         help="A 'move line like' model, ie having at least debit, credit, "
              "date, account_id and company_id fields.",
     )
+    source_aml_model_name = fields.Char(
+        string='Move lines source model name',
+        related='source_aml_model_id.model',
+    )
     source_sumcol_ids = fields.One2many(
         comodel_name='mis.report.instance.period.sum',
         inverse_name='period_id',
