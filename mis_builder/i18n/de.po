@@ -20,7 +20,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:520
-#: code:addons/mis_builder/models/mis_report_instance.py:537
+#: code:addons/mis_builder/models/mis_report_instance.py:541
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (Kopie)"
@@ -150,7 +150,7 @@ msgid ""
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:354
+#: code:addons/mis_builder/models/mis_report_instance.py:358
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Ein Datumsfilter ist Pflicht für diese Quelle in Spalte %s."
@@ -238,7 +238,7 @@ msgid "Analytic Account"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:506
+#: code:addons/mis_builder/models/mis_report_instance.py:510
 #, python-format
 msgid "Analytic Account: %s"
 msgstr ""
@@ -316,14 +316,14 @@ msgid "Column"
 msgstr "Spalte"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:374
+#: code:addons/mis_builder/models/mis_report_instance.py:378
 #, fuzzy, python-format
 msgid "Column %s cannot be compared to itrec."
 msgstr "Spalte %s kann nicht mit sich selber verglichen werden."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:662
-#: code:addons/mis_builder/models/mis_report_instance.py:683
+#: code:addons/mis_builder/models/mis_report_instance.py:666
+#: code:addons/mis_builder/models/mis_report_instance.py:687
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "Spalte %s mit Ist-Werten muss von-/bis-Daten haben."
@@ -334,7 +334,7 @@ msgid "Columns"
 msgstr "Spalten"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:381
+#: code:addons/mis_builder/models/mis_report_instance.py:385
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr "Vergleichsspalten müssen zum selben Bericht gehören %s"
@@ -1029,6 +1029,13 @@ msgid "Move lines source"
 msgstr "Quelle der Bewegungszeilen"
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_source_aml_model_name
+#, fuzzy
+#| msgid "Move lines source"
+msgid "Move lines source model name"
+msgstr "Quelle der Bewegungszeilen"
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_multi
 msgid "Multi"
 msgstr "Multi"
@@ -1058,7 +1065,7 @@ msgid "No date filter"
 msgstr "Kein Datumsfilter"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:359
+#: code:addons/mis_builder/models/mis_report_instance.py:363
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr "Für diese Quelle ist kein Datumsfilter erlaubt in Spalte %s."
@@ -1139,7 +1146,7 @@ msgid "Pivot date"
 msgstr "Pivot-Datum"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:369
+#: code:addons/mis_builder/models/mis_report_instance.py:373
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Bitte geben Sie beide Vergleichsspalten an in %s."
@@ -1507,7 +1514,7 @@ msgid "You cannot sum period %s with itself."
 msgstr "Sie können die Periode %s nicht mit sich selbst summieren."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:753
+#: code:addons/mis_builder/models/mis_report_instance.py:757
 #, python-format
 msgid "from %s to %s"
 msgstr "von %s bis %s"
