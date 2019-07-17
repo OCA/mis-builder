@@ -15,7 +15,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:519
-#: code:addons/mis_builder/models/mis_report_instance.py:536
+#: code:addons/mis_builder/models/mis_report_instance.py:540
 #, python-format
 msgid "%s (copy)"
 msgstr ""
@@ -103,7 +103,7 @@ msgid "A 'move line like' model, ie having at least debit, credit, date, account
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:353
+#: code:addons/mis_builder/models/mis_report_instance.py:357
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr ""
@@ -175,7 +175,7 @@ msgid "Analytic Account"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:505
+#: code:addons/mis_builder/models/mis_report_instance.py:509
 #, python-format
 msgid "Analytic Account: %s"
 msgstr ""
@@ -252,14 +252,14 @@ msgid "Column"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:373
+#: code:addons/mis_builder/models/mis_report_instance.py:377
 #, python-format
 msgid "Column %s cannot be compared to itrec."
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:665
-#: code:addons/mis_builder/models/mis_report_instance.py:686
+#: code:addons/mis_builder/models/mis_report_instance.py:669
+#: code:addons/mis_builder/models/mis_report_instance.py:690
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr ""
@@ -270,7 +270,7 @@ msgid "Columns"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:380
+#: code:addons/mis_builder/models/mis_report_instance.py:384
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr ""
@@ -936,6 +936,11 @@ msgid "Move lines source"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_name
+msgid "Move lines source model name"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__multi
 msgid "Multi"
 msgstr ""
@@ -964,7 +969,7 @@ msgid "No date filter"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:358
+#: code:addons/mis_builder/models/mis_report_instance.py:362
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr ""
@@ -1046,7 +1051,7 @@ msgid "Pivot date"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:368
+#: code:addons/mis_builder/models/mis_report_instance.py:372
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr ""
@@ -1397,7 +1402,7 @@ msgid "You cannot sum period %s with itself."
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:756
+#: code:addons/mis_builder/models/mis_report_instance.py:760
 #, python-format
 msgid "from %s to %s"
 msgstr ""
