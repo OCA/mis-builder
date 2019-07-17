@@ -202,6 +202,7 @@
                         <group col="2" colspan="2" name="source_data">
                             <field name="source_aml_model_id"
                                 attrs="{'invisible': [('source', '!=', 'actuals_alt')], 'required': [('source', '==', 'actuals_alt')]}"/>
+                            <field name="source_aml_model_name" invisible="1"/>
                             <field name="source_sumcol_ids"
                                    attrs="{'invisible': [('source', '!=', 'sumcol')]}"
                                    nolabel="1" colspan="2">
