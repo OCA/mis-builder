@@ -359,26 +359,24 @@ class KpiMatrix(object):
                                           key=lambda s: s.sequence))
             self._cols[sumcol_key] = sum_col
             for row in self.iter_rows():
-                if row.kpi.accumulation_method != ACC_SUM:
-                    continue
-                if row.account_id and not sum_accdet:
-                    continue
                 acc = SimpleArray(
                     [AccountingNone] * (len(common_subkpis) or 1))
-                for sign, col_to_sum in col_to_sum_keys:
-                    cell_tuple = self._cols[col_to_sum].\
-                        get_cell_tuple_for_row(row)
-                    if cell_tuple is None:
-                        vals = \
-                            [AccountingNone] * (len(common_subkpis) or 1)
-                    else:
-                        vals = [cell.val for cell in cell_tuple
-                                if not common_subkpis or
-                                cell.subcol.subkpi in common_subkpis]
-                    if sign == '+':
-                        acc += SimpleArray(vals)
-                    else:
-                        acc -= SimpleArray(vals)
+                if (row.kpi.accumulation_method == ACC_SUM
+                        and not (row.account_id and not sum_accdet)):
+                    for sign, col_to_sum in col_to_sum_keys:
+                        cell_tuple = self._cols[col_to_sum].\
+                            get_cell_tuple_for_row(row)
+                        if cell_tuple is None:
+                            vals = \
+                                [AccountingNone] * (len(common_subkpis) or 1)
+                        else:
+                            vals = [cell.val for cell in cell_tuple
+                                    if not common_subkpis or
+                                    cell.subcol.subkpi in common_subkpis]
+                        if sign == '+':
+                            acc += SimpleArray(vals)
+                        else:
+                            acc -= SimpleArray(vals)
                 self.set_values_detail_account(
                     row.kpi, sumcol_key, row.account_id, acc,
                     [None] * (len(common_subkpis) or 1),
