@@ -274,6 +274,7 @@ class MisReportKpiStyle(models.Model):
             if props.dp:
                 num_format += u'.'
                 num_format += u'0' * props.dp
+            # A comparison TYPE_PCT can have a suffix 'pp'
             num_format += props.suffix if props.suffix else '%'
             xlsx_attributes.append(('num_format', num_format))
         if props.indent_level is not None and not no_indent:

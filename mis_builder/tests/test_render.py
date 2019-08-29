@@ -291,7 +291,21 @@ class TestRendering(common.TransactionCase):
             'bg_color': u'#0000FF',
             'num_format': u'"p "#,##0.00" s"',
         })
-        # percent type ignore prefix and suffix
+        # percent type ignore prefix and keep suffix
+        xlsx = self.style_obj.to_xlsx_style(
+            TYPE_PCT, style_props, no_indent=True
+        )
+        self.assertEquals(xlsx, {
+            'italic': True,
+            'bold': True,
+            'size': 9,
+            'font_color': u'#FF0000',
+            'bg_color': u'#0000FF',
+            'num_format': u'0.00s',
+        })
+        # percent type add % suffix when no suffix defined
+        del self.style.suffix
+        style_props = self.style_obj.merge([self.style])
         xlsx = self.style_obj.to_xlsx_style(
             TYPE_PCT, style_props, no_indent=True
         )
@@ -303,6 +317,7 @@ class TestRendering(common.TransactionCase):
             'bg_color': u'#0000FF',
             'num_format': u'0.00%',
         })
+
         # str type have no num_format style
         xlsx = self.style_obj.to_xlsx_style(
             TYPE_STR, style_props, no_indent=True
