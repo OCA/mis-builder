@@ -54,18 +54,16 @@ class MisCommittedPurchase(models.Model):
             tools.drop_view_if_exists(self.env.cr,
                                       'mis_committed_purchase_tag_rel')
             self.env.cr.execute("""
-            CREATE OR REPLACE VIEW mis_committed_purchase_tag_rel AS 
-            (SELECT 
+            CREATE OR REPLACE VIEW mis_committed_purchase_tag_rel AS
+            (SELECT
                 po_mcp.id AS mis_committed_purchase_id,
                 po_rel.account_analytic_tag_id AS account_analytic_tag_id
             FROM account_analytic_tag_purchase_order_line_rel AS po_rel
             INNER JOIN mis_committed_purchase AS po_mcp ON
                 po_mcp.res_id = po_rel.purchase_order_line_id
             WHERE po_mcp.res_model = 'purchase.order.line'
-            
             UNION ALL
-            
-            SELECT 
+            SELECT
                 inv_mcp.id AS mis_committed_purchase_id,
                 inv_rel.account_analytic_tag_id AS account_analytic_tag_id
             FROM account_analytic_tag_account_invoice_line_rel AS inv_rel
