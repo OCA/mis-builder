@@ -186,8 +186,8 @@ class TestRendering(common.TransactionCase):
     def test_compare_pct_result_type(self):
         style_props = self.style_obj.merge([self.style])
         result = self.style_obj.compare_and_render(self.lang, style_props,
-                                              TYPE_PCT, CMP_DIFF,
-                                              0.75, 0.50)
+                                                   TYPE_PCT, CMP_DIFF,
+                                                   0.75, 0.50)
         self.assertEquals(result[3], TYPE_NUM)
 
     def test_merge(self):

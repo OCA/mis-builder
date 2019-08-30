@@ -330,14 +330,14 @@ class KpiMatrix(object):
                 for val, base_val, comparison_subcol in \
                         zip(vals, base_vals, comparison_col.iter_subcols()):
                     # TODO FIXME average factors
-                    delta, delta_r, style_r, delta_type = \
+                    delta, delta_r, delta_style, delta_type = \
                         self._style_model.compare_and_render(
                             self.lang, row.style_props,
                             row.kpi.type, row.kpi.compare_method,
                             val, base_val, 1, 1)
                     comparison_cell_tuple.append(KpiMatrixCell(
                         row, comparison_subcol, delta, delta_r, None,
-                        style_r, None, delta_type))
+                        delta_style, None, delta_type))
                 comparison_col._set_cell_tuple(row, comparison_cell_tuple)
 
     def compute_sums(self):
