@@ -216,7 +216,7 @@ class MisReportKpiStyle(models.Model):
             delta = value - base_value
             if delta and round(delta, (style_props.dp or 0) + 2) != 0:
                 style_r.update(dict(
-                    divider=0.01, prefix='', suffix=_('pp')))
+                    divider=0.01, prefix='', suffix=_('pp'), keep_suffix=True))
             else:
                 delta = AccountingNone
         elif type == TYPE_NUM:
@@ -274,8 +274,8 @@ class MisReportKpiStyle(models.Model):
             if props.dp:
                 num_format += u'.'
                 num_format += u'0' * props.dp
-            # A comparison TYPE_PCT can have a suffix 'pp'
-            num_format += props.suffix if props.suffix else '%'
+            # A comparison TYPE_PCT can keep its suffix
+            num_format += props.suffix if props.keep_suffix else '%'
             xlsx_attributes.append(('num_format', num_format))
         if props.indent_level is not None and not no_indent:
             xlsx_attributes.append(

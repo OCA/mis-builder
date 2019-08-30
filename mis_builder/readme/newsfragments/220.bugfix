@@ -1,1 +1,1 @@
-Mis builder export in XLSX should keep the percentage point suffix (pp) instead of replacing it with %
+In Excel export, keep the percentage point suffix (pp) instead of replacing it with %.
