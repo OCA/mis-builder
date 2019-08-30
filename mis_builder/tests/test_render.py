@@ -183,6 +183,13 @@ class TestRendering(common.TransactionCase):
         self.assertEquals((AccountingNone, u''),
                           self._compare_and_render(0.751, 0.750, TYPE_PCT))
 
+    def test_compare_pct_result_type(self):
+        style_props = self.style_obj.merge([self.style])
+        result = self.style_obj.compare_and_render(self.lang, style_props,
+                                              TYPE_PCT, CMP_DIFF,
+                                              0.75, 0.50)
+        self.assertEquals(result[3], TYPE_NUM)
+
     def test_merge(self):
         self.style.color = '#FF0000'
         self.style.color_inherit = False
@@ -302,19 +309,6 @@ class TestRendering(common.TransactionCase):
             'font_color': u'#FF0000',
             'bg_color': u'#0000FF',
             'num_format': u'0.00%',
-        })
-        # percent type keep suffix when props contains keep_suffix
-        style_props.keep_suffix = True
-        xlsx = self.style_obj.to_xlsx_style(
-            TYPE_PCT, style_props, no_indent=True
-        )
-        self.assertEquals(xlsx, {
-            'italic': True,
-            'bold': True,
-            'size': 9,
-            'font_color': u'#FF0000',
-            'bg_color': u'#0000FF',
-            'num_format': u'0.00s',
         })
 
         # str type have no num_format style

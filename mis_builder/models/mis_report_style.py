@@ -204,10 +204,26 @@ class MisReportKpiStyle(models.Model):
     def compare_and_render(self, lang, style_props, type, compare_method,
                            value, base_value,
                            average_value=1, average_base_value=1):
+        """
+        :param lang: res.lang record
+        :param style_props: PropertyDict with style properties
+        :param type: num, pct or str
+        :param compare_method: diff, pct, none
+        :param value: value to compare (value - base_value)
+        :param base_value: value compared with (value - base_value)
+        :param average_value: value = value / average_value
+        :param average_base_value: base_value = base_value / average_base_value
+        :return: tuple with 4 elements
+            - delta = comparison result (Float or AccountingNone)
+            - delta_r = delta rendered in formatted string (String)
+            - style_r = PropertyDict with style properties
+            - delta_type = Type of the comparison result (num or pct)
+        """
         delta = AccountingNone
         style_r = style_props.copy()
+        delta_type = TYPE_NUM
         if isinstance(value, DataError) or isinstance(base_value, DataError):
-            return AccountingNone, '', style_r
+            return AccountingNone, '', style_r, delta_type
         if value is None:
             value = AccountingNone
         if base_value is None:
@@ -216,7 +232,7 @@ class MisReportKpiStyle(models.Model):
             delta = value - base_value
             if delta and round(delta, (style_props.dp or 0) + 2) != 0:
                 style_r.update(dict(
-                    divider=0.01, prefix='', suffix=_('pp'), keep_suffix=True))
+                    divider=0.01, prefix='', suffix=_('pp')))
             else:
                 delta = AccountingNone
         elif type == TYPE_NUM:
@@ -238,6 +254,7 @@ class MisReportKpiStyle(models.Model):
                     if delta and round(delta, 3) != 0:
                         style_r.update(dict(
                             divider=0.01, dp=1, prefix='', suffix='%'))
+                        delta_type = TYPE_PCT
                     else:
                         delta = AccountingNone
         if delta is not AccountingNone:
@@ -246,9 +263,9 @@ class MisReportKpiStyle(models.Model):
                 style_r.divider, style_r.dp,
                 style_r.prefix, style_r.suffix,
                 sign='+')
-            return delta, delta_r, style_r
+            return delta, delta_r, style_r, delta_type
         else:
-            return AccountingNone, '', style_r
+            return AccountingNone, '', style_r, delta_type
 
     @api.model
     def to_xlsx_style(self, type, props, no_indent=False):
@@ -274,8 +291,7 @@ class MisReportKpiStyle(models.Model):
             if props.dp:
                 num_format += u'.'
                 num_format += u'0' * props.dp
-            # A comparison TYPE_PCT can keep its suffix
-            num_format += props.suffix if props.keep_suffix else '%'
+            num_format += '%'
             xlsx_attributes.append(('num_format', num_format))
         if props.indent_level is not None and not no_indent:
             xlsx_attributes.append(
