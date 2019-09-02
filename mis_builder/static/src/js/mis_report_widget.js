@@ -18,7 +18,7 @@ odoo.define('mis_builder.widget', function (require) {
         template: "MisReportWidgetTemplate",
 
         custom_events: _.extend({}, AbstractField.prototype.custom_events, {
-            'field_changed': '_onFieldChanged',
+            'field_changed': 'on_field_changed',
         }),
         events: _.extend({}, AbstractField.prototype.events, {
             'click .mis_builder_drilldown': 'drilldown',
@@ -187,7 +187,7 @@ odoo.define('mis_builder.widget', function (require) {
             this.replace();
         },
 
-        _onFieldChanged: function (event) {
+        on_field_changed: function (event) {
             var self = this;
             if (event && event.data.changes) {
                 var changes = event.data.changes;
