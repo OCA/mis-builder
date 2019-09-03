@@ -47,6 +47,10 @@ odoo.define('mis_builder.widget', function (require) {
             self.analytic_account_id_domain = [];
             self.analytic_account_id_label = _t("Analytic Account");
             self.analytic_account_id_m2o = undefined;
+            self.analytic_tag_id = undefined;
+            self.analytic_tag_id_domain = [];
+            self.analytic_tag_id_label = _t("Analytic Tag");
+            self.analytic_tag_id_m2o = undefined;
             self.has_group_analytic_accounting = false;
             self.hide_analytic_filters = false;
             self.filter_values = {};
@@ -174,6 +178,7 @@ odoo.define('mis_builder.widget', function (require) {
                 return;
             }
             self.add_analytic_account_filter();
+            self.add_analytic_tag_filter();
         },
 
         add_analytic_account_filter: function () {
@@ -209,6 +214,41 @@ odoo.define('mis_builder.widget', function (require) {
             });
             analytic_account_id_m2o.$follow_button.toggle();
             self.analytic_account_id_m2o = analytic_account_id_m2o;
+        },
+
+        add_analytic_tag_filter: function () {
+            var self = this;
+            if (!self.has_group_analytic_accounting) {
+                return;
+            }
+            if (self.analytic_tag_id_m2o) {
+                // Prevent errors with autocomplete
+                self.analytic_tag_id_m2o.destroy();
+            }
+            var field_name = 'analytic_tag_ids';
+            var dfm_object = {};
+            dfm_object[field_name] = {
+                relation: 'account.analytic.tag',
+            };
+            self.dfm.extend_field_desc(dfm_object);
+            var analytic_tag_id_m2o = new FieldMany2One(self.dfm, {
+                attrs: {
+                    placeholder: self.analytic_tag_id_label,
+                    name: field_name,
+                    type: 'many2one',
+                    domain: self.analytic_tag_id_domain,
+                    context: {},
+                    modifiers: '{}',
+                    options: '{"no_create": true}',
+                },
+            });
+            self.init_filter_value(analytic_tag_id_m2o, field_name);
+            analytic_tag_id_m2o.prependTo(self.get_mis_builder_filter_box());
+            analytic_tag_id_m2o.$input.focusout(function () {
+                self.set_filter_value(analytic_tag_id_m2o, field_name);
+            });
+            analytic_tag_id_m2o.$follow_button.toggle();
+            self.analytic_tag_id_m2o = analytic_tag_id_m2o;
         },
 
         refresh: function () {
