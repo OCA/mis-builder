@@ -13,6 +13,7 @@ odoo.define('mis_builder.widget', function (require) {
     var session = require('web.session');
 
     var FieldMany2One = core.form_widget_registry.get('many2one');
+    var FieldMany2ManyTags = core.form_widget_registry.get('many2many_tags');
     var _t = core._t;
 
     var MisReportWidget = AbstractField.extend({
@@ -47,10 +48,10 @@ odoo.define('mis_builder.widget', function (require) {
             self.analytic_account_id_domain = [];
             self.analytic_account_id_label = _t("Analytic Account");
             self.analytic_account_id_m2o = undefined;
-            self.analytic_tag_id = undefined;
-            self.analytic_tag_id_domain = [];
-            self.analytic_tag_id_label = _t("Analytic Tag");
-            self.analytic_tag_id_m2o = undefined;
+            self.analytic_tag_ids = undefined;
+            self.analytic_tag_ids_domain = [];
+            self.analytic_tag_ids_label = _t("Analytic Tags");
+            self.analytic_tag_ids_m2m = undefined;
             self.has_group_analytic_accounting = false;
             self.hide_analytic_filters = false;
             self.filter_values = {};
@@ -221,9 +222,10 @@ odoo.define('mis_builder.widget', function (require) {
             if (!self.has_group_analytic_accounting) {
                 return;
             }
-            if (self.analytic_tag_id_m2o) {
+            if (self.analytic_tag_ids_m2m) {
                 // Prevent errors with autocomplete
-                self.analytic_tag_id_m2o.destroy();
+                self.analytic_tag_ids_m2m.destroy_content();
+                self.analytic_tag_ids_m2m.destroy();
             }
             var field_name = 'analytic_tag_ids';
             var dfm_object = {};
@@ -231,24 +233,24 @@ odoo.define('mis_builder.widget', function (require) {
                 relation: 'account.analytic.tag',
             };
             self.dfm.extend_field_desc(dfm_object);
-            var analytic_tag_id_m2o = new FieldMany2One(self.dfm, {
+            var analytic_tag_ids_m2m = new FieldMany2ManyTags(self.dfm, {
                 attrs: {
-                    placeholder: self.analytic_tag_id_label,
+                    placeholder: self.analytic_tag_ids_label,
                     name: field_name,
-                    type: 'many2one',
-                    domain: self.analytic_tag_id_domain,
+                    type: 'many2many',
+                    domain: self.analytic_tag_ids_domain,
                     context: {},
                     modifiers: '{}',
                     options: '{"no_create": true}',
+                    help: _t('This filter returns the account move lines that have all the selected tags.'),
                 },
             });
-            self.init_filter_value(analytic_tag_id_m2o, field_name);
-            analytic_tag_id_m2o.prependTo(self.get_mis_builder_filter_box());
-            analytic_tag_id_m2o.$input.focusout(function () {
-                self.set_filter_value(analytic_tag_id_m2o, field_name);
+            self.init_filter_value(analytic_tag_ids_m2m, field_name);
+            analytic_tag_ids_m2m.prependTo(self.get_mis_builder_filter_box());
+            analytic_tag_ids_m2m.on("change:value", this, function () {
+                self.set_filter_value(analytic_tag_ids_m2m, field_name);
             });
-            analytic_tag_id_m2o.$follow_button.toggle();
-            self.analytic_tag_id_m2o = analytic_tag_id_m2o;
+            self.analytic_tag_ids_m2m = analytic_tag_ids_m2m;
         },
 
         refresh: function () {
