@@ -7,6 +7,7 @@ odoo.define('mis_builder.widget', function (require) {
     var AbstractField = require('web.AbstractField');
     var field_registry = require('web.field_registry');
     var relational_fields = require('web.relational_fields');
+    var BasicModel = require('web.BasicModel');
 
     var core = require('web.core');
     var session = require('web.session');
@@ -42,10 +43,15 @@ odoo.define('mis_builder.widget', function (require) {
             self.analytic_account_id_m2o = undefined;
             self.analytic_account_id_domain = [];
             self.analytic_account_id_label = _t("Analytic Account");
+            self.analytic_tag_ids = undefined;
+            self.analytic_tag_ids_domain = [];
+            self.analytic_tag_ids_label = _t("Analytic Tags");
+            self.analytic_tag_ids_m2m = undefined;
             self.has_group_analytic_accounting = false;
             self.hide_analytic_filters = false;
             self.filter_values = {};
             self.init_filter_from_context();
+            self.record_model = new BasicModel(self.model);
         },
 
         init_filter_from_context: function() {
@@ -131,10 +137,19 @@ odoo.define('mis_builder.widget', function (require) {
             var filter = self.filter_values[attr_name];
             if (filter !== undefined && filter['value'] !== undefined) {
                 if (field_object.formatType == "many2one") {
-                    field_object.value = filter['value'][0];
-                    field_object.m2o_value = filter['value'][1];
-                } else {
-                    // TODO (m2m)
+                    field_object.value = filter['value'][0].id;
+                    field_object.m2o_value = filter['value'][0].display_name;
+                } else if (field_object.formatType == "many2many"){
+                    field_object.value.data = [];
+                    field_object.value.res_ids = [];
+                    _.each(filter.value, function(val) {
+                        field_object.value.data.push({
+                            data: val,
+                            res_id: val.id,
+                            id: val.id,
+                        });
+                        field_object.value.res_ids.push(val.id);
+                    })
                 }
             }
         },
@@ -142,52 +157,99 @@ odoo.define('mis_builder.widget', function (require) {
         init_filter: function(filter_name) {
             var self = this;
             if(self.filter_values[filter_name] === undefined) {
-                self.filter_values[filter_name] = {};
+                self.filter_values[filter_name] = {value: []};
             }
         },
 
-        set_filter_value: function(field_object, attr_name, new_val) {
+        set_m2o_value: function(field_object, attr_name, new_val) {
             var self = this;
             self.init_filter(attr_name);
-            if (field_object.formatType == "many2one") {
-                self.filter_values[attr_name]['value'] =
-                    [new_val.id, new_val.display_name] || undefined;
-            } else {
-                // TODO (m2m)
+            self.filter_values[attr_name]['value'] =
+                [{id: new_val.id, display_name: new_val.display_name}] || undefined;
+        },
+
+        set_m2m_value: function(field_object, attr_name, new_val) {
+            var self = this;
+            if (self.filter_values[attr_name] === undefined) {
+                self.init_filter(attr_name);
             }
+            self.filter_values[attr_name]['value'].push(new_val);
+        },
+
+        rm_m2m_value: function(field_object, attr_name, new_val) {
+            var self = this;
+            _.each(new_val, function(val) {
+                var found = _.findWhere(self.filter_values[attr_name]['value'], { id: val });
+                var index = self.filter_values[attr_name].value.indexOf(found);
+                if (index !== -1) self.filter_values[attr_name].value.splice(index, 1);
+            });
         },
 
         add_filters: function () {
             var self = this;
-            if (self.hide_analytic_filters) {
+            if (self.hide_analytic_filters || !self.has_group_analytic_accounting) {
                 return;
             }
-            self.add_analytic_account_filter();
+            this.record_model.makeRecord(self.model, [{
+                relation: 'account.analytic.account',
+                type: 'many2one',
+                name: 'filter_analytic_account_id',
+            }, {
+                relation: 'account.analytic.tag',
+                type: 'many2many',
+                name: 'filter_analytic_tag_ids',
+            }], {})
+            .then(function (recordID) {
+                self.handleCreateRecord = recordID;
+                var record = self.record_model.get(self.handleCreateRecord);
+
+                // Prevent errors with autocomplete
+                if (self.analytic_account_id_m2o) {
+                    self.analytic_account_id_m2o.destroy();
+                }
+                if (self.analytic_tag_ids_m2m) {
+                    self.analytic_tag_ids_m2m.destroy();
+                }
+
+                // Field creation
+                self.analytic_account_id_m2o = new relational_fields.FieldMany2One(self,
+                    'filter_analytic_account_id',
+                    record,
+                    {
+                        mode: 'edit',
+                        attrs: {
+                            can_write: false,
+                            can_create: false,
+                            placeholder: _t("Analytic Account Filter"),
+                        },
+                    });
+                self.init_filter_value(self.analytic_account_id_m2o, 'analytic_account_id');
+                self.analytic_tag_ids_m2m = new relational_fields.FormFieldMany2ManyTags(self,
+                    'filter_analytic_tag_ids',
+                    record,
+                    {
+                        mode: 'edit',
+                        attrs: {
+                            can_write: false,
+                            can_create: false,
+                            placeholder: _t("Analytic Tags Filter"),
+                        },
+                    });
+                self.init_filter_value(self.analytic_tag_ids_m2m, 'analytic_tag_ids');
+
+                // Add fields to view
+                self.analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
+                self.analytic_account_id_m2o.$external_button.hide();
+                self.analytic_tag_ids_m2m.prependTo(self.get_mis_builder_filter_box());
+                self.render_m2m();
+            });
         },
 
-        add_analytic_account_filter: function () {
-            var self = this;
-            if (!self.has_group_analytic_accounting) {
-                return;
-            }
-            if (self.analytic_account_id_m2o) {
-                // Prevent errors with autocomplete
-                self.analytic_account_id_m2o.destroy();
-            }
-            var field_name = 'analytic_account_id';
-            self.analytic_account_id_m2o = new relational_fields.FieldMany2One(self, "analytic_account_filter_id", self.record, {
-                mode: 'edit',
-                viewType: self.viewType,
-                attrs: {
-                    can_write: false,
-                    can_create: false,
-                },
-            });
-            self.init_filter_value(self.analytic_account_id_m2o, field_name);
-
-            // Add field to view
-            self.analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
-            self.analytic_account_id_m2o.$external_button.hide();
+        render_m2m: function () {
+            this.analytic_tag_ids_m2m._renderEdit();
+            this.analytic_tag_ids_m2m.many2one.can_create = false;
+            this.analytic_tag_ids_m2m.many2one.can_write = false;
+            this.analytic_tag_ids_m2m.many2one.attrs.placeholder = _t("Analytic Tags Filter");
         },
 
         refresh: function () {
@@ -198,11 +260,25 @@ odoo.define('mis_builder.widget', function (require) {
             var self = this;
             if (event && event.data.changes) {
                 var changes = event.data.changes;
-                if (changes['analytic_account_filter_id'] !== undefined) {
+                if (changes['filter_analytic_account_id'] !== undefined) {
                     var field_name = 'analytic_account_id';
-                    var new_val = changes['analytic_account_filter_id'];
-                    self.set_filter_value(self.analytic_account_id_m2o, field_name, new_val);
+                    var new_val = changes['filter_analytic_account_id'];
+                    self.set_m2o_value(self.analytic_account_id_m2o, field_name, new_val);
+                    self.init_filter_value(self.analytic_account_id_m2o, field_name);
+                    self.analytic_account_id_m2o._renderEdit();
                 }
+                if (changes['filter_analytic_tag_ids'] !== undefined) {
+                    var field_name = 'analytic_tag_ids';
+                    var new_val = changes['filter_analytic_tag_ids'];
+                    if (new_val.operation == 'ADD_M2M'){
+                        self.set_m2m_value(self.analytic_tag_ids_m2m, field_name, new_val.ids);
+                    } else if (new_val.operation == 'FORGET'){
+                        self.rm_m2m_value(self.analytic_tag_ids_m2m, field_name, new_val.ids);
+                    }
+                    self.init_filter_value(self.analytic_tag_ids_m2m, field_name);
+                    self.render_m2m();
+                }
+                event.stopPropagation();
             }
         },
 

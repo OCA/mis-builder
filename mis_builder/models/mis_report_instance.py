@@ -308,9 +308,13 @@ class MisReportInstancePeriod(models.Model):
         mis_report_filters = self.env.context.get('mis_report_filters', {})
         for filter_name, values in mis_report_filters.items():
             if values:
-                value = values.get('value')[0]
-                operator = values.get('operator', '=')
-                filters.append((filter_name, operator, value))
+                value = values.get('value')
+                if not value:
+                    continue
+                if not isinstance(value, list):
+                    value = [value]
+                for val in value:
+                    filters.append((filter_name, 'in', [val['id']]))
         return filters
 
     @api.multi
@@ -475,9 +479,8 @@ class MisReportInstance(models.Model):
     analytic_account_id = fields.Many2one(
         comodel_name='account.analytic.account', string='Analytic Account',
         oldname='account_analytic_id')
-    analytic_account_filter_id = fields.Many2one(
-        comodel_name='account.analytic.account',
-        string='Analytic Account Filter')
+    analytic_tag_ids = fields.Many2many(
+        comodel_name='account.analytic.tag', string='Analytic Tags')
     hide_analytic_filters = fields.Boolean(default=True)
 
     @api.onchange('company_id', 'multi_company')
@@ -501,15 +504,16 @@ class MisReportInstance(models.Model):
     @api.model
     def get_filter_descriptions_from_context(self):
         filters = self.env.context.get('mis_report_filters', {})
-        analytic_account = filters.get('analytic_account_id', {})
-        analytic_account_id = analytic_account.get('value') and \
-            analytic_account.get('value')[0]
+        analytic_account = filters.get('analytic_account_id', {}).get('value')
         filter_descriptions = []
-        if analytic_account_id:
-            analytic_account = self.env['account.analytic.account'].browse(
-                analytic_account_id)
+        if analytic_account:
             filter_descriptions.append(
-                _("Analytic Account: %s") % analytic_account.display_name)
+                _("Analytic Account: %s") % analytic_account['display_name'])
+        analytic_tag_value = filters.get('analytic_tag_ids', {}).get('value')
+        if analytic_tag_value:
+            filter_descriptions.append(
+                _("Analytic Tags: %s") %
+                ', '.join([rec['display_name'] for rec in analytic_tag_value]))
         return filter_descriptions
 
     @api.multi
@@ -595,8 +599,16 @@ class MisReportInstance(models.Model):
         if self.analytic_account_id:
             context['mis_report_filters']['analytic_account_id'] = {
                 'value': [
-                    self.analytic_account_id.id,
-                    self.analytic_account_id.display_name
+                    {'id': self.analytic_account_id.id,
+                     'display_name': self.analytic_account_id.display_name
+                     }
+                ]
+            }
+        if self.analytic_tag_ids:
+            context['mis_report_filters']['analytic_tag_ids'] = {
+                'value': [
+                    {'id': rec.id, 'display_name': rec.name}
+                    for rec in self.analytic_tag_ids
                 ]
             }
 
