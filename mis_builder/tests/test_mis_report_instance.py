@@ -393,13 +393,16 @@ class TestMisReportInstance(common.HttpCase):
         self.report_instance._onchange_company()
         self.assertFalse(self.report_instance.company_ids)
 
-    def test_mis_report_analytic_filters(self):
+    def test_mis_report_analytic_account_filters(self):
         # Check that matrix has no values when using a filter with a non
         # existing account
         matrix = self.report_instance.with_context(
             mis_report_filters={
                 'analytic_account_id': {
-                    'value': 999,
+                    'value': [{
+                        'id': 999,
+                        'display_name': 'Fake analytic account',
+                    }]
                 },
             }
         )._compute_matrix()
@@ -412,6 +415,50 @@ class TestMisReportInstance(common.HttpCase):
                 self.assertEquals(vals, [AccountingNone, AccountingNone, None])
             elif row.kpi.name == 'k4':
                 self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
+
+    def test_mis_report_analytic_tag_filters(self):
+        # Check that matrix has no values when using a filter with a non
+        # existing account
+        matrix = self.report_instance.with_context(
+            mis_report_filters={
+                'analytic_tag_ids': {
+                    'value': [{
+                        'id': 1234,
+                        'display_name': 'Fake analytic tag',
+                    }]
+                },
+            }
+        )._compute_matrix()
+        for row in matrix.iter_rows():
+            vals = [c.val for c in row.iter_cells()]
+            if row.kpi.name == 'k1':
+                self.assertEquals(
+                    vals, [AccountingNone, AccountingNone, AccountingNone])
+            elif row.kpi.name == 'k2':
+                self.assertEquals(vals, [AccountingNone, AccountingNone, None])
+            elif row.kpi.name == 'k4':
+                self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
+
+    def test_mis_report_compute_context(self):
+        account_analytic_id = self.env['account.analytic.account'].create({
+            'name': 'New Account',
+            'display_name': 'New Account',
+        })
+        account_tag_id = self.env['account.analytic.tag'].create({
+            'name': 'New Tag',
+        })
+        self.report_instance.write({
+            'analytic_account_id': account_analytic_id.id,
+            'analytic_tag_ids': [(6, False, account_tag_id.ids)],
+        })
+        context = self.report_instance._context_with_filters()
+        filter_context = context.get('mis_report_filters')
+        self.assertEquals(filter_context.get('analytic_account_id')['value'],
+                          [{'id': account_analytic_id.id,
+                           'display_name': account_analytic_id.name}])
+        self.assertEquals(filter_context.get('analytic_tag_ids')['value'],
+                          [{'id': account_tag_id.id,
+                           'display_name': account_tag_id.name}])
 
     def test_raise_when_unknown_kpi_value_type(self):
         with self.assertRaises(SubKPIUnknownTypeError):
