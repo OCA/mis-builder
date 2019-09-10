@@ -11,7 +11,7 @@ from odoo import api, fields, models, tools
 class MisCommittedPurchase(models.Model):
 
     _name = 'mis.committed.purchase'
-    _description = 'MIS Committed Purchase'
+    _description = 'MIS Commitment'
     _auto = False
 
     line_type = fields.Char()
