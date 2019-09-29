@@ -6,8 +6,6 @@ addons:
   apt:
    packages:
       - expect-dev  # provides unbuffer utility
-      - python-lxml # because pip installation is slow
-      - pdftk # required in reporting-engine repo
 
 language: python
 
@@ -22,9 +20,6 @@ env:
   - LINT_CHECK="1"
   - TESTS="1" ODOO_REPO="odoo/odoo" MAKEPOT="1"
   - TESTS="1" ODOO_REPO="OCA/OCB"
-
-virtualenv:
-  system_site_packages: true
 
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
