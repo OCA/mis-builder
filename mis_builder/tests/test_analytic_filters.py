@@ -50,3 +50,8 @@ class TestAnalyticFilters(TransactionCase):
         )
         # filter name without value => no domain
         self._check_get_filter_domain_from_context({"some_field": None}, [])
+        # "is not set" filter must work
+        self._check_get_filter_domain_from_context(
+            {"analytic_account_id": {"value": False}},
+            [("analytic_account_id", "=", False)],
+        )
