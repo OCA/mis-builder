@@ -18,7 +18,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:520
-#: code:addons/mis_builder/models/mis_report_instance.py:541
+#: code:addons/mis_builder/models/mis_report_instance.py:540
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (cópia)"
@@ -156,7 +156,7 @@ msgstr ""
 "date, account_id e company_id."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:358
+#: code:addons/mis_builder/models/mis_report_instance.py:357
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Um filtro de data é obrigatório para esta fonte na coluna %s."
@@ -246,7 +246,7 @@ msgid "Analytic Account"
 msgstr "Conta Analítica"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:510
+#: code:addons/mis_builder/models/mis_report_instance.py:509
 #, python-format
 msgid "Analytic Account: %s"
 msgstr "Conta Analítica: %s"
@@ -326,14 +326,14 @@ msgid "Column"
 msgstr "Coluna"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:378
+#: code:addons/mis_builder/models/mis_report_instance.py:377
 #, python-format
 msgid "Column %s cannot be compared to itrec."
 msgstr "Coluna %s não pode ser comparada a itrec."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:666
-#: code:addons/mis_builder/models/mis_report_instance.py:687
+#: code:addons/mis_builder/models/mis_report_instance.py:665
+#: code:addons/mis_builder/models/mis_report_instance.py:686
 #, python-format
 msgid "Column %s with actuals source must have from/to dates."
 msgstr "A coluna% s com a fonte real deve ter dados de/para."
@@ -344,7 +344,7 @@ msgid "Columns"
 msgstr "Colunas"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:385
+#: code:addons/mis_builder/models/mis_report_instance.py:384
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr "As colunas para comparar devem pertencer ao mesmo relatório em %s"
@@ -1075,7 +1075,7 @@ msgid "No date filter"
 msgstr "Nenhum filtro de data"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:363
+#: code:addons/mis_builder/models/mis_report_instance.py:362
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr "Nenhum filtro de data é permitido para essa fonte na coluna %s."
@@ -1156,7 +1156,7 @@ msgid "Pivot date"
 msgstr "Data do Pivot"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:373
+#: code:addons/mis_builder/models/mis_report_instance.py:372
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Por favor forneça ambas colunas para comparar em %s."
@@ -1525,7 +1525,7 @@ msgid "You cannot sum period %s with itself."
 msgstr "Você não pode somar o período %s com ele mesmo."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:757
+#: code:addons/mis_builder/models/mis_report_instance.py:756
 #, python-format
 msgid "from %s to %s"
 msgstr "de %s para %s"
