@@ -222,6 +222,7 @@ Check the module `mis_builder_demo <https://github.com/OCA/mis-builder/tree/10.0
 Example of query: we want a report showing the Total amount (HVAT) of all sales order confirmed during the current month and the previous month.
 
 Create a query:
+
 * Name: select a name (it must be a python expression, so no space in the name)
 * Model: look for the model on which you want to do the report. For example : Sale Order
 * Field to fetch: select in the list the field from the Model that will be used in the report. For example: Untaxed Amount
@@ -236,10 +237,12 @@ Create a query:
 In the KPI expression, you can now use the fields of the queries.
 For example:
 sum([s.amount_untaxed for s in sales_order_amount])
+
 .. image:: _static/images/query_2.png
    :width: 1800
 
 In a reporting instance, the result is as follows:
+
 .. image:: _static/images/query_3.png
    :width: 1800
 
@@ -263,10 +266,13 @@ Analytic accounts is often used in budget and actual versions to follow-up the c
 If you need to activate the management of analytic accounts, go to Accounting module ‣ Configuration ‣ Settings and enable the Budget management feature.
 
 In each MIS report, you can untick the box to get the analytic filters. The selection possible is one only.
-.. image:: _static/images/analytic.png
-   :width: 1800
+
+.. image:: _static/images/analytic.jpg
+   :width: 300
+
 The other possibility is to add the analytic filter in the MIS report without any selection possible by the user of the report.
-.. image:: _static/images/analytic2.png
+
+.. image:: _static/images/analytic1.jpg
    :width: 1800
 
 Data sources for columns
