@@ -60,7 +60,7 @@ How to create a template
 #. Comparison Method (Percentage, difference, none)
 #. Style: as defined in the Reports Style
 #. Style expression: An expression that returns a style depending on the KPI value.
-   Such style is applied on top of the row style.
+   Such style is applied on top of the row style. Example of syntax: "Style_to_be_used" if name>0 else None
 #. Budgetable (if MIS_Budget module is installed): indicates that a budget can be
    provided for the KPI (not needed for calculations)
 #. Multi: If True allows to define KPI with multiple values (eg: Initial, Debit,
@@ -218,6 +218,30 @@ TODO: content to be added
 Reporting on non-accounting data (queries)
 ------------------------------------------
 Check the module `mis_builder_demo <https://github.com/OCA/mis-builder/tree/10.0/mis_builder_demo>`_ to see how to create specific series of data for Committed purchases not yet invoiced.
+
+Example of query: we want a report showing the Total amount (HVAT) of all sales order confirmed during the current month and the previous month.
+
+Create a query:
+* Name: select a name (it must be a python expression, so no space in the name)
+* Model: look for the model on which you want to do the report. For example : Sale Order
+* Field to fetch: select in the list the field from the Model that will be used in the report. For example: Untaxed Amount
+* Fetched fields name: this will show the name of the field to use in the KPI expression later on. For example: amount_untaxed
+* Aggregate: choose between nothing, Sum, Max, Average or Min. Use either this aggregate field or you will need to add some aggregate expression in the KPI, because the query will give a list, not a number.
+* Date field: choose a date field available on the Model. For example: confirmation date of the sale order.
+* Domain: this is optional. Use a domain (as definded in classic Odoo). For example: [("partner_id.country_id.code","=","US")]
+
+.. image:: _static/images/query_1.png
+   :width: 1800
+
+In the KPI expression, you can now use the fields of the queries.
+For example:
+sum([s.amount_untaxed for s in sales_order_amount])
+.. image:: _static/images/query_2.png
+   :width: 1800
+
+In a reporting instance, the result is as follows:
+.. image:: _static/images/query_3.png
+   :width: 1800
 
 Styles
 ------
