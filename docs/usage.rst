@@ -234,7 +234,16 @@ The styles are used later in the Template Report definition.
 
 Analytic Filters
 ----------------
-TODO: content to be added
+Analytic accounts is often used in budget and actual versions to follow-up the costs and expenses of a project.
+
+If you need to activate the management of analytic accounts, go to Accounting module ‣ Configuration ‣ Settings and enable the Budget management feature.
+
+In each MIS report, you can untick the box to get the analytic filters. The selection possible is one only.
+.. image:: _static/images/analytic.png
+   :width: 1800
+The other possibility is to add the analytic filter in the MIS report without any selection possible by the user of the report.
+.. image:: _static/images/analytic2.png
+   :width: 1800
 
 Data sources for columns
 ------------------------
@@ -371,3 +380,14 @@ Spain P&L
 #########
 .. image:: _static/images/24.png
    :width: 1800
+
+French Balance Sheet
+#####################
+.. image:: _static/images/25.png
+   :width: 1800
+   
+French P&L
+#########
+.. image:: _static/images/26.png
+   :width: 1800 
+
