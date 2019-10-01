@@ -307,17 +307,20 @@ class MisReportInstancePeriod(models.Model):
     def _get_filter_domain_from_context(self):
         filters = []
         mis_report_filters = self.env.context.get('mis_report_filters', {})
-        for filter_name, values in mis_report_filters.items():
-            if values:
-                value = values.get('value')
-                if not value:
-                    continue
-                if not isinstance(value, list):
-                    value = [value]
-                many_ids = self.report_instance_id.resolve_2many_commands(
-                    filter_name, value, ['id'])
-                for m in many_ids:
-                    filters.append((filter_name, 'in', [m['id']]))
+        for filter_name, domain in mis_report_filters.items():
+            if domain:
+                value = domain.get('value')
+                operator = domain.get('operator', '=')
+                # Operator = 'all' when coming from JS widget
+                if operator == 'all':
+                    if not isinstance(value, list):
+                        value = [value]
+                    many_ids = self.report_instance_id.resolve_2many_commands(
+                        filter_name, value, ['id'])
+                    for m in many_ids:
+                        filters.append((filter_name, 'in', [m['id']]))
+                else:
+                    filters.append((filter_name, operator, value))
         return filters
 
     @api.multi
@@ -607,10 +610,12 @@ class MisReportInstance(models.Model):
         if self.analytic_account_id:
             context['mis_report_filters']['analytic_account_id'] = {
                 'value': self.analytic_account_id.id,
+                'operator': '=',
             }
         if self.analytic_tag_ids:
             context['mis_report_filters']['analytic_tag_ids'] = {
                 'value': self.analytic_tag_ids.ids,
+                'operator': 'all',
             }
 
     @api.multi
