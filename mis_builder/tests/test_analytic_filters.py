@@ -13,7 +13,10 @@ class TestAnalyticFilters(TransactionCase):
         assert mri._context_with_filters().get("mis_report_filters") == {}
         mri.analytic_account_id = aaa
         assert mri._context_with_filters().get("mis_report_filters") == {
-            "analytic_account_id": {"value": aaa.id}
+            "analytic_account_id": {'value': [{'id': aaa.id,
+                                              'display_name': aaa.display_name
+                                               }],
+                                    'operator': 'all'}
         }
         # test _context_with_filters does nothing is a filter is already
         # in the context
@@ -54,4 +57,20 @@ class TestAnalyticFilters(TransactionCase):
         self._check_get_filter_domain_from_context(
             {"analytic_account_id": {"value": False}},
             [("analytic_account_id", "=", False)],
+        )
+        # Filter from analytic account filter widget
+        self._check_get_filter_domain_from_context(
+            {"analytic_account_id": {"value": {'id': 1,
+                                               'display_name': 'test'},
+                                     "operator": "all"}},
+            [('analytic_account_id', 'in', [1])],
+        )
+        # Filter from analytic tags filter widget
+        self._check_get_filter_domain_from_context(
+            {"analytic_tag_ids": {"value": [{'id': 1,
+                                             'display_name': 'test1'},
+                                            {'id': 2,
+                                             'display_name': 'test2'}],
+                                  "operator": "all"}},
+            [('analytic_tag_ids', 'in', [1]), ('analytic_tag_ids', 'in', [2])],
         )

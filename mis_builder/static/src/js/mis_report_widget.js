@@ -166,6 +166,7 @@ odoo.define('mis_builder.widget', function (require) {
             self.init_filter(attr_name);
             self.filter_values[attr_name]['value'] =
                 [{id: new_val.id, display_name: new_val.display_name}] || undefined;
+            self.filter_values[attr_name]['operator'] = 'all';
         },
 
         set_m2m_value: function(field_object, attr_name, new_val) {
@@ -174,6 +175,7 @@ odoo.define('mis_builder.widget', function (require) {
                 self.init_filter(attr_name);
             }
             self.filter_values[attr_name]['value'].push(new_val);
+            self.filter_values[attr_name]['operator'] = 'all';
         },
 
         rm_m2m_value: function(field_object, attr_name, new_val) {
@@ -238,9 +240,9 @@ odoo.define('mis_builder.widget', function (require) {
                 self.init_filter_value(self.analytic_tag_ids_m2m, 'analytic_tag_ids');
 
                 // Add fields to view
-                self.analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
+                self.analytic_account_id_m2o.prependTo(self.$("#analytic_account"));
                 self.analytic_account_id_m2o.$external_button.hide();
-                self.analytic_tag_ids_m2m.prependTo(self.get_mis_builder_filter_box());
+                self.analytic_tag_ids_m2m.prependTo(self.$("#analytic_tags"));
                 self.render_m2m();
             });
         },

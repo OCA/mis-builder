@@ -306,15 +306,17 @@ class MisReportInstancePeriod(models.Model):
     def _get_filter_domain_from_context(self):
         filters = []
         mis_report_filters = self.env.context.get('mis_report_filters', {})
-        for filter_name, values in mis_report_filters.items():
-            if values:
-                value = values.get('value')
-                if not value:
-                    continue
-                if not isinstance(value, list):
-                    value = [value]
-                for val in value:
-                    filters.append((filter_name, 'in', [val['id']]))
+        for filter_name, domain in mis_report_filters.items():
+            if domain:
+                value = domain.get('value')
+                operator = domain.get('operator', '=')
+                if operator == 'all':
+                    if not isinstance(value, list):
+                        value = [value]
+                    for val in value:
+                        filters.append((filter_name, 'in', [val['id']]))
+                else:
+                    filters.append((filter_name, operator, value))
         return filters
 
     @api.multi
@@ -602,14 +604,16 @@ class MisReportInstance(models.Model):
                     {'id': self.analytic_account_id.id,
                      'display_name': self.analytic_account_id.display_name
                      }
-                ]
+                ],
+                'operator': 'all',
             }
         if self.analytic_tag_ids:
             context['mis_report_filters']['analytic_tag_ids'] = {
                 'value': [
                     {'id': rec.id, 'display_name': rec.name}
                     for rec in self.analytic_tag_ids
-                ]
+                ],
+                'operator': 'all',
             }
 
     @api.multi
