@@ -6,10 +6,10 @@
 # Frank Schellenberg <opensource@schellenberg.nl>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-06 13:51+0000\n"
-"PO-Revision-Date: 2018-01-06 13:51+0000\n"
+"POT-Creation-Date: 2018-01-13 15:37+0000\n"
+"PO-Revision-Date: 2018-01-13 15:37+0000\n"
 "Last-Translator: Frank Schellenberg <opensource@schellenberg.nl>, 2018\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "Language: nl\n"
@@ -24,12 +24,12 @@ msgid "3 M Budget"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_account_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__account_id
 msgid "Account"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_analytic_account_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_account_id
 msgid "Analytic Account"
 msgstr ""
 
@@ -44,22 +44,22 @@ msgid "Committed"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_company_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__company_id
 msgid "Company"
 msgstr "Bedrijf"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_credit
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__credit
 msgid "Credit"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_date
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__date
 msgid "Date"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_debit
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__debit
 msgid "Debit"
 msgstr ""
 
@@ -74,7 +74,7 @@ msgid "Demo Expenses vs Budget"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_display_name
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__display_name
 msgid "Display Name"
 msgstr "Weergavenaam"
 
@@ -89,18 +89,18 @@ msgid "Expenses"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_id
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase___last_update
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase____last_update
 msgid "Last Modified on"
 msgstr "Voor het laatst aangepast op"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_line_type
-msgid "Line type"
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__line_type
+msgid "Line Type"
 msgstr ""
 
 #. module: mis_builder_demo
@@ -119,7 +119,7 @@ msgid "MIS Committed Purchase"
 msgstr ""
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_name
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__name
 msgid "Name"
 msgstr "Naam"
 

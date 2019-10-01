@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
@@ -651,10 +650,13 @@ class MisReportInstance(models.Model):
             self._context_with_filters(),
             landscape=self.landscape_pdf,
         )
-        return self.env['report'].with_context(context).get_action(
-            self,
-            'mis_builder.report_mis_report_instance',
-            data=dict(dummy=True),  # required to propagate context
+        return (
+            self.env.ref('mis_builder.qweb_pdf_export')
+                .with_context(context)
+                .report_action(
+                    self,
+                    data=dict(dummy=True),  # required to propagate context
+                )
         )
 
     @api.multi
@@ -663,9 +665,10 @@ class MisReportInstance(models.Model):
         context = dict(
             self._context_with_filters(),
         )
-        return self.env['report'].with_context(context).get_action(
-            self,
-            'mis.report.instance.xlsx',
+        return (
+            self.env.ref('mis_builder.xls_export')
+                .with_context(context)
+                .report_action(self)
         )
 
     @api.multi

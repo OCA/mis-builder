@@ -1,4 +1,4 @@
-10.0.3.4.0 (2019-07-09)
+12.0.3.4.0 (2019-07-09)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 **Features**
@@ -19,10 +19,14 @@
 - Fix rendering of percentage types in Excel export. (`#192 <https://github.com/oca/mis-builder/issues/192>`_)
 
 
-10.0.3.3.0 (2018-11-16)
+12.0.3.3.0 (2019-01-26)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 **Features**
+
+*Dynamic analytic filters in report preview are not yet available in 11,
+this requires an update to the JS widget that proved difficult to implement
+so far. Help welcome.*
 
 - Analytic account filters. On a report, an analytic
   account can be selected for filtering. The filter will
@@ -52,14 +56,15 @@
 **Bugs**
 
 - In the style form, hide the "Hide always" checkbox when "Hide always inherit"
-  is checked, as for all other syle elements. (`#121 <https://github.com/OCA/mis-builder/pull/121>`_)
+  is checked, as for all other syle elements. (`#121 <https://github.com/OCA/mis-builder/pull/121>_`)
 
 **Upgrading from 3.2 (breaking changes)**
 
 If you use ``Actuals (alternative)`` data source in combination with analytic
 filters, the underlying model must now have an ``analytic_account_id`` field.
 
-10.0.3.2.2 (2018-06-30)
+
+11.0.3.2.2 (2018-06-30)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Fix bug in company_default_get call returning
@@ -70,7 +75,7 @@ filters, the underlying model must now have an ``analytic_account_id`` field.
   need to be displayed).
   (`#46 <https://github.com/OCA/mis-builder/issues/46>`_)
 
-10.0.3.2.1 (2018-05-29)
+11.0.3.2.1 (2018-05-29)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [FIX] Missing comparison operator for AccountingNone
@@ -90,6 +95,12 @@ filters, the underlying model must now have an ``analytic_account_id`` field.
   and negative balances respectively (ie ignoring accounts with negative,
   resp positive balances)
   (`#86 <https://github.com/OCA/mis-builder/issues/86>`_)
+
+11.0.3.1.2 (2018-02-04)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Migration to Odoo 11. No new feature.
+(`#67 <https://github.com/OCA/mis-builder/pull/67>`_)
 
 10.0.3.1.1 (2017-11-14)
 ~~~~~~~~~~~~~~~~~~~~~~~

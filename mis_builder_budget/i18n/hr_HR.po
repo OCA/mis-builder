@@ -1,44 +1,48 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mis_builder_budget
+# * mis_builder_budget
 #
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-10-06 12:25+0000\n"
-"Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
-"Language-Team: none\n"
-"Language: ca\n"
+"POT-Creation-Date: 2018-01-13 15:37+0000\n"
+"PO-Revision-Date: 2018-01-13 15:37+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
+"Language-Team: Croatian (Croatia) (https://www.transifex.com/oca/teams/23907/"
+"hr_HR/)\n"
+"Language: hr_HR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.1.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget.py:69
 #, python-format
 msgid "%s (copy)"
-msgstr "%s (còpia)"
+msgstr ""
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:96
 #, python-format
 msgid "%s is not within budget %s date range."
-msgstr "%s no és dins del rang de dates del pressupost %s."
+msgstr ""
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:103
 #, python-format
 msgid "%s overlaps %s in budget %s"
-msgstr "%s superposa %s en el pressupost %s"
+msgstr ""
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:90
 #, python-format
 msgid "%s start date must not be after end date"
-msgstr "La data d'inici de %s no pot ser posterior a la data de finalització"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_needaction
@@ -73,12 +77,12 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__analytic_tag_ids
 msgid "Analytic Tags"
-msgstr "Etiquetes analítiques"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__analytic_account_id
 msgid "Analytic account"
-msgstr "Compte analític"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_attachment_count
@@ -89,44 +93,42 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__budget_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__source_mis_budget_id
 msgid "Budget"
-msgstr "Pressupost"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__budget_date_from
-#, fuzzy
 msgid "Budget Date From"
-msgstr "Elements de pressupost"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__budget_date_to
-#, fuzzy
 msgid "Budget Date To"
-msgstr "Elements de pressupost"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Budget items"
-msgstr "Elements de pressupost"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi__budgetable
 msgid "Budgetable"
-msgstr "Pressupostable"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Otkaži"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Cancelled"
-msgstr "Cancel·lat"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__company_id
 msgid "Company"
-msgstr "Companyia"
+msgstr "Tvrtka"
 
 #. module: mis_builder_budget
 #: selection:mis.report.instance.period,source:0
@@ -136,46 +138,46 @@ msgstr ""
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Confirm"
-msgstr "Confirmar"
+msgstr ""
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Confirmed"
-msgstr "Confirmat"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__create_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__create_uid
 msgid "Created by"
-msgstr "Creat per"
+msgstr "Kreirao"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__create_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__create_date
 msgid "Created on"
-msgstr "Creat el"
+msgstr "Kreirano"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__date_range_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__date_range_id
 msgid "Date range"
-msgstr "Rang de data"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__description
 msgid "Description"
-msgstr "Descripció"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__display_name
 msgid "Display Name"
-msgstr "Nom mostrat"
+msgstr "Naziv "
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Draft"
-msgstr "Esborrany"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_follower_ids
@@ -196,7 +198,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__date_from
 msgid "From"
-msgstr "Des del"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__id
@@ -227,12 +229,12 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__item_ids
 msgid "Item"
-msgstr "Objecte"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__kpi_expression_id
 msgid "KPI"
-msgstr "KPI"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__seq1
@@ -243,59 +245,56 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item____last_update
 msgid "Last Modified on"
-msgstr "Última modificació el"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__write_uid
 msgid "Last Updated by"
-msgstr "Última actualització per"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__write_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__write_date
 msgid "Last Updated on"
-msgstr "Última actualització el"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
 #: selection:mis.report.instance.period,source:0
 msgid "MIS Budget"
-msgstr "Pressupost MIS"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
 msgid "MIS Budget Item"
-msgstr "Objecte de pressupost MIS"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
 msgid "MIS Budget Items"
-msgstr "Objectes de pressupostos MIS"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
 msgid "MIS Budgets"
-msgstr "Pressupostos MIS"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance
-#, fuzzy
 msgid "MIS Report Instance"
-msgstr "Plantilla de pressupost MIS"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
-#, fuzzy
 msgid "MIS Report Instance Period"
-msgstr "mis.report.instance.period"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_kpi
-#, fuzzy
 msgid "MIS Report KPI"
-msgstr "Plantilla de pressupost MIS"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_kpi_expression
@@ -306,7 +305,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__report_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__report_id
 msgid "MIS Report Template"
-msgstr "Plantilla de pressupost MIS"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_main_attachment_id
@@ -327,7 +326,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__name
 msgid "Name"
-msgstr "Nom"
+msgstr "Naziv"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_needaction_counter
@@ -357,7 +356,7 @@ msgstr ""
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Set draft"
-msgstr "Canviar a esborrany"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__source
@@ -367,7 +366,7 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__state
 msgid "State"
-msgstr "Estat"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__seq2
@@ -383,7 +382,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__date_to
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__date_to
 msgid "To"
-msgstr "a"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_unread
@@ -404,12 +403,3 @@ msgstr ""
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__website_message_ids
 msgid "Website communication history"
 msgstr ""
-
-#~ msgid "mis.report.instance"
-#~ msgstr "mis.report.instance"
-
-#~ msgid "mis.report.kpi"
-#~ msgstr "mis.report.kpi"
-
-#~ msgid "mis.report.kpi.expression"
-#~ msgstr "mis.report.kpi.expression"

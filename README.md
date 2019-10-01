@@ -1,15 +1,17 @@
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/10.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
-[![Build Status](https://travis-ci.org/OCA/mis-builder.svg?branch=10.0)](https://travis-ci.org/OCA/mis-builder)
-[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/10.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
-[![docs](https://media.readthedocs.org/static/projects/badges/passing.svg)](http://oca-mis-builder.readthedocs.io/en/10.0/)
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/12.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
+[![Build Status](https://travis-ci.org/OCA/mis-builder.svg?branch=12.0)](https://travis-ci.org/OCA/mis-builder)
+[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/12.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
+[![docs](https://media.readthedocs.org/static/projects/badges/passing.svg)](http://oca-mis-builder.readthedocs.io/en/12.0/)
 
 # MIS Builder
 
 Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
 
-**This is the 10.0 branch, where we develop new features, which are then ported
-to 9.0 and 11.0.**
+**This is the 12.0 branch. Please note the development of new features occurs mainly on
+the 10.0 branch, to be forward-ported to 12.0. Please submit pull requests to the 10.0
+branch in priority, unless they are 12.0 specific bugs, or they rely on
+Odoo features that are not present in 10.0.**
 
 This project implements a class of reports where KPI (Key Performance Indicators)
 are displayed in rows, and time periods in columns. It focuses on very fast reporting
@@ -45,15 +47,15 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[mis_builder](mis_builder/) | 10.0.3.4.0 | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 10.0.3.3.0 | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 10.0.3.0.0 | Demo addon for MIS Builder
+[mis_builder](mis_builder/) | 12.0.3.4.0 | Build 'Management Information System' Reports and Dashboards
+[mis_builder_budget](mis_builder_budget/) | 12.0.3.3.0 | Create budgets for MIS reports
+[mis_builder_demo](mis_builder_demo/) | 12.0.3.0.1 | Demo addon for MIS Builder
 
 [//]: # (end addons)
 
 Translation Status
 ------------------
-[![Translation status](https://translation.odoo-community.org/widgets/mis-builder-10-0/-/multi-auto.svg)](https://translation.odoo-community.org/engage/mis-builder-10-0/?utm_source=widget)
+[![Translation status](https://translation.odoo-community.org/widgets/mis-builder-11-0/-/multi-auto.svg)](https://translation.odoo-community.org/engage/mis-builder-11-0/?utm_source=widget)
 
 ----
 

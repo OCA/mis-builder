@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 {
     'name': 'MIS Builder',
-    'version': '10.0.3.4.0',
+    'version': '12.0.3.4.0',
     'category': 'Reporting',
     'summary': """
         Build 'Management Information System' Reports and Dashboards
@@ -16,7 +15,7 @@
         'account',
         'board',
         'report_xlsx',  # OCA/reporting-engine
-        'date_range',  # OCA/server-tools
+        'date_range',  # OCA/server-ux
         'web_widget_color',  # OCA/web
     ],
     'data': [

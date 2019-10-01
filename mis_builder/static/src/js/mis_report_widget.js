@@ -2,7 +2,7 @@
    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). */
 
 odoo.define('mis_builder.widget', function (require) {
-    "use strict";
+"use strict";
 
     var FormCommon = require('web.form_common');
     var Model = require('web.DataModel');
@@ -15,6 +15,8 @@ odoo.define('mis_builder.widget', function (require) {
     var FieldMany2One = core.form_widget_registry.get('many2one');
     var FieldMany2ManyTags = core.form_widget_registry.get('many2many_tags');
     var _t = core._t;
+    var AbstractField = require('web.AbstractField');
+    var field_registry = require('web.field_registry');
 
     var MisReportWidget = AbstractField.extend({
 
@@ -24,9 +26,6 @@ odoo.define('mis_builder.widget', function (require) {
          * - mis_report_data: the result of mis.report.instance.compute()
          * - show_settings: a flag that controls the visibility of the Settings
          *   button
-         * - has_group_analytic_accounting
-         * - hide_analytic_filters: a flag that controls the visibility of the
-         *   analytic filters box
          */
 
         template: "MisReportWidgetTemplate",
@@ -69,10 +68,8 @@ odoo.define('mis_builder.widget', function (require) {
          * bound.
          */
         _instance_id: function () {
-            var self = this;
-            var value = self.get('value');
-            if (value) {
-                return value;
+            if (this.value) {
+                return this.value;
             }
 
             /*
@@ -81,7 +78,7 @@ odoo.define('mis_builder.widget', function (require) {
              * of Odoo dashboards that are not designed to contain forms but
              * rather tree views or charts.
              */
-            var context = self.get_context();
+            var context = this.getParent().state.context;
             if (context['active_model'] === 'mis.report.instance') {
                 return context['active_id'];
             }
@@ -93,19 +90,23 @@ odoo.define('mis_builder.widget', function (require) {
          */
         willStart: function () {
             var self = this;
-            var context = self.get_context();
+            var context = self.getParent().state.context;
 
-            var def1 = self.MisReportInstance.call(
-                'compute',
-                [self._instance_id()],
-                {'context': context}
-            ).then(function (result) {
+            var def1 = self._rpc({
+                model: 'mis.report.instance',
+                method: 'compute',
+                args: [self._instance_id()],
+                context: context,
+            }).then(function (result) {
                 self.mis_report_data = result;
             });
 
-            var def2 = session.user_has_group(
-                'account.group_account_user'
-            ).then(function (result) {
+            var def2 = self._rpc({
+                model: 'res.users',
+                method: 'has_group',
+                args: ['account.group_account_user'],
+                context: context,
+            }).then(function (result) {
                 self.show_settings = result;
             });
 
@@ -258,72 +259,61 @@ odoo.define('mis_builder.widget', function (require) {
             this.replace();
         },
 
-        get_context: function () {
-            var self = this;
-            var context = new data.CompoundContext(
-                self.view.dataset.get_context(), {
-                    mis_report_filters: self.filter_values,
-                }
-            );
-            return context;
-        },
-
         print_pdf: function () {
             var self = this;
-            var context = self.get_context();
-            self.MisReportInstance.call(
-                'print_pdf',
-                [self._instance_id()],
-                {'context': context}
-            ).then(function (result) {
+            var context = self.getParent().state.context;
+            this._rpc({
+                model: 'mis.report.instance',
+                method: 'print_pdf',
+                args: [this._instance_id()],
+                context: context,
+            }).then(function (result) {
                 self.do_action(result);
             });
         },
 
         export_xls: function () {
             var self = this;
-            var context = self.get_context();
-            self.MisReportInstance.call(
-                'export_xls',
-                [self._instance_id()],
-                {'context': context}
-            ).then(function (result) {
+            var context = self.getParent().state.context;
+            this._rpc({
+                model: 'mis.report.instance',
+                method: 'export_xls',
+                args: [this._instance_id()],
+                context: context,
+            }).then(function (result) {
                 self.do_action(result);
             });
         },
 
         display_settings: function () {
             var self = this;
-            var context = self.get_context();
-            self.MisReportInstance.call(
-                'display_settings',
-                [self._instance_id()],
-                {'context': context}
-            ).then(function (result) {
+            var context = self.getParent().state.context;
+            this._rpc({
+                model: 'mis.report.instance',
+                method: 'display_settings',
+                args: [this._instance_id()],
+                context: context,
+            }).then(function (result) {
                 self.do_action(result);
             });
         },
 
         drilldown: function (event) {
             var self = this;
-            var context = self.get_context();
+            var context = self.getParent().state.context;
             var drilldown = $(event.target).data("drilldown");
-            self.MisReportInstance.call(
-                'drilldown',
-                [self._instance_id(), drilldown],
-                {'context': context}
-            ).then(function (result) {
+            this._rpc({
+                model: 'mis.report.instance',
+                method: 'drilldown',
+                args: [this._instance_id(), drilldown],
+                context: context,
+            }).then(function (result) {
                 self.do_action(result);
             });
         },
-
-        get_mis_builder_filter_box: function () {
-            var self = this;
-            return self.$(".oe_mis_builder_analytic_filter_box");
-        },
     });
 
-    core.form_widget_registry.add('mis_report_widget', MisReportWidget);
+    field_registry.add("mis_report_widget", MisReportWidget);
 
     return MisReportWidget;
 

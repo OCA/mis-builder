@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2014-2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
@@ -6,8 +5,7 @@ from collections import defaultdict
 import logging
 import numbers
 
-from odoo.report import report_sxw
-from odoo import _, fields
+from odoo import models, fields, _
 from datetime import datetime
 
 from ..models.accounting_none import AccountingNone
@@ -16,15 +14,6 @@ from ..models.mis_report_style import TYPE_STR
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from odoo.addons.report_xlsx.report.report_xlsx import ReportXlsx
-except ImportError:
-    _logger.debug("report_xlsx not installed, Excel export non functional")
-
-    class ReportXlsx(object):
-        def __init__(self, *args, **kwargs):
-            pass
-
 
 ROW_HEIGHT = 15  # xlsxwriter units
 COL_WIDTH = 0.9  # xlsxwriter units
@@ -32,7 +21,9 @@ MIN_COL_WIDTH = 10  # characters
 MAX_COL_WIDTH = 50  # characters
 
 
-class MisBuilderXlsx(ReportXlsx):
+class MisBuilderXlsx(models.AbstractModel):
+    _name = 'report.mis_builder.mis_report_instance_xlsx'
+    _inherit = 'report.report_xlsx.abstract'
 
     def generate_xlsx_report(self, workbook, data, objects):
 
@@ -166,7 +157,3 @@ class MisBuilderXlsx(ReportXlsx):
         min_col_pos = min(col_width.keys())
         max_col_pos = max(col_width.keys())
         sheet.set_column(min_col_pos, max_col_pos, data_col_width * COL_WIDTH)
-
-
-MisBuilderXlsx('report.mis.report.instance.xlsx',
-               'mis.report.instance', parser=report_sxw.rml_parse)

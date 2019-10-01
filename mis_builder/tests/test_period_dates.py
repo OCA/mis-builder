@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from odoo import fields
 import odoo.tests.common as common
 
 from ..models.mis_report_instance import (
@@ -30,6 +30,9 @@ class TestPeriodDates(common.TransactionCase):
         ))
         self.assertEqual(len(self.instance.period_ids), 1)
         self.period = self.instance.period_ids[0]
+
+    def assertDateEqual(self, first, second, msg=None):
+        self.assertEqual(first, fields.Date.from_string(second), msg)
 
     def test_date_filter_constraints(self):
         self.instance.comparison_mode = True
@@ -67,8 +70,8 @@ class TestPeriodDates(common.TransactionCase):
             manual_date_from='2017-01-01',
             manual_date_to='2017-12-31',
         ))
-        self.assertEqual(self.period.date_from, '2017-01-01')
-        self.assertEqual(self.period.date_to, '2017-12-31')
+        self.assertDateEqual(self.period.date_from, '2017-01-01')
+        self.assertDateEqual(self.period.date_to, '2017-12-31')
         self.assertTrue(self.period.valid)
 
     def test_rel_day(self):
@@ -81,8 +84,8 @@ class TestPeriodDates(common.TransactionCase):
             type='d',
             offset='-2',
         ))
-        self.assertEqual(self.period.date_from, '2016-12-30')
-        self.assertEqual(self.period.date_to, '2016-12-30')
+        self.assertDateEqual(self.period.date_from, '2016-12-30')
+        self.assertDateEqual(self.period.date_to, '2016-12-30')
         self.assertTrue(self.period.valid)
 
     def test_rel_day_ytd(self):
@@ -96,8 +99,8 @@ class TestPeriodDates(common.TransactionCase):
             offset='-2',
             is_ytd=True,
         ))
-        self.assertEqual(self.period.date_from, '2019-01-01')
-        self.assertEqual(self.period.date_to, '2019-05-01')
+        self.assertDateEqual(self.period.date_from, '2019-01-01')
+        self.assertDateEqual(self.period.date_to, '2019-05-01')
         self.assertTrue(self.period.valid)
 
     def test_rel_week(self):
@@ -112,8 +115,8 @@ class TestPeriodDates(common.TransactionCase):
             duration=2,
         ))
         # from Monday to Sunday, the week after 2016-12-30
-        self.assertEqual(self.period.date_from, '2017-01-02')
-        self.assertEqual(self.period.date_to, '2017-01-15')
+        self.assertDateEqual(self.period.date_from, '2017-01-02')
+        self.assertDateEqual(self.period.date_to, '2017-01-15')
         self.assertTrue(self.period.valid)
 
     def test_rel_week_ytd(self):
@@ -128,8 +131,8 @@ class TestPeriodDates(common.TransactionCase):
             duration=2,
             is_ytd=True,
         ))
-        self.assertEqual(self.period.date_from, '2019-01-01')
-        self.assertEqual(self.period.date_to, '2019-06-16')
+        self.assertDateEqual(self.period.date_from, '2019-01-01')
+        self.assertDateEqual(self.period.date_to, '2019-06-16')
         self.assertTrue(self.period.valid)
 
     def test_rel_month(self):
@@ -142,8 +145,8 @@ class TestPeriodDates(common.TransactionCase):
             type='m',
             offset='1',
         ))
-        self.assertEqual(self.period.date_from, '2017-02-01')
-        self.assertEqual(self.period.date_to, '2017-02-28')
+        self.assertDateEqual(self.period.date_from, '2017-02-01')
+        self.assertDateEqual(self.period.date_to, '2017-02-28')
         self.assertTrue(self.period.valid)
 
     def test_rel_month_ytd(self):
@@ -157,8 +160,8 @@ class TestPeriodDates(common.TransactionCase):
             offset='-1',
             is_ytd=True,
         ))
-        self.assertEqual(self.period.date_from, '2019-01-01')
-        self.assertEqual(self.period.date_to, '2019-04-30')
+        self.assertDateEqual(self.period.date_from, '2019-01-01')
+        self.assertDateEqual(self.period.date_to, '2019-04-30')
         self.assertTrue(self.period.valid)
 
     def test_rel_year(self):
@@ -171,8 +174,8 @@ class TestPeriodDates(common.TransactionCase):
             type='y',
             offset='1',
         ))
-        self.assertEqual(self.period.date_from, '2018-01-01')
-        self.assertEqual(self.period.date_to, '2018-12-31')
+        self.assertDateEqual(self.period.date_from, '2018-01-01')
+        self.assertDateEqual(self.period.date_to, '2018-12-31')
         self.assertTrue(self.period.valid)
 
     def test_rel_date_range(self):
@@ -199,8 +202,8 @@ class TestPeriodDates(common.TransactionCase):
             offset='-1',
             duration=3,
         ))
-        self.assertEqual(self.period.date_from, '2016-01-01')
-        self.assertEqual(self.period.date_to, '2018-12-31')
+        self.assertDateEqual(self.period.date_from, '2016-01-01')
+        self.assertDateEqual(self.period.date_to, '2018-12-31')
         self.assertTrue(self.period.valid)
 
     def test_dates_in_expr(self):

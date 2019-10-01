@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -6,7 +5,7 @@
     'name': 'MIS Builder Budget',
     'summary': """
         Create budgets for MIS reports""",
-    'version': '10.0.3.3.0',
+    'version': '12.0.3.3.0',
     'license': 'AGPL-3',
     'author': 'ACSONE SA/NV, '
               'Odoo Community Association (OCA)',
