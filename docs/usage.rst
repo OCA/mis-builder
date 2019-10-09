@@ -263,7 +263,7 @@ Analytic Filters
 ----------------
 Analytic accounts is often used in budget and actual versions to follow-up the costs and expenses of a project.
 
-If you need to activate the management of analytic accounts, go to Accounting module ‣ Configuration ‣ Settings and enable the Budget management feature.
+If you need to activate the management of analytic accounts, go to Invoicing module ‣ Configuration ‣ Settings and enable the Analytic Accounting.
 
 In each MIS report, you can untick the box to get the analytic filters. The selection possible is one only.
 
