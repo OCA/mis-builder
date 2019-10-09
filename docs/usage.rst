@@ -228,7 +228,7 @@ Create a query:
 * Field to fetch: select in the list the field from the Model that will be used in the report. For example: Untaxed Amount
 * Fetched fields name: this will show the name of the field to use in the KPI expression later on. For example: amount_untaxed
 * Aggregate: choose between nothing, Sum, Max, Average or Min. Use either this aggregate field or you will need to add some aggregate expression in the KPI, because the query will give a list, not a number.
-* Date field: choose a date field available on the Model. For example: confirmation date of the sale order.
+* Date field: choose a date field available on the Model. This date is used to get the records that matched the period mentioned in the query. For example: confirmation date of the sale order.
 * Domain: this is optional. Use a domain (as definded in classic Odoo). For example: [("partner_id.country_id.code","=","US")]
 
 .. image:: _static/images/query_1.png
