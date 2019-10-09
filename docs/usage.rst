@@ -219,7 +219,7 @@ Reporting on non-accounting data (queries)
 ------------------------------------------
 Check the module `mis_builder_demo <https://github.com/OCA/mis-builder/tree/10.0/mis_builder_demo>`_ to see how to create specific series of data for Committed purchases not yet invoiced.
 
-Example of query: we want a report showing the Total amount (HVAT) of all sales order confirmed during the current month and the previous month.
+Example of query: we want a report showing the Total amount (Excluding VAT) of all sales order confirmed during the current month and the previous month.
 
 Create a query:
 
