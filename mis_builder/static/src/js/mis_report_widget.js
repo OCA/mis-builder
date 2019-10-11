@@ -163,6 +163,10 @@ odoo.define('mis_builder.widget', function (require) {
 
         set_m2o_value: function(field_object, attr_name, new_val) {
             var self = this;
+            if(!new_val) {
+                self.filter_values[attr_name] = undefined;
+                return
+            }
             self.init_filter(attr_name);
             self.filter_values[attr_name]['value'] =
                 [{id: new_val.id, display_name: new_val.display_name}] || undefined;
@@ -262,14 +266,14 @@ odoo.define('mis_builder.widget', function (require) {
             var self = this;
             if (event && event.data.changes) {
                 var changes = event.data.changes;
-                if (changes['filter_analytic_account_id'] !== undefined) {
+                if ('filter_analytic_account_id' in changes) {
                     var field_name = 'analytic_account_id';
                     var new_val = changes['filter_analytic_account_id'];
                     self.set_m2o_value(self.analytic_account_id_m2o, field_name, new_val);
                     self.init_filter_value(self.analytic_account_id_m2o, field_name);
                     self.analytic_account_id_m2o._renderEdit();
                 }
-                if (changes['filter_analytic_tag_ids'] !== undefined) {
+                if ('filter_analytic_tag_ids' in changes) {
                     var field_name = 'analytic_tag_ids';
                     var new_val = changes['filter_analytic_tag_ids'];
                     if (new_val.operation == 'ADD_M2M'){
