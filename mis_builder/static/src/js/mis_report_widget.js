@@ -13,6 +13,7 @@ odoo.define('mis_builder.widget', function (require) {
     var session = require('web.session');
 
     var FieldMany2One = core.form_widget_registry.get('many2one');
+    var FieldMany2ManyTags = core.form_widget_registry.get('many2many_tags');
     var _t = core._t;
 
     var MisReportWidget = AbstractField.extend({
@@ -47,6 +48,10 @@ odoo.define('mis_builder.widget', function (require) {
             self.analytic_account_id_domain = [];
             self.analytic_account_id_label = _t("Analytic Account");
             self.analytic_account_id_m2o = undefined;
+            self.analytic_tag_ids = undefined;
+            self.analytic_tag_ids_domain = [];
+            self.analytic_tag_ids_label = _t("Analytic Tags");
+            self.analytic_tag_ids_m2m = undefined;
             self.has_group_analytic_accounting = false;
             self.hide_analytic_filters = false;
             self.filter_values = {};
@@ -148,9 +153,14 @@ odoo.define('mis_builder.widget', function (require) {
 
         set_filter_value: function(field_object, attr_name) {
             var self = this;
+            var value = field_object.get_value() || undefined;
+            if(value === undefined) {
+                self.filter_values[attr_name] = undefined;
+                return
+            }
             self.init_filter(attr_name);
-            self.filter_values[attr_name]['value'] =
-                field_object.get_value() || undefined;
+            self.filter_values[attr_name]['value'] = value;
+            self.filter_values[attr_name]['operator'] = 'all';
         },
 
         set_filter_operator: function(operator, attr_name) {
@@ -174,6 +184,8 @@ odoo.define('mis_builder.widget', function (require) {
                 return;
             }
             self.add_analytic_account_filter();
+            self.add_analytic_tag_filter();
+            $('.o_form_view').addClass('o_form_editable');
         },
 
         add_analytic_account_filter: function () {
@@ -203,12 +215,48 @@ odoo.define('mis_builder.widget', function (require) {
                 },
             });
             self.init_filter_value(analytic_account_id_m2o, field_name);
-            analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
+            analytic_account_id_m2o.appendTo(self.$("#analytic_account"));
             analytic_account_id_m2o.$input.focusout(function () {
                 self.set_filter_value(analytic_account_id_m2o, field_name);
             });
             analytic_account_id_m2o.$follow_button.toggle();
             self.analytic_account_id_m2o = analytic_account_id_m2o;
+        },
+
+        add_analytic_tag_filter: function () {
+            var self = this;
+            if (!self.has_group_analytic_accounting) {
+                return;
+            }
+            if (self.analytic_tag_ids_m2m) {
+                // Prevent errors with autocomplete
+                self.analytic_tag_ids_m2m.destroy_content();
+                self.analytic_tag_ids_m2m.destroy();
+            }
+            var field_name = 'analytic_tag_ids';
+            var dfm_object = {};
+            dfm_object[field_name] = {
+                relation: 'account.analytic.tag',
+            };
+            self.dfm.extend_field_desc(dfm_object);
+            var analytic_tag_ids_m2m = new FieldMany2ManyTags(self.dfm, {
+                attrs: {
+                    placeholder: self.analytic_tag_ids_label,
+                    name: field_name,
+                    type: 'many2many',
+                    domain: self.analytic_tag_ids_domain,
+                    context: {},
+                    modifiers: '{}',
+                    options: '{"no_create": true}',
+                    help: _t('This filter returns the account move lines that have all the selected tags.'),
+                },
+            });
+            self.init_filter_value(analytic_tag_ids_m2m, field_name);
+            analytic_tag_ids_m2m.appendTo(self.$("#analytic_tags"));
+            analytic_tag_ids_m2m.on("change:value", this, function () {
+                self.set_filter_value(analytic_tag_ids_m2m, field_name);
+            });
+            self.analytic_tag_ids_m2m = analytic_tag_ids_m2m;
         },
 
         refresh: function () {
