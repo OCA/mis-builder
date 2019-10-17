@@ -13,6 +13,6 @@ not only about purchases anymore. This should not be an issue because
 GL accounts are differents for purchases and income anyway and generally
 used in different KPI.
 
-These are breaking changes. Change the status of mis_builder_demo to alpha,
+These are breaking changes. Change the status of ``mis_builder_demo`` to alpha,
 since it is a demo module and it's content can change at any time without
 any compatibility guarantees.
