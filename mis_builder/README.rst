@@ -431,6 +431,7 @@ Contributors
 * Eric Caudal <eric.caudal@elico-corp.com>
 * Andrea Stirpe <a.stirpe@onestein.nl>
 * Maxence Groine <mgroine@fiefmanage.ch>
+* Arnaud Pineux <arnaud.pineux@acsone.eu>
 
 Maintainers
 ~~~~~~~~~~~
