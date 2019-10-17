@@ -19,3 +19,5 @@
 * Andrea Stirpe <a.stirpe@onestein.nl>
 * Maxence Groine <mgroine@fiefmanage.ch>
 * Arnaud Pineux <arnaud.pineux@acsone.eu>
+* Ernesto Tejeda <ernesto.tejeda@tecnativa.com>
+* Pedro M. Baeza <pedro.baeza@tecnativa.com>
