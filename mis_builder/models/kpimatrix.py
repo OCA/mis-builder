@@ -167,7 +167,7 @@ class KpiMatrix(object):
         self._sum_todo = {}
         # { account_id: account_name }
         self._account_names = {}
-        self.multi_company = multi_company
+        self._multi_company = multi_company
 
     def declare_kpi(self, kpi):
         """ Declare a new kpi (row) in the matrix.
@@ -426,7 +426,7 @@ class KpiMatrix(object):
 
     def _get_account_name(self, account):
         result = u'{} {}'.format(account.code, account.name)
-        if self.multi_company:
+        if self._multi_company:
             result = u'{} [{}]'.format(result, account.company_id.name)
         return result
 
