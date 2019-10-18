@@ -89,7 +89,9 @@ class AccountingExpressionProcessor(object):
         r"(?P<ml_domain>\[.*?\])?"
     )
 
-    def __init__(self, companies, currency=None):
+    def __init__(
+        self, companies, currency=None, account_model='account.account'
+    ):
         self.env = companies.env
         self.companies = companies
         if not currency:
@@ -112,6 +114,8 @@ class AccountingExpressionProcessor(object):
         # a first query to get the initial balance and another
         # to get the variation, so it's a bit slower
         self.smart_end = True
+        # Account model
+        self._account_model = self.env[account_model].with_context(active_test=False)
 
     def _account_codes_to_domain(self, account_codes):
         """Convert a comma separated list of account codes
@@ -188,8 +192,6 @@ class AccountingExpressionProcessor(object):
 
     def done_parsing(self):
         """ Replace account domains by account ids in map """
-        account_model = self.env['account.account'].\
-            with_context(active_test=False)
         for key, acc_domains in self._map_account_ids.items():
             all_account_ids = set()
             for acc_domain in acc_domains:
@@ -197,7 +199,7 @@ class AccountingExpressionProcessor(object):
                     acc_domain,
                     [('company_id', 'in', self.companies.ids)],
                 ])
-                account_ids = account_model.\
+                account_ids = self._account_model.\
                     search(acc_domain_with_company).ids
                 self._account_ids_by_acc_domain[acc_domain].\
                     update(account_ids)
