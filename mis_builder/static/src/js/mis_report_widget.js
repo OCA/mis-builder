@@ -46,11 +46,11 @@ odoo.define('mis_builder.widget', function (require) {
             self.dfm = new FormCommon.DefaultFieldManager(self);
             self.analytic_account_id = undefined;
             self.analytic_account_id_domain = [];
-            self.analytic_account_id_label = _t("Analytic Account");
+            self.analytic_account_id_label = _t("Analytic Account Filter");
             self.analytic_account_id_m2o = undefined;
             self.analytic_tag_ids = undefined;
             self.analytic_tag_ids_domain = [];
-            self.analytic_tag_ids_label = _t("Analytic Tags");
+            self.analytic_tag_ids_label = _t("Analytic Tags Filter");
             self.analytic_tag_ids_m2m = undefined;
             self.has_group_analytic_accounting = false;
             self.hide_analytic_filters = false;
@@ -211,11 +211,11 @@ odoo.define('mis_builder.widget', function (require) {
                     domain: self.analytic_account_id_domain,
                     context: {},
                     modifiers: '{}',
-                    options: '{"no_create": true}',
+                    options: '{"no_create": true, "no_open": true}',
                 },
             });
             self.init_filter_value(analytic_account_id_m2o, field_name);
-            analytic_account_id_m2o.appendTo(self.$("#analytic_account"));
+            analytic_account_id_m2o.appendTo(self.get_mis_builder_filter_box());
             analytic_account_id_m2o.$input.focusout(function () {
                 self.set_filter_value(analytic_account_id_m2o, field_name);
             });
@@ -248,11 +248,11 @@ odoo.define('mis_builder.widget', function (require) {
                     context: {},
                     modifiers: '{}',
                     options: '{"no_create": true}',
-                    help: _t('This filter returns the account move lines that have all the selected tags.'),
+                    help: _t('This filter returns the journal entries that have all the selected tags.'),
                 },
             });
             self.init_filter_value(analytic_tag_ids_m2m, field_name);
-            analytic_tag_ids_m2m.appendTo(self.$("#analytic_tags"));
+            analytic_tag_ids_m2m.appendTo(self.get_mis_builder_filter_box());
             analytic_tag_ids_m2m.on("change:value", this, function () {
                 self.set_filter_value(analytic_tag_ids_m2m, field_name);
             });
