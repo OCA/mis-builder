@@ -457,8 +457,7 @@ class MisReport(models.Model):
     _description = 'MIS Report Template'
 
     def _default_move_lines_source(self):
-        return self.env['ir.model'].search(
-            [('model', '=', 'account.move.line')]).id
+        return self.env['ir.model'].search([('model', '=', 'account.move.line')])
 
     name = fields.Char(required=True,
                        string='Name', translate=True)
