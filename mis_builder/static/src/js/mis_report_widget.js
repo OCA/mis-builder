@@ -160,7 +160,6 @@ odoo.define('mis_builder.widget', function (require) {
             }
             self.init_filter(attr_name);
             self.filter_values[attr_name]['value'] = value;
-            self.filter_values[attr_name]['operator'] = 'all';
         },
 
         set_filter_operator: function(operator, attr_name) {
@@ -254,6 +253,7 @@ odoo.define('mis_builder.widget', function (require) {
             analytic_tag_ids_m2m.appendTo(self.get_mis_builder_filter_box());
             analytic_tag_ids_m2m.on("change:value", this, function () {
                 self.set_filter_value(analytic_tag_ids_m2m, field_name);
+                self.set_filter_operator("all", field_name);
             });
             self.analytic_tag_ids_m2m = analytic_tag_ids_m2m;
         },
