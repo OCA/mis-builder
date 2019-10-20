@@ -23,6 +23,7 @@
         'data/mis_budget.xml',
         'data/mis_report_instance.xml',
     ],
+    'uninstall_hook': 'uninstall_hook',
     'installable': True,
     'maintainers': ['sbidoul'],
     'development_status': 'Alpha',
