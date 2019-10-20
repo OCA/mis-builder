@@ -44,7 +44,7 @@ def _zip(iter1, iter2):
         i1 = next(iter1, None)
         i2 = next(iter2, None)
         if i1 is None and i2 is None:
-            raise StopIteration()
+            return
         yield i, i1, i2
         i += 1
 
