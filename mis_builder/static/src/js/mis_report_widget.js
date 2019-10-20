@@ -45,7 +45,7 @@ odoo.define('mis_builder.widget', function (require) {
             self.dfm = new FormCommon.DefaultFieldManager(self);
             self.analytic_account_id = undefined;
             self.analytic_account_id_domain = [];
-            self.analytic_account_id_label = _t("Analytic Account");
+            self.analytic_account_id_label = _t("Analytic Account Filter");
             self.analytic_account_id_m2o = undefined;
             self.has_group_analytic_accounting = false;
             self.hide_analytic_filters = false;
@@ -199,11 +199,11 @@ odoo.define('mis_builder.widget', function (require) {
                     domain: self.analytic_account_id_domain,
                     context: {},
                     modifiers: '{}',
-                    options: '{"no_create": true}',
+                    options: '{"no_create": true, "no_open": true}',
                 },
             });
             self.init_filter_value(analytic_account_id_m2o, field_name);
-            analytic_account_id_m2o.prependTo(self.get_mis_builder_filter_box());
+            analytic_account_id_m2o.appendTo(self.get_mis_builder_filter_box());
             analytic_account_id_m2o.$input.focusout(function () {
                 self.set_filter_value(analytic_account_id_m2o, field_name);
             });

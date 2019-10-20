@@ -25,5 +25,5 @@
     ],
     'installable': True,
     'maintainers': ['sbidoul'],
-    'development_status': 'Beta',
+    'development_status': 'Alpha',
 }

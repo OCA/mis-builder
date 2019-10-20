@@ -136,7 +136,8 @@ class KpiMatrixCell(object):
     def __init__(self, row, subcol,
                  val, val_rendered, val_comment,
                  style_props,
-                 drilldown_arg):
+                 drilldown_arg,
+                 val_type):
         self.row = row
         self.subcol = subcol
         self.val = val
@@ -144,17 +145,18 @@ class KpiMatrixCell(object):
         self.val_comment = val_comment
         self.style_props = style_props
         self.drilldown_arg = drilldown_arg
+        self.val_type = val_type
 
 
 class KpiMatrix(object):
 
-    def __init__(self, env):
+    def __init__(self, env, multi_company=False, account_model='account.account'):
         # cache language id for faster rendering
         lang_model = env['res.lang']
         lang_id = lang_model._lang_get(env.user.lang)
         self.lang = lang_model.browse(lang_id)
         self._style_model = env['mis.report.style']
-        self._account_model = env['account.account']
+        self._account_model = env[account_model]
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
@@ -168,6 +170,7 @@ class KpiMatrix(object):
         self._sum_todo = {}
         # { account_id: account_name }
         self._account_names = {}
+        self._multi_company = multi_company
 
     def declare_kpi(self, kpi):
         """ Declare a new kpi (row) in the matrix.
@@ -272,7 +275,7 @@ class KpiMatrix(object):
                         _logger.error("Style '%s' not found.", style_name)
             cell = KpiMatrixCell(row, subcol, val, val_rendered,
                                  tooltips and val_comment or None,
-                                 cell_style_props, drilldown_arg)
+                                 cell_style_props, drilldown_arg, kpi.type)
             cell_tuple.append(cell)
         assert len(cell_tuple) == col.colspan
         col._set_cell_tuple(row, cell_tuple)
@@ -329,14 +332,14 @@ class KpiMatrix(object):
                 for val, base_val, comparison_subcol in \
                         zip(vals, base_vals, comparison_col.iter_subcols()):
                     # TODO FIXME average factors
-                    delta, delta_r, style_r = \
+                    delta, delta_r, delta_style, delta_type = \
                         self._style_model.compare_and_render(
                             self.lang, row.style_props,
                             row.kpi.type, row.kpi.compare_method,
                             val, base_val, 1, 1)
                     comparison_cell_tuple.append(KpiMatrixCell(
                         row, comparison_subcol, delta, delta_r, None,
-                        style_r, None))
+                        delta_style, None, delta_type))
                 comparison_col._set_cell_tuple(row, comparison_cell_tuple)
 
     def compute_sums(self):
@@ -420,9 +423,15 @@ class KpiMatrix(object):
         accounts = self._account_model.\
             search([('id', 'in', list(account_ids))])
         self._account_names = {
-            a.id: u'{} {}'.format(a.code, a.name)
+            a.id: self._get_account_name(a)
             for a in accounts
         }
+
+    def _get_account_name(self, account):
+        result = u'{} {}'.format(account.code, account.name)
+        if self._multi_company:
+            result = u'{} [{}]'.format(result, account.company_id.name)
+        return result
 
     def get_account_name(self, account_id):
         if account_id not in self._account_names:

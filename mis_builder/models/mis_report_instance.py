@@ -285,6 +285,20 @@ class MisReportInstancePeriod(models.Model):
          'Period name should be unique by report'),
     ]
 
+    @api.constrains('source_aml_model_id')
+    def _check_source_aml_model_id(self):
+        for record in self:
+            if record.source_aml_model_id:
+                record_model = record.source_aml_model_id.field_id.filtered(
+                    lambda r: r.name == 'account_id').relation
+                report_account_model = record.report_id.account_model
+                if record_model != report_account_model:
+                    raise ValidationError(_(
+                        'Actual (alternative) models used in columns must '
+                        'have the same account model in the Account field and must '
+                        'be the same defined in the '
+                        'report template: %s') % report_account_model)
+
     @api.onchange('date_range_id')
     def _onchange_date_range(self):
         if self.date_range_id:
@@ -307,11 +321,20 @@ class MisReportInstancePeriod(models.Model):
     def _get_filter_domain_from_context(self):
         filters = []
         mis_report_filters = self.env.context.get('mis_report_filters', {})
-        for filter_name, values in mis_report_filters.items():
-            if values:
-                value = values.get('value')
-                operator = values.get('operator', '=')
-                filters.append((filter_name, operator, value))
+        for filter_name, domain in mis_report_filters.items():
+            if domain:
+                value = domain.get('value')
+                operator = domain.get('operator', '=')
+                # Operator = 'all' when coming from JS widget
+                if operator == 'all':
+                    if not isinstance(value, list):
+                        value = [value]
+                    many_ids = self.report_instance_id.resolve_2many_commands(
+                        filter_name, value, ['id'])
+                    for m in many_ids:
+                        filters.append((filter_name, 'in', [m['id']]))
+                else:
+                    filters.append((filter_name, operator, value))
         return filters
 
     @api.multi
@@ -476,6 +499,8 @@ class MisReportInstance(models.Model):
     analytic_account_id = fields.Many2one(
         comodel_name='account.analytic.account', string='Analytic Account',
         oldname='account_analytic_id')
+    analytic_tag_ids = fields.Many2many(
+        comodel_name='account.analytic.tag', string='Analytic Tags')
     hide_analytic_filters = fields.Boolean(default=True)
 
     @api.onchange('company_id', 'multi_company')
@@ -499,14 +524,21 @@ class MisReportInstance(models.Model):
     @api.model
     def get_filter_descriptions_from_context(self):
         filters = self.env.context.get('mis_report_filters', {})
-        analytic_account = filters.get('analytic_account_id', {})
-        analytic_account_id = analytic_account.get('value')
+        analytic_account_id = \
+            filters.get('analytic_account_id', {}).get('value')
         filter_descriptions = []
         if analytic_account_id:
             analytic_account = self.env['account.analytic.account'].browse(
                 analytic_account_id)
             filter_descriptions.append(
                 _("Analytic Account: %s") % analytic_account.display_name)
+        analytic_tag_value = filters.get('analytic_tag_ids', {}).get('value')
+        if analytic_tag_value:
+            analytic_tag_names = self.resolve_2many_commands(
+                'analytic_tag_ids', analytic_tag_value, ['name'])
+            filter_descriptions.append(
+                _("Analytic Tags: %s") %
+                ', '.join([rec['name'] for rec in analytic_tag_names]))
         return filter_descriptions
 
     @api.multi
@@ -592,6 +624,12 @@ class MisReportInstance(models.Model):
         if self.analytic_account_id:
             context['mis_report_filters']['analytic_account_id'] = {
                 'value': self.analytic_account_id.id,
+                'operator': '=',
+            }
+        if self.analytic_tag_ids:
+            context['mis_report_filters']['analytic_tag_ids'] = {
+                'value': self.analytic_tag_ids.ids,
+                'operator': 'all',
             }
 
     @api.multi
@@ -677,6 +715,7 @@ class MisReportInstance(models.Model):
             period.subkpi_ids,
             period._get_additional_move_line_filter,
             period._get_additional_query_filter,
+            aml_model=self.report_id.move_lines_source.model,
             no_auto_expand_accounts=self.no_auto_expand_accounts,
         )
 
@@ -741,7 +780,7 @@ class MisReportInstance(models.Model):
         self.ensure_one()
         aep = self.report_id._prepare_aep(
             self.query_company_ids, self.currency_id)
-        kpi_matrix = self.report_id.prepare_kpi_matrix()
+        kpi_matrix = self.report_id.prepare_kpi_matrix(self.multi_company)
         for period in self.period_ids:
             description = None
             if period.mode == MODE_NONE:
@@ -773,7 +812,9 @@ class MisReportInstance(models.Model):
         account_id = arg.get('account_id')
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env['mis.report.instance.period'].browse(period_id)
-            aep = AEP(self.query_company_ids, self.currency_id)
+            aep = AEP(
+                self.query_company_ids, self.currency_id, self.report_id.account_model
+            )
             aep.parse_expr(expr)
             aep.done_parsing()
             domain = aep.get_aml_domain_for_expr(
@@ -785,7 +826,7 @@ class MisReportInstance(models.Model):
             if period.source == SRC_ACTUALS_ALT:
                 aml_model_name = period.source_aml_model_id.model
             else:
-                aml_model_name = 'account.move.line'
+                aml_model_name = self.report_id.move_lines_source.model
             return {
                 'name': u'{} - {}'.format(expr, period.name),
                 'domain': domain,

@@ -82,7 +82,7 @@ class MisBudgetItem(models.Model):
     def _prepare_overlap_domain(self):
         """Prepare a domain to check for overlapping budget items."""
         self.ensure_one()
-        return [
+        domain = [
             ('date_from', '<=', self.date_to),
             ('date_to', '>=', self.date_from),
             ('budget_id', '=', self.budget_id.id),
@@ -90,6 +90,9 @@ class MisBudgetItem(models.Model):
             ('analytic_account_id', '=', self.analytic_account_id.id),
             ('id', '!=', self.id),
         ]
+        for tag in self.analytic_tag_ids:
+            domain.append(('analytic_tag_ids', 'in', [tag.id]))
+        return domain
 
     @api.constrains('date_range_id', 'date_from', 'date_to',
                     'budget_id', 'kpi_expression_id')
