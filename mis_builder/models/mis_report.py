@@ -455,6 +455,9 @@ class MisReport(models.Model):
     _name = 'mis.report'
     _description = 'MIS Report Template'
 
+    def _default_move_lines_source(self):
+        return self.env['ir.model'].search([('model', '=', 'account.move.line')])
+
     name = fields.Char(required=True,
                        string='Name', translate=True)
     description = fields.Char(required=False,
@@ -470,6 +473,31 @@ class MisReport(models.Model):
     subkpi_ids = fields.One2many('mis.report.subkpi', 'report_id',
                                  string="Sub KPI",
                                  copy=True)
+    move_lines_source = fields.Many2one(
+        comodel_name='ir.model',
+        string='Move lines source',
+        domain=[('field_id.name', '=', 'debit'),
+                ('field_id.name', '=', 'credit'),
+                ('field_id.name', '=', 'account_id'),
+                ('field_id.name', '=', 'date'),
+                ('field_id.name', '=', 'company_id')],
+        default=_default_move_lines_source,
+        required=True,
+        help="A 'move line like' model, ie having at least debit, credit, "
+             "date, account_id and company_id fields. This model is the "
+             "data source for column Actuals.",
+    )
+    account_model = fields.Char(
+        compute='_compute_account_model',
+        string='Account model',
+    )
+
+    @api.multi
+    @api.depends('move_lines_source')
+    def _compute_account_model(self):
+        for record in self:
+            record.account_model = record.move_lines_source.field_id.filtered(
+                lambda r: r.name == 'account_id').relation
 
     @api.onchange('subkpi_ids')
     def _on_change_subkpi_ids(self):
@@ -534,9 +562,9 @@ class MisReport(models.Model):
     # TODO: kpi name cannot be start with query name
 
     @api.multi
-    def prepare_kpi_matrix(self):
+    def prepare_kpi_matrix(self, multi_company=False):
         self.ensure_one()
-        kpi_matrix = KpiMatrix(self.env)
+        kpi_matrix = KpiMatrix(self.env, multi_company, self.account_model)
         for kpi in self.kpi_ids:
             kpi_matrix.declare_kpi(kpi)
         return kpi_matrix
@@ -544,7 +572,7 @@ class MisReport(models.Model):
     @api.multi
     def _prepare_aep(self, companies, currency=None):
         self.ensure_one()
-        aep = AEP(companies, currency)
+        aep = AEP(companies, currency, self.account_model)
         for kpi in self.kpi_ids:
             for expression in kpi.expression_ids:
                 if expression.name:

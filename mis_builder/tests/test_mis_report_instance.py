@@ -264,6 +264,35 @@ class TestMisReportInstance(common.HttpCase):
                 # k7 references k3 via subkpi names
                 self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
 
+    def test_multi_company_compute(self):
+        self.report_instance.write({
+            'multi_company': True,
+            'company_ids': [(6, 0, self.report_instance.company_id.ids)],
+        })
+        self.report_instance.report_id.kpi_ids.write({
+            'auto_expand_accounts': True
+        })
+        matrix = self.report_instance._compute_matrix()
+        for row in matrix.iter_rows():
+            if row.account_id:
+                account = self.env['account.account'].browse(row.account_id)
+                self.assertEqual(row.label, '%s %s [%s]' % (
+                    account.code,
+                    account.name,
+                    account.company_id.name,
+                ))
+        self.report_instance.write({
+            'multi_company': False,
+        })
+        matrix = self.report_instance._compute_matrix()
+        for row in matrix.iter_rows():
+            if row.account_id:
+                account = self.env['account.account'].browse(row.account_id)
+                self.assertEqual(row.label, '%s %s' % (
+                    account.code,
+                    account.name,
+                ))
+
     def test_evaluate(self):
         company = self.env.ref('base.main_company')
         aep = self.report._prepare_aep(company)
