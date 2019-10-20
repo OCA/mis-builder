@@ -185,7 +185,6 @@ odoo.define('mis_builder.widget', function (require) {
             }
             self.add_analytic_account_filter();
             self.add_analytic_tag_filter();
-            $('.o_form_view').addClass('o_form_editable');
         },
 
         add_analytic_account_filter: function () {
