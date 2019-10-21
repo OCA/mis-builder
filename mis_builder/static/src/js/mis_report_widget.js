@@ -21,9 +21,9 @@ odoo.define('mis_builder.widget', function (require) {
 
         events: _.extend({}, AbstractField.prototype.events, {
             'click .mis_builder_drilldown': 'drilldown',
-            'click .oe_mis_builder_print': 'print_pdf',
-            'click .oe_mis_builder_export': 'export_xls',
-            'click .oe_mis_builder_settings': 'display_settings',
+            'click .oe_mis_builder_print': 'printPdf',
+            'click .oe_mis_builder_export': 'exportXls',
+            'click .oe_mis_builder_settings': 'displaySettings',
             'click .oe_mis_builder_refresh': 'refresh',
         }),
 
@@ -45,13 +45,13 @@ odoo.define('mis_builder.widget', function (require) {
             self.hide_analytic_filters = false;
         },
 
-        _get_filter_value: function(name) {
+        _getFilterValue: function(name) {
             var filters = this.getParent().state.context['mis_report_filters'] || {};
             var filter = filters[name] || {};
             return filter.value;
         },
 
-        _set_filter_value: function(name, value, operator) {
+        _setFilterValue: function(name, value, operator) {
             var context = this.getParent().state.context;
             var filters;
             if (context['mis_report_filters'] === undefined) {
@@ -74,7 +74,7 @@ odoo.define('mis_builder.widget', function (require) {
          * Return the id of the mis.report.instance to which the widget is
          * bound.
          */
-        _instance_id: function () {
+        _instanceId: function () {
             if (this.value) {
                 return this.value;
             }
@@ -102,7 +102,7 @@ odoo.define('mis_builder.widget', function (require) {
             var def1 = self._rpc({
                 model: 'mis.report.instance',
                 method: 'compute',
-                args: [self._instance_id()],
+                args: [self._instanceId()],
                 context: context,
             }).then(function (result) {
                 self.mis_report_data = result;
@@ -129,7 +129,7 @@ odoo.define('mis_builder.widget', function (require) {
             var def5 = self._rpc({
                 model: 'mis.report.instance',
                 method: 'read',
-                args: [self._instance_id(), ['hide_analytic_filters']],
+                args: [self._instanceId(), ['hide_analytic_filters']],
                 context: context,
             }).then(function (result) {
                 self.hide_analytic_filters = result[0]['hide_analytic_filters'];
@@ -141,14 +141,14 @@ odoo.define('mis_builder.widget', function (require) {
         start: function () {
             var self = this;
             self._super.apply(self, arguments);
-            self._add_analytic_filters();
+            self._addAnalyticFilters();
         },
 
         /**
          * Create list of field descriptors to be provided
          * to BasicModel.makeRecord.
          */
-        _get_filter_fields: function() {
+        _getFilterFields: function() {
             var self = this;
             var fields = []
             if (self.has_group_analytic_accounting) {
@@ -156,7 +156,7 @@ odoo.define('mis_builder.widget', function (require) {
                     relation: 'account.analytic.account',
                     type: 'many2one',
                     name: 'filter_analytic_account_id',
-                    value: self._get_filter_value('analytic_account_id'),
+                    value: self._getFilterValue('analytic_account_id'),
                 });
             }
             if (self.has_group_analytic_tags) {
@@ -164,7 +164,7 @@ odoo.define('mis_builder.widget', function (require) {
                     relation: 'account.analytic.tag',
                     type: 'many2many',
                     name: 'filter_analytic_tag_ids',
-                    value: self._get_filter_value('analytic_tag_ids'),
+                    value: self._getFilterValue('analytic_tag_ids'),
                 });
             }
             return fields;
@@ -174,16 +174,16 @@ odoo.define('mis_builder.widget', function (require) {
          * Create fieldInfo structure to be provided
          * to BasicModel.makeRecord.
          */
-        _get_filter_fieldInfo: function() {
+        _getFilterFieldInfo: function() {
             return {};
         },
 
         /**
          * Create analytic filter widgets and add them in the filter box.
          */
-        _make_filter_field_widgets: function(record) {
+        _makeFilterFieldWidgets: function(record) {
             var self = this;
-            
+
             if (self.has_group_analytic_accounting) {
                 self.analytic_account_id_m2o = new relational_fields.FieldMany2One(self,
                     'filter_analytic_account_id',
@@ -200,7 +200,7 @@ odoo.define('mis_builder.widget', function (require) {
                     }
                 );
                 self._registerWidget(record.id, self.analytic_account_id_m2o.name, self.analytic_account_id_m2o);
-                self.analytic_account_id_m2o.appendTo(self.get_mis_builder_filter_box());
+                self.analytic_account_id_m2o.appendTo(self.getMisBuilderFilterBox());
             }
 
             if (self.has_group_analytic_tags) {
@@ -219,18 +219,18 @@ odoo.define('mis_builder.widget', function (require) {
                     }
                 );
                 self._registerWidget(record.id, self.analytic_tag_ids_m2m.name, self.analytic_tag_ids_m2m);
-                self.analytic_tag_ids_m2m.appendTo(self.get_mis_builder_filter_box());
+                self.analytic_tag_ids_m2m.appendTo(self.getMisBuilderFilterBox());
             }
         },
 
         /**
          * Hack to work around Odoo not fetching display name for
-         * x2many used with makeRecord. 
-         * 
+         * x2many used with makeRecord.
+         *
          * Return a list of deferred
          * to be awaited before creating the widgets.
          */
-        _before_create_widgets: function(record) {
+        _beforeCreateWidgets: function(record) {
             var self = this;
             var defs = []
 
@@ -244,24 +244,24 @@ odoo.define('mis_builder.widget', function (require) {
         },
 
         /**
-         * Populate the analytic filters box. 
+         * Populate the analytic filters box.
          * This method is not meant to be overridden.
          */
-        _add_analytic_filters: function () {
+        _addAnalyticFilters: function () {
             var self = this;
             if (self.hide_analytic_filters) {
                 return;
             }
             self.model.makeRecord(
                 "dummy.model",
-                self._get_filter_fields(),
-                self._get_filter_fieldInfo(),
+                self._getFilterFields(),
+                self._getFilterFieldInfo(),
             ).then(function (recordId) {
                 var record = self.model.get(recordId);
-                var defs = self._before_create_widgets(record);
+                var defs = self._beforeCreateWidgets(record);
                 $.when.apply($, defs).then(function () {
                     record = self.model.get(record.id);
-                    self._make_filter_field_widgets(record);
+                    self._makeFilterFieldWidgets(record);
                 });
             });
         },
@@ -272,17 +272,17 @@ odoo.define('mis_builder.widget', function (require) {
 
             if (self.analytic_account_id_m2o !== undefined) {
                 if (self.analytic_account_id_m2o.value) {
-                    self._set_filter_value('analytic_account_id', self.analytic_account_id_m2o.value.res_id, "=");
+                    self._setFilterValue('analytic_account_id', self.analytic_account_id_m2o.value.res_id, "=");
                 } else {
-                    self._set_filter_value('analytic_account_id', undefined);
+                    self._setFilterValue('analytic_account_id', undefined);
                 }
             }
 
             if (self.analytic_tag_ids_m2m !== undefined) {
                 if (self.analytic_tag_ids_m2m.value && self.analytic_tag_ids_m2m.value.res_ids.length > 0) {
-                    self._set_filter_value('analytic_tag_ids', self.analytic_tag_ids_m2m.value.res_ids, "all");
+                    self._setFilterValue('analytic_tag_ids', self.analytic_tag_ids_m2m.value.res_ids, "all");
                 } else {
-                    self._set_filter_value('analytic_tag_ids', undefined);
+                    self._setFilterValue('analytic_tag_ids', undefined);
                 }
             }
 
@@ -293,39 +293,39 @@ odoo.define('mis_builder.widget', function (require) {
             this.replace();
         },
 
-        print_pdf: function () {
+        printPdf: function () {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
                 model: 'mis.report.instance',
                 method: 'print_pdf',
-                args: [this._instance_id()],
+                args: [this._instanceId()],
                 context: context,
             }).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        export_xls: function () {
+        exportXls: function () {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
                 model: 'mis.report.instance',
                 method: 'export_xls',
-                args: [this._instance_id()],
+                args: [this._instanceId()],
                 context: context,
             }).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        display_settings: function () {
+        displaySettings: function () {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
                 model: 'mis.report.instance',
                 method: 'display_settings',
-                args: [this._instance_id()],
+                args: [this._instanceId()],
                 context: context,
             }).then(function (result) {
                 self.do_action(result);
@@ -339,14 +339,14 @@ odoo.define('mis_builder.widget', function (require) {
             this._rpc({
                 model: 'mis.report.instance',
                 method: 'drilldown',
-                args: [this._instance_id(), drilldown],
+                args: [this._instanceId(), drilldown],
                 context: context,
             }).then(function (result) {
                 self.do_action(result);
             });
         },
 
-        get_mis_builder_filter_box: function () {
+        getMisBuilderFilterBox: function () {
             var self = this;
             return self.$(".oe_mis_builder_analytic_filter_box");
         },
