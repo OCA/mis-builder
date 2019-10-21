@@ -1,0 +1,3 @@
+Propagate context to xlsx report, so the analytic account filter
+works when exporting to xslx too. This also requires a fix to
+``report_xlsx`` (see https://github.com/OCA/reporting-engine/pull/259).

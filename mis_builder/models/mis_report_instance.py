@@ -682,7 +682,10 @@ class MisReportInstance(models.Model):
         return (
             self.env.ref('mis_builder.xls_export')
                 .with_context(context)
-                .report_action(self)
+                .report_action(
+                    self,
+                    data=dict(dummy=True),  # required to propagate context
+                )
         )
 
     @api.multi
