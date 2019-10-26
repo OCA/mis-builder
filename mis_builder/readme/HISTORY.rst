@@ -1,3 +1,30 @@
+9.0.3.5.0 (2019-10-26)
+~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- The ``account_id`` field of the model selected in 'Move lines source'
+  in the Period form can now be a Many2one
+  relationship with any model that has a ``code`` field (not only with
+  ``account.account`` model). To this end, the model to be used for Actuals
+  move lines can be configured on the report template. It can be something else
+  than move lines and the only constraint is that its ``account_id`` field
+  as a ``code`` field. (`#149 <https://github.com/oca/mis-builder/issues/149>`_)
+- Add ``source_aml_model_name`` field so extension modules providing
+  alternative data sources can more easily customize their data source. (`#214 <https://github.com/oca/mis-builder/issues/214>`_)
+- Analytic tags filtering support backported from 10, although
+  invisible, as the feature is generally not enabled in Odoo 9. (`#228 <https://github.com/oca/mis-builder/issues/228>`_)
+- Display company in account details rows in multi-company mode. (`#242 <https://github.com/oca/mis-builder/issues/242>`_)
+
+
+**Bugfixes**
+
+- In columns of type Sum, preserve styles for KPIs that are not summable
+  (eg percentage values). Before this fix, such cells were displayed without
+  style. (`#219 <https://github.com/oca/mis-builder/issues/219>`_)
+- In Excel export, keep the percentage point suffix (pp) instead of replacing it with %. (`#220 <https://github.com/oca/mis-builder/issues/220>`_)
+
+
 9.0.3.4.0 (2019-07-09)
 ~~~~~~~~~~~~~~~~~~~~~~
 
