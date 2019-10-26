@@ -1,11 +1,11 @@
 To use this module, you first need to flag at least some KPI in a MIS
 report to be budgetable. You also need to configure the accumulation method
-on the KPI according to their type. 
+on the KPI according to their type.
 
 The accumulation method determines how budgeted values spanning over a
 time period are transformed to match the reporting period.
 
-* Sum: values of shorter period are added, values of longest or partially overlapping 
+* Sum: values of shorter period are added, values of longest or partially overlapping
   periods are adjusted pro-rata temporis (eg monetary amount such as revenue).
 * Average: values of included period are averaged with a pro-rata temporis weight.
   Typically used for values that do not accumulate over time (eg a number of employees).

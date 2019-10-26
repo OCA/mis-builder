@@ -114,7 +114,7 @@
                                  <div>
                                      <p>Expressions can be any valid python expressions.</p>
                                      <p>
-                                         The following special elements are recognized in the expressions to compute accounting data: 
+                                         The following special elements are recognized in the expressions to compute accounting data:
                                          <code>{bal|crd|deb|pbal|nbal}{pieu}[account selector][journal items domain]</code>.
                                      </p>
                                      <ul>

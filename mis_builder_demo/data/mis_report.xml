@@ -2,7 +2,7 @@
 <!-- Copyright 2017-2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-    
+
   <record id="mis_report_expenses" model="mis.report">
     <field name="name">Demo Expenses</field>
     <field name="style_id" ref="mis_report_expenses_style1"/>
