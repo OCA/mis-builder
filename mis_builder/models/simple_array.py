@@ -92,23 +92,18 @@ import traceback
 
 from .data_error import DataError
 
-
-__all__ = [
-    'SimpleArray',
-    'named_simple_array',
-]
+__all__ = ["SimpleArray", "named_simple_array"]
 
 
 class SimpleArray(tuple):
-
     def _op(self, op, other):
         def _o2(x, y):
             try:
                 return op(x, y)
             except ZeroDivisionError:
-                return DataError('#DIV/0', traceback.format_exc())
+                return DataError("#DIV/0", traceback.format_exc())
             except Exception:
-                return DataError('#ERR', traceback.format_exc())
+                return DataError("#ERR", traceback.format_exc())
 
         if isinstance(other, tuple):
             if len(other) != len(self):
@@ -167,7 +162,7 @@ class SimpleArray(tuple):
         return self._cast(other)._op(operator.truediv, self)
 
     def __repr__(self):
-        return "%s(%s)" % (self.__class__.__name__, tuple.__repr__(self))
+        return "{}({})".format(self.__class__.__name__, tuple.__repr__(self))
 
 
 def named_simple_array(typename, field_names):
@@ -179,13 +174,14 @@ def named_simple_array(typename, field_names):
     our needs in mis_builder, ie referring to subkpi values
     by name.
     """
-    props = dict(
-        (field_name, property(operator.itemgetter(i)))
+    props = {
+        field_name: property(operator.itemgetter(i))
         for i, field_name in enumerate(field_names)
-    )
-    return type(typename, (SimpleArray, ), props)
+    }
+    return type(typename, (SimpleArray,), props)
 
 
-if __name__ == '__main__':  # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     import doctest
+
     doctest.testmod()

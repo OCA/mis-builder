@@ -13,7 +13,7 @@ def init_test_model(env, model_cls):
     model._setup_base(cr, SUPERUSER_ID, partial=False)
     model._setup_fields(cr, SUPERUSER_ID, partial=False)
     model._setup_complete(cr, SUPERUSER_ID)
-    model._auto_init(cr, {'module': __name__})
+    model._auto_init(cr, {"module": __name__})
 
 
 def _zip(iter1, iter2):
@@ -36,6 +36,8 @@ def assert_matrix(matrix, expected):
         if row is not None and expected_row is None:
             raise AssertionError("too many rows")
         for j, cell, expected_val in _zip(row.iter_cells(), expected_row):
-            assert (cell and cell.val) == expected_val, \
-                "%s != %s in row %s col %s" % \
-                (cell and cell.val, expected_val, i, j)
+            assert (
+                cell and cell.val
+            ) == expected_val, "{} != {} in row {} col {}".format(
+                cell and cell.val, expected_val, i, j
+            )

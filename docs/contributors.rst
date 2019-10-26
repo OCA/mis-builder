@@ -43,6 +43,3 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`_:
 This module is part of the `OCA/mis-builder <https://github.com/OCA/mis-builder/tree/10.0/mis_builder>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
-
-
-

@@ -13,28 +13,34 @@ class Report(models.Model):
     _inherit = "report"
 
     @api.v7
-    def get_pdf(self, cr, uid, ids, report_name, html=None, data=None,
-                context=None):
-        if report_name == 'mis_builder.report_mis_report_instance':
+    def get_pdf(self, cr, uid, ids, report_name, html=None, data=None, context=None):
+        if report_name == "mis_builder.report_mis_report_instance":
             if not ids:
-                ids = context.get('active_ids')
-            mis_report_instance = self.pool['mis.report.instance'].browse(
-                cr, uid, ids, context=context)[0]
+                ids = context.get("active_ids")
+            mis_report_instance = self.pool["mis.report.instance"].browse(
+                cr, uid, ids, context=context
+            )[0]
             context = dict(
                 mis_report_instance._context_with_filters(),
                 landscape=mis_report_instance.landscape_pdf,
             )
             # data=None, because it was there only to force Odoo
             # to propagate context
-            return super(Report, self).get_pdf(cr, uid, ids, report_name,
-                                               html=html, data=None,
-                                               context=context)
-        return super(Report, self).get_pdf(cr, uid, ids, report_name,
-                                           html=html, data=data,
-                                           context=context)
+            return super(Report, self).get_pdf(
+                cr, uid, ids, report_name, html=html, data=None, context=context
+            )
+        return super(Report, self).get_pdf(
+            cr, uid, ids, report_name, html=html, data=data, context=context
+        )
 
-    @api.v8
+    @api.v8  # noqa: F811
     def get_pdf(self, records, report_name, html=None, data=None):
-        return self._model.get_pdf(self._cr, self._uid,
-                                   records.ids, report_name,
-                                   html=html, data=data, context=self._context)
+        return self._model.get_pdf(
+            self._cr,
+            self._uid,
+            records.ids,
+            report_name,
+            html=html,
+            data=data,
+            context=self._context,
+        )

@@ -2,7 +2,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
     SELECT ROW_NUMBER() OVER() AS id, mis_committed_purchase.* FROM (
 
         /* /!\ Multi currency is left as an exercise for the reader /!\ */
-    
+
         /* UNINVOICED PURCHASES */
     SELECT
         'uninvoiced purchase' AS line_type,
