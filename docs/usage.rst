@@ -175,7 +175,7 @@ data: {bal|crd|deb}{pieu}[account selector][journal items domain].
 * p, i, e: respectively variation over the period, initial balance, ending balance
 * The account selector is a like expression on the account code (eg 70%, etc).
 * The journal items domain is an Odoo domain filter on journal items.
-* balu[]: (u for unallocated) is a special expression that shows the unallocated 
+* balu[]: (u for unallocated) is a special expression that shows the unallocated
   profit/loss of previous fiscal years.
 * Expression can also involve other KPI and query results by name (eg kpi1 + kpi2).
 
@@ -234,7 +234,7 @@ Reporting on non-accounting data (queries)
 ------------------------------------------
 
 This section describes the "Queries" tab in the MIS Report definition form.
-It is used to prepare queries on any Odoo model that has at least 
+It is used to prepare queries on any Odoo model that has at least
 a date-like field, and use the result in expression.
 
 .. note::
