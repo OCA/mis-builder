@@ -118,7 +118,7 @@
     "no-this-before-super": "warn",
     "no-throw-literal": "warn",
     "no-undef": "warn",
-    "no-undef-init": "warn",
+    "no-undef-init": "off",
     "no-undefined": "off",
     "no-unexpected-multiline": "warn",
     "no-underscore-dangle": "off",
@@ -193,7 +193,7 @@
       "warn",
       "unix"
     ],
-    "lines-around-comment": "warn",
+    "lines-around-comment": "off",
     "max-depth": "warn",
     "max-len": ["warn", {
       "code": 88,
@@ -241,7 +241,7 @@
     "sort-imports": "warn",
     "sort-vars": "off",
     "space-before-blocks": "warn",
-    "space-before-function-paren": "warn",
+    "space-before-function-paren": ["warn", "never"],
     "space-in-parens": "off",
     "space-infix-ops": "off",
     "space-unary-ops": "off",
