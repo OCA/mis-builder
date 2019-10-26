@@ -1,3 +1,0 @@
-In columns of type Sum, preserve styles for KPIs that are not summable
-(eg percentage values). Before this fix, such cells were displayed without
-style.
