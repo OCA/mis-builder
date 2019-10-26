@@ -52,9 +52,9 @@ def _zip(iter1, iter2):
 def assert_matrix(matrix, expected):
     for i, row, expected_row in _zip(matrix.iter_rows(), expected):
         if row is None and expected_row is not None:
-            assert False, "not enough rows"
+            raise AssertionError("not enough rows")
         if row is not None and expected_row is None:
-            assert False, "too many rows"
+            raise AssertionError("too many rows")
         for j, cell, expected_val in _zip(row.iter_cells(), expected_row):
             assert (cell and cell.val) == expected_val, \
                 "%s != %s in row %s col %s" % \

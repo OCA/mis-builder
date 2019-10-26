@@ -761,7 +761,7 @@ class MisReport(models.Model):
                         not eval_expressions_by_account:
                     continue
 
-                for account_id, vals, drilldown_args, name_error in \
+                for account_id, vals, drilldown_args, _name_error in \
                         eval_expressions_by_account(expressions, locals_dict):
                     kpi_matrix.set_values_detail_account(
                         kpi, col_key, account_id, vals, drilldown_args)
