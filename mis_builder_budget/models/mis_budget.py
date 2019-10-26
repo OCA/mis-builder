@@ -86,15 +86,12 @@ class MisBudget(models.Model):
 
     @api.multi
     def action_draft(self):
-        for rec in self:
-            self.state = 'draft'
+        self.write({"state": "draft"})
 
     @api.multi
     def action_cancel(self):
-        for rec in self:
-            self.state = 'cancelled'
+        self.write({"state": "cancelled"})
 
     @api.multi
     def action_confirm(self):
-        for rec in self:
-            self.state = 'confirmed'
+        self.write({"state": "confirmed"})

@@ -130,7 +130,7 @@ class KpiMatrixSubCol(object):
         return cell_tuple[self.index]
 
 
-class KpiMatrixCell(object):
+class KpiMatrixCell(object):  # noqa: B903 (immutable data class)
 
     def __init__(self, row, subcol,
                  val, val_rendered, val_comment,
@@ -330,11 +330,12 @@ class KpiMatrix(object):
                 for val, base_val, comparison_subcol in \
                         zip(vals, base_vals, comparison_col.iter_subcols()):
                     # TODO FIXME average factors
-                    delta, delta_r, delta_style, delta_type = \
-                        self._style_model.compare_and_render(
-                            self.lang, row.style_props,
-                            row.kpi.type, row.kpi.compare_method,
-                            val, base_val, 1, 1)
+                    comparison = self._style_model.compare_and_render(
+                        self.lang, row.style_props,
+                        row.kpi.type, row.kpi.compare_method,
+                        val, base_val, 1, 1
+                    )
+                    delta, delta_r, delta_style, delta_type = comparison
                     comparison_cell_tuple.append(KpiMatrixCell(
                         row, comparison_subcol, delta, delta_r, None,
                         delta_style, None, delta_type))
@@ -401,7 +402,7 @@ class KpiMatrix(object):
 
         yields KpiMatrixCol: one for each column or comparison.
         """
-        for col_key, col in self._cols.items():
+        for _col_key, col in self._cols.items():
             yield col
 
     def iter_subcols(self):
