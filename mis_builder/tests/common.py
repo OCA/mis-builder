@@ -9,17 +9,16 @@ def _make_acl(env, model_name):
     """ make a dummy acl and commit it
     so we don't get warning about missing acl
     """
-    model_id = env['ir.model'].search([('name', '=', model_name)]).id
-    acl = env['ir.model.access'].search([('model_id', '=', model_id)])
+    model_id = env["ir.model"].search([("name", "=", model_name)]).id
+    acl = env["ir.model.access"].search([("model_id", "=", model_id)])
     if acl:
         return
     with odoo.api.Environment.manage():
         with odoo.registry(env.cr.dbname).cursor() as new_cr:
             new_env = odoo.api.Environment(new_cr, env.uid, env.context)
-            new_env['ir.model.access'].create(dict(
-                model_id=model_id,
-                name='dummy acl for ' + model_name,
-            ))
+            new_env["ir.model.access"].create(
+                dict(model_id=model_id, name="dummy acl for " + model_name)
+            )
             new_env.cr.commit()
 
 
@@ -56,6 +55,8 @@ def assert_matrix(matrix, expected):
         if row is not None and expected_row is None:
             raise AssertionError("too many rows")
         for j, cell, expected_val in _zip(row.iter_cells(), expected_row):
-            assert (cell and cell.val) == expected_val, \
-                "%s != %s in row %s col %s" % \
-                (cell and cell.val, expected_val, i, j)
+            assert (
+                cell and cell.val
+            ) == expected_val, "{} != {} in row {} col {}".format(
+                cell and cell.val, expected_val, i, j
+            )

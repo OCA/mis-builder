@@ -16,7 +16,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
             FROM res_currency_rate r
               JOIN res_company c ON (r.company_id is null or r.company_id = c.id)
         )
-    
+
         /* UNINVOICED PURCHASES */
     SELECT
         'uninvoiced purchase' AS line_type,

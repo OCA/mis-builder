@@ -126,4 +126,5 @@ def _max(*args):
 
 if __name__ == "__main__":  # pragma: no cover
     import doctest
+
     doctest.testmod()

@@ -7,8 +7,6 @@ from odoo import fields, models
 
 class MisReportKpi(models.Model):
 
-    _inherit = 'mis.report.kpi'
+    _inherit = "mis.report.kpi"
 
-    budgetable = fields.Boolean(
-        default=False,
-    )
+    budgetable = fields.Boolean(default=False)
