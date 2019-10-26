@@ -121,7 +121,7 @@ odoo.define('mis_builder.widget', function (require) {
             });
 
             var def4 = session.user_has_group(
-                'analytic.group_analytic_accounting'  // TODO change in v12
+                'analytic.group_analytic_tags'
             ).then(function (result) {
                 self.has_group_analytic_tags = result;
             });
@@ -210,7 +210,7 @@ odoo.define('mis_builder.widget', function (require) {
                     {
                         mode: 'edit',
                         attrs: {
-                            placeholder: self.analytic_tag_ids_label,  // Odoo 11 does not display it
+                            placeholder: self.analytic_tag_ids_label,
                             options: {
                                 no_create: 'True',
                                 no_open: 'True',
