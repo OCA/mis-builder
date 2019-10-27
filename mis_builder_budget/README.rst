@@ -31,7 +31,7 @@ This module lets you create budgets for any MIS report. Several budgets
 can be created for a given report template (ie one budget per year). Budget
 figures are provided at the KPI level, with different time periods. A budget
 can then be selected as a data source for a MIS report column, and the report
-will show the budgeted values for each KPI, adjusted for the period of the 
+will show the budgeted values for each KPI, adjusted for the period of the
 column.
 
 **Table of contents**
@@ -44,12 +44,12 @@ Usage
 
 To use this module, you first need to flag at least some KPI in a MIS
 report to be budgetable. You also need to configure the accumulation method
-on the KPI according to their type. 
+on the KPI according to their type.
 
 The accumulation method determines how budgeted values spanning over a
 time period are transformed to match the reporting period.
 
-* Sum: values of shorter period are added, values of longest or partially overlapping 
+* Sum: values of shorter period are added, values of longest or partially overlapping
   periods are adjusted pro-rata temporis (eg monetary amount such as revenue).
 * Average: values of included period are averaged with a pro-rata temporis weight.
   Typically used for values that do not accumulate over time (eg a number of employees).
@@ -64,12 +64,22 @@ when displayed. Columns can be compared by adding a column of type "comparison" 
 Known issues / Roadmap
 ======================
 
-The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_ 
-and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can 
+The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_
+and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can
 be found on GitHub.
 
 Changelog
 =========
+
+10.0.3.4.0 (2019-10-26)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Consider analytic tags too when detecting overlapping budget items.
+  Previously only analytic account was considered, and this overlap detection
+  mechanism was overlooked when analytic tags were added to budget items. (`#241 <https://github.com/oca/mis-builder/issues/241>`_)
+
 
 10.0.3.3.0 (2018-11-16)
 ~~~~~~~~~~~~~~~~~~~~~~~
