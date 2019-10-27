@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mis_builder_demo
+# 	* mis_builder_demo
 #
 msgid ""
 msgstr ""
@@ -30,6 +30,13 @@ msgstr "Konto"
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_analytic_account_id
 msgid "Analytic Account"
+msgstr "Kostenstelle"
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_analytic_tag_ids
+#, fuzzy
+#| msgid "Analytic Account"
+msgid "Analytic Tags"
 msgstr "Kostenstelle"
 
 #. module: mis_builder_demo
@@ -114,7 +121,9 @@ msgstr ""
 
 #. module: mis_builder_demo
 #: model:ir.model,name:mis_builder_demo.model_mis_committed_purchase
-msgid "MIS Committed Purchase"
+#, fuzzy
+#| msgid "MIS Committed Purchase"
+msgid "MIS Commitment"
 msgstr "MIS genehmigte Einkäufe"
 
 #. module: mis_builder_demo
@@ -126,6 +135,16 @@ msgstr "Name"
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_other
 msgid "Other"
 msgstr "Sonstige"
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_res_id
+msgid "Resource ID"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_res_model
+msgid "Resource Model Name"
+msgstr ""
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
