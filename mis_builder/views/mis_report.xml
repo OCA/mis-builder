@@ -22,6 +22,7 @@
                         <field name="name"/>
                         <field name="description"/>
                         <field name="style_id"/>
+                        <field name="move_lines_source" options="{'no_open': true}"/>
                     </group>
                     <notebook>
                         <page string="KPI's">
@@ -113,7 +114,7 @@
                                  <div>
                                      <p>Expressions can be any valid python expressions.</p>
                                      <p>
-                                         The following special elements are recognized in the expressions to compute accounting data: 
+                                         The following special elements are recognized in the expressions to compute accounting data:
                                          <code>{bal|crd|deb|pbal|nbal}{pieu}[account selector][journal items domain]</code>.
                                      </p>
                                      <ul>

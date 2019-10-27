@@ -60,7 +60,7 @@ How to create a template
 #. Comparison Method (Percentage, difference, none)
 #. Style: as defined in the Reports Style
 #. Style expression: An expression that returns a style depending on the KPI value.
-   Such style is applied on top of the row style.
+   Such style is applied on top of the row style. Example of syntax: "Style_to_be_used" if name>0 else None
 #. Budgetable (if MIS_Budget module is installed): indicates that a budget can be
    provided for the KPI (not needed for calculations)
 #. Multi: If True allows to define KPI with multiple values (eg: Initial, Debit,
@@ -136,7 +136,9 @@ Create a new column in the report
 Instances example, column types
 -------------------------------
 
-TODO: content to be added
+.. todo::
+
+  content waiting contribution
 
 Displaying reports
 ------------------
@@ -173,7 +175,7 @@ data: {bal|crd|deb}{pieu}[account selector][journal items domain].
 * p, i, e: respectively variation over the period, initial balance, ending balance
 * The account selector is a like expression on the account code (eg 70%, etc).
 * The journal items domain is an Odoo domain filter on journal items.
-* balu[]: (u for unallocated) is a special expression that shows the unallocated 
+* balu[]: (u for unallocated) is a special expression that shows the unallocated
   profit/loss of previous fiscal years.
 * Expression can also involve other KPI and query results by name (eg kpi1 + kpi2).
 
@@ -199,25 +201,97 @@ Examples
 
 Expansion of Account Detail
 ---------------------------
-TODO: content to be added
+
+.. todo::
+
+  content waiting contribution
 
 Python expressions basics
 -------------------------
+
 Arithmetic Expressions
 **********************
-TODO: content to be added
+
+.. todo::
+
+  content waiting contribution
 
 Conditional Expressions
 ***********************
-TODO: content to be added
+
+.. todo::
+
+  content waiting contribution
 
 Zero vs no data, AccountingNone
 -------------------------------
-TODO: content to be added
+
+.. todo::
+
+  content waiting contribution
 
 Reporting on non-accounting data (queries)
 ------------------------------------------
-Check the module `mis_builder_demo <https://github.com/OCA/mis-builder/tree/10.0/mis_builder_demo>`_ to see how to create specific series of data for Committed purchases not yet invoiced.
+
+This section describes the "Queries" tab in the MIS Report definition form.
+It is used to prepare queries on any Odoo model that has at least
+a date-like field, and use the result in expression.
+
+.. note::
+
+  See also the `Data sources for columns`_ section to report on views that are
+  similar to journal entries, such committed purchases.
+
+Example of query: we want a report showing the Total amount (Excluding VAT) of
+all sales order confirmed during the current month and the previous month.
+
+To create a query, first populate the Queries tab.
+
+Name
+  Select a name (it must be a compatible with a python variable name, so no
+  space in the name for instance, use only ascii letters, digits and
+  underscore, and start with a letter)
+
+Model
+  Look for the model on which you want to do the report. For example : Sale
+  Order
+
+Field to fetch
+  Select in the list the field from the Model that will be used in the report.
+  For example: Untaxed Amount
+
+Fetched fields name
+  This will show the name of the field to use in the KPI expression later on.
+  For example: amount_untaxed
+
+Aggregate
+  Choose between nothing, Sum, Max, Average or Min. If you leave this aggregate
+  field empty, the query will give a list, not a number.
+
+Date field
+  Choose a date field available on the Model. This date is used to get the
+  records that matched the period mentioned in the query. For example:
+  confirmation date of the sale order.
+
+Domain
+  This is optional. Use a domain (as definded in classic Odoo), to filter
+  records. For example: [("partner_id.country_id.code","=","US")]
+
+.. image:: _static/images/query_1.png
+   :width: 1800
+
+In the KPI expression, you can now use the fields of the queries.
+For example: ``sum([s.amount_untaxed for s in sales_order_amount])`` in case
+the Aggregate field was not set, or ``s.amount_untaxed`` in case the Aggregate
+field was set.
+
+.. image:: _static/images/query_2.png
+   :width: 1800
+
+In a reporting instance, the result is as follows:
+
+.. image:: _static/images/query_3.png
+   :width: 1800
 
 Styles
 ------
@@ -230,19 +304,43 @@ You can create multi-level styles which will be applied to the different lines o
 
 The styles are used later in the Template Report definition.
 
-.. TODO: Add a line for each of the options, although they are quite straightforward
+.. todo::
+
+  Add a line for each of the options, although they are quite straightforward.
 
 Analytic Filters
 ----------------
-TODO: content to be added
+
+Analytic accounts is often used in budget and actual versions to follow-up the
+costs and expenses of a project.
+
+If you need to activate the management of analytic accounts, go to Invoicing
+module ‣ Configuration ‣ Settings and enable the Analytic Accounting.
+
+In each MIS report, you can untick the box to get the analytic filters. The
+selection possible is one only.
+
+.. image:: _static/images/analytic.jpg
+   :width: 300
+
+The other possibility is to add the analytic filter in the MIS report without
+any selection possible by the user of the report.
+
+.. image:: _static/images/analytic1.jpg
+   :width: 1800
 
 Data sources for columns
 ------------------------
-* Actuals
-* Actuals (alternative): example, commitments
-* Sum/Difference
 
-TODO: content to be added
+- Actuals
+- Actuals (alternative): Check the module ``mis_builder_demo`` to see how to
+  create specific series of data for Committed purchases not yet invoiced.
+- Sum/Difference
+- MIS Budgets
+
+.. todo::
+
+  content waiting contribution
 
 MIS Budgets
 -----------
