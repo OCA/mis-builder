@@ -7,9 +7,9 @@ MIS Builder Demo
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Alpha
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -26,6 +26,11 @@ MIS Builder Demo
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 Demo addon for MIS Builder.
+
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 
@@ -49,9 +54,19 @@ chart of accounts:
 Known issues / Roadmap
 ======================
 
-The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_ 
-and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can 
+The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_
+and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can
 be found on github.
+
+Changelog
+=========
+
+9.0.3.1.0 (2019-10-26)
+~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix date casting error on committed expenses drilldown. (`#185 <https://github.com/oca/mis-builder/issues/185>`_)
 
 Bug Tracker
 ===========
