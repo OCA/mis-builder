@@ -109,6 +109,7 @@
                                         domain="[('id', 'child_of', company_id)]"
                                         attrs="{'invisible': [('multi_company', '=', False)]}"/>
                                 <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                <field name="analytic_tag_ids" groups="analytic.group_analytic_tags" widget="many2many_tags"/>
                             </group>
                         </page>
                         <page string="Layout">

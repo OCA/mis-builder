@@ -28,7 +28,7 @@ then target the corresponding branch.
 
 ## CLA
 
-Have you signed the OCA Contributor License Agreement? 
+Have you signed the OCA Contributor License Agreement?
 If not, please visit https://odoo-community.org/page/cla to learn how.
 
 ## Changelog entry
