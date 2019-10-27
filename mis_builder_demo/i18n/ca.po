@@ -33,6 +33,12 @@ msgid "Analytic Account"
 msgstr "Compte"
 
 #. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_tag_ids
+#, fuzzy
+msgid "Analytic Tags"
+msgstr "Compte"
+
+#. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
 msgid "Available"
 msgstr "Disponible"
@@ -114,7 +120,9 @@ msgstr "M-2"
 
 #. module: mis_builder_demo
 #: model:ir.model,name:mis_builder_demo.model_mis_committed_purchase
-msgid "MIS Committed Purchase"
+#, fuzzy
+#| msgid "MIS Committed Purchase"
+msgid "MIS Commitment"
 msgstr "MIS consignat a compra"
 
 #. module: mis_builder_demo
@@ -126,6 +134,16 @@ msgstr "Nom"
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_other
 msgid "Other"
 msgstr "Altre"
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__res_id
+msgid "Resource ID"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__res_model
+msgid "Resource Model Name"
+msgstr ""
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
