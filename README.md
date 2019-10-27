@@ -5,7 +5,7 @@
 
 # MIS Builder
 
-Management Information System reports for Odoo: easily build super fast, 
+Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
 
 **This is the 9.0 branch. Please note the development of new features occurs mainly on
