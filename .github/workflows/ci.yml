@@ -1,0 +1,20 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - uses: actions/cache@v1
+        with:
+          path: .pre-commit
+          key: ${{ runner.OS }}-pre-commit
+      - name: Install pre-commit
+        run: |
+          python3 -m pip install setuptools  # because a pre-commit dependency needs it to build
+          python3 -m pip install pre-commit
+      - name: Run pre-commit
+        run: env PRE_COMMIT_HOME=${GITHUB_WORKSPACE}/.pre-commit python3 -m pre_commit run --all-files --show-diff-on-failure
