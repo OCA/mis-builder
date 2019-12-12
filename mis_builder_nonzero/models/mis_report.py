@@ -25,5 +25,3 @@ class MisReportInstance(models.Model):
                             content.append(line)
             res['content'] = content
         return res
-
-
