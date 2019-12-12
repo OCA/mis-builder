@@ -9,7 +9,8 @@
     'summary': """
         Ads a boolean on mis reports to filter out KPI with zero balance
     """,
-    'author': 'Decodio d.o.o.'
+    'author': 'Decodio d.o.o., '
+              'Odoo Community Association (OCA)'
     ,
     'website': "https://decod.io",
     'license': 'AGPL-3',
