@@ -9,17 +9,16 @@ def _make_acl(env, model_name):
     """ make a dummy acl and commit it
     so we don't get warning about missing acl
     """
-    model_id = env['ir.model'].search([('name', '=', model_name)]).id
-    acl = env['ir.model.access'].search([('model_id', '=', model_id)])
+    model_id = env["ir.model"].search([("name", "=", model_name)]).id
+    acl = env["ir.model.access"].search([("model_id", "=", model_id)])
     if acl:
         return
     with odoo.api.Environment.manage():
         with odoo.registry(env.cr.dbname).cursor() as new_cr:
             new_env = odoo.api.Environment(new_cr, env.uid, env.context)
-            new_env['ir.model.access'].create(dict(
-                model_id=model_id,
-                name='dummy acl for ' + model_name,
-            ))
+            new_env["ir.model.access"].create(
+                dict(model_id=model_id, name="dummy acl for " + model_name)
+            )
             new_env.cr.commit()
 
 
@@ -44,7 +43,7 @@ def _zip(iter1, iter2):
         i1 = next(iter1, None)
         i2 = next(iter2, None)
         if i1 is None and i2 is None:
-            raise StopIteration()
+            return
         yield i, i1, i2
         i += 1
 
@@ -52,10 +51,12 @@ def _zip(iter1, iter2):
 def assert_matrix(matrix, expected):
     for i, row, expected_row in _zip(matrix.iter_rows(), expected):
         if row is None and expected_row is not None:
-            assert False, "not enough rows"
+            raise AssertionError("not enough rows")
         if row is not None and expected_row is None:
-            assert False, "too many rows"
+            raise AssertionError("too many rows")
         for j, cell, expected_val in _zip(row.iter_cells(), expected_row):
-            assert (cell and cell.val) == expected_val, \
-                "%s != %s in row %s col %s" % \
-                (cell and cell.val, expected_val, i, j)
+            assert (
+                cell and cell.val
+            ) == expected_val, "{} != {} in row {} col {}".format(
+                cell and cell.val, expected_val, i, j
+            )

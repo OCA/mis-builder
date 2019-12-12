@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.15.1: http://docutils.sourceforge.net/" />
 <title>MIS Builder</title>
 <style type="text/css">
 
@@ -376,38 +376,40 @@ can be added to Odoo dashboards.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#installation" id="id40">Installation</a></li>
-<li><a class="reference internal" href="#usage" id="id41">Usage</a></li>
-<li><a class="reference internal" href="#development" id="id42">Development</a></li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id43">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#changelog" id="id44">Changelog</a><ul>
-<li><a class="reference internal" href="#id1" id="id45">10.0.3.3.0 (2018-11-16)</a></li>
-<li><a class="reference internal" href="#id12" id="id46">10.0.3.2.2 (2018-06-30)</a></li>
-<li><a class="reference internal" href="#id15" id="id47">10.0.3.2.1 (2018-05-29)</a></li>
-<li><a class="reference internal" href="#id17" id="id48">10.0.3.2.0 (2018-05-02)</a></li>
-<li><a class="reference internal" href="#id21" id="id49">10.0.3.1.1 (2017-11-14)</a></li>
-<li><a class="reference internal" href="#id30" id="id50">10.0.3.0.4 (2017-10-14)</a></li>
-<li><a class="reference internal" href="#id32" id="id51">10.0.3.0.3 (2017-10-03)</a></li>
-<li><a class="reference internal" href="#id34" id="id52">10.0.3.0.2 (2017-10-01)</a></li>
-<li><a class="reference internal" href="#unreleased" id="id53">10.0.2.0.3 (unreleased)</a></li>
-<li><a class="reference internal" href="#id35" id="id54">9.0.2.0.2 (2016-09-27)</a></li>
-<li><a class="reference internal" href="#id36" id="id55">9.0.2.0.1 (2016-05-26)</a></li>
-<li><a class="reference internal" href="#id37" id="id56">9.0.2.0.0 (2016-05-24)</a></li>
-<li><a class="reference internal" href="#id38" id="id57">8.0.1.0.0 (2016-04-27)</a></li>
-<li><a class="reference internal" href="#id39" id="id58">8.0.0.2.0</a></li>
+<li><a class="reference internal" href="#installation" id="id54">Installation</a></li>
+<li><a class="reference internal" href="#usage" id="id55">Usage</a></li>
+<li><a class="reference internal" href="#development" id="id56">Development</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id57">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="id58">Changelog</a><ul>
+<li><a class="reference internal" href="#id1" id="id59">10.0.3.5.0 (2019-10-26)</a></li>
+<li><a class="reference internal" href="#id8" id="id60">10.0.3.4.0 (2019-07-09)</a></li>
+<li><a class="reference internal" href="#id15" id="id61">10.0.3.3.0 (2018-11-16)</a></li>
+<li><a class="reference internal" href="#id26" id="id62">10.0.3.2.2 (2018-06-30)</a></li>
+<li><a class="reference internal" href="#id29" id="id63">10.0.3.2.1 (2018-05-29)</a></li>
+<li><a class="reference internal" href="#id31" id="id64">10.0.3.2.0 (2018-05-02)</a></li>
+<li><a class="reference internal" href="#id35" id="id65">10.0.3.1.1 (2017-11-14)</a></li>
+<li><a class="reference internal" href="#id44" id="id66">10.0.3.0.4 (2017-10-14)</a></li>
+<li><a class="reference internal" href="#id46" id="id67">10.0.3.0.3 (2017-10-03)</a></li>
+<li><a class="reference internal" href="#id48" id="id68">10.0.3.0.2 (2017-10-01)</a></li>
+<li><a class="reference internal" href="#unreleased" id="id69">10.0.2.0.3 (unreleased)</a></li>
+<li><a class="reference internal" href="#id49" id="id70">9.0.2.0.2 (2016-09-27)</a></li>
+<li><a class="reference internal" href="#id50" id="id71">9.0.2.0.1 (2016-05-26)</a></li>
+<li><a class="reference internal" href="#id51" id="id72">9.0.2.0.0 (2016-05-24)</a></li>
+<li><a class="reference internal" href="#id52" id="id73">8.0.1.0.0 (2016-04-27)</a></li>
+<li><a class="reference internal" href="#id53" id="id74">8.0.0.2.0</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#bug-tracker" id="id59">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id60">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id61">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id62">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="id63">Maintainers</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="id75">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id76">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id77">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id78">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id79">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="installation">
-<h1><a class="toc-backref" href="#id40">Installation</a></h1>
+<h1><a class="toc-backref" href="#id54">Installation</a></h1>
 <p>Your preferred way to install addons will work with MIS Builder.</p>
 <p>An easy way to install it with all its dependencies is using pip:</p>
 <ul class="simple">
@@ -417,7 +419,7 @@ the MIS Builder application.</li>
 </ul>
 </div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#id41">Usage</a></h1>
+<h1><a class="toc-backref" href="#id55">Usage</a></h1>
 <p>To configure this module, you need to:</p>
 <ul class="simple">
 <li>Go to Accounting &gt; Configuration &gt; MIS Reporting &gt; MIS Report Templates where
@@ -443,7 +445,7 @@ and export it to PDF or Excel.</li>
 </div>
 </div>
 <div class="section" id="development">
-<h1><a class="toc-backref" href="#id42">Development</a></h1>
+<h1><a class="toc-backref" href="#id56">Development</a></h1>
 <p>A typical extension is to provide a mechanism to filter reports on analytic dimensions
 or operational units. To implement this, you can override _get_additional_move_line_filter
 and _get_additional_filter to further filter move lines or queries based on a user
@@ -452,15 +454,62 @@ or even on mis.report.instance.period if you want different columns to show diff
 analytic accounts.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id43">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#id57">Known issues / Roadmap</a></h1>
 <p>The mis_builder <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">roadmap</a>
 and <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug">known issues</a> can
 be found on GitHub.</p>
 </div>
 <div class="section" id="changelog">
-<h1><a class="toc-backref" href="#id44">Changelog</a></h1>
+<h1><a class="toc-backref" href="#id58">Changelog</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id45">10.0.3.3.0 (2018-11-16)</a></h2>
+<h2><a class="toc-backref" href="#id59">10.0.3.5.0 (2019-10-26)</a></h2>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li>The <tt class="docutils literal">account_id</tt> field of the model selected in ‘Move lines source’
+in the Period form can now be a Many2one
+relationship with any model that has a <tt class="docutils literal">code</tt> field (not only with
+<tt class="docutils literal">account.account</tt> model). To this end, the model to be used for Actuals
+move lines can be configured on the report template. It can be something else
+than move lines and the only constraint is that its <tt class="docutils literal">account_id</tt> field
+as a <tt class="docutils literal">code</tt> field. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/149">#149</a>)</li>
+<li>Add <tt class="docutils literal">source_aml_model_name</tt> field so extension modules providing
+alternative data sources can more easily customize their data source. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/214">#214</a>)</li>
+<li>Support analytic tag filters in the backend view and preview widget.
+Selecting several tags in the filter means filtering on move lines which
+have <em>all</em> these tags set. This is to support the most common use case of
+using tags for different dimensions. The filter also makes a AND with the
+analytic account filter. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/228">#228</a>)</li>
+<li>Display company in account details rows in multi-company mode. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/242">#242</a>)</li>
+</ul>
+<p><strong>Bugfixes</strong></p>
+<ul class="simple">
+<li>In columns of type Sum, preserve styles for KPIs that are not summable
+(eg percentage values). Before this fix, such cells were displayed without
+style. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/219">#219</a>)</li>
+<li>In Excel export, keep the percentage point suffix (pp) instead of replacing it with %. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/220">#220</a>)</li>
+</ul>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id60">10.0.3.4.0 (2019-07-09)</a></h2>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li>New year-to-date mode for defining periods. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/165">#165</a>)</li>
+<li>Add support for move lines with negative debit or credit.
+Used by some for storno accounting. Not officially supported. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/175">#175</a>)</li>
+<li>In Excel export, use a number format with thousands separator. The
+specific separator used depends on the Excel configuration (eg regional
+settings). (<a class="reference external" href="https://github.com/oca/mis-builder/issues/190">#190</a>)</li>
+<li>Add generation date/time at the end of the XLS export. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/191">#191</a>)</li>
+<li>In presence of Sub KPIs, report more informative user errors when
+non-multi expressions yield tuples of incorrect lenght. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/196">#196</a>)</li>
+</ul>
+<p><strong>Bugfixes</strong></p>
+<ul class="simple">
+<li>Fix rendering of percentage types in Excel export. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/192">#192</a>)</li>
+</ul>
+</div>
+<div class="section" id="id15">
+<h2><a class="toc-backref" href="#id61">10.0.3.3.0 (2018-11-16)</a></h2>
 <p><strong>Features</strong></p>
 <ul class="simple">
 <li>Analytic account filters. On a report, an analytic
@@ -497,8 +546,8 @@ is checked, as for all other syle elements. (<a class="reference external" href=
 <p>If you use <tt class="docutils literal">Actuals (alternative)</tt> data source in combination with analytic
 filters, the underlying model must now have an <tt class="docutils literal">analytic_account_id</tt> field.</p>
 </div>
-<div class="section" id="id12">
-<h2><a class="toc-backref" href="#id46">10.0.3.2.2 (2018-06-30)</a></h2>
+<div class="section" id="id26">
+<h2><a class="toc-backref" href="#id62">10.0.3.2.2 (2018-06-30)</a></h2>
 <ul class="simple">
 <li>[FIX] Fix bug in company_default_get call returning
 id instead of recordset
@@ -509,16 +558,16 @@ need to be displayed).
 (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/46">#46</a>)</li>
 </ul>
 </div>
-<div class="section" id="id15">
-<h2><a class="toc-backref" href="#id47">10.0.3.2.1 (2018-05-29)</a></h2>
+<div class="section" id="id29">
+<h2><a class="toc-backref" href="#id63">10.0.3.2.1 (2018-05-29)</a></h2>
 <ul class="simple">
 <li>[FIX] Missing comparison operator for AccountingNone
 leading to errors in pbal computations
 (<a class="reference external" href="https://github.com/OCA/mis-builder/issue/93">#93</a>)</li>
 </ul>
 </div>
-<div class="section" id="id17">
-<h2><a class="toc-backref" href="#id48">10.0.3.2.0 (2018-05-02)</a></h2>
+<div class="section" id="id31">
+<h2><a class="toc-backref" href="#id64">10.0.3.2.0 (2018-05-02)</a></h2>
 <ul class="simple">
 <li>[FIX] make subkpi ordering deterministic
 (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/71">#71</a>)</li>
@@ -532,8 +581,8 @@ resp positive balances)
 (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/86">#86</a>)</li>
 </ul>
 </div>
-<div class="section" id="id21">
-<h2><a class="toc-backref" href="#id49">10.0.3.1.1 (2017-11-14)</a></h2>
+<div class="section" id="id35">
+<h2><a class="toc-backref" href="#id65">10.0.3.1.1 (2017-11-14)</a></h2>
 <p>New features:</p>
 <ul class="simple">
 <li>[ADD] month and year relative periods, easier to use than
@@ -570,24 +619,24 @@ created (not yet saved) report instances.
 <li>Alternative move line data sources must have a company_id field.</li>
 </ul>
 </div>
-<div class="section" id="id30">
-<h2><a class="toc-backref" href="#id50">10.0.3.0.4 (2017-10-14)</a></h2>
+<div class="section" id="id44">
+<h2><a class="toc-backref" href="#id66">10.0.3.0.4 (2017-10-14)</a></h2>
 <p>Bug fix:</p>
 <ul class="simple">
 <li>[FIX] issue with initial balance rounding.
 <a class="reference external" href="https://github.com/OCA/mis-builder/issues/30">#30</a></li>
 </ul>
 </div>
-<div class="section" id="id32">
-<h2><a class="toc-backref" href="#id51">10.0.3.0.3 (2017-10-03)</a></h2>
+<div class="section" id="id46">
+<h2><a class="toc-backref" href="#id67">10.0.3.0.3 (2017-10-03)</a></h2>
 <p>Bug fix:</p>
 <ul class="simple">
 <li>[FIX] fix error saving KPI on newly created reports.
 <a class="reference external" href="https://github.com/OCA/mis-builder/issues/18">#18</a></li>
 </ul>
 </div>
-<div class="section" id="id34">
-<h2><a class="toc-backref" href="#id52">10.0.3.0.2 (2017-10-01)</a></h2>
+<div class="section" id="id48">
+<h2><a class="toc-backref" href="#id68">10.0.3.0.2 (2017-10-01)</a></h2>
 <p>New features:</p>
 <ul class="simple">
 <li>[ADD] Alternative move line source per report column.
@@ -631,7 +680,7 @@ expressions were used in a KPI</li>
 </ul>
 </div>
 <div class="section" id="unreleased">
-<h2><a class="toc-backref" href="#id53">10.0.2.0.3 (unreleased)</a></h2>
+<h2><a class="toc-backref" href="#id69">10.0.2.0.3 (unreleased)</a></h2>
 <ul class="simple">
 <li>[IMP] more robust behaviour in presence of missing expressions</li>
 <li>[FIX] indent style</li>
@@ -643,23 +692,23 @@ reports with no objects</li>
 <li>[IMP] provide full access to mis builder style for group Adviser.</li>
 </ul>
 </div>
-<div class="section" id="id35">
-<h2><a class="toc-backref" href="#id54">9.0.2.0.2 (2016-09-27)</a></h2>
+<div class="section" id="id49">
+<h2><a class="toc-backref" href="#id70">9.0.2.0.2 (2016-09-27)</a></h2>
 <ul class="simple">
 <li>[IMP] Add refresh button in mis report preview.</li>
 <li>[IMP] Widget code changes to allow to add fields in the widget more easily.</li>
 </ul>
 </div>
-<div class="section" id="id36">
-<h2><a class="toc-backref" href="#id55">9.0.2.0.1 (2016-05-26)</a></h2>
+<div class="section" id="id50">
+<h2><a class="toc-backref" href="#id71">9.0.2.0.1 (2016-05-26)</a></h2>
 <ul class="simple">
 <li>[IMP] remove unused argument in declare_and_compute_period()
 for a cleaner API. This is a breaking API changing merged in
 urgency before it is used by other modules.</li>
 </ul>
 </div>
-<div class="section" id="id37">
-<h2><a class="toc-backref" href="#id56">9.0.2.0.0 (2016-05-24)</a></h2>
+<div class="section" id="id51">
+<h2><a class="toc-backref" href="#id72">9.0.2.0.0 (2016-05-24)</a></h2>
 <p>Part of the work for this release has been done at the Sorrento sprint
 April 26-29, 2016. The rest (ie a major refactoring) has been done in
 the weeks after.</p>
@@ -706,8 +755,8 @@ flexible alternative to fiscal periods</li>
 consolidation accounts have been removed</li>
 </ul>
 </div>
-<div class="section" id="id38">
-<h2><a class="toc-backref" href="#id57">8.0.1.0.0 (2016-04-27)</a></h2>
+<div class="section" id="id52">
+<h2><a class="toc-backref" href="#id73">8.0.1.0.0 (2016-04-27)</a></h2>
 <ul class="simple">
 <li>The copy of a MIS Report Instance now copies period.
 <a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/181">https://github.com/OCA/account-financial-reporting/pull/181</a></li>
@@ -731,13 +780,13 @@ the widget to open the door to analytic filtering in the previews.
 <a class="reference external" href="https://github.com/OCA/account-financial-reporting/pull/131">https://github.com/OCA/account-financial-reporting/pull/131</a></li>
 </ul>
 </div>
-<div class="section" id="id39">
-<h2><a class="toc-backref" href="#id58">8.0.0.2.0</a></h2>
+<div class="section" id="id53">
+<h2><a class="toc-backref" href="#id74">8.0.0.2.0</a></h2>
 <p>Pre-history. Or rather, you need to look at the git log.</p>
 </div>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id59">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id75">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/mis-builder/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -745,15 +794,15 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id60">Credits</a></h1>
+<h1><a class="toc-backref" href="#id76">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id61">Authors</a></h2>
+<h2><a class="toc-backref" href="#id77">Authors</a></h2>
 <ul class="simple">
 <li>ACSONE SA/NV</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id62">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id78">Contributors</a></h2>
 <ul class="simple">
 <li>Stéphane Bidoul &lt;<a class="reference external" href="mailto:stephane.bidoul&#64;acsone.eu">stephane.bidoul&#64;acsone.eu</a>&gt;</li>
 <li>Laetitia Gangloff &lt;<a class="reference external" href="mailto:laetitia.gangloff&#64;acsone.eu">laetitia.gangloff&#64;acsone.eu</a>&gt;</li>
@@ -774,10 +823,14 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <li>Richard deMeester &lt;<a class="reference external" href="mailto:richard&#64;willowit.com.au">richard&#64;willowit.com.au</a>&gt;</li>
 <li>Eric Caudal &lt;<a class="reference external" href="mailto:eric.caudal&#64;elico-corp.com">eric.caudal&#64;elico-corp.com</a>&gt;</li>
 <li>Andrea Stirpe &lt;<a class="reference external" href="mailto:a.stirpe&#64;onestein.nl">a.stirpe&#64;onestein.nl</a>&gt;</li>
+<li>Maxence Groine &lt;<a class="reference external" href="mailto:mgroine&#64;fiefmanage.ch">mgroine&#64;fiefmanage.ch</a>&gt;</li>
+<li>Arnaud Pineux &lt;<a class="reference external" href="mailto:arnaud.pineux&#64;acsone.eu">arnaud.pineux&#64;acsone.eu</a>&gt;</li>
+<li>Ernesto Tejeda &lt;<a class="reference external" href="mailto:ernesto.tejeda&#64;tecnativa.com">ernesto.tejeda&#64;tecnativa.com</a>&gt;</li>
+<li>Pedro M. Baeza &lt;<a class="reference external" href="mailto:pedro.baeza&#64;tecnativa.com">pedro.baeza&#64;tecnativa.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id63">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id79">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose

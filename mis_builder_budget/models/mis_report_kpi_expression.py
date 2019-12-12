@@ -7,21 +7,21 @@ from odoo import api, models
 
 class MisReportKpiExpression(models.Model):
 
-    _inherit = 'mis.report.kpi.expression'
+    _inherit = "mis.report.kpi.expression"
 
     @api.model
-    def name_search(self, name='', args=None, operator='ilike', limit=100):
+    def name_search(self, name="", args=None, operator="ilike", limit=100):
         args = args or []
-        if 'default_budget_id' in self.env.context:
-            report_id = self.env['mis.budget'].\
-                browse(self.env.context['default_budget_id']).report_id.id
+        if "default_budget_id" in self.env.context:
+            report_id = (
+                self.env["mis.budget"]
+                .browse(self.env.context["default_budget_id"])
+                .report_id.id
+            )
             if report_id:
-                args += [
-                    ('kpi_id.report_id', '=', report_id),
-                ]
-                if '.' in name:
-                    args += [
-                        ('subkpi_id.report_id', '=', report_id),
-                    ]
-        return super(MisReportKpiExpression, self).\
-            name_search(name, args, operator, limit)
+                args += [("kpi_id.report_id", "=", report_id)]
+                if "." in name:
+                    args += [("subkpi_id.report_id", "=", report_id)]
+        return super(MisReportKpiExpression, self).name_search(
+            name, args, operator, limit
+        )

@@ -5,7 +5,7 @@
             <t t-if="widget.mis_report_data">
                 <h2><t t-esc="widget.mis_report_data.report_name" /></h2>
                 <div>
-                    <div class="oe_mis_builder_analytic_filter_box oe_left" style="position: relative; display: inline-block;"/>
+                    <div class="oe_mis_builder_analytic_filter_box oe_left o_form_view o_form_editable"></div>
                     <div class="oe_mis_builder_buttons oe_right oe_button_box">
                         <button class="oe_mis_builder_refresh btn btn-sm oe_button"><span class="fa fa-refresh"/> Refresh</button>
                         <button class="oe_mis_builder_print btn btn-sm oe_button"><span class="fa fa-print"/> Print</button>

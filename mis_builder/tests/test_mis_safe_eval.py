@@ -4,24 +4,23 @@
 
 import odoo.tests.common as common
 
-from ..models.mis_safe_eval import mis_safe_eval, DataError, NameDataError
+from ..models.mis_safe_eval import DataError, NameDataError, mis_safe_eval
 
 
 class TestMisSafeEval(common.TransactionCase):
-
     def test_nominal(self):
-        val = mis_safe_eval('a + 1', {'a': 1})
+        val = mis_safe_eval("a + 1", {"a": 1})
         self.assertEqual(val, 2)
 
     def test_exceptions(self):
-        val = mis_safe_eval('1/0', {})  # division by zero
+        val = mis_safe_eval("1/0", {})  # division by zero
         self.assertTrue(isinstance(val, DataError))
-        self.assertEqual(val.name, '#DIV/0')
-        val = mis_safe_eval('1a', {})  # syntax error
+        self.assertEqual(val.name, "#DIV/0")
+        val = mis_safe_eval("1a", {})  # syntax error
         self.assertTrue(isinstance(val, DataError))
-        self.assertEqual(val.name, '#ERR')
+        self.assertEqual(val.name, "#ERR")
 
     def test_name_error(self):
-        val = mis_safe_eval('a + 1', {})
+        val = mis_safe_eval("a + 1", {})
         self.assertTrue(isinstance(val, NameDataError))
-        self.assertEqual(val.name, '#NAME')
+        self.assertEqual(val.name, "#NAME")

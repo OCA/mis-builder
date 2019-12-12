@@ -2,20 +2,22 @@
 # Copyright 2014-2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from collections import defaultdict, OrderedDict
-try:
-    import itertools.izip as zip
-except ImportError:
-    pass  # python 3
 import logging
+from collections import OrderedDict, defaultdict
 
 from odoo import _
 from odoo.exceptions import UserError
 
 from .accounting_none import AccountingNone
-from .mis_safe_eval import mis_safe_eval, DataError
 from .mis_kpi_data import ACC_SUM
+from .mis_safe_eval import DataError, mis_safe_eval
 from .simple_array import SimpleArray
+
+try:
+    import itertools.izip as zip
+except ImportError:
+    pass  # python 3
+
 
 _logger = logging.getLogger(__name__)
 
@@ -31,16 +33,16 @@ class KpiMatrixRow(object):
         self._matrix = matrix
         self.kpi = kpi
         self.account_id = account_id
-        self.description = ''
+        self.description = ""
         self.parent_row = parent_row
         if not self.account_id:
-            self.style_props = self._matrix._style_model.merge([
-                self.kpi.report_id.style_id,
-                self.kpi.style_id])
+            self.style_props = self._matrix._style_model.merge(
+                [self.kpi.report_id.style_id, self.kpi.style_id]
+            )
         else:
-            self.style_props = self._matrix._style_model.merge([
-                self.kpi.report_id.style_id,
-                self.kpi.auto_expand_accounts_style_id])
+            self.style_props = self._matrix._style_model.merge(
+                [self.kpi.report_id.style_id, self.kpi.auto_expand_accounts_style_id]
+            )
 
     @property
     def label(self):
@@ -54,7 +56,7 @@ class KpiMatrixRow(object):
         if not self.account_id:
             return self.kpi.name
         else:
-            return '{}:{}'.format(self.kpi.name, self.account_id)
+            return "{}:{}".format(self.kpi.name, self.account_id)
 
     def iter_cell_tuples(self, cols=None):
         if cols is None:
@@ -76,7 +78,6 @@ class KpiMatrixRow(object):
 
 
 class KpiMatrixCol(object):
-
     def __init__(self, key, label, description, locals_dict, subkpis):
         self.key = key
         self.label = label
@@ -86,11 +87,11 @@ class KpiMatrixCol(object):
         self._subcols = []
         self.subkpis = subkpis
         if not subkpis:
-            subcol = KpiMatrixSubCol(self, '', '', 0)
+            subcol = KpiMatrixSubCol(self, "", "", 0)
             self._subcols.append(subcol)
         else:
             for i, subkpi in enumerate(subkpis):
-                subcol = KpiMatrixSubCol(self, subkpi.description, '', i)
+                subcol = KpiMatrixSubCol(self, subkpi.description, "", i)
                 self._subcols.append(subcol)
         self._cell_tuples_by_row = {}  # {row: (cells tuple)}
 
@@ -108,7 +109,6 @@ class KpiMatrixCol(object):
 
 
 class KpiMatrixSubCol(object):
-
     def __init__(self, col, label, description, index=0):
         self.col = col
         self.label = label
@@ -131,12 +131,18 @@ class KpiMatrixSubCol(object):
         return cell_tuple[self.index]
 
 
-class KpiMatrixCell(object):
-
-    def __init__(self, row, subcol,
-                 val, val_rendered, val_comment,
-                 style_props,
-                 drilldown_arg):
+class KpiMatrixCell(object):  # noqa: B903 (immutable data class)
+    def __init__(
+        self,
+        row,
+        subcol,
+        val,
+        val_rendered,
+        val_comment,
+        style_props,
+        drilldown_arg,
+        val_type,
+    ):
         self.row = row
         self.subcol = subcol
         self.val = val
@@ -144,16 +150,16 @@ class KpiMatrixCell(object):
         self.val_comment = val_comment
         self.style_props = style_props
         self.drilldown_arg = drilldown_arg
+        self.val_type = val_type
 
 
 class KpiMatrix(object):
-
-    def __init__(self, env):
+    def __init__(self, env, multi_company=False, account_model="account.account"):
         # cache language id for faster rendering
-        lang_model = env['res.lang']
+        lang_model = env["res.lang"]
         self.lang = lang_model._lang_get(env.user.lang)
-        self._style_model = env['mis.report.style']
-        self._account_model = env['account.account']
+        self._style_model = env["mis.report.style"]
+        self._account_model = env[account_model]
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
@@ -167,6 +173,7 @@ class KpiMatrix(object):
         self._sum_todo = {}
         # { account_id: account_name }
         self._account_names = {}
+        self._multi_company = multi_company
 
     def declare_kpi(self, kpi):
         """ Declare a new kpi (row) in the matrix.
@@ -176,8 +183,7 @@ class KpiMatrix(object):
         self._kpi_rows[kpi] = KpiMatrixRow(self, kpi)
         self._detail_rows[kpi] = {}
 
-    def declare_col(self, col_key, label, description,
-                    locals_dict, subkpis):
+    def declare_col(self, col_key, label, description, locals_dict, subkpis):
         """ Declare a new column, giving it an identifier (key).
 
         Invoke the declare_* methods in display order.
@@ -186,38 +192,39 @@ class KpiMatrix(object):
         self._cols[col_key] = col
         return col
 
-    def declare_comparison(self, cmpcol_key, col_key, base_col_key,
-                           label, description=None):
+    def declare_comparison(
+        self, cmpcol_key, col_key, base_col_key, label, description=None
+    ):
         """ Declare a new comparison column.
 
         Invoke the declare_* methods in display order.
         """
-        self._comparison_todo[cmpcol_key] = \
-            (col_key, base_col_key, label, description)
+        self._comparison_todo[cmpcol_key] = (col_key, base_col_key, label, description)
         self._cols[cmpcol_key] = None  # reserve slot in insertion order
 
-    def declare_sum(self, sumcol_key, col_to_sum_keys,
-                    label, description=None, sum_accdet=False):
+    def declare_sum(
+        self, sumcol_key, col_to_sum_keys, label, description=None, sum_accdet=False
+    ):
         """ Declare a new summation column.
 
         Invoke the declare_* methods in display order.
         :param col_to_sum_keys: [(sign, col_key)]
         """
-        self._sum_todo[sumcol_key] = \
-            (col_to_sum_keys, label, description, sum_accdet)
+        self._sum_todo[sumcol_key] = (col_to_sum_keys, label, description, sum_accdet)
         self._cols[sumcol_key] = None  # reserve slot in insertion order
 
-    def set_values(self, kpi, col_key, vals,
-                   drilldown_args, tooltips=True):
+    def set_values(self, kpi, col_key, vals, drilldown_args, tooltips=True):
         """ Set values for a kpi and a colum.
 
         Invoke this after declaring the kpi and the column.
         """
-        self.set_values_detail_account(kpi, col_key, None, vals,
-                                       drilldown_args, tooltips)
+        self.set_values_detail_account(
+            kpi, col_key, None, vals, drilldown_args, tooltips
+        )
 
-    def set_values_detail_account(self, kpi, col_key, account_id, vals,
-                                  drilldown_args, tooltips=True):
+    def set_values_detail_account(
+        self, kpi, col_key, account_id, vals, drilldown_args, tooltips=True
+    ):
         """ Set values for a kpi and a column and a detail account.
 
         Invoke this after declaring the kpi and the column.
@@ -235,43 +242,53 @@ class KpiMatrix(object):
         cell_tuple = []
         assert len(vals) == col.colspan
         assert len(drilldown_args) == col.colspan
-        for val, drilldown_arg, subcol in \
-                zip(vals, drilldown_args, col.iter_subcols()):
+        for val, drilldown_arg, subcol in zip(vals, drilldown_args, col.iter_subcols()):
             if isinstance(val, DataError):
                 val_rendered = val.name
                 val_comment = val.msg
             else:
                 val_rendered = self._style_model.render(
-                    self.lang, row.style_props, kpi.type, val)
+                    self.lang, row.style_props, kpi.type, val
+                )
                 if row.kpi.multi and subcol.subkpi:
-                    val_comment = u'{}.{} = {}'.format(
+                    val_comment = u"{}.{} = {}".format(
                         row.kpi.name,
                         subcol.subkpi.name,
-                        row.kpi._get_expression_str_for_subkpi(subcol.subkpi))
+                        row.kpi._get_expression_str_for_subkpi(subcol.subkpi),
+                    )
                 else:
-                    val_comment = u'{} = {}'.format(
-                        row.kpi.name,
-                        row.kpi.expression)
+                    val_comment = u"{} = {}".format(row.kpi.name, row.kpi.expression)
             cell_style_props = row.style_props
             if row.kpi.style_expression:
                 # evaluate style expression
                 try:
-                    style_name = mis_safe_eval(row.kpi.style_expression,
-                                               col.locals_dict)
+                    style_name = mis_safe_eval(
+                        row.kpi.style_expression, col.locals_dict
+                    )
                 except Exception:
-                    _logger.error("Error evaluating style expression <%s>",
-                                  row.kpi.style_expression, exc_info=True)
+                    _logger.error(
+                        "Error evaluating style expression <%s>",
+                        row.kpi.style_expression,
+                        exc_info=True,
+                    )
                 if style_name:
-                    style = self._style_model.search(
-                        [('name', '=', style_name)])
+                    style = self._style_model.search([("name", "=", style_name)])
                     if style:
                         cell_style_props = self._style_model.merge(
-                            [row.style_props, style[0]])
+                            [row.style_props, style[0]]
+                        )
                     else:
                         _logger.error("Style '%s' not found.", style_name)
-            cell = KpiMatrixCell(row, subcol, val, val_rendered,
-                                 tooltips and val_comment or None,
-                                 cell_style_props, drilldown_arg)
+            cell = KpiMatrixCell(
+                row,
+                subcol,
+                val,
+                val_rendered,
+                tooltips and val_comment or None,
+                cell_style_props,
+                drilldown_arg,
+                kpi.type,
+            )
             cell_tuple.append(cell)
         assert len(cell_tuple) == col.colspan
         col._set_cell_tuple(row, cell_tuple)
@@ -289,21 +306,28 @@ class KpiMatrix(object):
 
         Invoke this after setting all values.
         """
-        for cmpcol_key, (col_key, base_col_key, label, description) in \
-                self._comparison_todo.items():
+        for (
+            cmpcol_key,
+            (col_key, base_col_key, label, description),
+        ) in self._comparison_todo.items():
             col = self._cols[col_key]
             base_col = self._cols[base_col_key]
             common_subkpis = self._common_subkpis([col, base_col])
             if (col.subkpis or base_col.subkpis) and not common_subkpis:
-                raise UserError(_('Columns {} and {} are not comparable').
-                                format(col.description,
-                                       base_col.description))
+                raise UserError(
+                    _("Columns {} and {} are not comparable").format(
+                        col.description, base_col.description
+                    )
+                )
             if not label:
-                label = u'{} vs {}'.\
-                    format(col.label, base_col.label)
-            comparison_col = KpiMatrixCol(cmpcol_key, label, description, {},
-                                          sorted(common_subkpis,
-                                                 key=lambda s: s.sequence))
+                label = u"{} vs {}".format(col.label, base_col.label)
+            comparison_col = KpiMatrixCol(
+                cmpcol_key,
+                label,
+                description,
+                {},
+                sorted(common_subkpis, key=lambda s: s.sequence),
+            )
             self._cols[cmpcol_key] = comparison_col
             for row in self.iter_rows():
                 cell_tuple = col.get_cell_tuple_for_row(row)
@@ -311,31 +335,49 @@ class KpiMatrix(object):
                 if cell_tuple is None and base_cell_tuple is None:
                     continue
                 if cell_tuple is None:
-                    vals = [AccountingNone] * \
-                        (len(common_subkpis) or 1)
+                    vals = [AccountingNone] * (len(common_subkpis) or 1)
                 else:
-                    vals = [cell.val for cell in cell_tuple
-                            if not common_subkpis or
-                            cell.subcol.subkpi in common_subkpis]
+                    vals = [
+                        cell.val
+                        for cell in cell_tuple
+                        if not common_subkpis or cell.subcol.subkpi in common_subkpis
+                    ]
                 if base_cell_tuple is None:
-                    base_vals = [AccountingNone] * \
-                        (len(common_subkpis) or 1)
+                    base_vals = [AccountingNone] * (len(common_subkpis) or 1)
                 else:
-                    base_vals = [cell.val for cell in base_cell_tuple
-                                 if not common_subkpis or
-                                 cell.subcol.subkpi in common_subkpis]
+                    base_vals = [
+                        cell.val
+                        for cell in base_cell_tuple
+                        if not common_subkpis or cell.subcol.subkpi in common_subkpis
+                    ]
                 comparison_cell_tuple = []
-                for val, base_val, comparison_subcol in \
-                        zip(vals, base_vals, comparison_col.iter_subcols()):
+                for val, base_val, comparison_subcol in zip(
+                    vals, base_vals, comparison_col.iter_subcols()
+                ):
                     # TODO FIXME average factors
-                    delta, delta_r, style_r = \
-                        self._style_model.compare_and_render(
-                            self.lang, row.style_props,
-                            row.kpi.type, row.kpi.compare_method,
-                            val, base_val, 1, 1)
-                    comparison_cell_tuple.append(KpiMatrixCell(
-                        row, comparison_subcol, delta, delta_r, None,
-                        style_r, None))
+                    comparison = self._style_model.compare_and_render(
+                        self.lang,
+                        row.style_props,
+                        row.kpi.type,
+                        row.kpi.compare_method,
+                        val,
+                        base_val,
+                        1,
+                        1,
+                    )
+                    delta, delta_r, delta_style, delta_type = comparison
+                    comparison_cell_tuple.append(
+                        KpiMatrixCell(
+                            row,
+                            comparison_subcol,
+                            delta,
+                            delta_r,
+                            None,
+                            delta_style,
+                            None,
+                            delta_type,
+                        )
+                    )
                 comparison_col._set_cell_tuple(row, comparison_cell_tuple)
 
     def compute_sums(self):
@@ -343,46 +385,59 @@ class KpiMatrix(object):
 
         Invoke this after setting all values.
         """
-        for sumcol_key, (col_to_sum_keys, label, description, sum_accdet) in \
-                self._sum_todo.items():
+        for (
+            sumcol_key,
+            (col_to_sum_keys, label, description, sum_accdet),
+        ) in self._sum_todo.items():
             sumcols = [self._cols[k] for (sign, k) in col_to_sum_keys]
             # TODO check all sumcols are resolved; we need a kind of
             #      recompute queue here so we don't depend on insertion
             #      order
             common_subkpis = self._common_subkpis(sumcols)
             if any(c.subkpis for c in sumcols) and not common_subkpis:
-                raise UserError(_('Sum cannot be computed in column {} '
-                                  'because the columns to sum have no '
-                                  'common subkpis').format(label))
-            sum_col = KpiMatrixCol(sumcol_key, label, description, {},
-                                   sorted(common_subkpis,
-                                          key=lambda s: s.sequence))
+                raise UserError(
+                    _(
+                        "Sum cannot be computed in column {} "
+                        "because the columns to sum have no "
+                        "common subkpis"
+                    ).format(label)
+                )
+            sum_col = KpiMatrixCol(
+                sumcol_key,
+                label,
+                description,
+                {},
+                sorted(common_subkpis, key=lambda s: s.sequence),
+            )
             self._cols[sumcol_key] = sum_col
             for row in self.iter_rows():
-                if row.kpi.accumulation_method != ACC_SUM:
-                    continue
-                if row.account_id and not sum_accdet:
-                    continue
-                acc = SimpleArray(
-                    [AccountingNone] * (len(common_subkpis) or 1))
-                for sign, col_to_sum in col_to_sum_keys:
-                    cell_tuple = self._cols[col_to_sum].\
-                        get_cell_tuple_for_row(row)
-                    if cell_tuple is None:
-                        vals = \
-                            [AccountingNone] * (len(common_subkpis) or 1)
-                    else:
-                        vals = [cell.val for cell in cell_tuple
-                                if not common_subkpis or
-                                cell.subcol.subkpi in common_subkpis]
-                    if sign == '+':
-                        acc += SimpleArray(vals)
-                    else:
-                        acc -= SimpleArray(vals)
+                acc = SimpleArray([AccountingNone] * (len(common_subkpis) or 1))
+                if row.kpi.accumulation_method == ACC_SUM and not (
+                    row.account_id and not sum_accdet
+                ):
+                    for sign, col_to_sum in col_to_sum_keys:
+                        cell_tuple = self._cols[col_to_sum].get_cell_tuple_for_row(row)
+                        if cell_tuple is None:
+                            vals = [AccountingNone] * (len(common_subkpis) or 1)
+                        else:
+                            vals = [
+                                cell.val
+                                for cell in cell_tuple
+                                if not common_subkpis
+                                or cell.subcol.subkpi in common_subkpis
+                            ]
+                        if sign == "+":
+                            acc += SimpleArray(vals)
+                        else:
+                            acc -= SimpleArray(vals)
                 self.set_values_detail_account(
-                    row.kpi, sumcol_key, row.account_id, acc,
+                    row.kpi,
+                    sumcol_key,
+                    row.account_id,
+                    acc,
                     [None] * (len(common_subkpis) or 1),
-                    tooltips=False)
+                    tooltips=False,
+                )
 
     def iter_rows(self):
         """ Iterate rows in display order.
@@ -401,7 +456,7 @@ class KpiMatrix(object):
 
         yields KpiMatrixCol: one for each column or comparison.
         """
-        for col_key, col in self._cols.items():
+        for _col_key, col in self._cols.items():
             yield col
 
     def iter_subcols(self):
@@ -418,12 +473,14 @@ class KpiMatrix(object):
         account_ids = set()
         for detail_rows in self._detail_rows.values():
             account_ids.update(detail_rows.keys())
-        accounts = self._account_model.\
-            search([('id', 'in', list(account_ids))])
-        self._account_names = {
-            a.id: u'{} {}'.format(a.code, a.name)
-            for a in accounts
-        }
+        accounts = self._account_model.search([("id", "in", list(account_ids))])
+        self._account_names = {a.id: self._get_account_name(a) for a in accounts}
+
+    def _get_account_name(self, account):
+        result = u"{} {}".format(account.code, account.name)
+        if self._multi_company:
+            result = u"{} [{}]".format(result, account.company_id.name)
+        return result
 
     def get_account_name(self, account_id):
         if account_id not in self._account_names:
@@ -431,58 +488,58 @@ class KpiMatrix(object):
         return self._account_names[account_id]
 
     def as_dict(self):
-        header = [{'cols': []}, {'cols': []}]
+        header = [{"cols": []}, {"cols": []}]
         for col in self.iter_cols():
-            header[0]['cols'].append({
-                'label': col.label,
-                'description': col.description,
-                'colspan': col.colspan,
-            })
+            header[0]["cols"].append(
+                {
+                    "label": col.label,
+                    "description": col.description,
+                    "colspan": col.colspan,
+                }
+            )
             for subcol in col.iter_subcols():
-                header[1]['cols'].append({
-                    'label': subcol.label,
-                    'description': subcol.description,
-                    'colspan': 1,
-                })
+                header[1]["cols"].append(
+                    {
+                        "label": subcol.label,
+                        "description": subcol.description,
+                        "colspan": 1,
+                    }
+                )
 
         body = []
         for row in self.iter_rows():
-            if (row.style_props.hide_empty and row.is_empty()) or \
-                    row.style_props.hide_always:
+            if (
+                row.style_props.hide_empty and row.is_empty()
+            ) or row.style_props.hide_always:
                 continue
             row_data = {
-                'row_id': row.row_id,
-                'parent_row_id': (row.parent_row and
-                                  row.parent_row.row_id or None),
-                'label': row.label,
-                'description': row.description,
-                'style': self._style_model.to_css_style(
-                    row.style_props),
-                'cells': []
+                "row_id": row.row_id,
+                "parent_row_id": (row.parent_row and row.parent_row.row_id or None),
+                "label": row.label,
+                "description": row.description,
+                "style": self._style_model.to_css_style(row.style_props),
+                "cells": [],
             }
             for cell in row.iter_cells():
                 if cell is None:
                     # TODO use subcol style here
-                    row_data['cells'].append({})
+                    row_data["cells"].append({})
                 else:
-                    if cell.val is AccountingNone or \
-                            isinstance(cell.val, DataError):
+                    if cell.val is AccountingNone or isinstance(cell.val, DataError):
                         val = None
                     else:
                         val = cell.val
                     col_data = {
-                        'val': val,
-                        'val_r': cell.val_rendered,
-                        'val_c': cell.val_comment,
-                        'style': self._style_model.to_css_style(
-                            cell.style_props, no_indent=True),
+                        "val": val,
+                        "val_r": cell.val_rendered,
+                        "val_c": cell.val_comment,
+                        "style": self._style_model.to_css_style(
+                            cell.style_props, no_indent=True
+                        ),
                     }
                     if cell.drilldown_arg:
-                        col_data['drilldown_arg'] = cell.drilldown_arg
-                    row_data['cells'].append(col_data)
+                        col_data["drilldown_arg"] = cell.drilldown_arg
+                    row_data["cells"].append(col_data)
             body.append(row_data)
 
-        return {
-            'header': header,
-            'body': body,
-        }
+        return {"header": header, "body": body}

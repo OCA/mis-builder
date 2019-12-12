@@ -109,6 +109,7 @@
                                         domain="[('id', 'child_of', company_id)]"
                                         attrs="{'invisible': [('multi_company', '=', False)]}"/>
                                 <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+                                <field name="analytic_tag_ids" groups="analytic.group_analytic_accounting" widget="many2many_tags"/>
                             </group>
                         </page>
                         <page string="Layout">
@@ -202,6 +203,7 @@
                         <group col="2" colspan="2" name="source_data">
                             <field name="source_aml_model_id"
                                 attrs="{'invisible': [('source', '!=', 'actuals_alt')], 'required': [('source', '==', 'actuals_alt')]}"/>
+                            <field name="source_aml_model_name" invisible="1"/>
                             <field name="source_sumcol_ids"
                                    attrs="{'invisible': [('source', '!=', 'sumcol')]}"
                                    nolabel="1" colspan="2">
@@ -231,6 +233,7 @@
                         <group name="relative" attrs="{'invisible': [('mode', '!=', 'relative')]}" colspan="4">
                             <group>
                                 <field name="type" attrs="{'required': [('mode', '=', 'relative')]}"/>
+                                <field name="is_ytd"/>
                                 <field name="date_range_type_id"
                                        attrs="{'invisible': [('type', '!=', 'date_range')], 'required': [('type', '=', 'date_range'), ('mode', '=', 'relative')]}"/>
                                 <field name="offset"/>

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from . import mis_budget
 from . import mis_budget_item
 from . import mis_report_kpi

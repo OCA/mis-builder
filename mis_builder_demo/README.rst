@@ -7,9 +7,9 @@ MIS Builder Demo
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Alpha
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -26,6 +26,11 @@ MIS Builder Demo
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 Demo addon for MIS Builder.
+
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 
@@ -49,9 +54,41 @@ chart of accounts:
 Known issues / Roadmap
 ======================
 
-The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_ 
-and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can 
+The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_
+and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can
 be found on github.
+
+Changelog
+=========
+
+10.0.3.1.0 (2019-10-26)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Handle multi currency for commited purchase view. The amount in this
+  view are now converted to the base currency (the one with rate 1),
+  so summing them has some meaning. As a consequence, this view has
+  less usefulness if the company currency is not the one with rate 1,
+  Debit and credit being assumed to be in company currency.
+
+  Add the M2M to account.analytic.tag in the commited purchase view.
+
+  Fix sign issue in commited purchase view.
+
+  Include customer invoice in commited purchase view. The view is therefore
+  not only about purchases anymore. This should not be an issue because
+  GL accounts are differents for purchases and income anyway and generally
+  used in different KPI.
+
+  These are breaking changes. Change the status of ``mis_builder_demo`` to alpha,
+  since it is a demo module and it's content can change at any time without
+  any compatibility guarantees. (`#222 <https://github.com/oca/mis-builder/issues/222>`_)
+
+
+**Bugfixes**
+
+- Fix date casting error on committed expenses drilldown. (`#185 <https://github.com/oca/mis-builder/issues/185>`_)
 
 Bug Tracker
 ===========
@@ -75,6 +112,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Stéphane Bidoul <stephane.bidoul@acsone.eu>
+* Arnaud Pineux <arnaud.pineux@acsone.eu>
 
 Maintainers
 ~~~~~~~~~~~

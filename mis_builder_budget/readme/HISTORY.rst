@@ -1,3 +1,13 @@
+10.0.3.4.0 (2019-10-26)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Consider analytic tags too when detecting overlapping budget items.
+  Previously only analytic account was considered, and this overlap detection
+  mechanism was overlooked when analytic tags were added to budget items. (`#241 <https://github.com/oca/mis-builder/issues/241>`_)
+
+
 10.0.3.3.0 (2018-11-16)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
