@@ -6,10 +6,11 @@ from odoo import api, fields, models
 
 
 class MisReportInstance(models.Model):
-    _inherit = 'mis.report.instance'
+    _inherit = "mis.report.instance"
 
     account_nonzero = fields.Boolean(
-        string='Only with values', default=True,
+        string="Only with values",
+        default=True,
         help="If checked only KPI lines with values are listed in report"
     )
 
@@ -18,10 +19,10 @@ class MisReportInstance(models.Model):
         res = super(MisReportInstance, self).compute()
         if self.account_nonzero:
             content = []
-            for line in res['content']:
-                for col in line['cols']:
-                    if col['val'] != 0.0 and col['val'] is not None:
+            for line in res["content"]:
+                for col in line["cols"]:
+                    if col["val"] != 0.0 and col["val"] is not None:
                         if line not in content:
                             content.append(line)
-            res['content'] = content
+            res["content"] = content
         return res
