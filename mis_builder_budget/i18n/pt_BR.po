@@ -6,52 +6,54 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2019-12-20 04:05+0000\n"
+"Last-Translator: Eder Brito <britoederr@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.9.1\n"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget.py:44
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (cópia)"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:92
 #, python-format
 msgid "%s is not within budget %s date range."
-msgstr ""
+msgstr "%s não está dentro do período %s do orçamento."
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:100
 #, python-format
 msgid "%s overlaps %s in budget %s"
-msgstr ""
+msgstr "%s sobreposto %s no orçamento %s"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item.py:87
 #, python-format
 msgid "%s start date must not be after end date"
-msgstr ""
+msgstr "%s data inicial não deve ser após a data final"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Ação Necessária"
 
 #. module: mis_builder_budget
 #: selection:mis.report.instance.period,source:0
 msgid "Actuals"
-msgstr ""
+msgstr "Reais"
 
 #. module: mis_builder_budget
 #: selection:mis.report.instance.period,source:0
 msgid "Actuals (alternative)"
-msgstr ""
+msgstr "Reais (alternativa)"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_report_instance_period__source
@@ -61,338 +63,344 @@ msgid "Actuals: current data, from accounting and other queries.\n"
 "Compare to column: compare to other column.\n"
 ""
 msgstr ""
+"Reais: dados atuais, da contabilidade e outras consultas.\n"
+"Reais (alternativa): dados atuais de um recurso alternativo (ex: uma uma "
+"visualização do banco de dados que fornece linhas de movimentação de contas "
+"semelhantes).\n"
+"Soma colunas: somatório (+/-) de outras colunas.\n"
+"Comparar à coluna: comparar com outra coluna.\n"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__amount
 msgid "Amount"
-msgstr ""
+msgstr "Montante"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__analytic_tag_ids
 msgid "Analytic Tags"
-msgstr ""
+msgstr "Marcadores Analíticos"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__analytic_account_id
 msgid "Analytic account"
-msgstr ""
+msgstr "Conta analítica"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Contar Anexo"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__budget_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__source_mis_budget_id
 msgid "Budget"
-msgstr ""
+msgstr "Orçamento"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__budget_date_from
 msgid "Budget Date From"
-msgstr ""
+msgstr "Data do Orçamento A Partir de"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__budget_date_to
 msgid "Budget Date To"
-msgstr ""
+msgstr "Data do Orçamento Até"
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Budget items"
-msgstr ""
+msgstr "Itens do Orçamento"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi__budgetable
 msgid "Budgetable"
-msgstr ""
+msgstr "Orçamento"
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelado"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__company_id
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: mis_builder_budget
 #: selection:mis.report.instance.period,source:0
 msgid "Compare columns"
-msgstr ""
+msgstr "Comparar colunas"
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Confirmed"
-msgstr ""
+msgstr "Confirmado"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__create_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__create_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__date_range_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__date_range_id
 msgid "Date range"
-msgstr ""
+msgstr "Período"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__description
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome de Exibição"
 
 #. module: mis_builder_budget
 #: selection:mis.budget,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Rascunho"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Seguidores (Canais)"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidores (Parceiros)"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__date_from
 msgid "From"
-msgstr ""
+msgstr "De"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_unread
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Se selecionado novas mensagens exigirão sua atenção."
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Se selecionado, novas mensagens exigirão sua atenção."
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Se selecionado, algumas mensagens terão um erro de entrega."
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "É Seguidor"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__item_ids
 msgid "Item"
-msgstr ""
+msgstr "Item"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__kpi_expression_id
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__seq1
 msgid "KPI Sequence"
-msgstr ""
+msgstr "Sequência KPI"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificação em"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última Atualização por"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__write_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Atualização em"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
 #: selection:mis.report.instance.period,source:0
 msgid "MIS Budget"
-msgstr ""
+msgstr "Orçamento SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
 msgid "MIS Budget Item"
-msgstr ""
+msgstr "Item do Orçamento SIG"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
 msgid "MIS Budget Items"
-msgstr ""
+msgstr "Itens do Orçamento SIG"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
 msgid "MIS Budgets"
-msgstr ""
+msgstr "Orçamentos SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance
 msgid "MIS Report Instance"
-msgstr ""
+msgstr "Instância de Relatório SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
 msgid "MIS Report Instance Period"
-msgstr ""
+msgstr "Período da Instância do Relatório SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_kpi
 msgid "MIS Report KPI"
-msgstr ""
+msgstr "Relatório KPI SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_kpi_expression
 msgid "MIS Report KPI Expression"
-msgstr ""
+msgstr "Expressão de KPI do relatório SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__report_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__report_id
 msgid "MIS Report Template"
-msgstr ""
+msgstr "Modelo do Relatório SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Anexo Principal"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Erro de Entrega de Mensagem"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mensagens"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Número de Ações"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_error_counter
 msgid "Number of error"
-msgstr ""
+msgstr "Número de erro"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Número de mensagens que exigem uma atenção"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Número de mensagens com erro de entrega"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Número de mensagens não lidas"
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Set draft"
-msgstr ""
+msgstr "Definir rascunho"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__source
 msgid "Source"
-msgstr ""
+msgstr "Fonte"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__state
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__seq2
 msgid "Sub-KPI Sequence"
-msgstr ""
+msgstr "Sequência Sub-KPI"
 
 #. module: mis_builder_budget
 #: selection:mis.report.instance.period,source:0
 msgid "Sum columns"
-msgstr ""
+msgstr "Somar colunas"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__date_to
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__date_to
 msgid "To"
-msgstr ""
+msgstr "Para"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "Mensagens não lidas"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Contagem de Mensagens Não Lidas"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Mensagens do Site"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Histórico de Comunicação do Site"
