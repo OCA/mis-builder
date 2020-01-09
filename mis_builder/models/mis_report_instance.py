@@ -505,9 +505,7 @@ class MisReportInstance(models.Model):
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
     analytic_account_id = fields.Many2one(
-        comodel_name="account.analytic.account",
-        string="Analytic Account",
-        oldname="account_analytic_id",
+        comodel_name="account.analytic.account", string="Analytic Account"
     )
     analytic_tag_ids = fields.Many2many(
         comodel_name="account.analytic.tag", string="Analytic Tags"
