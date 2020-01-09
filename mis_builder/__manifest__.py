@@ -3,7 +3,7 @@
 
 {
     "name": "MIS Builder",
-    "version": "12.0.3.5.0",
+    "version": "13.0.3.5.0",
     "category": "Reporting",
     "summary": """
         Build 'Management Information System' Reports and Dashboards
@@ -12,10 +12,10 @@
     "website": "https://github.com/OCA/mis-builder/",
     "depends": [
         "account",
-        "board",
+        # "board",
         "report_xlsx",  # OCA/reporting-engine
         "date_range",  # OCA/server-ux
-        "web_widget_color",  # OCA/web
+        # "web_widget_color",  # OCA/web
     ],
     "data": [
         "wizard/mis_builder_dashboard.xml",
