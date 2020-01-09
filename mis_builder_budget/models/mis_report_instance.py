@@ -93,7 +93,6 @@ class MisReportInstance(models.Model):
                     "type": "ir.actions.act_window",
                     "res_model": "mis.budget.item",
                     "views": [[False, "list"], [False, "form"]],
-                    "view_type": "list",
                     "view_mode": "list",
                     "target": "current",
                 }

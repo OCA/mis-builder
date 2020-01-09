@@ -77,7 +77,6 @@
             <field name="name">MIS Report Styles</field>
             <field name="view_id" ref="mis_report_style_view_tree"/>
             <field name="res_model">mis.report.style</field>
-            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 

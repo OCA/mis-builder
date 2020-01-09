@@ -162,7 +162,6 @@
         <field name="name">MIS Report Templates</field>
         <field name="view_id" ref="mis_report_view_tree"/>
         <field name="res_model">mis.report</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 

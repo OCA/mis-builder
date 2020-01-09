@@ -22,7 +22,6 @@
         <record model="ir.actions.act_window" id="mis_report_instance_add_to_dashboard_action">
             <field name="name">Add to dashboard</field>
             <field name="res_model">add.mis.report.instance.dashboard.wizard</field>
-            <field name="view_type">form</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="mis_report_instance_add_to_dashboard_form_view"/>
             <field name="target">new</field>
