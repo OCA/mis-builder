@@ -369,7 +369,7 @@ class TestAEP(common.TransactionCase):
                 # for P&L accounts, only after fy start
                 "|",
                 ("date", ">=", "2017-01-01"),
-                ("user_type_id.include_initial_balance", "=", True),
+                ("account_id.user_type_id.include_initial_balance", "=", True),
                 # everything must be before from_date for initial balance
                 ("date", "<", "2017-02-01"),
             ],
