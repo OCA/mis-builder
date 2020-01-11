@@ -18,7 +18,7 @@
         "security/mis_budget.xml",
         "views/mis_budget.xml",
     ],
-    "installable": False,
+    "installable": True,
     "development_status": "Production/Stable",
     "maintainers": ["sbidoul"],
 }

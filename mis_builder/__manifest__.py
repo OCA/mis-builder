@@ -28,7 +28,7 @@
         "report/mis_report_instance_xlsx.xml",
     ],
     "qweb": ["static/src/xml/mis_report_widget.xml"],
-    "installable": False,
+    "installable": True,
     "application": True,
     "license": "AGPL-3",
     "development_status": "Production/Stable",
