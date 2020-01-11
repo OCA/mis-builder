@@ -147,7 +147,7 @@ class TestAEP(common.TransactionCase):
 
     def test_sanity_check(self):
         self.assertEquals(self.company.fiscalyear_last_day, 31)
-        self.assertEquals(self.company.fiscalyear_last_month, 12)
+        self.assertEquals(self.company.fiscalyear_last_month, "12")
 
     def test_aep_basic(self):
         self.aep.done_parsing()
