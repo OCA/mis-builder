@@ -433,13 +433,6 @@ class MisReportInstance(models.Model):
             else:
                 record.pivot_date = fields.Date.context_today(record)
 
-    @api.model
-    def _default_company_id(self):
-        default_company_id = self.env["res.company"]._company_default_get(
-            "mis.report.instance"
-        )
-        return default_company_id
-
     _name = "mis.report.instance"
     _description = "MIS Report Instance"
 
@@ -466,7 +459,7 @@ class MisReportInstance(models.Model):
     company_id = fields.Many2one(
         comodel_name="res.company",
         string="Company",
-        default=_default_company_id,
+        default=lambda self: self.env.company,
         required=True,
     )
     multi_company = fields.Boolean(
