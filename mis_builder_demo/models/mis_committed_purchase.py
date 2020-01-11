@@ -4,7 +4,7 @@
 import os
 from os.path import join as opj
 
-from odoo import api, fields, models, tools
+from odoo import fields, models, tools
 
 
 class MisCommittedPurchase(models.Model):
@@ -24,7 +24,7 @@ class MisCommittedPurchase(models.Model):
     debit = fields.Float()
     date = fields.Date()
 
-    # resource can be purchase.order.line or account.invoice.line
+    # resource can be purchase.order.line or account.move.line
     res_id = fields.Integer(string="Resource ID")
     res_model = fields.Char(string="Resource Model Name")
 
@@ -36,7 +36,6 @@ class MisCommittedPurchase(models.Model):
         string="Analytic Tags",
     )
 
-    @api.model_cr
     def init(self):
         script = opj(os.path.dirname(__file__), "mis_committed_purchase.sql")
         with open(script) as f:
@@ -59,9 +58,9 @@ class MisCommittedPurchase(models.Model):
             SELECT
                 inv_mcp.id AS mis_committed_purchase_id,
                 inv_rel.account_analytic_tag_id AS account_analytic_tag_id
-            FROM account_analytic_tag_account_invoice_line_rel AS inv_rel
+            FROM account_analytic_tag_account_move_line_rel AS inv_rel
             INNER JOIN mis_committed_purchase AS inv_mcp ON
-                inv_mcp.res_id = inv_rel.account_invoice_line_id
-            WHERE inv_mcp.res_model = 'account.invoice.line')
+                inv_mcp.res_id = inv_rel.account_move_line_id
+            WHERE inv_mcp.res_model = 'account.move.line')
             """
             )
