@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-13 15:37+0000\n"
-"PO-Revision-Date: 2019-05-08 16:03+0000\n"
+"PO-Revision-Date: 2020-01-28 18:13+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: Croatian (Croatia) (https://www.transifex.com/oca/teams/23907/"
 "hr_HR/)\n"
@@ -17,9 +17,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.5.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:535
@@ -51,12 +51,12 @@ msgstr ""
 msgid ""
 "<b>bal[70]</b>: variation of the balance of account 70 over the period (it "
 "is the same as balp[70]."
-msgstr ""
+msgstr "<b>bal[70]</b>: varijanta salda konta 70 u periodu (isto kao  balp[70]."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>bale[1%]</b>: balance of accounts starting with 1 at end of period."
-msgstr ""
+msgstr "<b>bale[1%]</b>: saldo konta koja počinju sa 1 na kraju perioda."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -70,8 +70,9 @@ msgid ""
 "id)][]</b>: variation of the balance of all receivable accounts over the "
 "period."
 msgstr ""
-"<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
-"id)][]</b>: varijacia slada svih potražnih konta kroz period.."
+"<b>balp[('user_type_id', '=', "
+"ref('account.data_account_type_receivable').id)][]</b>: varijacija slada "
+"svih potražnih konta kroz period.."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -136,6 +137,8 @@ msgid ""
 "whose\n"
 "                                          ending balance is positive."
 msgstr ""
+"<b>pbale[55%]</b>: suma svih završnih salda konta koja počinju sa 55 čiji\n"
+"                                          završni saldo je pozitivan."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -143,6 +146,8 @@ msgid ""
 "<b>sum, min, max, len, avg</b>: behave as expected, very similar to the "
 "python builtins."
 msgstr ""
+"<b>sum, min, max, len, avg</b>: očenikano ponašanje operatora, vrlo slično "
+"kao i u pythonu."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
@@ -150,6 +155,8 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields."
 msgstr ""
+"Model sličan 'account move line' modelu, sadrži barem sljedeća polja: debit, "
+"credit, account_id i company_id."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
@@ -157,22 +164,25 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
 msgstr ""
+"Model sličan 'account move line' modelu, sadrži barem sljedeća polja: debit, "
+"credit, account_id i company_id. Ovaj model je izvor podataka za kolonu "
+"Trenutno ( Actuals)."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:393
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
-msgstr ""
+msgstr "Filter po datumu je obavezan za izvor podataka u koloni %s."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
 msgid "Account model"
-msgstr ""
+msgstr "Model konta"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
 msgid "Accumulation Method"
-msgstr ""
+msgstr "Kumulativna metoda"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:303
@@ -207,18 +217,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_add_to_dashboard_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 msgid "Add to dashboard"
-msgstr ""
+msgstr "Dodaj na nadzornu ploču"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "Additionally following variables are available in the evaluation context:"
-msgstr ""
+msgstr "Dodatno sljedeće varijable su dostupne u kontekstu:"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query__aggregate
 msgid "Aggregate"
-msgstr ""
+msgstr "Zbrajanje"
 
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
@@ -233,7 +243,7 @@ msgstr "Sve proknjižene stavke"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__amount
 msgid "Amount"
-msgstr ""
+msgstr "Iznos"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_kpi__style_expression
@@ -241,47 +251,49 @@ msgid ""
 "An expression that returns a style depending on the KPI value. Such style is "
 "applied on top of the row style."
 msgstr ""
+"Izraz koji vraća stil zavisno od KPI vrijednosti. Takav stil se primjenjuje "
+"nakon stila retka."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_account_id
 msgid "Analytic Account"
-msgstr ""
+msgstr "Analitički konto"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:35
 #, python-format
 msgid "Analytic Account Filter"
-msgstr ""
+msgstr "Filter analitičkih konta"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:548
 #, python-format
 msgid "Analytic Account: %s"
-msgstr ""
+msgstr "Analitički konto: %s"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_tag_ids
 msgid "Analytic Tags"
-msgstr ""
+msgstr "Oznake analitike"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:38
 #, python-format
 msgid "Analytic Tags Filter"
-msgstr ""
+msgstr "Filter oznaka analitike"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:556
 #, python-format
 msgid "Analytic Tags: %s"
-msgstr ""
+msgstr "Oznake analitike: %s"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Auto expand"
-msgstr ""
+msgstr "Automatsko širenje"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:129
@@ -290,17 +302,17 @@ msgstr ""
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Average"
-msgstr ""
+msgstr "Prosjek"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__background_color
 msgid "Background Color"
-msgstr ""
+msgstr "Boja pozadine"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__background_color_inherit
 msgid "Background Color Inherit"
-msgstr ""
+msgstr "Nasljeđivanje boje pozadine"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_style__background_color
