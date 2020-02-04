@@ -837,7 +837,6 @@ class MisReport(models.Model):
             drilldown_args = []
             name_error = False
             for expression in expressions:
-                val = AccountingNone
                 expr = expression and expression.name or "AccountingNone"
                 replaced_expr = aep.replace_expr(expr)
                 val = mis_safe_eval(replaced_expr, locals_dict)
