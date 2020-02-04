@@ -8,7 +8,7 @@ from odoo.osv.expression import AND
 from odoo.addons.mis_builder.models.accounting_none import AccountingNone
 from odoo.addons.mis_builder.models.expression_evaluator import ExpressionEvaluator
 
-from .mis_report_instance_period import SRC_MIS_BUDGET
+from .mis_report_instance_period import SRC_MIS_BUDGET, SRC_MIS_BUDGET_BY_ACCOUNT
 
 
 class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
@@ -75,6 +75,10 @@ class MisReportInstance(models.Model):
     def _add_column(self, aep, kpi_matrix, period, label, description):
         if period.source == SRC_MIS_BUDGET:
             return self._add_column_mis_budget(
+                aep, kpi_matrix, period, label, description
+            )
+        elif period.source == SRC_MIS_BUDGET_BY_ACCOUNT:
+            return self._add_column_move_lines(
                 aep, kpi_matrix, period, label, description
             )
         else:
