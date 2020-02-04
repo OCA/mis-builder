@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2017 ACSONE SA/NV
+<!-- Copyright 2017-2020 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 
 <odoo>
 
-    <record model="ir.ui.view" id="mis_budget_form_view">
-        <field name="name">mis.budget.form (in mis_builder_budget)</field>
-        <field name="model">mis.budget</field>
+    <record model="ir.ui.view" id="mis_budget_by_account_form_view">
+        <field name="name">mis.budget.by.account.form (in mis_builder_budget)</field>
+        <field name="model">mis.budget.by.account</field>
         <field name="arch" type="xml">
             <form>
                 <header>
@@ -17,7 +17,7 @@
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
-                        <button name="%(mis_budget_item_act_window)d"
+                        <button name="%(mis_budget_by_account_item_act_window)d"
                                 type="action"
                                 class="oe_stat_button"
                                 icon="fa-bars"
@@ -26,7 +26,6 @@
                     <group>
                         <field name="name"/>
                         <field name="description"/>
-                        <field name="report_id"/>
                         <field name="company_id" groups="base.group_multi_company"/>
                     </group>
                     <group>
@@ -43,9 +42,9 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="mis_budget_search_view">
-        <field name="name">mis.budget.search (in mis_builder_budget)</field>
-        <field name="model">mis.budget</field>
+    <record model="ir.ui.view" id="mis_budget_by_account_search_view">
+        <field name="name">mis.budget.by.account.search (in mis_builder_budget)</field>
+        <field name="model">mis.budget.by.account</field>
         <field name="arch" type="xml">
             <search>
                 <field name="name"/>
@@ -54,13 +53,12 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="mis_budget_tree_view">
-        <field name="name">mis.budget.tree (in mis_builder_budget)</field>
-        <field name="model">mis.budget</field>
+    <record model="ir.ui.view" id="mis_budget_by_account_tree_view">
+        <field name="name">mis.budget.by.account.tree (in mis_builder_budget)</field>
+        <field name="model">mis.budget.by.account</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
-                <field name="report_id"/>
                 <field name="date_from"/>
                 <field name="date_to"/>
                 <field name="state"/>
@@ -68,18 +66,18 @@
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="mis_budget_act_window">
-        <field name="name">MIS Budgets (by KPIs)</field>
-        <field name="res_model">mis.budget</field>
+    <record model="ir.actions.act_window" id="mis_budget_by_account_act_window">
+        <field name="name">MIS Budgets (by accounts)</field>
+        <field name="res_model">mis.budget.by.account</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>
 
-    <record model="ir.ui.menu" id="mis_budget_menu">
-        <field name="name">MIS Budgets (by KPIs)</field>
+    <record model="ir.ui.menu" id="mis_budget_by_account_menu">
+        <field name="name">MIS Budgets (by accounts)</field>
         <field name="parent_id" ref="mis_builder.mis_report_finance_menu"/>
-        <field name="action" ref="mis_budget_act_window"/>
+        <field name="action" ref="mis_budget_by_account_act_window"/>
         <field name="sequence" eval="201"/>
     </record>
 

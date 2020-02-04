@@ -13,7 +13,7 @@ class MisReportInstancePeriod(models.Model):
 
     source = fields.Selection(selection_add=[(SRC_MIS_BUDGET, "MIS Budget")])
     source_mis_budget_id = fields.Many2one(
-        comodel_name="mis.budget", string="Budget", oldname="source_mis_budget"
+        comodel_name="mis.budget", string="Budget by KPI", oldname="source_mis_budget"
     )
 
     def _get_additional_budget_item_filter(self):
