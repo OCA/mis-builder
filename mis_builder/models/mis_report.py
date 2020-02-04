@@ -838,16 +838,16 @@ class MisReport(models.Model):
             name_error = False
             for expression in expressions:
                 val = AccountingNone
-                drilldown_arg = None
                 expr = expression and expression.name or "AccountingNone"
                 replaced_expr = aep.replace_expr(expr)
                 val = mis_safe_eval(replaced_expr, locals_dict)
+                vals.append(val)
                 if isinstance(val, NameDataError):
                     name_error = True
                 if replaced_expr != expr:
-                    drilldown_arg = {"period_id": col_key, "expr": expr}
-                vals.append(val)
-                drilldown_args.append(drilldown_arg)
+                    drilldown_args.append({"period_id": col_key, "expr": expr})
+                else:
+                    drilldown_args.append(None)
             return vals, drilldown_args, name_error
 
         def eval_expressions_by_account(expressions, locals_dict):
@@ -857,7 +857,8 @@ class MisReport(models.Model):
                 drilldown_args = []
                 name_error = False
                 for expr, replaced_expr in zip(exprs, replaced_exprs):
-                    vals.append(mis_safe_eval(replaced_expr, locals_dict))
+                    val = mis_safe_eval(replaced_expr, locals_dict)
+                    vals.append(val)
                     if replaced_expr != expr:
                         drilldown_args.append(
                             {
