@@ -833,39 +833,37 @@ class MisReport(models.Model):
         )
 
         def eval_expressions(expressions, locals_dict):
-            expressions = [e and e.name or "AccountingNone" for e in expressions]
             vals = []
             drilldown_args = []
             name_error = False
             for expression in expressions:
                 val = AccountingNone
                 drilldown_arg = None
-                if expression:
-                    replaced_expr = aep.replace_expr(expression)
+                expr = expression and expression.name or "AccountingNone"
+                if expr:
+                    replaced_expr = aep.replace_expr(expr)
                     val = mis_safe_eval(replaced_expr, locals_dict)
                     if isinstance(val, NameDataError):
                         name_error = True
-                    if replaced_expr != expression:
-                        drilldown_arg = {"period_id": col_key, "expr": expression}
+                    if replaced_expr != expr:
+                        drilldown_arg = {"period_id": col_key, "expr": expr}
                 vals.append(val)
                 drilldown_args.append(drilldown_arg)
             return vals, drilldown_args, name_error
 
         def eval_expressions_by_account(expressions, locals_dict):
-            expressions = [e and e.name or "AccountingNone" for e in expressions]
-            for account_id, replaced_exprs in aep.replace_exprs_by_account_id(
-                expressions
-            ):
+            exprs = [e and e.name or "AccountingNone" for e in expressions]
+            for account_id, replaced_exprs in aep.replace_exprs_by_account_id(exprs):
                 vals = []
                 drilldown_args = []
                 name_error = False
-                for expression, replaced_expr in zip(expressions, replaced_exprs):
+                for expr, replaced_expr in zip(exprs, replaced_exprs):
                     vals.append(mis_safe_eval(replaced_expr, locals_dict))
-                    if replaced_expr != expression:
+                    if replaced_expr != expr:
                         drilldown_args.append(
                             {
                                 "period_id": col_key,
-                                "expr": expression,
+                                "expr": expr,
                                 "account_id": account_id,
                             }
                         )
