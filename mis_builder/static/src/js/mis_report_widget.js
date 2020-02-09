@@ -174,7 +174,7 @@ odoo.define("mis_builder.widget", function(require) {
 
         get_filter_operator: function(attr_name) {
             var self = this;
-            var operator = undefined;
+            var operator = undefined; // eslint-disable-line no-undef-init
             if (self.filter_values[attr_name] !== undefined) {
                 operator = self.filter_values[attr_name].operator || "=";
             }
