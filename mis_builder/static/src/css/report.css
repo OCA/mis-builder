@@ -3,7 +3,7 @@
     width: 100%;
     table-layout: fixed;
 }
-.mis_row  {
+.mis_row {
     display: table-row;
     page-break-inside: avoid;
 }
@@ -17,7 +17,8 @@
 .mis_tbody {
     display: table-row-group;
 }
-.mis_table, .mis_table .mis_row {
+.mis_table,
+.mis_table .mis_row {
     border-left: 0px;
     border-right: 0px;
     text-align: left;
@@ -33,7 +34,7 @@
 }
 .mis_table .mis_cell.mis_collabel {
     font-weight: bold;
-    background-color: #F0F0F0;
+    background-color: #f0f0f0;
     text-align: center;
 }
 .mis_table .mis_cell.mis_rowlabel {
