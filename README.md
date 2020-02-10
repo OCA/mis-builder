@@ -9,7 +9,7 @@ Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
 
 **This is the 10.0 branch, where we develop new features, which are then ported
-to 9.0 and 11.0.**
+to 11.0, 12.0 and 13.0.**
 
 This project implements a class of reports where KPI (Key Performance Indicators)
 are displayed in rows, and time periods in columns. It focuses on very fast reporting
