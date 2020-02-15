@@ -1,4 +1,4 @@
-# Copyright 2014-2018 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from lxml import etree
@@ -32,7 +32,6 @@ class AddMisReportInstanceDashboard(models.TransientModel):
             )
         return res
 
-    @api.multi
     def action_add_to_dashboard(self):
         active_model = self.env.context.get("active_model")
         assert active_model == "mis.report.instance"

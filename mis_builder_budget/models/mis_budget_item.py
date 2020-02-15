@@ -1,4 +1,4 @@
-# Copyright 2017-2018 ACSONE SA/NV
+# Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
@@ -60,7 +60,6 @@ class MisBudgetItem(models.Model):
                 ):
                     rec.date_range_id = False
 
-    @api.multi
     def _prepare_overlap_domain(self):
         """Prepare a domain to check for overlapping budget items."""
         self.ensure_one()

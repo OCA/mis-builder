@@ -1,7 +1,7 @@
-# Copyright 2017-2018 ACSONE SA/NV
+# Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, models
+from odoo import models
 from odoo.osv import expression
 
 from odoo.addons.mis_builder.models.accounting_none import AccountingNone
@@ -71,7 +71,6 @@ class MisReportInstance(models.Model):
                 aep, kpi_matrix, period, label, description
             )
 
-    @api.multi
     def drilldown(self, arg):
         self.ensure_one()
         period_id = arg.get("period_id")

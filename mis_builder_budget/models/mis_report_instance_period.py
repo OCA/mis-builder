@@ -1,7 +1,7 @@
-# Copyright 2017-2018 ACSONE SA/NV
+# Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 SRC_MIS_BUDGET = "mis_budget"
 
@@ -15,7 +15,6 @@ class MisReportInstancePeriod(models.Model):
         comodel_name="mis.budget", string="Budget", oldname="source_mis_budget"
     )
 
-    @api.multi
     def _get_additional_budget_item_filter(self):
         """ Prepare a filter to apply on all budget items
 
