@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import api, models
+from odoo import models
 
 _logger = logging.getLogger(__name__)
 
@@ -11,7 +11,6 @@ _logger = logging.getLogger(__name__)
 class Report(models.Model):
     _inherit = "ir.actions.report"
 
-    @api.multi
     def render_qweb_pdf(self, res_ids=None, data=None):
         if self.report_name == "mis_builder.report_mis_report_instance":
             if not res_ids:

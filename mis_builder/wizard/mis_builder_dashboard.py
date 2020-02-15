@@ -32,7 +32,6 @@ class AddMisReportInstanceDashboard(models.TransientModel):
             )
         return res
 
-    @api.multi
     def action_add_to_dashboard(self):
         active_model = self.env.context.get("active_model")
         assert active_model == "mis.report.instance"
