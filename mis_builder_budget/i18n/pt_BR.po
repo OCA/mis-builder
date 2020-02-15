@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mis_builder_budget
+# 	* mis_builder_budget
 #
 msgid ""
 msgstr ""
@@ -17,25 +17,25 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget.py:44
+#: code:addons/mis_builder_budget/models/mis_budget.py:43
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (cópia)"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:92
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:91
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr "%s não está dentro do período %s do orçamento."
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:100
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:99
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr "%s sobreposto %s no orçamento %s"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:87
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:86
 #, python-format
 msgid "%s start date must not be after end date"
 msgstr "%s data inicial não deve ser após a data final"
@@ -57,11 +57,12 @@ msgstr "Reais (alternativa)"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_report_instance_period__source
-msgid "Actuals: current data, from accounting and other queries.\n"
-"Actuals (alternative): current data from an alternative source (eg a database view providing look-alike account move lines).\n"
+msgid ""
+"Actuals: current data, from accounting and other queries.\n"
+"Actuals (alternative): current data from an alternative source (eg a "
+"database view providing look-alike account move lines).\n"
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
-""
 msgstr ""
 "Reais: dados atuais, da contabilidade e outras consultas.\n"
 "Reais (alternativa): dados atuais de um recurso alternativo (ex: uma uma "

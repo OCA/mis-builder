@@ -17,25 +17,25 @@ msgstr ""
 "X-Generator: Weblate 3.1.1\n"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget.py:44
+#: code:addons/mis_builder_budget/models/mis_budget.py:43
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (còpia)"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:92
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:91
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr "%s no és dins del rang de dates del pressupost %s."
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:100
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:99
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr "%s superposa %s en el pressupost %s"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:87
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:86
 #, python-format
 msgid "%s start date must not be after end date"
 msgstr "La data d'inici de %s no pot ser posterior a la data de finalització"
