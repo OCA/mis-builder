@@ -146,7 +146,6 @@ class MisReportKpi(models.Model):
 
     _order = "sequence, id"
 
-    @api.multi
     def name_get(self):
         res = []
         for rec in self:
@@ -176,7 +175,6 @@ class MisReportKpi(models.Model):
                 }
             }
 
-    @api.multi
     @api.depends("expression_ids.subkpi_id.name", "expression_ids.name")
     def _compute_expression(self):
         for kpi in self:
@@ -192,7 +190,6 @@ class MisReportKpi(models.Model):
                     exprs.append(expression.name or "AccountingNone")
             kpi.expression = ",\n".join(exprs)
 
-    @api.multi
     def _inverse_expression(self):
         for kpi in self:
             if kpi.multi:
@@ -322,7 +319,6 @@ class MisReportKpiExpression(models.Model):
         )
     ]
 
-    @api.multi
     def name_get(self):
         res = []
         for rec in self:
@@ -479,7 +475,6 @@ class MisReport(models.Model):
         compute="_compute_account_model", string="Account model"
     )
 
-    @api.multi
     @api.depends("move_lines_source")
     def _compute_account_model(self):
         for record in self:
@@ -510,7 +505,6 @@ class MisReport(models.Model):
             if expressions:
                 kpi.expressions_ids = expressions
 
-    @api.multi
     def get_wizard_report_action(self):
         action = self.env.ref("mis_builder.mis_report_instance_view_action")
         res = action.read()[0]
@@ -529,7 +523,6 @@ class MisReport(models.Model):
         )
         return res
 
-    @api.multi
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or [])
@@ -550,7 +543,6 @@ class MisReport(models.Model):
 
     # TODO: kpi name cannot be start with query name
 
-    @api.multi
     def prepare_kpi_matrix(self, multi_company=False):
         self.ensure_one()
         kpi_matrix = KpiMatrix(self.env, multi_company, self.account_model)
@@ -558,7 +550,6 @@ class MisReport(models.Model):
             kpi_matrix.declare_kpi(kpi)
         return kpi_matrix
 
-    @api.multi
     def _prepare_aep(self, companies, currency=None):
         self.ensure_one()
         aep = AEP(companies, currency, self.account_model)
@@ -583,7 +574,6 @@ class MisReport(models.Model):
             "SimpleArray": SimpleArray,
         }
 
-    @api.multi
     def _fetch_queries(self, date_from, date_to, get_additional_query_filter=None):
         self.ensure_one()
         res = {}
@@ -777,7 +767,6 @@ class MisReport(models.Model):
             compute_queue = recompute_queue
             recompute_queue = []
 
-    @api.multi
     def declare_and_compute_period(
         self,
         kpi_matrix,
@@ -909,7 +898,6 @@ class MisReport(models.Model):
                     res[account_id].add(kpi)
         return res
 
-    @api.multi
     def evaluate(
         self,
         aep,

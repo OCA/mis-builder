@@ -69,7 +69,6 @@ class MisReportInstancePeriod(models.Model):
     are defined as an offset relative to a pivot date.
     """
 
-    @api.multi
     @api.depends(
         "report_instance_id.pivot_date",
         "report_instance_id.comparison_mode",
@@ -351,7 +350,6 @@ class MisReportInstancePeriod(models.Model):
                     filters.append((filter_name, operator, value))
         return filters
 
-    @api.multi
     def _get_additional_move_line_filter(self):
         """ Prepare a filter to apply on all move lines
 
@@ -371,7 +369,6 @@ class MisReportInstancePeriod(models.Model):
         self.ensure_one()
         return self._get_filter_domain_from_context()
 
-    @api.multi
     def _get_additional_query_filter(self, query):
         """ Prepare an additional filter to apply on the query
 
@@ -527,7 +524,6 @@ class MisReportInstance(models.Model):
         else:
             self.company_ids = False
 
-    @api.multi
     @api.depends("multi_company", "company_id", "company_ids")
     def _compute_query_company_ids(self):
         for rec in self:
@@ -559,7 +555,6 @@ class MisReportInstance(models.Model):
             )
         return filter_descriptions
 
-    @api.multi
     def save_report(self):
         self.ensure_one()
         self.write({"temporary": False})
@@ -580,7 +575,6 @@ class MisReportInstance(models.Model):
         _logger.debug("Vacuum %s Temporary MIS Builder Report", len(reports))
         return reports.unlink()
 
-    @api.multi
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
@@ -594,7 +588,6 @@ class MisReportInstance(models.Model):
         date_format = lang.date_format
         return datetime.datetime.strftime(fields.Date.from_string(date), date_format)
 
-    @api.multi
     @api.depends("date_from")
     def _compute_comparison_mode(self):
         for instance in self:
@@ -602,7 +595,6 @@ class MisReportInstance(models.Model):
                 instance.date_from
             )
 
-    @api.multi
     def _inverse_comparison_mode(self):
         for record in self:
             if not record.comparison_mode:
@@ -631,7 +623,6 @@ class MisReportInstance(models.Model):
             ):
                 self.date_range_id = False
 
-    @api.multi
     def _add_analytic_filters_to_context(self, context):
         self.ensure_one()
         if self.analytic_account_id:
@@ -645,7 +636,6 @@ class MisReportInstance(models.Model):
                 "operator": "all",
             }
 
-    @api.multi
     def _context_with_filters(self):
         self.ensure_one()
         if "mis_report_filters" in self.env.context:
@@ -655,7 +645,6 @@ class MisReportInstance(models.Model):
         self._add_analytic_filters_to_context(context)
         return context
 
-    @api.multi
     def preview(self):
         self.ensure_one()
         view_id = self.env.ref("mis_builder." "mis_report_instance_result_view_form")
@@ -670,7 +659,6 @@ class MisReportInstance(models.Model):
             "context": self._context_with_filters(),
         }
 
-    @api.multi
     def print_pdf(self):
         self.ensure_one()
         context = dict(self._context_with_filters(), landscape=self.landscape_pdf)
@@ -684,7 +672,6 @@ class MisReportInstance(models.Model):
             )
         )
 
-    @api.multi
     def export_xls(self):
         self.ensure_one()
         context = dict(self._context_with_filters())
@@ -694,7 +681,6 @@ class MisReportInstance(models.Model):
             .get_action(self, "mis.report.instance.xlsx")
         )
 
-    @api.multi
     def display_settings(self):
         assert len(self.ids) <= 1
         view_id = self.env.ref("mis_builder.mis_report_instance_view_form")
@@ -783,7 +769,6 @@ class MisReportInstance(models.Model):
         elif period.source == SRC_CMPCOL:
             return self._add_column_cmpcol(aep, kpi_matrix, period, label, description)
 
-    @api.multi
     def _compute_matrix(self):
         """ Compute a report and return a KpiMatrix.
 
@@ -810,13 +795,11 @@ class MisReportInstance(models.Model):
         kpi_matrix.compute_sums()
         return kpi_matrix
 
-    @api.multi
     def compute(self):
         self.ensure_one()
         kpi_matrix = self._compute_matrix()
         return kpi_matrix.as_dict()
 
-    @api.multi
     def drilldown(self, arg):
         self.ensure_one()
         period_id = arg.get("period_id")

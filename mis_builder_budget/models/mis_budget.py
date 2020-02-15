@@ -36,7 +36,6 @@ class MisBudget(models.Model):
         comodel_name="res.company", string="Company", default=_default_company
     )
 
-    @api.multi
     def copy(self, default=None):
         self.ensure_one()
         if default is None:
@@ -62,14 +61,11 @@ class MisBudget(models.Model):
                 ):
                     rec.date_range_id = False
 
-    @api.multi
     def action_draft(self):
         self.write({"state": "draft"})
 
-    @api.multi
     def action_cancel(self):
         self.write({"state": "cancelled"})
 
-    @api.multi
     def action_confirm(self):
         self.write({"state": "confirmed"})
