@@ -255,6 +255,7 @@ class MisReportInstancePeriod(models.Model):
             ("field_id.name", "=", "account_id"),
             ("field_id.name", "=", "date"),
             ("field_id.name", "=", "company_id"),
+            ("field_id.model_id.model", "!=", "account.move.line"),
         ],
         help="A 'move line like' model, ie having at least debit, credit, "
         "date, account_id and company_id fields.",
