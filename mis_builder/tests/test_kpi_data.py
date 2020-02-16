@@ -19,6 +19,7 @@ class TestKpiData(SavepointCase):
         class MisKpiDataTestItem(models.Model):
 
             _name = "mis.kpi.data.test.item"
+            _description = "Test model for mis.kpi.data"
             _inherit = "mis.kpi.data"
 
         init_test_model(cls.env, MisKpiDataTestItem)
