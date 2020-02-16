@@ -709,29 +709,7 @@ class MisReportInstance(models.Model):
             "target": "current",
         }
 
-    def _add_column_actuals(self, aep, kpi_matrix, period, label, description):
-        if not period.date_from or not period.date_to:
-            raise UserError(
-                _("Column %s with actuals source " "must have from/to dates.")
-                % (period.name,)
-            )
-        self.report_id.declare_and_compute_period(
-            kpi_matrix,
-            period.id,
-            label,
-            description,
-            aep,
-            period.date_from,
-            period.date_to,
-            None,  # target_move now part of additional_move_line_filter
-            period.subkpi_ids,
-            period._get_additional_move_line_filter,
-            period._get_additional_query_filter,
-            aml_model=period._get_aml_model_name(),
-            no_auto_expand_accounts=self.no_auto_expand_accounts,
-        )
-
-    def _add_column_actuals_alt(self, aep, kpi_matrix, period, label, description):
+    def _add_column_move_lines(self, aep, kpi_matrix, period, label, description):
         if not period.date_from or not period.date_to:
             raise UserError(
                 _("Column %s with actuals source " "must have from/to dates.")
@@ -773,9 +751,11 @@ class MisReportInstance(models.Model):
 
     def _add_column(self, aep, kpi_matrix, period, label, description):
         if period.source == SRC_ACTUALS:
-            return self._add_column_actuals(aep, kpi_matrix, period, label, description)
+            return self._add_column_move_lines(
+                aep, kpi_matrix, period, label, description
+            )
         elif period.source == SRC_ACTUALS_ALT:
-            return self._add_column_actuals_alt(
+            return self._add_column_move_lines(
                 aep, kpi_matrix, period, label, description
             )
         elif period.source == SRC_SUMCOL:
