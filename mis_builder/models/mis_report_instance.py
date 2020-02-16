@@ -712,7 +712,7 @@ class MisReportInstance(models.Model):
     def _add_column_move_lines(self, aep, kpi_matrix, period, label, description):
         if not period.date_from or not period.date_to:
             raise UserError(
-                _("Column %s with actuals source " "must have from/to dates.")
+                _("Column %s with move lines source must have from/to dates.")
                 % (period.name,)
             )
         self.report_id.declare_and_compute_period(
