@@ -329,6 +329,14 @@ class MisReportInstancePeriod(models.Model):
         if self.source in (SRC_SUMCOL, SRC_CMPCOL):
             self.mode = MODE_NONE
 
+    def _get_aml_model_name(self):
+        self.ensure_one()
+        if self.source == SRC_ACTUALS:
+            return self.report_id.move_lines_source.model
+        elif self.source == SRC_ACTUALS_ALT:
+            return self.source_aml_model_name
+        return False
+
     @api.model
     def _get_filter_domain_from_context(self):
         filters = []
@@ -713,7 +721,7 @@ class MisReportInstance(models.Model):
             period.subkpi_ids,
             period._get_additional_move_line_filter,
             period._get_additional_query_filter,
-            aml_model=self.report_id.move_lines_source.model,
+            aml_model=period._get_aml_model_name(),
             no_auto_expand_accounts=self.no_auto_expand_accounts,
         )
 
@@ -735,7 +743,7 @@ class MisReportInstance(models.Model):
             period.subkpi_ids,
             period._get_additional_move_line_filter,
             period._get_additional_query_filter,
-            aml_model=period.source_aml_model_id.model,
+            aml_model=period._get_aml_model_name(),
             no_auto_expand_accounts=self.no_auto_expand_accounts,
         )
 
@@ -820,15 +828,11 @@ class MisReportInstance(models.Model):
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())
-            if period.source == SRC_ACTUALS_ALT:
-                aml_model_name = period.source_aml_model_id.model
-            else:
-                aml_model_name = self.report_id.move_lines_source.model
             return {
                 "name": u"{} - {}".format(expr, period.name),
                 "domain": domain,
                 "type": "ir.actions.act_window",
-                "res_model": aml_model_name,
+                "res_model": period._get_aml_model_name(),
                 "views": [[False, "list"], [False, "form"]],
                 "view_type": "list",
                 "view_mode": "list",
