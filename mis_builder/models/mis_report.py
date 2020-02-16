@@ -789,31 +789,10 @@ class MisReport(models.Model):
         aml_model=None,
         no_auto_expand_accounts=False,
     ):
-        """ Evaluate a report for a given period, populating a KpiMatrix.
-
-        :param kpi_matrix: the KpiMatrix object to be populated created
-                           with prepare_kpi_matrix()
-        :param col_key: the period key to use when populating the KpiMatrix
-        :param aep: an AccountingExpressionProcessor instance created
-                    using _prepare_aep()
-        :param date_from, date_to: the starting and ending date
-        :param target_move: all|posted
-        :param subkpis_filter: a list of subkpis to include in the evaluation
-                               (if empty, use all subkpis)
-        :param get_additional_move_line_filter: a bound method that takes
-                                                no arguments and returns
-                                                a domain compatible with
-                                                account.move.line
-        :param get_additional_query_filter: a bound method that takes a single
-                                            query argument and returns a
-                                            domain compatible with the query
-                                            underlying model
-        :param locals_dict: personalized locals dictionary used as evaluation
-                            context for the KPI expressions
-        :param aml_model: the name of a model that is compatible with
-                          account.move.line
-        :param no_auto_expand_accounts: disable expansion of account details
-        """
+        _logger.warning(
+            "declare_and_compute_period() is deprecated, "
+            "use _declare_and_compute_period() instead"
+        )
         expression_evaluator = ExpressionEvaluator(
             aep,
             date_from,
@@ -849,6 +828,22 @@ class MisReport(models.Model):
         locals_dict=None,
         no_auto_expand_accounts=False,
     ):
+        """ Evaluate a report for a given period, populating a KpiMatrix.
+
+        :param expression_evaluator: an ExpressionEvaluator instance
+        :param kpi_matrix: the KpiMatrix object to be populated created
+                           with prepare_kpi_matrix()
+        :param col_key: the period key to use when populating the KpiMatrix
+        :param subkpis_filter: a list of subkpis to include in the evaluation
+                               (if empty, use all subkpis)
+        :param get_additional_query_filter: a bound method that takes a single
+                                            query argument and returns a
+                                            domain compatible with the query
+                                            underlying model
+        :param locals_dict: personalized locals dictionary used as evaluation
+                            context for the KPI expressions
+        :param no_auto_expand_accounts: disable expansion of account details
+        """
         self.ensure_one()
 
         # prepare the localsdict
