@@ -73,16 +73,15 @@ repos:
     rev: v1.26.2
     hooks:
       - id: pyupgrade
-  - repo: https://github.com/asottile/seed-isort-config
-    rev: v1.9.4
-    hooks:
-      - id: seed-isort-config
-  - repo: https://github.com/pre-commit/mirrors-isort
-    rev: v4.3.21
+  - repo: https://github.com/timothycrosley/isort
+    rev: 4.3.21-2
     hooks:
       - id: isort
         name: isort except __init__.py
         exclude: /__init__\.py$
+        # TODO, the next time we upgrade isort's rev, we should remove 'types'
+        types: [python]
+        additional_dependencies: ["pipreqs==0.4.10", "pip-api==0.0.13"]
   - repo: https://github.com/acsone/setuptools-odoo
     rev: 2.5.2
     hooks:
