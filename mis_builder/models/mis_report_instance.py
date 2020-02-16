@@ -11,6 +11,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from .aep import AccountingExpressionProcessor as AEP
+from .expression_evaluator import ExpressionEvaluator
 
 _logger = logging.getLogger(__name__)
 
@@ -715,19 +716,22 @@ class MisReportInstance(models.Model):
                 _("Column %s with move lines source must have from/to dates.")
                 % (period.name,)
             )
-        self.report_id.declare_and_compute_period(
-            kpi_matrix,
-            period.id,
-            label,
-            description,
+        expression_evaluator = ExpressionEvaluator(
             aep,
             period.date_from,
             period.date_to,
             None,  # target_move now part of additional_move_line_filter
+            period._get_additional_move_line_filter(),
+            period._get_aml_model_name(),
+        )
+        self.report_id._declare_and_compute_period(
+            expression_evaluator,
+            kpi_matrix,
+            period.id,
+            label,
+            description,
             period.subkpi_ids,
-            period._get_additional_move_line_filter,
             period._get_additional_query_filter,
-            aml_model=period._get_aml_model_name(),
             no_auto_expand_accounts=self.no_auto_expand_accounts,
         )
 
