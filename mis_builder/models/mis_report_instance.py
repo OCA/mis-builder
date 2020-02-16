@@ -375,7 +375,13 @@ class MisReportInstancePeriod(models.Model):
         Returns an Odoo domain expression (a python list)
         compatible with account.move.line."""
         self.ensure_one()
-        return self._get_filter_domain_from_context()
+        domain = self._get_filter_domain_from_context()
+        if (
+            self._get_aml_model_name() == "account.move.line"
+            and self.report_instance_id.target_move == "posted"
+        ):
+            domain.extend([("move_id.state", "=", "posted")])
+        return domain
 
     def _get_additional_query_filter(self, query):
         """ Prepare an additional filter to apply on the query
@@ -717,7 +723,7 @@ class MisReportInstance(models.Model):
             aep,
             period.date_from,
             period.date_to,
-            self.target_move,
+            None,  # target_move now part of additional_move_line_filter
             period.subkpi_ids,
             period._get_additional_move_line_filter,
             period._get_additional_query_filter,
@@ -739,7 +745,7 @@ class MisReportInstance(models.Model):
             aep,
             period.date_from,
             period.date_to,
-            None,
+            None,  # target_move now part of additional_move_line_filter
             period.subkpi_ids,
             period._get_additional_move_line_filter,
             period._get_additional_query_filter,
@@ -824,7 +830,7 @@ class MisReportInstance(models.Model):
                 expr,
                 period.date_from,
                 period.date_to,
-                self.target_move if period.source == SRC_ACTUALS else None,
+                None,  # target_move now part of additional_move_line_filter
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())
