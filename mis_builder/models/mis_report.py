@@ -12,7 +12,7 @@ import dateutil
 import pytz
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.models import expression as osv_expression
 from odoo.tools.safe_eval import safe_eval
 
@@ -158,17 +158,11 @@ class MisReportKpi(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
-
-    @api.onchange("name")
-    def _onchange_name(self):
-        if self.name and not _is_valid_python_var(self.name):
-            return {
-                "warning": {
-                    "title": "Invalid name %s" % self.name,
-                    "message": "The name must be a valid python identifier",
-                }
-            }
+                raise ValidationError(
+                    _("KPI name ({}) must be a valid python identifier").format(
+                        record.name
+                    )
+                )
 
     @api.depends("expression_ids.subkpi_id.name", "expression_ids.name")
     def _compute_expression(self):
@@ -272,17 +266,11 @@ class MisReportSubkpi(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
-
-    @api.onchange("name")
-    def _onchange_name(self):
-        if self.name and not _is_valid_python_var(self.name):
-            return {
-                "warning": {
-                    "title": "Invalid name %s" % self.name,
-                    "message": "The name must be a valid python identifier",
-                }
-            }
+                raise ValidationError(
+                    _("Sub-KPI name ({}) must be a valid python identifier").format(
+                        record.name
+                    )
+                )
 
     @api.onchange("description")
     def _onchange_description(self):
@@ -417,7 +405,11 @@ class MisReportQuery(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
+                raise ValidationError(
+                    _("Query name ({}) must be valid python identifier").format(
+                        record.name
+                    )
+                )
 
 
 class MisReport(models.Model):
