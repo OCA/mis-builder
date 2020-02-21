@@ -11,6 +11,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from .aep import AccountingExpressionProcessor as AEP
+from .expression_evaluator import ExpressionEvaluator
 
 _logger = logging.getLogger(__name__)
 
@@ -254,6 +255,7 @@ class MisReportInstancePeriod(models.Model):
             ("field_id.name", "=", "account_id"),
             ("field_id.name", "=", "date"),
             ("field_id.name", "=", "company_id"),
+            ("field_id.model_id.model", "!=", "account.move.line"),
         ],
         help="A 'move line like' model, ie having at least debit, credit, "
         "date, account_id and company_id fields.",
@@ -329,6 +331,14 @@ class MisReportInstancePeriod(models.Model):
         if self.source in (SRC_SUMCOL, SRC_CMPCOL):
             self.mode = MODE_NONE
 
+    def _get_aml_model_name(self):
+        self.ensure_one()
+        if self.source == SRC_ACTUALS:
+            return self.report_id.move_lines_source.model
+        elif self.source == SRC_ACTUALS_ALT:
+            return self.source_aml_model_name
+        return False
+
     @api.model
     def _get_filter_domain_from_context(self):
         filters = []
@@ -367,7 +377,13 @@ class MisReportInstancePeriod(models.Model):
         Returns an Odoo domain expression (a python list)
         compatible with account.move.line."""
         self.ensure_one()
-        return self._get_filter_domain_from_context()
+        domain = self._get_filter_domain_from_context()
+        if (
+            self._get_aml_model_name() == "account.move.line"
+            and self.report_instance_id.target_move == "posted"
+        ):
+            domain.extend([("move_id.state", "=", "posted")])
+        return domain
 
     def _get_additional_query_filter(self, query):
         """ Prepare an additional filter to apply on the query
@@ -695,47 +711,28 @@ class MisReportInstance(models.Model):
             "target": "current",
         }
 
-    def _add_column_actuals(self, aep, kpi_matrix, period, label, description):
+    def _add_column_move_lines(self, aep, kpi_matrix, period, label, description):
         if not period.date_from or not period.date_to:
             raise UserError(
-                _("Column %s with actuals source " "must have from/to dates.")
+                _("Column %s with move lines source must have from/to dates.")
                 % (period.name,)
             )
-        self.report_id.declare_and_compute_period(
-            kpi_matrix,
-            period.id,
-            label,
-            description,
+        expression_evaluator = ExpressionEvaluator(
             aep,
             period.date_from,
             period.date_to,
-            self.target_move,
-            period.subkpi_ids,
-            period._get_additional_move_line_filter,
-            period._get_additional_query_filter,
-            aml_model=self.report_id.move_lines_source.model,
-            no_auto_expand_accounts=self.no_auto_expand_accounts,
+            None,  # target_move now part of additional_move_line_filter
+            period._get_additional_move_line_filter(),
+            period._get_aml_model_name(),
         )
-
-    def _add_column_actuals_alt(self, aep, kpi_matrix, period, label, description):
-        if not period.date_from or not period.date_to:
-            raise UserError(
-                _("Column %s with actuals source " "must have from/to dates.")
-                % (period.name,)
-            )
-        self.report_id.declare_and_compute_period(
+        self.report_id._declare_and_compute_period(
+            expression_evaluator,
             kpi_matrix,
             period.id,
             label,
             description,
-            aep,
-            period.date_from,
-            period.date_to,
-            None,
             period.subkpi_ids,
-            period._get_additional_move_line_filter,
             period._get_additional_query_filter,
-            aml_model=period.source_aml_model_id.model,
             no_auto_expand_accounts=self.no_auto_expand_accounts,
         )
 
@@ -759,9 +756,11 @@ class MisReportInstance(models.Model):
 
     def _add_column(self, aep, kpi_matrix, period, label, description):
         if period.source == SRC_ACTUALS:
-            return self._add_column_actuals(aep, kpi_matrix, period, label, description)
+            return self._add_column_move_lines(
+                aep, kpi_matrix, period, label, description
+            )
         elif period.source == SRC_ACTUALS_ALT:
-            return self._add_column_actuals_alt(
+            return self._add_column_move_lines(
                 aep, kpi_matrix, period, label, description
             )
         elif period.source == SRC_SUMCOL:
@@ -816,19 +815,15 @@ class MisReportInstance(models.Model):
                 expr,
                 period.date_from,
                 period.date_to,
-                self.target_move if period.source == SRC_ACTUALS else None,
+                None,  # target_move now part of additional_move_line_filter
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())
-            if period.source == SRC_ACTUALS_ALT:
-                aml_model_name = period.source_aml_model_id.model
-            else:
-                aml_model_name = self.report_id.move_lines_source.model
             return {
                 "name": u"{} - {}".format(expr, period.name),
                 "domain": domain,
                 "type": "ir.actions.act_window",
-                "res_model": aml_model_name,
+                "res_model": period._get_aml_model_name(),
                 "views": [[False, "list"], [False, "form"]],
                 "view_type": "list",
                 "view_mode": "list",
