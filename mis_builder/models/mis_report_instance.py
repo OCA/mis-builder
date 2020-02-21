@@ -275,6 +275,25 @@ class MisReportInstancePeriod(models.Model):
     source_cmpcol_to_id = fields.Many2one(
         comodel_name="mis.report.instance.period", string="Compare"
     )
+    # filters
+    analytic_account_id = fields.Many2one(
+        comodel_name="account.analytic.account",
+        string="Analytic Account",
+        help=(
+            "Filter column on journal entries that match this analytic account."
+            "This filter is combined with a AND with the report-level filters "
+            "and cannot be modified in the preview."
+        ),
+    )
+    analytic_tag_ids = fields.Many2many(
+        comodel_name="account.analytic.tag",
+        string="Analytic Tags",
+        help=(
+            "Filter column on journal entries that have all these analytic tags."
+            "This filter is combined with a AND with the report-level filters "
+            "and cannot be modified in the preview."
+        ),
+    )
 
     _order = "sequence, id"
 
@@ -383,6 +402,10 @@ class MisReportInstancePeriod(models.Model):
             and self.report_instance_id.target_move == "posted"
         ):
             domain.extend([("move_id.state", "=", "posted")])
+        if self.analytic_account_id:
+            domain.append(("analytic_account_id", "=", self.analytic_account_id.id))
+        for tag in self.analytic_tag_ids:
+            domain.append(("analytic_tag_ids", "=", tag.id))
         return domain
 
     def _get_additional_query_filter(self, query):

@@ -256,6 +256,10 @@
                             </group>
                         </group>
                     </group>
+                    <group string="Filters">
+                        <field name="analytic_account_id"/>
+                        <field name="analytic_tag_ids" widget="many2many_tags"/>
+                    </group>
                 </form>
             </field>
         </record>
