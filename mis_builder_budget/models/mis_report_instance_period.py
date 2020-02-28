@@ -38,5 +38,5 @@ class MisReportInstancePeriod(models.Model):
         Returns an Odoo domain expression (a python list)
         compatible with mis.budget.item."""
         self.ensure_one()
-        filters = self._get_filter_domain_from_context()
+        filters = self._get_additional_move_line_filter()
         return filters
