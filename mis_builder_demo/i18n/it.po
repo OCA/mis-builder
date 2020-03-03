@@ -1,0 +1,145 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* mis_builder_demo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#. module: mis_builder_demo
+#: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_bud
+msgid "3 M Budget"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__account_id
+msgid "Account"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_account_id
+msgid "Analytic Account"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_tag_ids
+msgid "Analytic Tags"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
+msgid "Available"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_commit
+msgid "Committed"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__company_id
+msgid "Company"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__credit
+msgid "Credit"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__date
+msgid "Date"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__debit
+msgid "Debit"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report,name:mis_builder_demo.mis_report_expenses
+msgid "Demo Expenses"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.instance,name:mis_builder_demo.mis_report_instance_expenses
+msgid "Demo Expenses vs Budget"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_equip
+msgid "Equipment"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_exp
+msgid "Expenses"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__id
+msgid "ID"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__line_type
+msgid "Line Type"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_act_mm1
+msgid "M-1"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_act_mm2
+msgid "M-2"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model,name:mis_builder_demo.model_mis_committed_purchase
+msgid "MIS Commitment"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__name
+msgid "Name"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_other
+msgid "Other"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__res_id
+msgid "Resource ID"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__res_model
+msgid "Resource Model Name"
+msgstr ""
+
+#. module: mis_builder_demo
+#: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
+msgid "Total"
+msgstr ""
