@@ -12,7 +12,7 @@ import dateutil
 import pytz
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.models import expression as osv_expression
 from odoo.tools.safe_eval import safe_eval
 
@@ -158,17 +158,11 @@ class MisReportKpi(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
-
-    @api.onchange("name")
-    def _onchange_name(self):
-        if self.name and not _is_valid_python_var(self.name):
-            return {
-                "warning": {
-                    "title": "Invalid name %s" % self.name,
-                    "message": "The name must be a valid python identifier",
-                }
-            }
+                raise ValidationError(
+                    _("KPI name ({}) must be a valid python identifier").format(
+                        record.name
+                    )
+                )
 
     @api.depends("expression_ids.subkpi_id.name", "expression_ids.name")
     def _compute_expression(self):
@@ -272,17 +266,11 @@ class MisReportSubkpi(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
-
-    @api.onchange("name")
-    def _onchange_name(self):
-        if self.name and not _is_valid_python_var(self.name):
-            return {
-                "warning": {
-                    "title": "Invalid name %s" % self.name,
-                    "message": "The name must be a valid python identifier",
-                }
-            }
+                raise ValidationError(
+                    _("Sub-KPI name ({}) must be a valid python identifier").format(
+                        record.name
+                    )
+                )
 
     @api.onchange("description")
     def _onchange_description(self):
@@ -417,7 +405,11 @@ class MisReportQuery(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
+                raise ValidationError(
+                    _("Query name ({}) must be valid python identifier").format(
+                        record.name
+                    )
+                )
 
 
 class MisReport(models.Model):
@@ -450,6 +442,14 @@ class MisReport(models.Model):
     subkpi_ids = fields.One2many(
         "mis.report.subkpi", "report_id", string="Sub KPI", copy=True
     )
+    subreport_ids = fields.One2many(
+        "mis.report.subreport", "report_id", string="Sub reports", copy=True,
+    )
+    all_kpi_ids = fields.One2many(
+        comodel_name="mis.report.kpi",
+        compute="_compute_all_kpi_ids",
+        help="KPIs of this report and subreports.",
+    )
     move_lines_source = fields.Many2one(
         comodel_name="ir.model",
         string="Move lines source",
@@ -469,6 +469,13 @@ class MisReport(models.Model):
     account_model = fields.Char(
         compute="_compute_account_model", string="Account model"
     )
+
+    @api.depends("kpi_ids", "subreport_ids")
+    def _compute_all_kpi_ids(self):
+        for rec in self:
+            rec.all_kpi_ids = rec.kpi_ids | rec.subreport_ids.mapped(
+                "subreport_id.kpi_ids"
+            )
 
     @api.depends("move_lines_source")
     def _compute_account_model(self):
@@ -548,7 +555,7 @@ class MisReport(models.Model):
     def _prepare_aep(self, companies, currency=None):
         self.ensure_one()
         aep = AEP(companies, currency, self.account_model)
-        for kpi in self.kpi_ids:
+        for kpi in self.all_kpi_ids:
             for expression in kpi.expression_ids:
                 if expression.name:
                     aep.parse_expr(expression.name)
@@ -661,6 +668,7 @@ class MisReport(models.Model):
         """
 
         if subkpis_filter:
+            # TODO filter by subkpi names
             subkpis = [subkpi for subkpi in self.subkpi_ids if subkpi in subkpis_filter]
         else:
             subkpis = self.subkpi_ids
@@ -849,6 +857,18 @@ class MisReport(models.Model):
         # prepare the localsdict
         if locals_dict is None:
             locals_dict = {}
+
+        # Evaluate subreports
+        for subreport in self.subreport_ids:
+            subreport_locals_dict = subreport.subreport_id._evaluate(
+                expression_evaluator, subkpis_filter, get_additional_query_filter,
+            )
+            locals_dict[subreport.name] = AutoStruct(
+                **{
+                    srk.name: subreport_locals_dict.get(srk.name, AccountingNone)
+                    for srk in subreport.subreport_id.kpi_ids
+                }
+            )
 
         locals_dict.update(self.prepare_locals_dict())
         locals_dict["date_from"] = fields.Date.from_string(
