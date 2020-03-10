@@ -10,15 +10,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 07:59+0000\n"
-"PO-Revision-Date: 2018-11-29 21:24+0000\n"
-"Last-Translator: Sandrine (ACSONE) <sandrine.ravet@acsone.eu>\n"
+"PO-Revision-Date: 2020-03-10 14:13+0000\n"
+"Last-Translator: Simon Mas <simon.mas@druidoo.io>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.2.2\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:528
@@ -134,11 +134,14 @@ msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid ""
 "<b>pbale[55%]</b>: sum of all ending balances of accounts starting with 55 "
 "whose\n"
 "                                          ending balance is positive."
 msgstr ""
+"<b>pbale[55%]</b>: somme des balances finales de comptes commençant par 55\n"
+"                                          dont le solde final est positif."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -269,38 +272,38 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_account_id
 msgid "Analytic Account"
-msgstr ""
+msgstr "Compte analytique"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:35
-#, python-format
+#, fuzzy, python-format
 msgid "Analytic Account Filter"
-msgstr ""
+msgstr "Filtre de Compte Analytique"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:544
-#, python-format
+#, fuzzy, python-format
 msgid "Analytic Account: %s"
-msgstr ""
+msgstr "Compte Analytique: %s"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_tag_ids
 msgid "Analytic Tags"
-msgstr ""
+msgstr "Etiquettes analytiques"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:38
-#, python-format
+#, fuzzy, python-format
 msgid "Analytic Tags Filter"
-msgstr ""
+msgstr "Filtre des Etiquettes Analytiques"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:552
-#, python-format
+#, fuzzy, python-format
 msgid "Analytic Tags: %s"
-msgstr ""
+msgstr "Etiquettes Analytiques: %s"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -548,13 +551,15 @@ msgstr "Différence"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__no_auto_expand_accounts
+#, fuzzy
 msgid "Disable account details expansion"
-msgstr ""
+msgstr "Désactiver le déploiement des détails de comptes"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__display_columns_description
+#, fuzzy
 msgid "Display Columns Description"
-msgstr ""
+msgstr "Affichage de la Description des Colonnes"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__display_name
@@ -579,8 +584,9 @@ msgstr "Affiche les détails par compte"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__display_columns_description
+#, fuzzy
 msgid "Display the date range details in the column headers."
-msgstr ""
+msgstr "Affichage du détail des bornes de dates dans les en-têtes de colonnes."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__divider_inherit
@@ -644,10 +650,13 @@ msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid ""
 "Expressions can involve other KPI, sub KPI and query results by name (eg "
 "kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
 msgstr ""
+"Les expressions peuvent faire référence à d'autres KPI, des sous KPI et des "
+"résultats de requêtes par nom (ex: kpi1 +kpi2, kpi2.subkpi1, query1.field1)."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__normalize_factor
@@ -722,8 +731,9 @@ msgstr "Poids de police par défaut"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__is_ytd
+#, fuzzy
 msgid "Forces the start date to Jan 1st of the relevant year"
-msgstr ""
+msgstr "Force la date de début au 1er janvier de l'année concernée"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__date_from
