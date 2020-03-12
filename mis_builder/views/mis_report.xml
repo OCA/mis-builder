@@ -60,6 +60,14 @@
                                 </tree>
                             </field>
                         </page>
+                        <page string="Sub Reports">
+                            <field name="subreport_ids" nolabel="1" colspan="2"  context="{'default_report_id': id}">
+                                <tree string="Sub Reports" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="subreport_id" domain="[('id', '!=', parent.id)]"/>
+                                </tree>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>

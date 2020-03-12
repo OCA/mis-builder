@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2017-2018 ACSONE SA/NV
+<!-- Copyright 2017 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 
 <odoo>
@@ -13,6 +13,8 @@
                 <field name="source_mis_budget_id"
                        attrs="{'invisible': [('source', '!=', 'mis_budget')], 'required': [('source', '=', 'mis_budget')]}"
                        domain="[('report_id', '=', report_id)]"/>
+                <field name="source_mis_budget_by_account_id"
+                       attrs="{'invisible': [('source', '!=', 'mis_budget_by_account')], 'required': [('source', '=', 'mis_budget_by_account')]}"/>
             </group>
         </field>
     </record>
