@@ -36,7 +36,6 @@ class TestMisBudgetByAccount(SavepointCase):
         cls.budget = cls.env["mis.budget.by.account"].create(
             dict(
                 name="the budget",
-                report_id=cls.report.id,
                 date_from="2017-01-01",
                 date_to="2017-12-31",
                 company_id=cls.env.ref("base.main_company").id,
