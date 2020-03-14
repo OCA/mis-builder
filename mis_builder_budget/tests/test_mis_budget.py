@@ -22,7 +22,6 @@ class TestMisBudget(TransactionCase):
                 budgetable=True,
             )
         )
-        self.kpi1_index = 1
         self.expr1 = self.kpi1.expression_ids[0]
         self.kpi2 = self.env["mis.report.kpi"].create(
             dict(
@@ -33,7 +32,6 @@ class TestMisBudget(TransactionCase):
                 sequence=0,  # kpi2 before kpi1 to test out of order evaluation
             )
         )
-        self.kpi2_index = 0
         # budget
         self.budget = self.env["mis.budget"].create(
             dict(
@@ -147,7 +145,7 @@ class TestMisBudget(TransactionCase):
 
     def test_name_search(self):
         report2 = self.report.copy()
-        report2.kpi_ids[self.kpi1_index].name = "k1_1"
+        report2.kpi_ids.filtered(lambda k: k.name == "k1").name = "k1_1"
         budget2 = self.budget.copy()
         budget2.report_id = report2.id
         # search restricted to the context of budget2
