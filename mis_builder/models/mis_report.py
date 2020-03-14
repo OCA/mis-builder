@@ -823,7 +823,6 @@ class MisReport(models.Model):
             no_auto_expand_accounts,
         )
 
-    @api.multi
     def _declare_and_compute_period(
         self,
         expression_evaluator,
@@ -958,7 +957,6 @@ class MisReport(models.Model):
         )
         return self._evaluate(expression_evaluator, subkpis_filter)
 
-    @api.multi
     def _evaluate(
         self,
         expression_evaluator,
