@@ -107,6 +107,8 @@ class TestMisBudget(TransactionCase):
                 manual_date_to="2017-02-21",
             )
         )
+        # clear cache to force re-read of kpis ordered by sequence
+        self.env.clear()
 
     def test1(self):
         matrix = self.instance._compute_matrix()
