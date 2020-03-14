@@ -12,7 +12,7 @@
     "website": "https://github.com/OCA/mis-builder/",
     "depends": [
         "account",
-        # "board",
+        "board",
         "report_xlsx",  # OCA/reporting-engine
         "date_range",  # OCA/server-ux
     ],
