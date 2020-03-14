@@ -82,7 +82,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 (cur.date_end is null or cur.date_end > coalesce(ai.invoice_date, now())))
         WHERE ai.state = 'draft'
           AND ai.type IN ('in_invoice', 'out_refund')
-          AND ail.exclude_from_invoice_tab
+          AND NOT ail.exclude_from_invoice_tab
 
     UNION ALL
 
