@@ -11,24 +11,19 @@ import dateutil
 import pytz
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.models import expression as osv_expression
 from odoo.tools.safe_eval import safe_eval
 
 from .accounting_none import AccountingNone
 from .aep import AccountingExpressionProcessor as AEP
 from .aggregate import _avg, _max, _min, _sum
+from .expression_evaluator import ExpressionEvaluator
 from .kpimatrix import KpiMatrix
 from .mis_kpi_data import ACC_AVG, ACC_NONE, ACC_SUM
 from .mis_report_style import CMP_DIFF, CMP_NONE, CMP_PCT, TYPE_NUM, TYPE_PCT, TYPE_STR
-from .mis_safe_eval import DataError, NameDataError, mis_safe_eval
+from .mis_safe_eval import DataError
 from .simple_array import SimpleArray, named_simple_array
-
-try:
-    import itertools.izip as zip
-except ImportError:
-    pass  # python 3
-
 
 _logger = logging.getLogger(__name__)
 
@@ -162,17 +157,11 @@ class MisReportKpi(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
-
-    @api.onchange("name")
-    def _onchange_name(self):
-        if self.name and not _is_valid_python_var(self.name):
-            return {
-                "warning": {
-                    "title": "Invalid name %s" % self.name,
-                    "message": "The name must be a valid python identifier",
-                }
-            }
+                raise ValidationError(
+                    _("KPI name ({}) must be a valid python identifier").format(
+                        record.name
+                    )
+                )
 
     @api.depends("expression_ids.subkpi_id.name", "expression_ids.name")
     def _compute_expression(self):
@@ -276,17 +265,11 @@ class MisReportSubkpi(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
-
-    @api.onchange("name")
-    def _onchange_name(self):
-        if self.name and not _is_valid_python_var(self.name):
-            return {
-                "warning": {
-                    "title": "Invalid name %s" % self.name,
-                    "message": "The name must be a valid python identifier",
-                }
-            }
+                raise ValidationError(
+                    _("Sub-KPI name ({}) must be a valid python identifier").format(
+                        record.name
+                    )
+                )
 
     @api.onchange("description")
     def _onchange_description(self):
@@ -421,7 +404,11 @@ class MisReportQuery(models.Model):
     def _check_name(self):
         for record in self:
             if not _is_valid_python_var(record.name):
-                raise UserError(_("The name must be a valid python " "identifier"))
+                raise ValidationError(
+                    _("Query name ({}) must be valid python identifier").format(
+                        record.name
+                    )
+                )
 
 
 class MisReport(models.Model):
@@ -454,6 +441,14 @@ class MisReport(models.Model):
     subkpi_ids = fields.One2many(
         "mis.report.subkpi", "report_id", string="Sub KPI", copy=True
     )
+    subreport_ids = fields.One2many(
+        "mis.report.subreport", "report_id", string="Sub reports", copy=True,
+    )
+    all_kpi_ids = fields.One2many(
+        comodel_name="mis.report.kpi",
+        compute="_compute_all_kpi_ids",
+        help="KPIs of this report and subreports.",
+    )
     move_lines_source = fields.Many2one(
         comodel_name="ir.model",
         string="Move lines source",
@@ -473,6 +468,13 @@ class MisReport(models.Model):
     account_model = fields.Char(
         compute="_compute_account_model", string="Account model"
     )
+
+    @api.depends("kpi_ids", "subreport_ids")
+    def _compute_all_kpi_ids(self):
+        for rec in self:
+            rec.all_kpi_ids = rec.kpi_ids | rec.subreport_ids.mapped(
+                "subreport_id.kpi_ids"
+            )
 
     @api.depends("move_lines_source")
     def _compute_account_model(self):
@@ -552,7 +554,7 @@ class MisReport(models.Model):
     def _prepare_aep(self, companies, currency=None):
         self.ensure_one()
         aep = AEP(companies, currency, self.account_model)
-        for kpi in self.kpi_ids:
+        for kpi in self.all_kpi_ids:
             for expression in kpi.expression_ids:
                 if expression.name:
                     aep.parse_expr(expression.name)
@@ -645,27 +647,27 @@ class MisReport(models.Model):
                 res[query.name] = s
         return res
 
-    def _declare_and_compute_col(
+    def _declare_and_compute_col(  # noqa: C901 (TODO simplify this fnction)
         self,
+        expression_evaluator,
         kpi_matrix,
         col_key,
         col_label,
         col_description,
         subkpis_filter,
         locals_dict,
-        eval_expressions,
-        eval_expressions_by_account,
         no_auto_expand_accounts=False,
     ):
         """This is the main computation loop.
 
         It evaluates the kpis and puts the results in the KpiMatrix.
-        Evaluation is done through callback methods so data sources
+        Evaluation is done through the expression_evaluator so data sources
         can provide their own mean of obtaining the data (eg preset
         kpi values for budget, or alternative move line sources).
         """
 
         if subkpis_filter:
+            # TODO filter by subkpi names
             subkpis = [subkpi for subkpi in self.subkpi_ids if subkpi in subkpis_filter]
         else:
             subkpis = self.subkpi_ids
@@ -686,9 +688,15 @@ class MisReport(models.Model):
                 # build the list of expressions for this kpi
                 expressions = kpi._get_expressions(subkpis)
 
-                vals, drilldown_args, name_error = eval_expressions(
-                    expressions, locals_dict
-                )
+                (
+                    vals,
+                    drilldown_args,
+                    name_error,
+                ) = expression_evaluator.eval_expressions(expressions, locals_dict)
+                for drilldown_arg in drilldown_args:
+                    if not drilldown_arg:
+                        continue
+                    drilldown_arg["period_id"] = col_key
 
                 if name_error:
                     recompute_queue.append(kpi)
@@ -740,7 +748,6 @@ class MisReport(models.Model):
                     name_error
                     or no_auto_expand_accounts
                     or not kpi.auto_expand_accounts
-                    or not eval_expressions_by_account
                 ):
                     continue
 
@@ -749,7 +756,13 @@ class MisReport(models.Model):
                     vals,
                     drilldown_args,
                     _name_error,
-                ) in eval_expressions_by_account(expressions, locals_dict):
+                ) in expression_evaluator.eval_expressions_by_account(
+                    expressions, locals_dict
+                ):
+                    for drilldown_arg in drilldown_args:
+                        if not drilldown_arg:
+                            continue
+                        drilldown_arg["period_id"] = col_key
                     kpi_matrix.set_values_detail_account(
                         kpi, col_key, account_id, vals, drilldown_args
                     )
@@ -783,29 +796,58 @@ class MisReport(models.Model):
         aml_model=None,
         no_auto_expand_accounts=False,
     ):
+        _logger.warning(
+            "declare_and_compute_period() is deprecated, "
+            "use _declare_and_compute_period() instead"
+        )
+        expression_evaluator = ExpressionEvaluator(
+            aep,
+            date_from,
+            date_to,
+            target_move,
+            get_additional_move_line_filter()
+            if get_additional_move_line_filter
+            else None,
+            aml_model,
+        )
+        return self._declare_and_compute_period(
+            expression_evaluator,
+            kpi_matrix,
+            col_key,
+            col_label,
+            col_description,
+            subkpis_filter,
+            get_additional_query_filter,
+            locals_dict,
+            no_auto_expand_accounts,
+        )
+
+    def _declare_and_compute_period(
+        self,
+        expression_evaluator,
+        kpi_matrix,
+        col_key,
+        col_label,
+        col_description,
+        subkpis_filter=None,
+        get_additional_query_filter=None,
+        locals_dict=None,
+        no_auto_expand_accounts=False,
+    ):
         """ Evaluate a report for a given period, populating a KpiMatrix.
 
+        :param expression_evaluator: an ExpressionEvaluator instance
         :param kpi_matrix: the KpiMatrix object to be populated created
                            with prepare_kpi_matrix()
         :param col_key: the period key to use when populating the KpiMatrix
-        :param aep: an AccountingExpressionProcessor instance created
-                    using _prepare_aep()
-        :param date_from, date_to: the starting and ending date
-        :param target_move: all|posted
         :param subkpis_filter: a list of subkpis to include in the evaluation
                                (if empty, use all subkpis)
-        :param get_additional_move_line_filter: a bound method that takes
-                                                no arguments and returns
-                                                a domain compatible with
-                                                account.move.line
         :param get_additional_query_filter: a bound method that takes a single
                                             query argument and returns a
                                             domain compatible with the query
                                             underlying model
         :param locals_dict: personalized locals dictionary used as evaluation
                             context for the KPI expressions
-        :param aml_model: the name of a model that is compatible with
-                          account.move.line
         :param no_auto_expand_accounts: disable expansion of account details
         """
         self.ensure_one()
@@ -814,73 +856,44 @@ class MisReport(models.Model):
         if locals_dict is None:
             locals_dict = {}
 
+        # Evaluate subreports
+        for subreport in self.subreport_ids:
+            subreport_locals_dict = subreport.subreport_id._evaluate(
+                expression_evaluator, subkpis_filter, get_additional_query_filter,
+            )
+            locals_dict[subreport.name] = AutoStruct(
+                **{
+                    srk.name: subreport_locals_dict.get(srk.name, AccountingNone)
+                    for srk in subreport.subreport_id.kpi_ids
+                }
+            )
+
         locals_dict.update(self.prepare_locals_dict())
-        locals_dict["date_from"] = fields.Date.from_string(date_from)
-        locals_dict["date_to"] = fields.Date.from_string(date_to)
+        locals_dict["date_from"] = fields.Date.from_string(
+            expression_evaluator.date_from
+        )
+        locals_dict["date_to"] = fields.Date.from_string(expression_evaluator.date_to)
 
         # fetch non-accounting queries
         locals_dict.update(
-            self._fetch_queries(date_from, date_to, get_additional_query_filter)
+            self._fetch_queries(
+                expression_evaluator.date_from,
+                expression_evaluator.date_to,
+                get_additional_query_filter,
+            )
         )
 
         # use AEP to do the accounting queries
-        additional_move_line_filter = None
-        if get_additional_move_line_filter:
-            additional_move_line_filter = get_additional_move_line_filter()
-        aep.do_queries(
-            date_from, date_to, target_move, additional_move_line_filter, aml_model
-        )
-
-        def eval_expressions(expressions, locals_dict):
-            expressions = [e and e.name or "AccountingNone" for e in expressions]
-            vals = []
-            drilldown_args = []
-            name_error = False
-            for expression in expressions:
-                val = AccountingNone
-                drilldown_arg = None
-                if expression:
-                    replaced_expr = aep.replace_expr(expression)
-                    val = mis_safe_eval(replaced_expr, locals_dict)
-                    if isinstance(val, NameDataError):
-                        name_error = True
-                    if replaced_expr != expression:
-                        drilldown_arg = {"period_id": col_key, "expr": expression}
-                vals.append(val)
-                drilldown_args.append(drilldown_arg)
-            return vals, drilldown_args, name_error
-
-        def eval_expressions_by_account(expressions, locals_dict):
-            expressions = [e and e.name or "AccountingNone" for e in expressions]
-            for account_id, replaced_exprs in aep.replace_exprs_by_account_id(
-                expressions
-            ):
-                vals = []
-                drilldown_args = []
-                name_error = False
-                for expression, replaced_expr in zip(expressions, replaced_exprs):
-                    vals.append(mis_safe_eval(replaced_expr, locals_dict))
-                    if replaced_expr != expression:
-                        drilldown_args.append(
-                            {
-                                "period_id": col_key,
-                                "expr": expression,
-                                "account_id": account_id,
-                            }
-                        )
-                    else:
-                        drilldown_args.append(None)
-                yield account_id, vals, drilldown_args, name_error
+        expression_evaluator.aep_do_queries()
 
         self._declare_and_compute_col(
+            expression_evaluator,
             kpi_matrix,
             col_key,
             col_label,
             col_description,
             subkpis_filter,
             locals_dict,
-            eval_expressions,
-            eval_expressions_by_account,
             no_auto_expand_accounts,
         )
 
@@ -931,22 +944,35 @@ class MisReport(models.Model):
                  these should be ignored as they might be removed in
                  the future.
         """
+        expression_evaluator = ExpressionEvaluator(
+            aep,
+            date_from,
+            date_to,
+            target_move,
+            get_additional_move_line_filter()
+            if get_additional_move_line_filter
+            else None,
+            aml_model,
+        )
+        return self._evaluate(expression_evaluator, subkpis_filter)
+
+    def _evaluate(
+        self,
+        expression_evaluator,
+        subkpis_filter=None,
+        get_additional_query_filter=None,
+    ):
         locals_dict = {}
         kpi_matrix = self.prepare_kpi_matrix()
-        self.declare_and_compute_period(
+        self._declare_and_compute_period(
+            expression_evaluator,
             kpi_matrix,
             col_key=1,
             col_label="",
             col_description="",
-            aep=aep,
-            date_from=date_from,
-            date_to=date_to,
-            target_move=target_move,
             subkpis_filter=subkpis_filter,
-            get_additional_move_line_filter=get_additional_move_line_filter,
             get_additional_query_filter=get_additional_query_filter,
             locals_dict=locals_dict,
-            aml_model=aml_model,
             no_auto_expand_accounts=True,
         )
         return locals_dict
