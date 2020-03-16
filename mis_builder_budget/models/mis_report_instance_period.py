@@ -18,7 +18,7 @@ class MisReportInstancePeriod(models.Model):
         ]
     )
     source_mis_budget_id = fields.Many2one(
-        comodel_name="mis.budget", string="Budget by KPI", oldname="source_mis_budget"
+        comodel_name="mis.budget", string="Budget by KPI"
     )
     source_mis_budget_by_account_id = fields.Many2one(
         comodel_name="mis.budget.by.account", string="Budget by Account"
