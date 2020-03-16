@@ -4,7 +4,7 @@
     <record id="mis_builder_multi_company_rule" model="ir.rule">
         <field name="name">Mis Report Instance multi company</field>
         <field name="model_id" ref="model_mis_report_instance"/>
-        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','in',company_ids)]</field>
     </record>
 
 </odoo>

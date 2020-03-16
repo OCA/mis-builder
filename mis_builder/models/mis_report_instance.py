@@ -433,13 +433,6 @@ class MisReportInstance(models.Model):
             else:
                 record.pivot_date = fields.Date.context_today(record)
 
-    @api.model
-    def _default_company_id(self):
-        default_company_id = self.env["res.company"]._company_default_get(
-            "mis.report.instance"
-        )
-        return default_company_id
-
     _name = "mis.report.instance"
     _description = "MIS Report Instance"
 
@@ -466,7 +459,7 @@ class MisReportInstance(models.Model):
     company_id = fields.Many2one(
         comodel_name="res.company",
         string="Company",
-        default=_default_company_id,
+        default=lambda self: self.env.company,
         required=True,
     )
     multi_company = fields.Boolean(
@@ -505,9 +498,7 @@ class MisReportInstance(models.Model):
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
     analytic_account_id = fields.Many2one(
-        comodel_name="account.analytic.account",
-        string="Analytic Account",
-        oldname="account_analytic_id",
+        comodel_name="account.analytic.account", string="Analytic Account"
     )
     analytic_tag_ids = fields.Many2many(
         comodel_name="account.analytic.tag", string="Analytic Tags"
@@ -652,7 +643,6 @@ class MisReportInstance(models.Model):
             "res_model": "mis.report.instance",
             "res_id": self.id,
             "view_mode": "form",
-            "view_type": "form",
             "view_id": view_id.id,
             "target": "current",
             "context": self._context_with_filters(),
@@ -684,7 +674,6 @@ class MisReportInstance(models.Model):
             "res_model": "mis.report.instance",
             "res_id": self.id if self.id else False,
             "view_mode": "form",
-            "view_type": "form",
             "views": [(view_id.id, "form")],
             "view_id": view_id.id,
             "target": "current",
@@ -825,7 +814,6 @@ class MisReportInstance(models.Model):
                 "type": "ir.actions.act_window",
                 "res_model": aml_model_name,
                 "views": [[False, "list"], [False, "form"]],
-                "view_type": "list",
                 "view_mode": "list",
                 "target": "current",
                 "context": {"active_test": False},

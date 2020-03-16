@@ -23,6 +23,7 @@ MAX_COL_WIDTH = 50  # characters
 
 class MisBuilderXlsx(models.AbstractModel):
     _name = "report.mis_builder.mis_report_instance_xlsx"
+    _description = "MIS Builder XLSX report"
     _inherit = "report.report_xlsx.abstract"
 
     def generate_xlsx_report(self, workbook, data, objects):

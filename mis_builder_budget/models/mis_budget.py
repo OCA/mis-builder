@@ -10,10 +10,6 @@ class MisBudget(models.Model):
     _description = "MIS Budget"
     _inherit = ["mail.thread"]
 
-    @api.model
-    def _default_company(self):
-        return self.env["res.company"]._company_default_get("mis.budget")
-
     name = fields.Char(required=True, track_visibility="onchange")
     description = fields.Char(track_visibility="onchange")
     report_id = fields.Many2one(
@@ -32,7 +28,9 @@ class MisBudget(models.Model):
         comodel_name="mis.budget.item", inverse_name="budget_id", copy=True
     )
     company_id = fields.Many2one(
-        comodel_name="res.company", string="Company", default=_default_company
+        comodel_name="res.company",
+        string="Company",
+        default=lambda self: self.env.company,
     )
 
     def copy(self, default=None):

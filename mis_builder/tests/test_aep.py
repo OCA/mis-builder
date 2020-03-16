@@ -109,7 +109,7 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr("bal_700IN")  # deprecated
         self.aep.parse_expr("bals[700IN]")  # deprecated
 
-    def _create_move(self, date, amount, debit_acc, credit_acc):
+    def _create_move(self, date, amount, debit_acc, credit_acc, post=True):
         move = self.move_model.create(
             {
                 "journal_id": self.journal.id,
@@ -124,7 +124,8 @@ class TestAEP(common.TransactionCase):
                 ],
             }
         )
-        move.post()
+        if post:
+            move.post()
         return move
 
     def _do_queries(self, date_from, date_to):
@@ -147,7 +148,7 @@ class TestAEP(common.TransactionCase):
 
     def test_sanity_check(self):
         self.assertEquals(self.company.fiscalyear_last_day, 31)
-        self.assertEquals(self.company.fiscalyear_last_month, 12)
+        self.assertEquals(self.company.fiscalyear_last_month, "12")
 
     def test_aep_basic(self):
         self.aep.done_parsing()
@@ -369,7 +370,7 @@ class TestAEP(common.TransactionCase):
                 # for P&L accounts, only after fy start
                 "|",
                 ("date", ">=", "2017-01-01"),
-                ("user_type_id.include_initial_balance", "=", True),
+                ("account_id.user_type_id.include_initial_balance", "=", True),
                 # everything must be before from_date for initial balance
                 ("date", "<", "2017-02-01"),
             ],
@@ -400,10 +401,12 @@ class TestAEP(common.TransactionCase):
             amount=100,
             debit_acc=self.account_ar,
             credit_acc=self.account_in,
+            post=False,
         )
         for ml in move.line_ids:
             if ml.credit:
                 ml.write(dict(tax_ids=[(6, 0, [tax.id])]))
+        move.post()
         # let's query for december 1st
         self._do_queries(
             datetime.date(self.prev_year, 12, 1), datetime.date(self.prev_year, 12, 1)

@@ -62,9 +62,9 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 ail.company_id AS company_id,
         ail.name AS name,
         ail.create_date::date as date,
-        ail.account_analytic_id as analytic_account_id,
+        ail.analytic_account_id as analytic_account_id,
         ail.id AS res_id,
-        'account.invoice.line' AS res_model,
+        'account.move.line' AS res_model,
         ail.account_id as account_id,
         CASE
           WHEN (ail.price_subtotal / COALESCE(cur.rate, 1.0))::decimal(16,2) >= 0.0 THEN (ail.price_subtotal / COALESCE(cur.rate, 1.0))::decimal(16,2)
@@ -74,13 +74,15 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
           WHEN (ail.price_subtotal / COALESCE(cur.rate, 1.0))::decimal(16,2)  < 0 THEN (ail.price_subtotal / COALESCE(cur.rate, 1.0))::decimal(16,2)
           ELSE 0.0
         END AS credit
-        FROM account_invoice_line ail
-            LEFT JOIN account_invoice ai ON ai.id = ail.invoice_id
+        FROM account_move_line ail
+            LEFT JOIN account_move ai ON ai.id = ail.move_id
             LEFT JOIN currency_rate cur on (cur.currency_id = ai.currency_id and
                 cur.company_id = ai.company_id and
-                cur.date_start <= coalesce(ai.date_invoice, now()) and
-                (cur.date_end is null or cur.date_end > coalesce(ai.date_invoice, now())))
-        WHERE ai.state = 'draft' AND ai.type IN ('in_invoice', 'out_refund')
+                cur.date_start <= coalesce(ai.invoice_date, now()) and
+                (cur.date_end is null or cur.date_end > coalesce(ai.invoice_date, now())))
+        WHERE ai.state = 'draft'
+          AND ai.type IN ('in_invoice', 'out_refund')
+          AND NOT ail.exclude_from_invoice_tab
 
     UNION ALL
 
@@ -90,9 +92,9 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 ail.company_id AS company_id,
         ail.name AS name,
         ail.create_date::date as date,
-        ail.account_analytic_id as analytic_account_id,
+        ail.analytic_account_id as analytic_account_id,
         ail.id AS res_id,
-        'account.invoice.line' AS res_model,
+        'account.move.line' AS res_model,
         ail.account_id as account_id,
         CASE
           WHEN (ail.price_subtotal / COALESCE(cur.rate, 1.0))::decimal(16,2)  < 0 THEN (ail.price_subtotal / COALESCE(cur.rate, 1.0))::decimal(16,2)
@@ -102,13 +104,15 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
           WHEN (ail.price_subtotal / COALESCE(cur.rate, 1.0))::decimal(16,2) >= 0.0 THEN (ail.price_subtotal / COALESCE(cur.rate, 1.0))::decimal(16,2)
           ELSE 0.0
         END AS credit
-        FROM account_invoice_line ail
-            LEFT JOIN account_invoice ai ON ai.id = ail.invoice_id
+        FROM account_move_line ail
+            LEFT JOIN account_move ai ON ai.id = ail.move_id
             LEFT JOIN currency_rate cur on (cur.currency_id = ai.currency_id and
                 cur.company_id = ai.company_id and
-                cur.date_start <= coalesce(ai.date_invoice, now()) and
-                (cur.date_end is null or cur.date_end > coalesce(ai.date_invoice, now())))
-        WHERE ai.state = 'draft' AND ai.type IN ('out_invoice', 'in_refund')
+                cur.date_start <= coalesce(ai.invoice_date, now()) and
+                (cur.date_end is null or cur.date_end > coalesce(ai.invoice_date, now())))
+        WHERE ai.state = 'draft'
+          AND ai.type IN ('out_invoice', 'in_refund')
+          AND NOT ail.exclude_from_invoice_tab
 
     ) AS mis_committed_purchase
 )

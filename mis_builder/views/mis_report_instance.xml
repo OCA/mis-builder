@@ -130,7 +130,6 @@
             <field name="name">MIS Reports</field>
             <field name="view_id" ref="mis_report_instance_view_tree"/>
             <field name="res_model">mis.report.instance</field>
-            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('temporary', '=', False)]</field>
         </record>
@@ -169,7 +168,6 @@
             <field name="name">Last Reports Generated</field>
             <field name="view_id" ref="mis_report_instance_view_tree"/>
             <field name="res_model">mis.report.instance</field>
-            <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('temporary', '=', True)]</field>
         </record>

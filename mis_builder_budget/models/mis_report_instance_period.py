@@ -11,9 +11,7 @@ class MisReportInstancePeriod(models.Model):
     _inherit = "mis.report.instance.period"
 
     source = fields.Selection(selection_add=[(SRC_MIS_BUDGET, "MIS Budget")])
-    source_mis_budget_id = fields.Many2one(
-        comodel_name="mis.budget", string="Budget", oldname="source_mis_budget"
-    )
+    source_mis_budget_id = fields.Many2one(comodel_name="mis.budget", string="Budget")
 
     def _get_additional_budget_item_filter(self):
         """ Prepare a filter to apply on all budget items

@@ -189,8 +189,6 @@ class TestMultiCompanyAEP(common.TransactionCase):
         self.env["res.currency.rate"].create(
             dict(currency_id=self.usd.id, name=today, rate=1.2)
         )
-        self.assertAlmostEqual(1.1, self.usd.with_context(date=date_to).rate)
-        self.assertAlmostEqual(1.2, self.usd.with_context(date=today).rate)
         # let's query for december, one company, default currency = eur
         aep = self._do_queries(self.company_eur, None, date_from, date_to)
         self.assertEqual(self._eval(aep, "balp[700IN]"), -100)

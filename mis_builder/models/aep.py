@@ -275,7 +275,7 @@ class AccountingExpressionProcessor(object):
             domain = [
                 "|",
                 ("date", ">=", fields.Date.to_string(fy_date_from)),
-                ("user_type_id.include_initial_balance", "=", True),
+                ("account_id.user_type_id.include_initial_balance", "=", True),
             ]
             if mode == self.MODE_INITIAL:
                 domain.append(("date", "<", date_from))
@@ -290,7 +290,7 @@ class AccountingExpressionProcessor(object):
             ]
             domain = [
                 ("date", "<", fields.Date.to_string(fy_date_from)),
-                ("user_type_id.include_initial_balance", "=", False),
+                ("account_id.user_type_id.include_initial_balance", "=", False),
             ]
         if target_move == "posted":
             domain.append(("move_id.state", "=", "posted"))
