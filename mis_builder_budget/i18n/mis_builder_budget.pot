@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mis_builder_budget
+# 	* mis_builder_budget
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,25 +14,25 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget.py:43
+#: code:addons/mis_builder_budget/models/mis_budget.py:0
 #, python-format
 msgid "%s (copy)"
 msgstr ""
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:91
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:0
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr ""
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:99
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:0
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr ""
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:86
+#: code:addons/mis_builder_budget/models/mis_budget_item.py:0
 #, python-format
 msgid "%s start date must not be after end date"
 msgstr ""
@@ -43,22 +43,12 @@ msgid "Action Needed"
 msgstr ""
 
 #. module: mis_builder_budget
-#: selection:mis.report.instance.period,source:0
-msgid "Actuals"
-msgstr ""
-
-#. module: mis_builder_budget
-#: selection:mis.report.instance.period,source:0
-msgid "Actuals (alternative)"
-msgstr ""
-
-#. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_report_instance_period__source
-msgid "Actuals: current data, from accounting and other queries.\n"
+msgid ""
+"Actuals: current data, from accounting and other queries.\n"
 "Actuals (alternative): current data from an alternative source (eg a database view providing look-alike account move lines).\n"
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
-""
 msgstr ""
 
 #. module: mis_builder_budget
@@ -113,7 +103,7 @@ msgid "Cancel"
 msgstr ""
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
+#: model:ir.model.fields.selection,name:mis_builder_budget.selection__mis_budget__state__cancelled
 msgid "Cancelled"
 msgstr ""
 
@@ -123,17 +113,12 @@ msgid "Company"
 msgstr ""
 
 #. module: mis_builder_budget
-#: selection:mis.report.instance.period,source:0
-msgid "Compare columns"
-msgstr ""
-
-#. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Confirm"
 msgstr ""
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
+#: model:ir.model.fields.selection,name:mis_builder_budget.selection__mis_budget__state__confirmed
 msgid "Confirmed"
 msgstr ""
 
@@ -167,7 +152,7 @@ msgid "Display Name"
 msgstr ""
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
+#: model:ir.model.fields.selection,name:mis_builder_budget.selection__mis_budget__state__draft
 msgid "Draft"
 msgstr ""
 
@@ -199,17 +184,14 @@ msgid "ID"
 msgstr ""
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_unread
-msgid "If checked new messages require your attention."
-msgstr ""
-
-#. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_needaction
+#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_unread
 msgid "If checked, new messages require your attention."
 msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
+#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -253,7 +235,7 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
-#: selection:mis.report.instance.period,source:0
+#: model:ir.model.fields.selection,name:mis_builder_budget.selection__mis_report_instance_period__source__mis_budget
 msgid "MIS Budget"
 msgstr ""
 
@@ -327,7 +309,7 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_error_counter
-msgid "Number of error"
+msgid "Number of errors"
 msgstr ""
 
 #. module: mis_builder_budget
@@ -343,6 +325,11 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_unread_counter
 msgid "Number of unread messages"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_sms_error
+msgid "SMS Delivery error"
 msgstr ""
 
 #. module: mis_builder_budget
@@ -363,11 +350,6 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__seq2
 msgid "Sub-KPI Sequence"
-msgstr ""
-
-#. module: mis_builder_budget
-#: selection:mis.report.instance.period,source:0
-msgid "Sum columns"
 msgstr ""
 
 #. module: mis_builder_budget
@@ -395,4 +377,3 @@ msgstr ""
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__website_message_ids
 msgid "Website communication history"
 msgstr ""
-
