@@ -10,10 +10,6 @@ class MisBudgetAbstract(models.AbstractModel):
     _description = "MIS Budget (Abstract Base Class)"
     _inherit = ["mail.thread"]
 
-    @api.model
-    def _default_company(self):
-        return self.env["res.company"]._company_default_get("mis.budget")
-
     name = fields.Char(required=True, track_visibility="onchange")
     description = fields.Char(track_visibility="onchange")
     date_range_id = fields.Many2one(comodel_name="date.range", string="Date range")
@@ -26,7 +22,9 @@ class MisBudgetAbstract(models.AbstractModel):
         track_visibility="onchange",
     )
     company_id = fields.Many2one(
-        comodel_name="res.company", string="Company", default=_default_company
+        comodel_name="res.company",
+        string="Company",
+        default=lambda self: self.env.company,
     )
 
     def copy(self, default=None):
