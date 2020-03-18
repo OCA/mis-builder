@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 07:59+0000\n"
-"PO-Revision-Date: 2020-03-18 13:13+0000\n"
+"PO-Revision-Date: 2020-03-18 16:13+0000\n"
 "Last-Translator: Simon Mas <simon.mas@druidoo.io>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
@@ -1082,13 +1082,15 @@ msgstr "Rapports MIS"
 
 #. module: mis_builder
 #: model:ir.actions.report,name:mis_builder.qweb_pdf_export
+#, fuzzy
 msgid "MIS report instance QWEB PDF report"
-msgstr "Instance MIS report QWEB PDF report"
+msgstr "Instance de rapport MIS QWEB PDF"
 
 #. module: mis_builder
 #: model:ir.actions.report,name:mis_builder.xls_export
+#, fuzzy
 msgid "MIS report instance XLS report"
-msgstr "Instance MIS report XLS report"
+msgstr "Instance de rapport MIS rapport XLS"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:403
@@ -1213,7 +1215,7 @@ msgstr "Compensation depuis la période actuelle"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum__period_id
 msgid "Parent column"
-msgstr "Colonne parent"
+msgstr "Colonne parente"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:111
@@ -1344,8 +1346,7 @@ msgstr "Sauvegarder"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__company_ids
 msgid "Select companies for which data will be searched."
-msgstr ""
-"Selectionnez les sociétés pour lesquelles les données seront cherchées."
+msgstr "Sélectionnez les sociétés pour lesquelles les données seront cherchées."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__currency_id
@@ -1353,7 +1354,7 @@ msgid ""
 "Select target currency for the report. Required if companies have different "
 "currencies."
 msgstr ""
-"Selectionnez la devise du rapport. Nécessaire si les sociétés ont des "
+"Sélectionnez la devise du rapport. Nécessaire si les sociétés ont des "
 "devises différentes."
 
 #. module: mis_builder
@@ -1510,12 +1511,13 @@ msgstr "Couleur du texte en code RGB valide (de #000000 à  #FFFFFF)"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid ""
 "The <b>account selector</b> is a like expression on the account code (eg "
 "70%, etc)."
 msgstr ""
-"Le <b>sélecteur de compte</b> est une expression Like sur le code du compte "
-"(eg 70%, etc)."
+"Le <b>sélecteur de compte</b> est une expression LIKE sur le code du compte ("
+"ex. 70%, etc)."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -1527,12 +1529,17 @@ msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid ""
 "The following special elements are recognized in the expressions to compute "
 "accounting data:\n"
 "                                         <code>{bal|crd|deb|pbal|nbal}{pieu}"
 "[account selector][journal items domain]</code>."
 msgstr ""
+"Les éléments suivants sont reconnus dans les expressions pour calculer les "
+"données comptables:\n"
+"                                         <code>{bal|crd|deb|pbal|nbal}{pieu}["
+"sélecteur de compte][domaine des pièces de journal]</code>."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:165
@@ -1551,8 +1558,9 @@ msgstr "à "
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__date_to
+#, fuzzy
 msgid "To (computed)"
-msgstr ""
+msgstr "A (calculé)"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_kpi_data.py:97
@@ -1608,14 +1616,15 @@ msgstr "Année"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__is_ytd
+#, fuzzy
 msgid "Year to date"
-msgstr ""
+msgstr "Du début de l'année à aujourd'hui"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:59
 #, python-format
 msgid "You cannot sum period %s with itself."
-msgstr "Vous ne pouvez pas additionner la période %s avec elle-meme."
+msgstr "Vous ne pouvez pas additionner la période %s avec elle-même."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:787
