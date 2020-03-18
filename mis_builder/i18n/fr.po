@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 07:59+0000\n"
-"PO-Revision-Date: 2020-03-10 14:13+0000\n"
+"PO-Revision-Date: 2020-03-18 13:13+0000\n"
 "Last-Translator: Simon Mas <simon.mas@druidoo.io>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
@@ -194,11 +194,15 @@ msgstr "Méthode d'accumulation"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:302
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "Actual (alternative) models used in columns must have the same account model "
 "in the Account field and must be the same defined in the report template: %s"
 msgstr ""
+"Les modèles réels (alternatifs) utilisés dans les colonnes doivent suivre le "
+"même modèle de compte que dans le champ Compte et doivent être identiques à "
+"ceux définis dans le modèle de rapport:\n"
+"%s"
 
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
@@ -744,14 +748,15 @@ msgstr "De"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__date_from
+#, fuzzy
 msgid "From (computed)"
-msgstr ""
+msgstr "De (calculé)"
 
 #. module: mis_builder
 #: code:addons/mis_builder/report/mis_report_instance_xlsx.py:159
 #, python-format
 msgid "Generated on {} at {}"
-msgstr ""
+msgstr "Généré le {} à {}"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -761,17 +766,19 @@ msgstr "Aide (pour expressions des KPI)"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__hide_always
 msgid "Hide Always"
-msgstr ""
+msgstr "Toujours Masquer"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__hide_always_inherit
+#, fuzzy
 msgid "Hide Always Inherit"
-msgstr ""
+msgstr "Toujours Masquer par défaut"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__hide_analytic_filters
+#, fuzzy
 msgid "Hide Analytic Filters"
-msgstr ""
+msgstr "Masquer les Filtres Analytiques"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__hide_empty
@@ -841,7 +848,7 @@ msgstr "KPI"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:725
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "KPI \"{}\" has type {} while a tuple was expected.\n"
 "\n"
@@ -851,14 +858,23 @@ msgid ""
 "\t- Changing the KPI to `multi` mode and giving an explicit value for each "
 "sub-KPI."
 msgstr ""
+"KPI \"{}\" est de type {} alors qu'un tuple était attendu.\n"
+"\n"
+"Ceci peut être résolu soit:\n"
+"\t-  En changeant  la valeur du KPI en un tuple de longueur {}\n"
+"ou\n"
+"\t- En changeant le mode du KPI en`multi` et en donnant une valeur explicite "
+"à chaque sous-KPI."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:715
-#, python-format
+#, fuzzy, python-format
 msgid ""
 "KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
 "expected."
 msgstr ""
+"Le KPI \"{}\" a pour valeur un tuple de longueur {} alors qu'un tuple de "
+"longueur {} est attendu."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq1
@@ -869,8 +885,9 @@ msgstr "Séquence"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__kpi_ids
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
+#, fuzzy
 msgid "KPI's"
-msgstr "KPI's"
+msgstr "KPIs"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression__kpi_id
@@ -939,8 +956,9 @@ msgstr "Dernière mise à jour le"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
+#, fuzzy
 msgid "Layout"
-msgstr ""
+msgstr "Présentation"
 
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
@@ -954,8 +972,9 @@ msgstr "Classe abstraite de données MIS KPI"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
+#, fuzzy
 msgid "MIS Report"
-msgstr "MIS Report"
+msgstr "Rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_add_mis_report_instance_dashboard_wizard
@@ -966,79 +985,86 @@ msgstr "Ajouter au tableau de bord"
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
+#, fuzzy
 msgid "MIS Report Instance"
-msgstr "Instance MIS report"
+msgstr "Instance de rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance_period
 #, fuzzy
 msgid "MIS Report Instance Period"
-msgstr "Instance MIS report"
+msgstr "Période d'Instance de rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance_period_sum
 #, fuzzy
 msgid "MIS Report Instance Period Sum"
-msgstr "Instance MIS report"
+msgstr "Somme sur la période d'Instance de rapport MIS"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
+#, fuzzy
 msgid "MIS Report Instances"
-msgstr "Instances MIS report"
+msgstr "Instances de rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+#, fuzzy
 msgid "MIS Report KPI"
-msgstr "MIS Report KPI"
+msgstr "KPI de rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
 #, fuzzy
 msgid "MIS Report KPI Expression"
-msgstr "MIS Report KPI"
+msgstr "Expression de KPI de Rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_query
 #, fuzzy
 msgid "MIS Report Query"
-msgstr "MIS Report"
+msgstr "Requête de rapport MIS"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_result_view_form
+#, fuzzy
 msgid "MIS Report Result"
-msgstr "Résultat MIS Report"
+msgstr "Résultat  de rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_style
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
+#, fuzzy
 msgid "MIS Report Style"
-msgstr "Style MIS Report"
+msgstr "Style de Rapport MIS"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_style_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_style_view_menu
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_tree
+#, fuzzy
 msgid "MIS Report Styles"
-msgstr "Styles MIS Report"
+msgstr "Styles de Rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subkpi
 #, fuzzy
 msgid "MIS Report Sub-KPI"
-msgstr "MIS Report KPI"
+msgstr "Sous-KPI de Rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report
 #, fuzzy
 msgid "MIS Report Template"
-msgstr "Modèles MIS Report"
+msgstr "Modèles de Rapport MIS"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_view_menu
+#, fuzzy
 msgid "MIS Report Templates"
-msgstr "Modèles MIS Report"
+msgstr "Modèles de Rapport MIS"
 
 #. module: mis_builder
 #: model:ir.ui.menu,name:mis_builder.mis_report_conf_menu
@@ -1050,8 +1076,9 @@ msgstr "MIS Reporting"
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_instance_view_menu
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_tree
+#, fuzzy
 msgid "MIS Reports"
-msgstr "MIS Reports"
+msgstr "Rapports MIS"
 
 #. module: mis_builder
 #: model:ir.actions.report,name:mis_builder.qweb_pdf_export
