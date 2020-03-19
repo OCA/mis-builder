@@ -791,8 +791,8 @@ class MisReportInstance(models.Model):
                 date_to = self._format_date(period.date_to)
                 description = _("from %s to %s") % (date_from, date_to)
             self._add_column(aep, kpi_matrix, period, period.name, description)
-        kpi_matrix.compute_comparisons()
         kpi_matrix.compute_sums()
+        kpi_matrix.compute_comparisons()
         return kpi_matrix
 
     def compute(self):
