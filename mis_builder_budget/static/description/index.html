@@ -369,41 +369,44 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/mis-builder/tree/12.0/mis_builder_budget"><img alt="OCA/mis-builder" src="https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github" /></a> <a class="reference external" href="https://translation.odoo-community.org/projects/mis-builder-12-0/mis-builder-12-0-mis_builder_budget"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external" href="https://runbot.odoo-community.org/runbot/248/12.0"><img alt="Try me on Runbot" src="https://img.shields.io/badge/runbot-Try%20me-875A7B.png" /></a></p>
 <p>Create budgets for MIS reports.</p>
-<p>This module lets you create budgets for any MIS report. Several budgets
-can be created for a given report template (ie one budget per year). Budget
-figures are provided at the KPI level, with different time periods. A budget
-can then be selected as a data source for a MIS report column, and the report
-will show the budgeted values for each KPI, adjusted for the period of the
-column.</p>
+<p>This module lets you create budgets for any MIS report. Several budgets can be
+created for a given report template (ie one budget per year). Budget figures
+are provided by KPI or by GL account, with different time periods. A budget can
+then be selected as a data source for a MIS report column, and the report will
+show the budgeted values for each KPI, adjusted for the period of the column.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#usage" id="id14">Usage</a></li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id15">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#changelog" id="id16">Changelog</a><ul>
-<li><a class="reference internal" href="#id1" id="id17">12.0.3.4.0 (2019-10-26)</a></li>
-<li><a class="reference internal" href="#id3" id="id18">11.0.3.3.0 (2019-01-13)</a></li>
-<li><a class="reference internal" href="#id5" id="id19">11.0.3.2.1 (2018-06-30)</a></li>
-<li><a class="reference internal" href="#id7" id="id20">11.0.3.2.0 (2018-05-02)</a></li>
-<li><a class="reference internal" href="#id9" id="id21">11.0.3.1.1 (2018-02-04)</a></li>
-<li><a class="reference internal" href="#id11" id="id22">10.0.3.1.0 (2017-11-14)</a></li>
-<li><a class="reference internal" href="#id13" id="id23">10.0.1.1.1 (2017-10-01)</a></li>
+<li><a class="reference internal" href="#usage" id="id16">Usage</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id17">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="id18">Changelog</a><ul>
+<li><a class="reference internal" href="#id1" id="id19">12.0.3.5.0 (2020-03-28)</a></li>
+<li><a class="reference internal" href="#id3" id="id20">12.0.3.4.0 (2019-10-26)</a></li>
+<li><a class="reference internal" href="#id5" id="id21">11.0.3.3.0 (2019-01-13)</a></li>
+<li><a class="reference internal" href="#id7" id="id22">11.0.3.2.1 (2018-06-30)</a></li>
+<li><a class="reference internal" href="#id9" id="id23">11.0.3.2.0 (2018-05-02)</a></li>
+<li><a class="reference internal" href="#id11" id="id24">11.0.3.1.1 (2018-02-04)</a></li>
+<li><a class="reference internal" href="#id13" id="id25">10.0.3.1.0 (2017-11-14)</a></li>
+<li><a class="reference internal" href="#id15" id="id26">10.0.1.1.1 (2017-10-01)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#bug-tracker" id="id24">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id25">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id26">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id27">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="id28">Maintainers</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="id27">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id28">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id29">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id30">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="id31">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#id14">Usage</a></h1>
-<p>To use this module, you first need to flag at least some KPI in a MIS
-report to be budgetable. You also need to configure the accumulation method
-on the KPI according to their type.</p>
+<h1><a class="toc-backref" href="#id16">Usage</a></h1>
+<p>There are two ways to use this module: create budgets by KPI or budgets by
+GL accounts. Currently, the two methods cannot be combined in the same budget.</p>
+<p><strong>Budget by KPIs</strong></p>
+<p>To use this this mode, you first need to flag at least some KPI in a MIS report
+to be budgetable. You also need to configure the accumulation method on the KPI
+according to their type.</p>
 <p>The accumulation method determines how budgeted values spanning over a
 time period are transformed to match the reporting period.</p>
 <ul class="simple">
@@ -412,22 +415,39 @@ periods are adjusted pro-rata temporis (eg monetary amount such as revenue).</li
 <li>Average: values of included period are averaged with a pro-rata temporis weight.
 Typically used for values that do not accumulate over time (eg a number of employees).</li>
 </ul>
-<p>When KPI are configured, you need to create a budget, then click on the budget items
-button to create or import the budgeted amounts for all your KPI and time periods.</p>
-<p>Finally, a column (aka period) must be added to a MIS report instance, selecting your
-newly created budget as a data source. The data will be adjusted to the reporting period
-when displayed. Columns can be compared by adding a column of type “comparison” or “sum”.</p>
+<p>When KPI are configured, you need to create a budget, using the MIS Budget (by
+KPIs) menu, then click on the budget items button to create or import the
+budgeted amounts for all your KPI and time periods.</p>
+<p><strong>Budget by GL accounts</strong></p>
+<p>You can also create budgets by GL accounts. In this case, the budget is
+populated with one line per GL account (and optionally analytic account and/or
+tags) and time period.</p>
+<p><strong>Add budget columns to report instances</strong></p>
+<p>Finally, a column (aka period) must be added to a MIS report instance,
+selecting your newly created budget as a data source. The data will be adjusted
+to the reporting period when displayed. Columns can be compared by adding a
+column of type “comparison” or “sum”.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id15">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#id17">Known issues / Roadmap</a></h1>
 <p>The mis_builder <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">roadmap</a>
 and <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug">known issues</a> can
 be found on GitHub.</p>
 </div>
 <div class="section" id="changelog">
-<h1><a class="toc-backref" href="#id16">Changelog</a></h1>
+<h1><a class="toc-backref" href="#id18">Changelog</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id17">12.0.3.4.0 (2019-10-26)</a></h2>
+<h2><a class="toc-backref" href="#id19">12.0.3.5.0 (2020-03-28)</a></h2>
+<p><strong>Features</strong></p>
+<ul class="simple">
+<li>Budget by GL account: allow budgeting by GL account in addition to the
+existing mechanism to budget by KPI. Budget items have a begin and end
+date, and when reporting a pro-rata temporis adjustment is made to match
+the reporting period. (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/259">#259</a>)</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id20">12.0.3.4.0 (2019-10-26)</a></h2>
 <p><strong>Bugfixes</strong></p>
 <ul class="simple">
 <li>Consider analytic tags too when detecting overlapping budget items.
@@ -435,48 +455,48 @@ Previously only analytic account was considered, and this overlap detection
 mechanism was overlooked when analytic tags were added to budget items. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/241">#241</a>)</li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2><a class="toc-backref" href="#id18">11.0.3.3.0 (2019-01-13)</a></h2>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id21">11.0.3.3.0 (2019-01-13)</a></h2>
 <p><strong>Features</strong></p>
 <ul class="simple">
 <li>Support analytic filters. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/15">#15</a>)</li>
 </ul>
 </div>
-<div class="section" id="id5">
-<h2><a class="toc-backref" href="#id19">11.0.3.2.1 (2018-06-30)</a></h2>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id22">11.0.3.2.1 (2018-06-30)</a></h2>
 <ul class="simple">
 <li>[IMP] Support analytic tags in budget items
 (<a class="reference external" href="https://github.com/OCA/mis-builder/pull/100">#100</a>)</li>
 </ul>
 </div>
-<div class="section" id="id7">
-<h2><a class="toc-backref" href="#id20">11.0.3.2.0 (2018-05-02)</a></h2>
+<div class="section" id="id9">
+<h2><a class="toc-backref" href="#id23">11.0.3.2.0 (2018-05-02)</a></h2>
 <ul class="simple">
 <li>[FIX] #NAME error in out-of-order computation of non
 budgetable items in budget columns
 (<a class="reference external" href="https://github.com/OCA/mis-builder/pull/69">#68</a>)</li>
 </ul>
 </div>
-<div class="section" id="id9">
-<h2><a class="toc-backref" href="#id21">11.0.3.1.1 (2018-02-04)</a></h2>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id24">11.0.3.1.1 (2018-02-04)</a></h2>
 <p>Migration to Odoo 11. No new feature.
 (<a class="reference external" href="https://github.com/OCA/mis-builder/pull/67">#67</a>)</p>
 </div>
-<div class="section" id="id11">
-<h2><a class="toc-backref" href="#id22">10.0.3.1.0 (2017-11-14)</a></h2>
+<div class="section" id="id13">
+<h2><a class="toc-backref" href="#id25">10.0.3.1.0 (2017-11-14)</a></h2>
 <p>New features:</p>
 <ul class="simple">
 <li>[ADD] multi-company record rule for MIS Budgets
 (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/27">#27</a>)</li>
 </ul>
 </div>
-<div class="section" id="id13">
-<h2><a class="toc-backref" href="#id23">10.0.1.1.1 (2017-10-01)</a></h2>
+<div class="section" id="id15">
+<h2><a class="toc-backref" href="#id26">10.0.1.1.1 (2017-10-01)</a></h2>
 <p>First version.</p>
 </div>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id24">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id27">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/mis-builder/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -484,15 +504,15 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id25">Credits</a></h1>
+<h1><a class="toc-backref" href="#id28">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id26">Authors</a></h2>
+<h2><a class="toc-backref" href="#id29">Authors</a></h2>
 <ul class="simple">
 <li>ACSONE SA/NV</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id27">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id30">Contributors</a></h2>
 <ul class="simple">
 <li>Stéphane Bidoul &lt;<a class="reference external" href="mailto:stephane.bidoul&#64;acsone.eu">stephane.bidoul&#64;acsone.eu</a>&gt;</li>
 <li>Adrien Peiffer &lt;<a class="reference external" href="mailto:adrien.peiffer&#64;acsone.eu">adrien.peiffer&#64;acsone.eu</a>&gt;</li>
@@ -501,7 +521,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id28">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id31">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
