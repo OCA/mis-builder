@@ -1,3 +1,20 @@
+13.0.3.6.0 (2020-03-28)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Add column-level filters on analytic account and analytic tags.
+  These filters are combined with a AND with the report-level filters
+  and cannot be modified in the preview. (`#138 <https://github.com/OCA/mis-builder/issues/138>`_)
+- Access to KPI from other reports in KPI expressions, aka subreports. In a
+  report template, one can list named "subreports" (other report templates). When
+  evaluating expressions, you can access KPI's of subreports with a dot-prefix
+  notation. Example: you can define a MIS Report for a "Balance Sheet", and then
+  have another MIS Report "Balance Sheet Ratios" that fetches KPI's from "Balance
+  Sheet" to create new KPI's for the ratios (e.g. balance_sheet.current_assets /
+  balance_sheet.total_assets). (`#155 <https://github.com/OCA/mis-builder/issues/155>`_)
+
+
 13.0.3.5.0 (2020-01-??)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
