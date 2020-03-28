@@ -17,58 +17,94 @@ msgstr ""
 "X-Generator: Weblate 3.1.1\n"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget.py:43
+#: code:addons/mis_builder_budget/models/mis_budget_abstract.py:37
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (còpia)"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:91
+#: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:82
 #, python-format
 msgid "%s is not within budget %s date range."
 msgstr "%s no és dins del rang de dates del pressupost %s."
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:99
+#: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:90
 #, python-format
 msgid "%s overlaps %s in budget %s"
 msgstr "%s superposa %s en el pressupost %s"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item.py:86
+#: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:77
 #, python-format
 msgid "%s start date must not be after end date"
 msgstr "La data d'inici de %s no pot ser posterior a la data de finalització"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_account_id
+#, fuzzy
+#| msgid "Analytic account"
+msgid "Account"
+msgstr "Compte analític"
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_analytic_tag_ids
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_analytic_tag_ids
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_tag_ids
 msgid "Analytic Tags"
 msgstr "Etiquetes analítiques"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_analytic_account_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_analytic_account_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_analytic_account_id
 msgid "Analytic account"
 msgstr "Compte analític"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_balance
+#, fuzzy
+#| msgid "Cancel"
+msgid "Balance"
+msgstr "Cancel·lar"
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_budget_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_budget_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period_source_mis_budget_id
 msgid "Budget"
 msgstr "Pressupost"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_budget_date_from
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_budget_date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
 #, fuzzy
 msgid "Budget Date From"
 msgstr "Elements de pressupost"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_budget_date_to
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_budget_date_to
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_to
 #, fuzzy
 msgid "Budget Date To"
 msgstr "Elements de pressupost"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period_source_mis_budget_by_account_id
+msgid "Budget by Account"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period_source_mis_budget_id
+#, fuzzy
+#| msgid "Budget"
+msgid "Budget by KPI"
+msgstr "Pressupost"
+
+#. module: mis_builder_budget
+#: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Budget items"
 msgstr "Elements de pressupost"
@@ -79,76 +115,125 @@ msgid "Budgetable"
 msgstr "Pressupostable"
 
 #. module: mis_builder_budget
+#: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Cancel"
 msgstr "Cancel·lar"
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
+#: selection:mis.budget,state:0 selection:mis.budget.abstract,state:0
+#: selection:mis.budget.by.account,state:0
 msgid "Cancelled"
 msgstr "Cancel·lat"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_company_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_company_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_company_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_company_id
 msgid "Company"
 msgstr "Companyia"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_company_currency_id
+#, fuzzy
+#| msgid "Company"
+msgid "Company Currency"
+msgstr "Companyia"
+
+#. module: mis_builder_budget
+#: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Confirm"
 msgstr "Confirmar"
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
+#: selection:mis.budget,state:0 selection:mis.budget.abstract,state:0
+#: selection:mis.budget.by.account,state:0
 msgid "Confirmed"
 msgstr "Confirmat"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_create_uid
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_create_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_create_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_create_uid
 msgid "Created by"
 msgstr "Creat per"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_create_date
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_create_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_create_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_create_date
 msgid "Created on"
 msgstr "Creat el"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_credit
+msgid "Credit"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_date_range_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_date_range_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_date_range_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_range_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_date_range_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_date_range_id
 msgid "Date range"
 msgstr "Rang de data"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_debit
+msgid "Debit"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_description
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_description
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_description
 msgid "Description"
 msgstr "Descripció"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_display_name
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_display_name
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_display_name
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_display_name
 msgid "Display Name"
 msgstr "Nom mostrat"
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
+#: selection:mis.budget,state:0 selection:mis.budget.abstract,state:0
+#: selection:mis.budget.by.account,state:0
 msgid "Draft"
 msgstr "Esborrany"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_date_from
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_date_from
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_from
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_date_from
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_date_from
 msgid "From"
 msgstr "Des del"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_id
 msgid "ID"
 msgstr "ID"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_ids
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_ids
 msgid "Item"
 msgstr "Objecte"
@@ -160,42 +245,99 @@ msgstr "KPI"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget___last_update
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract___last_update
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account___last_update
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item___last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item___last_update
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract___last_update
 msgid "Last Modified on"
 msgstr "Última modificació el"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_write_uid
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_write_uid
 msgid "Last Updated by"
 msgstr "Última actualització per"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_write_date
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_write_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_write_date
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_write_date
 msgid "Last Updated on"
 msgstr "Última actualització el"
 
 #. module: mis_builder_budget
-#: model:ir.model,name:mis_builder_budget.model_mis_budget
-msgid "MIS Budget"
-msgstr "Pressupost MIS"
+#: model:ir.model,name:mis_builder_budget.model_mis_budget_abstract
+msgid "MIS Budget (Abstract Base Class)"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_budget_item_abstract
+#, fuzzy
+#| msgid "MIS Budget Items"
+msgid "MIS Budget Item (Abstract Base Class)"
+msgstr "Objectes de pressupostos MIS"
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account_item
+#, fuzzy
+#| msgid "MIS Budget Item"
+msgid "MIS Budget Item (by Account)"
+msgstr "Objecte de pressupost MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
-msgid "MIS Budget Item"
+#, fuzzy
+#| msgid "MIS Budget Item"
+msgid "MIS Budget Item (by KPI)"
 msgstr "Objecte de pressupost MIS"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
-msgid "MIS Budget Items"
+#, fuzzy
+#| msgid "MIS Budget Items"
+msgid "MIS Budget Items (by KPIs)"
 msgstr "Objectes de pressupostos MIS"
+
+#. module: mis_builder_budget
+#: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_item_act_window
+#, fuzzy
+#| msgid "MIS Budget Items"
+msgid "MIS Budget Items (by accounts)"
+msgstr "Objectes de pressupostos MIS"
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account
+#, fuzzy
+#| msgid "MIS Budget Item"
+msgid "MIS Budget by Account"
+msgstr "Objecte de pressupost MIS"
+
+#. module: mis_builder_budget
+#: model:ir.model,name:mis_builder_budget.model_mis_budget
+#, fuzzy
+#| msgid "MIS Budget Item"
+msgid "MIS Budget by KPI"
+msgstr "Objecte de pressupost MIS"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
-msgid "MIS Budgets"
-msgstr "Pressupostos MIS"
+#, fuzzy
+#| msgid "MIS Budget Items"
+msgid "MIS Budgets (by KPIs)"
+msgstr "Objectes de pressupostos MIS"
+
+#. module: mis_builder_budget
+#: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_act_window
+#: model:ir.ui.menu,name:mis_builder_budget.mis_budget_by_account_menu
+#, fuzzy
+#| msgid "MIS Budget Items"
+msgid "MIS Budgets (by accounts)"
+msgstr "Objectes de pressupostos MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance
@@ -227,24 +369,58 @@ msgid "MIS Report Template"
 msgstr "Plantilla de pressupost MIS"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_name
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_name
 msgid "Name"
 msgstr "Nom"
 
 #. module: mis_builder_budget
+#: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Set draft"
 msgstr "Canviar a esborrany"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_state
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_state
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_state
 msgid "State"
 msgstr "Estat"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_date_to
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_date_to
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_date_to
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_date_to
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_date_to
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_date_to
 msgid "To"
 msgstr "a"
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account_item_company_currency_id
+msgid "Utility field to express amount currency"
+msgstr ""
+
+#. module: mis_builder_budget
+#: sql_constraint:mis.budget.by.account.item:0
+msgid ""
+"Wrong credit or debit value in budget item! Credit and debit should be "
+"positive."
+msgstr ""
+
+#. module: mis_builder_budget
+#: sql_constraint:mis.budget.by.account.item:0
+msgid ""
+"Wrong credit or debit value in budget item! Credit or debit should be zero."
+msgstr ""
+
+#~ msgid "MIS Budget"
+#~ msgstr "Pressupost MIS"
+
+#~ msgid "MIS Budgets"
+#~ msgstr "Pressupostos MIS"
 
 #~ msgid "mis.report.instance"
 #~ msgstr "mis.report.instance"
