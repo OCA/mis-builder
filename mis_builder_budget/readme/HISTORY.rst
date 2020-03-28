@@ -1,3 +1,14 @@
+13.0.3.5.0 (2020-03-28)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Budget by GL account: allow budgeting by GL account in addition to the
+  existing mechanism to budget by KPI. Budget items have a begin and end
+  date, and when reporting a pro-rata temporis adjustment is made to match
+  the reporting period. (`#259 <https://github.com/OCA/mis-builder/issues/259>`_)
+
+
 13.0.3.4.0 (2020-01-??)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
