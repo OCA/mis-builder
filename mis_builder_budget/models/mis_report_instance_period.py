@@ -4,14 +4,36 @@
 from odoo import fields, models
 
 SRC_MIS_BUDGET = "mis_budget"
+SRC_MIS_BUDGET_BY_ACCOUNT = "mis_budget_by_account"
 
 
 class MisReportInstancePeriod(models.Model):
 
     _inherit = "mis.report.instance.period"
 
-    source = fields.Selection(selection_add=[(SRC_MIS_BUDGET, "MIS Budget")])
-    source_mis_budget_id = fields.Many2one(comodel_name="mis.budget", string="Budget")
+    source = fields.Selection(
+        selection_add=[
+            (SRC_MIS_BUDGET, "MIS Budget by KPI"),
+            (SRC_MIS_BUDGET_BY_ACCOUNT, "MIS Budget by Account"),
+        ]
+    )
+    source_mis_budget_id = fields.Many2one(
+        comodel_name="mis.budget", string="Budget by KPI"
+    )
+    source_mis_budget_by_account_id = fields.Many2one(
+        comodel_name="mis.budget.by.account", string="Budget by Account"
+    )
+
+    def _get_aml_model_name(self):
+        if self.source == SRC_MIS_BUDGET_BY_ACCOUNT:
+            return "mis.budget.by.account.item"
+        return super(MisReportInstancePeriod, self)._get_aml_model_name()
+
+    def _get_additional_move_line_filter(self):
+        domain = super(MisReportInstancePeriod, self)._get_additional_move_line_filter()
+        if self.source == SRC_MIS_BUDGET_BY_ACCOUNT:
+            domain.extend([("budget_id", "=", self.source_mis_budget_by_account_id.id)])
+        return domain
 
     def _get_additional_budget_item_filter(self):
         """ Prepare a filter to apply on all budget items
@@ -35,5 +57,5 @@ class MisReportInstancePeriod(models.Model):
         Returns an Odoo domain expression (a python list)
         compatible with mis.budget.item."""
         self.ensure_one()
-        filters = self._get_filter_domain_from_context()
+        filters = self._get_additional_move_line_filter()
         return filters
