@@ -2,18 +2,19 @@ name: Mark stale issues and pull requests
 
 on:
   schedule:
-  - cron: "0 12 * * 0"
+    - cron: "0 12 * * 0"
 
 jobs:
   stale:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/stale@v1
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        stale-pr-message: 'This PR has been without activity for 120 days. It will be closed in 30 days unless the stale label is removed or some activity happens in between.'
-        stale-pr-label: 'stale'
-        days-before-stale: 120
-        days-before-close: 30
+      - uses: actions/stale@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          stale-pr-message:
+            "This PR has been without activity for 120 days. It will be closed in 30
+            days unless the stale label is removed or some activity happens in between."
+          stale-pr-label: "stale"
+          days-before-stale: 120
+          days-before-close: 30
