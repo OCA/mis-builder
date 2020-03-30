@@ -1,37 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017-2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
-  <record id="mis_budget_expenses" model="mis.budget">
-    <field name="name" eval="'Demo Expenses Budget'"/>
-    <field name="report_id" ref="mis_report_expenses"/>
-    <field name="date_from" eval="(datetime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"/>
-    <field name="date_to" eval="(datetime.now() + relativedelta(years=1, month=12, day=31)).strftime('%Y-%m-%d')"/>
-  </record>
-
-  <record id="mis_budget_item_1" model="mis.budget.item">
-    <field name="budget_id" ref="mis_budget_expenses"/>
-    <field name="kpi_expression_id" ref="mis_report_expenses_kpi_expr_exp"/>
-    <field name="date_from" eval="(datetime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"/>
-    <field name="date_to" eval="(datetime.now() + relativedelta(years=1, month=12, day=31)).strftime('%Y-%m-%d')"/>
-    <field name="amount">100000</field>
-  </record>
-
-  <record id="mis_budget_item_2" model="mis.budget.item">
-    <field name="budget_id" ref="mis_budget_expenses"/>
-    <field name="kpi_expression_id" ref="mis_report_expenses_kpi_expr_equip"/>
-    <field name="date_from" eval="(datetime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"/>
-    <field name="date_to" eval="(datetime.now() + relativedelta(years=1, month=12, day=31)).strftime('%Y-%m-%d')"/>
-    <field name="amount">200000</field>
-  </record>
-
-  <record id="mis_budget_item_3" model="mis.budget.item">
-    <field name="budget_id" ref="mis_budget_expenses"/>
-    <field name="kpi_expression_id" ref="mis_report_expenses_kpi_expr_other"/>
-    <field name="date_from" eval="(datetime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"/>
-    <field name="date_to" eval="(datetime.now() + relativedelta(years=1, month=12, day=31)).strftime('%Y-%m-%d')"/>
-    <field name="amount">50000</field>
-  </record>
-
+    <record id="mis_budget_expenses" model="mis.budget">
+        <field name="name" eval="'Demo Expenses Budget'" />
+        <field name="report_id" ref="mis_report_expenses" />
+        <field
+            name="date_from"
+            eval="(datetime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"
+        />
+        <field
+            name="date_to"
+            eval="(datetime.now() + relativedelta(years=1, month=12, day=31)).strftime('%Y-%m-%d')"
+        />
+    </record>
+    <record id="mis_budget_item_1" model="mis.budget.item">
+        <field name="budget_id" ref="mis_budget_expenses" />
+        <field name="kpi_expression_id" ref="mis_report_expenses_kpi_expr_exp" />
+        <field
+            name="date_from"
+            eval="(datetime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"
+        />
+        <field
+            name="date_to"
+            eval="(datetime.now() + relativedelta(years=1, month=12, day=31)).strftime('%Y-%m-%d')"
+        />
+        <field name="amount">100000</field>
+    </record>
+    <record id="mis_budget_item_2" model="mis.budget.item">
+        <field name="budget_id" ref="mis_budget_expenses" />
+        <field name="kpi_expression_id" ref="mis_report_expenses_kpi_expr_equip" />
+        <field
+            name="date_from"
+            eval="(datetime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"
+        />
+        <field
+            name="date_to"
+            eval="(datetime.now() + relativedelta(years=1, month=12, day=31)).strftime('%Y-%m-%d')"
+        />
+        <field name="amount">200000</field>
+    </record>
+    <record id="mis_budget_item_3" model="mis.budget.item">
+        <field name="budget_id" ref="mis_budget_expenses" />
+        <field name="kpi_expression_id" ref="mis_report_expenses_kpi_expr_other" />
+        <field
+            name="date_from"
+            eval="(datetime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"
+        />
+        <field
+            name="date_to"
+            eval="(datetime.now() + relativedelta(years=1, month=12, day=31)).strftime('%Y-%m-%d')"
+        />
+        <field name="amount">50000</field>
+    </record>
 </odoo>

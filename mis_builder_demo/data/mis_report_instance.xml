@@ -1,98 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017-2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
-  <record id="mis_report_instance_expenses" model="mis.report.instance">
-    <field name="name">Demo Expenses vs Budget</field>
-    <field name="report_id" ref="mis_report_expenses"/>
-    <field name="comparison_mode" eval="True"/>
-  </record>
-
-  <record id="mis_report_instance_expenses_bud" model="mis.report.instance.period">
-    <field name="name">3 M Budget</field>
-    <field name="report_instance_id" ref="mis_report_instance_expenses"/>
-    <field name="source">mis_budget</field>
-    <field name="source_mis_budget_id" ref="mis_budget_expenses"/>
-    <field name="mode">relative</field>
-    <field name="type">m</field>
-    <field name="offset">-2</field>
-    <field name="duration">3</field>
-    <field name="sequence">10</field>
-  </record>
-
-  <record id="mis_report_instance_expenses_commit" model="mis.report.instance.period">
-    <field name="name">Committed</field>
-    <field name="report_instance_id" ref="mis_report_instance_expenses"/>
-    <field name="source">actuals_alt</field>
-    <field name="source_aml_model_id" ref="model_mis_committed_purchase"/>
-    <field name="mode">relative</field>
-    <field name="type">m</field>
-    <field name="offset">-2</field>
-    <field name="duration">3</field>
-    <field name="sequence">20</field>
-  </record>
-
-  <record id="mis_report_instance_expenses_act_mm2" model="mis.report.instance.period">
-    <field name="name">M-2</field>
-    <field name="report_instance_id" ref="mis_report_instance_expenses"/>
-    <field name="source">actuals</field>
-    <field name="mode">relative</field>
-    <field name="type">m</field>
-    <field name="offset">-2</field>
-    <field name="sequence">30</field>
-  </record>
-
-  <record id="mis_report_instance_expenses_act_mm1" model="mis.report.instance.period">
-    <field name="name">M-1</field>
-    <field name="report_instance_id" ref="mis_report_instance_expenses"/>
-    <field name="source">actuals</field>
-    <field name="mode">relative</field>
-    <field name="type">m</field>
-    <field name="offset">-1</field>
-    <field name="sequence">40</field>
-  </record>
-
-  <record id="mis_report_instance_expenses_act_m" model="mis.report.instance.period">
-    <field name="name">M</field>
-    <field name="report_instance_id" ref="mis_report_instance_expenses"/>
-    <field name="source">actuals</field>
-    <field name="mode">relative</field>
-    <field name="type">m</field>
-    <field name="offset">0</field>
-    <field name="sequence">50</field>
-  </record>
-
-  <record id="mis_report_instance_expenses_avail" model="mis.report.instance.period">
-    <field name="name">Available</field>
-    <field name="report_instance_id" ref="mis_report_instance_expenses"/>
-    <field name="source">sumcol</field>
-    <field name="mode">none</field>
-  </record>
-  <record id="mis_report_instance_expenses_avail_s1" model="mis.report.instance.period.sum">
-    <field name="period_id" ref="mis_report_instance_expenses_avail"/>
-    <field name="period_to_sum_id" ref="mis_report_instance_expenses_bud"/>
-    <field name="sign">+</field>
-  </record>
-  <record id="mis_report_instance_expenses_avail_s2" model="mis.report.instance.period.sum">
-    <field name="period_id" ref="mis_report_instance_expenses_avail"/>
-    <field name="period_to_sum_id" ref="mis_report_instance_expenses_commit"/>
-    <field name="sign">-</field>
-  </record>
-  <record id="mis_report_instance_expenses_avail_s3" model="mis.report.instance.period.sum">
-    <field name="period_id" ref="mis_report_instance_expenses_avail"/>
-    <field name="period_to_sum_id" ref="mis_report_instance_expenses_act_mm2"/>
-    <field name="sign">-</field>
-  </record>
-  <record id="mis_report_instance_expenses_avail_s4" model="mis.report.instance.period.sum">
-    <field name="period_id" ref="mis_report_instance_expenses_avail"/>
-    <field name="period_to_sum_id" ref="mis_report_instance_expenses_act_mm1"/>
-    <field name="sign">-</field>
-  </record>
-  <record id="mis_report_instance_expenses_avail_s5" model="mis.report.instance.period.sum">
-    <field name="period_id" ref="mis_report_instance_expenses_avail"/>
-    <field name="period_to_sum_id" ref="mis_report_instance_expenses_act_m"/>
-    <field name="sign">-</field>
-  </record>
-
+    <record id="mis_report_instance_expenses" model="mis.report.instance">
+        <field name="name">Demo Expenses vs Budget</field>
+        <field name="report_id" ref="mis_report_expenses" />
+        <field name="comparison_mode" eval="True" />
+    </record>
+    <record id="mis_report_instance_expenses_bud" model="mis.report.instance.period">
+        <field name="name">3 M Budget</field>
+        <field name="report_instance_id" ref="mis_report_instance_expenses" />
+        <field name="source">mis_budget</field>
+        <field name="source_mis_budget_id" ref="mis_budget_expenses" />
+        <field name="mode">relative</field>
+        <field name="type">m</field>
+        <field name="offset">-2</field>
+        <field name="duration">3</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="mis_report_instance_expenses_commit" model="mis.report.instance.period">
+        <field name="name">Committed</field>
+        <field name="report_instance_id" ref="mis_report_instance_expenses" />
+        <field name="source">actuals_alt</field>
+        <field name="source_aml_model_id" ref="model_mis_committed_purchase" />
+        <field name="mode">relative</field>
+        <field name="type">m</field>
+        <field name="offset">-2</field>
+        <field name="duration">3</field>
+        <field name="sequence">20</field>
+    </record>
+    <record
+        id="mis_report_instance_expenses_act_mm2"
+        model="mis.report.instance.period"
+    >
+        <field name="name">M-2</field>
+        <field name="report_instance_id" ref="mis_report_instance_expenses" />
+        <field name="source">actuals</field>
+        <field name="mode">relative</field>
+        <field name="type">m</field>
+        <field name="offset">-2</field>
+        <field name="sequence">30</field>
+    </record>
+    <record
+        id="mis_report_instance_expenses_act_mm1"
+        model="mis.report.instance.period"
+    >
+        <field name="name">M-1</field>
+        <field name="report_instance_id" ref="mis_report_instance_expenses" />
+        <field name="source">actuals</field>
+        <field name="mode">relative</field>
+        <field name="type">m</field>
+        <field name="offset">-1</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="mis_report_instance_expenses_act_m" model="mis.report.instance.period">
+        <field name="name">M</field>
+        <field name="report_instance_id" ref="mis_report_instance_expenses" />
+        <field name="source">actuals</field>
+        <field name="mode">relative</field>
+        <field name="type">m</field>
+        <field name="offset">0</field>
+        <field name="sequence">50</field>
+    </record>
+    <record id="mis_report_instance_expenses_avail" model="mis.report.instance.period">
+        <field name="name">Available</field>
+        <field name="report_instance_id" ref="mis_report_instance_expenses" />
+        <field name="source">sumcol</field>
+        <field name="mode">none</field>
+    </record>
+    <record
+        id="mis_report_instance_expenses_avail_s1"
+        model="mis.report.instance.period.sum"
+    >
+        <field name="period_id" ref="mis_report_instance_expenses_avail" />
+        <field name="period_to_sum_id" ref="mis_report_instance_expenses_bud" />
+        <field name="sign">+</field>
+    </record>
+    <record
+        id="mis_report_instance_expenses_avail_s2"
+        model="mis.report.instance.period.sum"
+    >
+        <field name="period_id" ref="mis_report_instance_expenses_avail" />
+        <field name="period_to_sum_id" ref="mis_report_instance_expenses_commit" />
+        <field name="sign">-</field>
+    </record>
+    <record
+        id="mis_report_instance_expenses_avail_s3"
+        model="mis.report.instance.period.sum"
+    >
+        <field name="period_id" ref="mis_report_instance_expenses_avail" />
+        <field name="period_to_sum_id" ref="mis_report_instance_expenses_act_mm2" />
+        <field name="sign">-</field>
+    </record>
+    <record
+        id="mis_report_instance_expenses_avail_s4"
+        model="mis.report.instance.period.sum"
+    >
+        <field name="period_id" ref="mis_report_instance_expenses_avail" />
+        <field name="period_to_sum_id" ref="mis_report_instance_expenses_act_mm1" />
+        <field name="sign">-</field>
+    </record>
+    <record
+        id="mis_report_instance_expenses_avail_s5"
+        model="mis.report.instance.period.sum"
+    >
+        <field name="period_id" ref="mis_report_instance_expenses_avail" />
+        <field name="period_to_sum_id" ref="mis_report_instance_expenses_act_m" />
+        <field name="sign">-</field>
+    </record>
 </odoo>

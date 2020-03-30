@@ -21,6 +21,17 @@ repos:
     rev: "1.19.1"
     hooks:
       - id: prettier
+  # TODO Avoid awebdeveloper/pre-commit-prettier if possible
+  # HACK https://github.com/prettier/prettier/issues/7407
+  - repo: https://github.com/awebdeveloper/pre-commit-prettier
+    rev: v0.0.1
+    hooks:
+      - id: prettier
+        name: prettier xml plugin
+        additional_dependencies:
+          - "prettier@1.19.1"
+          - "@prettier/plugin-xml@0.7.2"
+        files: \.xml$
   - repo: https://github.com/pre-commit/mirrors-eslint
     rev: v6.8.0
     hooks:
@@ -67,11 +78,11 @@ repos:
         name: pylint with optional checks
         args: ["--rcfile=.pylintrc", "--exit-zero"]
         verbose: true
-        additional_dependencies: ["pylint-odoo==3.0.3"]
+        additional_dependencies: ["pylint-odoo==3.1.0"]
       - id: pylint
         name: pylint with mandatory checks
         args: ["--rcfile=.pylintrc-mandatory"]
-        additional_dependencies: ["pylint-odoo==3.0.3"]
+        additional_dependencies: ["pylint-odoo==3.1.0"]
   - repo: https://github.com/asottile/pyupgrade
     rev: v1.26.2
     hooks:
