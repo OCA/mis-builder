@@ -1,32 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017-2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
-  <record id="mis_report_expenses_style1" model="mis.report.style">
-    <field name="name">Demo style $</field>
-    <field name="prefix_inherit" eval="False"/>
-    <field name="prefix">$</field>
-    <field name="dp_inherit" eval="False"/>
-    <field name="dp">2</field>
-  </record>
-
-  <record id="mis_report_expenses_style2" model="mis.report.style">
-    <field name="name">Demo style account detail</field>
-    <field name="indent_level_inherit" eval="False"/>
-    <field name="indent_level">1</field>
-    <field name="font_style_inherit" eval="False"/>
-    <field name="font_style">italic</field>
-  </record>
-
-  <record id="mis_report_expenses_style4" model="mis.report.style">
-    <field name="name">Demo style total</field>
-    <field name="background_color_inherit" eval="False"/>
-    <field name="background_color">#967C8B</field>
-    <field name="color_inherit" eval="False"/>
-    <field name="color">#FFFFFF</field>
-    <field name="font_weight_inherit" eval="False"/>
-    <field name="font_weight">bold</field>
-  </record>
-
+    <record id="mis_report_expenses_style1" model="mis.report.style">
+        <field name="name">Demo style $</field>
+        <field name="prefix_inherit" eval="False" />
+        <field name="prefix">$</field>
+        <field name="dp_inherit" eval="False" />
+        <field name="dp">2</field>
+    </record>
+    <record id="mis_report_expenses_style2" model="mis.report.style">
+        <field name="name">Demo style account detail</field>
+        <field name="indent_level_inherit" eval="False" />
+        <field name="indent_level">1</field>
+        <field name="font_style_inherit" eval="False" />
+        <field name="font_style">italic</field>
+    </record>
+    <record id="mis_report_expenses_style4" model="mis.report.style">
+        <field name="name">Demo style total</field>
+        <field name="background_color_inherit" eval="False" />
+        <field name="background_color">#967C8B</field>
+        <field name="color_inherit" eval="False" />
+        <field name="color">#FFFFFF</field>
+        <field name="font_weight_inherit" eval="False" />
+        <field name="font_weight">bold</field>
+    </record>
 </odoo>

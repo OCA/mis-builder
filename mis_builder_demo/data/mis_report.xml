@@ -1,67 +1,58 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017-2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
-  <record id="mis_report_expenses" model="mis.report">
-    <field name="name">Demo Expenses</field>
-    <field name="style_id" ref="mis_report_expenses_style1"/>
-  </record>
-
-  <record id="mis_report_expenses_kpi_exp" model="mis.report.kpi">
-    <field name="report_id" ref="mis_report_expenses"/>
-    <field name="name">exp</field>
-    <field name="description">Expenses</field>
-    <field name="auto_expand_accounts">True</field>
-    <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2"/>
-    <field name="budgetable" eval="True"/>
-    <field name="sequence">1</field>
-  </record>
-
-  <record id="mis_report_expenses_kpi_expr_exp" model="mis.report.kpi.expression">
-    <field name="kpi_id" ref="mis_report_expenses_kpi_exp"/>
-    <field name="name">balp[220000]</field>
-  </record>
-
-  <record id="mis_report_expenses_kpi_equip" model="mis.report.kpi">
-    <field name="report_id" ref="mis_report_expenses"/>
-    <field name="name">equip</field>
-    <field name="description">Equipment</field>
-    <field name="auto_expand_accounts">True</field>
-    <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2"/>
-    <field name="budgetable" eval="True"/>
-    <field name="sequence">2</field>
-  </record>
-
-  <record id="mis_report_expenses_kpi_expr_equip" model="mis.report.kpi.expression">
-    <field name="kpi_id" ref="mis_report_expenses_kpi_equip"/>
-    <field name="name">balp[212200]</field>
-  </record>
-
-  <record id="mis_report_expenses_kpi_other" model="mis.report.kpi">
-    <field name="report_id" ref="mis_report_expenses"/>
-    <field name="name">other</field>
-    <field name="description">Other</field>
-    <field name="auto_expand_accounts">True</field>
-    <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2"/>
-    <field name="budgetable" eval="True"/>
-    <field name="sequence">3</field>
-  </record>
-
-  <record id="mis_report_expenses_kpi_expr_other" model="mis.report.kpi.expression">
-    <field name="kpi_id" ref="mis_report_expenses_kpi_other"/>
-    <field name="name">balp[211000,212100,212300]</field>
-  </record>
-
-  <record id="mis_report_expenses_kpi_total" model="mis.report.kpi">
-    <field name="report_id" ref="mis_report_expenses"/>
-    <field name="name">total</field>
-    <field name="description">Total</field>
-    <field name="expression">exp + equip + other</field>
-    <field name="auto_expand_accounts">False</field>
-    <field name="budgetable" eval="False"/>
-    <field name="style_id" ref="mis_report_expenses_style4"/>
-    <field name="sequence">4</field>
-  </record>
-
+    <record id="mis_report_expenses" model="mis.report">
+        <field name="name">Demo Expenses</field>
+        <field name="style_id" ref="mis_report_expenses_style1" />
+    </record>
+    <record id="mis_report_expenses_kpi_exp" model="mis.report.kpi">
+        <field name="report_id" ref="mis_report_expenses" />
+        <field name="name">exp</field>
+        <field name="description">Expenses</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2" />
+        <field name="budgetable" eval="True" />
+        <field name="sequence">1</field>
+    </record>
+    <record id="mis_report_expenses_kpi_expr_exp" model="mis.report.kpi.expression">
+        <field name="kpi_id" ref="mis_report_expenses_kpi_exp" />
+        <field name="name">balp[220000]</field>
+    </record>
+    <record id="mis_report_expenses_kpi_equip" model="mis.report.kpi">
+        <field name="report_id" ref="mis_report_expenses" />
+        <field name="name">equip</field>
+        <field name="description">Equipment</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2" />
+        <field name="budgetable" eval="True" />
+        <field name="sequence">2</field>
+    </record>
+    <record id="mis_report_expenses_kpi_expr_equip" model="mis.report.kpi.expression">
+        <field name="kpi_id" ref="mis_report_expenses_kpi_equip" />
+        <field name="name">balp[212200]</field>
+    </record>
+    <record id="mis_report_expenses_kpi_other" model="mis.report.kpi">
+        <field name="report_id" ref="mis_report_expenses" />
+        <field name="name">other</field>
+        <field name="description">Other</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2" />
+        <field name="budgetable" eval="True" />
+        <field name="sequence">3</field>
+    </record>
+    <record id="mis_report_expenses_kpi_expr_other" model="mis.report.kpi.expression">
+        <field name="kpi_id" ref="mis_report_expenses_kpi_other" />
+        <field name="name">balp[211000,212100,212300]</field>
+    </record>
+    <record id="mis_report_expenses_kpi_total" model="mis.report.kpi">
+        <field name="report_id" ref="mis_report_expenses" />
+        <field name="name">total</field>
+        <field name="description">Total</field>
+        <field name="expression">exp + equip + other</field>
+        <field name="auto_expand_accounts">False</field>
+        <field name="budgetable" eval="False" />
+        <field name="style_id" ref="mis_report_expenses_style4" />
+        <field name="sequence">4</field>
+    </record>
 </odoo>
