@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-03-20 08:07+0000\n"
+"PO-Revision-Date: 2020-03-30 07:18+0000\n"
 "Last-Translator: Hans Henrik Gabelgaard <hhg@gabelgaard.org>\n"
 "Language-Team: none\n"
 "Language: da\n"
@@ -969,10 +969,8 @@ msgstr "MIS Rapport"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subreport
-#, fuzzy
-#| msgid "MIS Report Result"
 msgid "MIS Report - Sub Reports Relation"
-msgstr "MIS Rapport Resultat"
+msgstr "MIS Rapport - Sub rapport relation"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_add_mis_report_instance_dashboard_wizard
@@ -1004,17 +1002,17 @@ msgstr "MIS Rapport Instanser"
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "MIS Report KPI"
-msgstr ""
+msgstr "MIS Rapport KPI"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
 msgid "MIS Report KPI Expression"
-msgstr ""
+msgstr "MIS Rapport KPI udtryk"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_query
 msgid "MIS Report Query"
-msgstr ""
+msgstr "MIS Rapport forespørgsel"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_result_view_form
@@ -1025,14 +1023,14 @@ msgstr "MIS Rapport Resultat"
 #: model:ir.model,name:mis_builder.model_mis_report_style
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
 msgid "MIS Report Style"
-msgstr ""
+msgstr "MIS Rapport typografi"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_style_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_style_view_menu
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_tree
 msgid "MIS Report Styles"
-msgstr ""
+msgstr "MIS Rapport typografier"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subkpi
@@ -1048,13 +1046,13 @@ msgstr ""
 #: model:ir.actions.act_window,name:mis_builder.mis_report_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_view_menu
 msgid "MIS Report Templates"
-msgstr "MIS Rapport Skabelon"
+msgstr "MIS Rapport Skabeloner"
 
 #. module: mis_builder
 #: model:ir.ui.menu,name:mis_builder.mis_report_conf_menu
 #: model:ir.ui.menu,name:mis_builder.mis_report_finance_menu
 msgid "MIS Reporting"
-msgstr ""
+msgstr "MIS Rapportering"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_view_action
@@ -1424,17 +1422,13 @@ msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
-#, fuzzy
-#| msgid "MIS Reports"
 msgid "Sub Reports"
-msgstr "MIS Rapporter"
+msgstr "Sub rapporter"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__subreport_ids
-#, fuzzy
-#| msgid "MIS Reports"
 msgid "Sub reports"
-msgstr "MIS Rapporter"
+msgstr "Sub rapporter"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq2
