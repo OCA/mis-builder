@@ -33,11 +33,11 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
           ELSE cast(NULL AS INTEGER)
         END AS account_id,
         CASE
-          WHEN (pol.price_unit / COALESCE(cur.rate, 1.0) * (pol.product_qty - pol.qty_invoiced))::decimal(16,2) >= 0.0 THEN (pol.price_unit * (pol.product_qty - pol.qty_invoiced))::decimal(16,2)
+          WHEN (pol.price_unit / COALESCE(cur.rate, 1.0) * (pol.product_qty - pol.qty_invoiced))::decimal(16,2) >= 0.0 THEN (pol.price_unit / COALESCE(cur.rate, 1.0) * (pol.product_qty - pol.qty_invoiced))::decimal(16,2)
           ELSE 0.0
         END AS debit,
         CASE
-          WHEN (pol.price_unit / COALESCE(cur.rate, 1.0) * (pol.product_qty - pol.qty_invoiced))::decimal(16,2)  < 0 THEN (pol.price_unit * (pol.product_qty - pol.qty_invoiced))::decimal(16,2)
+          WHEN (pol.price_unit / COALESCE(cur.rate, 1.0) * (pol.product_qty - pol.qty_invoiced))::decimal(16,2)  < 0 THEN (pol.price_unit / COALESCE(cur.rate, 1.0) * (pol.product_qty - pol.qty_invoiced))::decimal(16,2)
           ELSE 0.0
         END AS credit
         FROM purchase_order_line pol
