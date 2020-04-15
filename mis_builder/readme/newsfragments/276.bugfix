@@ -1,0 +1,2 @@
+Fix ``TypeError: 'module' object is not iterable`` when using
+budgets by account.
