@@ -82,7 +82,7 @@ class ProRataReadGroupMixin(models.AbstractModel):
             return res.values()
         return super(ProRataReadGroupMixin, self).read_group(
             domain,
-            fields,
+            flds,
             groupby,
             offset=offset,
             limit=limit,
