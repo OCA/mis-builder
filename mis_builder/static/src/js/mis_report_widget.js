@@ -114,7 +114,7 @@ odoo.define("mis_builder.widget", function(require) {
                 });
 
             var def2 = session
-                .user_has_group("analytic.group_account_user")
+                .user_has_group("account.group_account_user")
                 .then(function(result) {
                     self.show_settings = result;
                 });
