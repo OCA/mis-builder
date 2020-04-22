@@ -1,3 +1,12 @@
+13.0.3.6.1 (2020-04-22)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix ``TypeError: 'module' object is not iterable`` when using
+  budgets by account. (`#276 <https://github.com/OCA/mis-builder/issues/276>`_)
+
+
 13.0.3.6.0 (2020-03-28)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
