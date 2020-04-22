@@ -394,7 +394,7 @@ class TestAEP(common.TransactionCase):
         self.aep.done_parsing()
 
         tax = self.env["account.tax"].create(
-            dict(name="test tax", active=False, amount=0)
+            dict(name="test tax", active=True, amount=0)
         )
         move = self._create_move(
             date=datetime.date(self.prev_year, 12, 1),
@@ -406,6 +406,7 @@ class TestAEP(common.TransactionCase):
         for ml in move.line_ids:
             if ml.credit:
                 ml.write(dict(tax_ids=[(6, 0, [tax.id])]))
+        tax.active = False
         move.post()
         # let's query for december 1st
         self._do_queries(
