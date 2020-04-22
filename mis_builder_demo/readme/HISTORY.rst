@@ -1,3 +1,11 @@
+13.0.3.1.2 (2020-04-22)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix currency rate in uninvoiced purchases. (`#274 <https://github.com/OCA/mis-builder/issues/274>`_)
+
+
 13.0.3.1.0 (2020-01-??)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
