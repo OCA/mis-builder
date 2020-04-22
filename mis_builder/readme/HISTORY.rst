@@ -1,3 +1,11 @@
+11.0.3.6.2 (2020-04-22)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- The "Settings" button is now displayed for users with the "Show full accounting features" right when previewing a report. (`#281 <https://github.com/OCA/mis-builder/issues/281>`_)
+
+
 11.0.3.6.1 (2020-04-22)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
