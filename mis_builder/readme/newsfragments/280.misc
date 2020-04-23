@@ -1,0 +1,3 @@
+The ``_intersect_date`` model method has been restored on ``mis.kpi.data``,
+and added on ``prorata.read_group.mixin`` as a semi-supported way to override
+the pro-rata temporis budget reporting mechanism.
