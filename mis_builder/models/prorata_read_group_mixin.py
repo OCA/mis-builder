@@ -32,6 +32,10 @@ class ProRataReadGroupMixin(models.AbstractModel):
         )
 
     @api.model
+    def _intersect_days(self, item_dt_from, item_dt_to, dt_from, dt_to):
+        return intersect_days(item_dt_from, item_dt_to, dt_from, dt_to)
+
+    @api.model
     def read_group(
         self, domain, flds, groupby, offset=0, limit=None, orderby=False, lazy=True
     ):
@@ -75,7 +79,7 @@ class ProRataReadGroupMixin(models.AbstractModel):
                 for sum_field in sum_fields:
                     item_dt_from = fields.Date.from_string(item["date_from"])
                     item_dt_to = fields.Date.from_string(item["date_to"])
-                    i_days, item_days = intersect_days(
+                    i_days, item_days = self._intersect_days(
                         item_dt_from, item_dt_to, dt_from, dt_to
                     )
                     res_item[sum_field] += item[sum_field] * i_days / item_days
