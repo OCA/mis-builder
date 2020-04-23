@@ -70,6 +70,10 @@ class MisKpiData(models.AbstractModel):
             )
 
     @api.model
+    def _intersect_days(self, item_dt_from, item_dt_to, dt_from, dt_to):
+        return intersect_days(item_dt_from, item_dt_to, dt_from, dt_to)
+
+    @api.model
     def _query_kpi_data(self, date_from, date_to, base_domain):
         """Query mis.kpi.data over a time period.
 
@@ -85,7 +89,9 @@ class MisKpiData(models.AbstractModel):
         for item in self.search(domain):
             item_dt_from = fields.Date.from_string(item.date_from)
             item_dt_to = fields.Date.from_string(item.date_to)
-            i_days, item_days = intersect_days(item_dt_from, item_dt_to, dt_from, dt_to)
+            i_days, item_days = self._intersect_days(
+                item_dt_from, item_dt_to, dt_from, dt_to
+            )
             if item.kpi_expression_id.kpi_id.accumulation_method == ACC_SUM:
                 # accumulate pro-rata overlap between item and reporting period
                 res[item.kpi_expression_id] += item.amount * i_days / item_days
