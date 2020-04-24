@@ -1711,7 +1711,7 @@ msgid "To (computed)"
 msgstr "A (calculé)"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_kpi_data.py:98
+#: code:addons/mis_builder/models/mis_kpi_data.py:104
 #, python-format
 msgid "Unexpected accumulation method %s for %s."
 msgstr "Méthode d'accumulation inattendue %s pour %s."
