@@ -1,16 +1,16 @@
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/12.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
-[![Build Status](https://travis-ci.org/OCA/mis-builder.svg?branch=12.0)](https://travis-ci.org/OCA/mis-builder)
-[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/12.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
-[![docs](https://media.readthedocs.org/static/projects/badges/passing.svg)](http://oca-mis-builder.readthedocs.io/en/12.0/)
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/13.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
+[![Build Status](https://travis-ci.org/OCA/mis-builder.svg?branch=13.0)](https://travis-ci.org/OCA/mis-builder)
+[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/13.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
+[![docs](https://media.readthedocs.org/static/projects/badges/passing.svg)](http://oca-mis-builder.readthedocs.io/en/13.0/)
 
 # MIS Builder
 
 Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
 
-**This is the 12.0 branch. Please note the development of new features occurs mainly on
-the 10.0 branch, to be forward-ported to 12.0. Please submit pull requests to the 10.0
-branch in priority, unless they are 12.0 specific bugs, or they rely on
+**This is the 13.0 branch. Please note the development of new features occurs mainly on
+the 10.0 branch, to be forward-ported to 13.0. Please submit pull requests to the 10.0
+branch in priority, unless they are 13.0 specific bugs, or they rely on
 Odoo features that are not present in 10.0.**
 
 This project implements a class of reports where KPI (Key Performance Indicators)
