@@ -6,123 +6,149 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-07-08 00:19+0000\n"
+"Last-Translator: Jan Prokop <jprokop@jackie.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:530
 #: code:addons/mis_builder/models/mis_report_instance.py:619
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (kópia)"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>AccountingNone</b>: a null value that behaves as 0 in arithmetic operations."
 msgstr ""
+"<b>AccountingNone</b>: hodnota nahrádzajúca 0 v aritmetických operáciách."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>bal, crd, deb, pbal, nbal</b>: balance, debit, credit, positive balance, negative balance."
 msgstr ""
+"<b>bal, crd, deb, pbal, nbal</b>: bilancia, debet, kredit, pozitívna "
+"bilancia, negatívna bilancia."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>bal[70]</b>: variation of the balance of account 70 over the period (it is the same as balp[70]."
 msgstr ""
+"<b>bal[70]</b>: variácia bilancie účtu 70 v perióde (rovnaké ako balp[70])."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>bale[1%]</b>: balance of accounts starting with 1 at end of period."
-msgstr ""
+msgstr "<b>bale[1%]</b>: bilancia účtov začínajúcich na 1 na konci periódy."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>bali[70,60]</b>: initial balance of accounts 70 and 60."
-msgstr ""
+msgstr "<b>bali[70,60]</b>: počiatočná bilancia účtov 70 a 60."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)][]</b>: variation of the balance of all receivable accounts over the period."
 msgstr ""
+"<b>balp[('user_type_id', '=', "
+"ref('account.data_account_type_receivable').id)][]</b>: variácia bilancie "
+"všetkých príjmových účtov za periódu."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]</b>: balance of move lines related to tax grid 56."
 msgstr ""
+"<b>balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]</b>: "
+"bilancia položiek pohybu vzťahujúcich sa k daniam 56."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>balu[]</b>: (u for unallocated) is a special expression that shows the unallocated profit/loss of previous\n"
 "                                           fiscal years."
 msgstr ""
+"<b>balu[]</b>: (u pre nepriradené) je špeciálny výraz pre zobrazenie "
+"nepriradených ziskov/strát z predchádzajúcich fiškálnych rokov."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>crdp[40%]</b>: sum of all credits on accounts starting with 40 during the period."
 msgstr ""
+"<b>crdp[40%]</b>: suma všetkých kreditov účtov začínajúcich 40 počas periódy."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>date_from, date_to</b>: beginning and end date of the period."
-msgstr ""
+msgstr "<b>date_from, date_to</b>: počiatočný a konečný dátum periódy."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>datetime, datetime, dateutil</b>: the python modules."
-msgstr ""
+msgstr "<b>datetime, datetime, dateutil</b>: moduly python."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: sum of all debits on accounts 55 and journal BNK1 during the period."
 msgstr ""
+"<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: suma všetkých debetov "
+"účtu 55 a účt. denníka BNK1 počas periódy."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>p, i, e</b>: respectively variation over the period, initial balance, ending balance"
 msgstr ""
+"<b>p, i, e</b>: variácia počas periódy, počiatočná bilancia, záverečná "
+"bilancia"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>pbale[55%]</b>: sum of all ending balances of accounts starting with 55 whose\n"
 "                                          ending balance is positive."
 msgstr ""
+"<b>pbale[55%]</b>: suma všetkých záverečných bilancií účtov začínajúcich na "
+"55\n"
+"                                           ktorých záverečná bilancia je "
+"pozitívna."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<b>sum, min, max, len, avg</b>: behave as expected, very similar to the python builtins."
-msgstr ""
+msgstr "<b>sum, min, max, len, avg</b>: veľmi podobné funkciám python."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid "A 'move line like' model, ie having at least debit, credit, date, account_id and company_id fields."
 msgstr ""
+"Model podobný položke pohybu, t.j. obsahujúci aspoň polia debet, kredit, "
+"dátum, id účtu a id spoločnosti."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
 msgid "A 'move line like' model, ie having at least debit, credit, date, account_id and company_id fields. This model is the data source for column Actuals."
 msgstr ""
+"Model podobný položke pohybu, t.j. obsahujúci aspoň polia debet, kredit, "
+"dátum, id účtu a id spoločnosti. Tento model je zdrojom pre stĺpec Aktuálne."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:429
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
-msgstr ""
+msgstr "Filter dátumu je povinný pre tento zdroj v stĺpci %s."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
 msgid "Account model"
-msgstr ""
+msgstr "Model účtov"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
 msgid "Accumulation Method"
-msgstr ""
+msgstr "Metóda akumulácie"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:323
@@ -133,12 +159,12 @@ msgstr ""
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
 msgid "Actuals"
-msgstr ""
+msgstr "Aktuálne"
 
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
 msgid "Actuals (alternative)"
-msgstr ""
+msgstr "Aktuálne (alternatívne)"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source
@@ -148,6 +174,11 @@ msgid "Actuals: current data, from accounting and other queries.\n"
 "Compare to column: compare to other column.\n"
 ""
 msgstr ""
+"Aktuálne: aktuálne dáta z účtovníctva a iných dotazov.\n"
+"Aktuálne (alternatívne): aktuálne dáta z alternatíveho zdroja (napr. pohľad "
+"databázy - view poskytujúci dáta podobné účtovným pohybom).\n"
+"Suma stĺpcov: sumarizácia (+/-) iných stĺpcov.\n"
+"Porovnanie stĺpcov: porovnanie s inými stĺpcami.\n"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_prorata_read_group_mixin
@@ -159,7 +190,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_add_to_dashboard_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 msgid "Add to dashboard"
-msgstr ""
+msgstr "Pridať na nástenku"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -169,27 +200,27 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query__aggregate
 msgid "Aggregate"
-msgstr ""
+msgstr "Agregované"
 
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
 msgid "All Entries"
-msgstr ""
+msgstr "Všetky vstupy"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__all_kpi_ids
 msgid "All Kpi"
-msgstr ""
+msgstr "Všetky Kpi"
 
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
 msgid "All Posted Entries"
-msgstr ""
+msgstr "Všetky zaúčtované vstupy"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__amount
 msgid "Amount"
-msgstr ""
+msgstr "Suma"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_kpi__style_expression
@@ -200,33 +231,33 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_account_id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_account_id
 msgid "Analytic Account"
-msgstr ""
+msgstr "Analytický účet"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:35
 #, python-format
 msgid "Analytic Account Filter"
-msgstr ""
+msgstr "Filter analytického účtu"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:583
 #, python-format
 msgid "Analytic Account: %s"
-msgstr ""
+msgstr "Analytický účet: %s"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_tag_ids
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_tag_ids
 msgid "Analytic Tags"
-msgstr ""
+msgstr "Analytický štítok"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:38
 #, python-format
 msgid "Analytic Tags Filter"
-msgstr ""
+msgstr "Filter analytického štítku"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:591
