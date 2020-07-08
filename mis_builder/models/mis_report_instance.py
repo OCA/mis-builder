@@ -838,7 +838,7 @@ class MisReportInstance(models.Model):
             )
             domain.extend(period._get_additional_move_line_filter())
             return {
-                "name": u"{} - {}".format(expr, period.name),
+                "name": self._get_drilldown_action_name(arg),
                 "domain": domain,
                 "type": "ir.actions.act_window",
                 "res_model": period._get_aml_model_name(),
@@ -850,3 +850,23 @@ class MisReportInstance(models.Model):
             }
         else:
             return False
+
+    def _get_drilldown_action_name(self, arg):
+        kpi_id = arg.get("kpi_id")
+        kpi = self.env["mis.report.kpi"].browse(kpi_id)
+        period_id = arg.get("period_id")
+        period = self.env["mis.report.instance.period"].browse(period_id)
+        account_id = arg.get("account_id")
+
+        if account_id:
+            account = self.env["account.account"].browse(account_id)
+            return "{kpi} - {account} - {period}".format(
+                kpi=kpi.description,
+                account=account.display_name,
+                period=period.display_name,
+            )
+        else:
+            return "{kpi} - {period}".format(
+                kpi=kpi.description,
+                period=period.display_name,
+            )
