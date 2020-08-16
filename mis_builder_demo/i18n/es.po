@@ -34,7 +34,6 @@ msgstr "Cuenta Analítica"
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase_analytic_tag_ids
 #, fuzzy
-#| msgid "Analytic Account"
 msgid "Analytic Tags"
 msgstr "Cuenta Analítica"
 
@@ -121,7 +120,6 @@ msgstr "M-2"
 #. module: mis_builder_demo
 #: model:ir.model,name:mis_builder_demo.model_mis_committed_purchase
 #, fuzzy
-#| msgid "MIS Committed Purchase"
 msgid "MIS Commitment"
 msgstr "MIS Consignado a compra"
 
