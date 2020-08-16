@@ -101,7 +101,6 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__balance
 #, fuzzy
-#| msgid "Cancel"
 msgid "Balance"
 msgstr "Annulla"
 
@@ -170,7 +169,6 @@ msgstr "Azienda"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__company_currency_id
 #, fuzzy
-#| msgid "Company"
 msgid "Company Currency"
 msgstr "Azienda"
 

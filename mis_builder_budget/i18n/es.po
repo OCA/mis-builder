@@ -46,7 +46,6 @@ msgstr "La fecha de inicio de %s no puede ser posterior a la fecha de fin"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__account_id
 #, fuzzy
-#| msgid "Analytic account"
 msgid "Account"
 msgstr "Cuenta analítica"
 
@@ -107,7 +106,6 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__balance
 #, fuzzy
-#| msgid "Cancel"
 msgid "Balance"
 msgstr "Cancelar"
 
@@ -142,7 +140,6 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__source_mis_budget_id
 #, fuzzy
-#| msgid "Budget"
 msgid "Budget by KPI"
 msgstr "Presupuesto"
 
@@ -180,7 +177,6 @@ msgstr "Compañía"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__company_currency_id
 #, fuzzy
-#| msgid "Company"
 msgid "Company Currency"
 msgstr "Compañía"
 
@@ -390,35 +386,30 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item_abstract
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budget Item (Abstract Base Class)"
 msgstr "Objetos de presupuesto MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account_item
 #, fuzzy
-#| msgid "MIS Budget Item"
 msgid "MIS Budget Item (by Account)"
 msgstr "Objeto de presupuesto MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
 #, fuzzy
-#| msgid "MIS Budget Item"
 msgid "MIS Budget Item (by KPI)"
 msgstr "Objeto de presupuesto MIS"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budget Items (by KPIs)"
 msgstr "Objetos de presupuesto MIS"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_item_act_window
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budget Items (by accounts)"
 msgstr "Objetos de presupuesto MIS"
 
@@ -426,7 +417,6 @@ msgstr "Objetos de presupuesto MIS"
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account
 #: selection:mis.report.instance.period,source:0
 #, fuzzy
-#| msgid "MIS Budget Item"
 msgid "MIS Budget by Account"
 msgstr "Objeto de presupuesto MIS"
 
@@ -434,7 +424,6 @@ msgstr "Objeto de presupuesto MIS"
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
 #: selection:mis.report.instance.period,source:0
 #, fuzzy
-#| msgid "MIS Budget Item"
 msgid "MIS Budget by KPI"
 msgstr "Objeto de presupuesto MIS"
 
@@ -442,7 +431,6 @@ msgstr "Objeto de presupuesto MIS"
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budgets (by KPIs)"
 msgstr "Objetos de presupuesto MIS"
 
@@ -450,7 +438,6 @@ msgstr "Objetos de presupuesto MIS"
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_by_account_menu
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budgets (by accounts)"
 msgstr "Objetos de presupuesto MIS"
 
