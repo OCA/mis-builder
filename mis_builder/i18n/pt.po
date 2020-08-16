@@ -1431,7 +1431,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_form
 #, fuzzy
-#| msgid "Report id"
 msgid "Sub Reports"
 msgstr "Id do relatório"
 
@@ -1460,7 +1459,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport_subreport_id
 #, fuzzy
-#| msgid "Report id"
 msgid "Subreport id"
 msgstr "Id do relatório"
 
