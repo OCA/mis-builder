@@ -43,7 +43,6 @@ msgstr "%s data inicial não deve ser após a data final"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__account_id
 #, fuzzy
-#| msgid "Amount"
 msgid "Account"
 msgstr "Montante"
 
@@ -99,7 +98,6 @@ msgstr "Contar Anexo"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__balance
 #, fuzzy
-#| msgid "Cancel"
 msgid "Balance"
 msgstr "Cancelar"
 
@@ -132,7 +130,6 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__source_mis_budget_id
 #, fuzzy
-#| msgid "Budget"
 msgid "Budget by KPI"
 msgstr "Orçamento"
 
@@ -171,7 +168,6 @@ msgstr "Empresa"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__company_currency_id
 #, fuzzy
-#| msgid "Company"
 msgid "Company Currency"
 msgstr "Empresa"
 
@@ -377,35 +373,30 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item_abstract
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budget Item (Abstract Base Class)"
 msgstr "Itens do Orçamento SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account_item
 #, fuzzy
-#| msgid "MIS Budget Item"
 msgid "MIS Budget Item (by Account)"
 msgstr "Item do Orçamento SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
 #, fuzzy
-#| msgid "MIS Budget Item"
 msgid "MIS Budget Item (by KPI)"
 msgstr "Item do Orçamento SIG"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budget Items (by KPIs)"
 msgstr "Itens do Orçamento SIG"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_item_act_window
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budget Items (by accounts)"
 msgstr "Itens do Orçamento SIG"
 
@@ -413,7 +404,6 @@ msgstr "Itens do Orçamento SIG"
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account
 #: model:ir.model.fields.selection,name:mis_builder_budget.selection__mis_report_instance_period__source__mis_budget_by_account
 #, fuzzy
-#| msgid "MIS Budget Item"
 msgid "MIS Budget by Account"
 msgstr "Item do Orçamento SIG"
 
@@ -421,7 +411,6 @@ msgstr "Item do Orçamento SIG"
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
 #: model:ir.model.fields.selection,name:mis_builder_budget.selection__mis_report_instance_period__source__mis_budget
 #, fuzzy
-#| msgid "MIS Budget Item"
 msgid "MIS Budget by KPI"
 msgstr "Item do Orçamento SIG"
 
@@ -429,7 +418,6 @@ msgstr "Item do Orçamento SIG"
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budgets (by KPIs)"
 msgstr "Itens do Orçamento SIG"
 
@@ -437,7 +425,6 @@ msgstr "Itens do Orçamento SIG"
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_by_account_menu
 #, fuzzy
-#| msgid "MIS Budget Items"
 msgid "MIS Budgets (by accounts)"
 msgstr "Itens do Orçamento SIG"
 
@@ -508,7 +495,6 @@ msgstr "Número de Ações"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_error_counter
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_error_counter
 #, fuzzy
-#| msgid "Number of error"
 msgid "Number of errors"
 msgstr "Número de erro"
 
@@ -538,7 +524,6 @@ msgstr "Número de mensagens não lidas"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
 #, fuzzy
-#| msgid "Message Delivery error"
 msgid "SMS Delivery error"
 msgstr "Erro de Entrega de Mensagem"
 
