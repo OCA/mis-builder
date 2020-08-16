@@ -161,9 +161,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_move_lines_source
 #, fuzzy
-#| msgid ""
-#| "A 'move line like' model, ie having at least debit, credit, date, "
-#| "account_id and company_id fields."
 msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
@@ -180,7 +177,6 @@ msgstr "Un filtre date est obligatoire pour cette source dans la colonne %s."
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_account_model
 #, fuzzy
-#| msgid "Sum account details"
 msgid "Account model"
 msgstr "Additionne le détail des comptes"
 
@@ -398,7 +394,6 @@ msgstr "Colonne %s ne peut pas être comparée à  elle-même."
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:735
 #, fuzzy, python-format
-#| msgid "Column %s with actuals source must have from/to dates."
 msgid "Column %s with move lines source must have from/to dates."
 msgstr "Colonne %s avec une source pour le réel doit avoir des dates de/à ."
 
@@ -503,7 +498,6 @@ msgstr "Tableau de bord"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_by_account_item_date
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin_date
 #, fuzzy
-#| msgid "Dates"
 msgid "Date"
 msgstr "Dates"
 
@@ -515,7 +509,6 @@ msgstr "Champ date"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin_date_from
 #, fuzzy
-#| msgid "Date Field"
 msgid "Date From"
 msgstr "Champ date"
 
@@ -536,7 +529,6 @@ msgstr "Type d'intervalle de dates"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin_date_to
 #, fuzzy
-#| msgid "Dates"
 msgid "Date To"
 msgstr "Dates"
 
@@ -925,7 +917,6 @@ msgstr "Séquence"
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:161
 #, fuzzy, python-format
-#| msgid "The name must be a valid python identifier"
 msgid "KPI name ({}) must be a valid python identifier"
 msgstr "Le nom doit être un identifiant python valide"
 
@@ -1017,14 +1008,12 @@ msgstr ""
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
 #, fuzzy
-#| msgid "MIS Budget"
 msgid "MIS Budget by Account"
 msgstr "MIS Budget"
 
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
 #, fuzzy
-#| msgid "MIS Budget"
 msgid "MIS Budget by KPI"
 msgstr "MIS Budget"
 
@@ -1041,7 +1030,6 @@ msgstr "MIS Report"
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subreport
 #, fuzzy
-#| msgid "MIS Report Result"
 msgid "MIS Report - Sub Reports Relation"
 msgstr "Résultat MIS Report"
 
@@ -1191,7 +1179,6 @@ msgstr "Source des lignes d'écriture"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_source_aml_model_name
 #, fuzzy
-#| msgid "Move lines source"
 msgid "Move lines source model name"
 msgstr "Source des lignes d'écriture"
 
@@ -1353,7 +1340,6 @@ msgstr "Société de la requête"
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:408
 #, fuzzy, python-format
-#| msgid "The name must be a valid python identifier"
 msgid "Query name ({}) must be valid python identifier"
 msgstr "Le nom doit être un identifiant python valide"
 
@@ -1507,14 +1493,12 @@ msgstr "Sous KPI's"
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_form
 #, fuzzy
-#| msgid "MIS Reports"
 msgid "Sub Reports"
 msgstr "MIS Reports"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport_ids
 #, fuzzy
-#| msgid "MIS Reports"
 msgid "Sub reports"
 msgstr "MIS Reports"
 
@@ -1528,7 +1512,6 @@ msgstr "Séquence"
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:269
 #, fuzzy, python-format
-#| msgid "The name must be a valid python identifier"
 msgid "Sub-KPI name ({}) must be a valid python identifier"
 msgstr "Le nom doit être un identifiant python valide"
 
@@ -1540,7 +1523,6 @@ msgstr "Subkpi"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport_subreport_id
 #, fuzzy
-#| msgid "Report"
 msgid "Subreport"
 msgstr "Rapport"
 
@@ -1553,14 +1535,12 @@ msgstr ""
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_subreport.py:45
 #, fuzzy, python-format
-#| msgid "The name must be a valid python identifier"
 msgid "Subreport name ({}) must be a valid python identifier"
 msgstr "Le nom doit être un identifiant python valide"
 
 #. module: mis_builder
 #: sql_constraint:mis.report.subreport:0
 #, fuzzy
-#| msgid "Period name should be unique by report"
 msgid "Subreport name should be unique by report"
 msgstr "Le nom de la période doit être unique par rapport"
 
