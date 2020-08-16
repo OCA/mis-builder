@@ -65,7 +65,6 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_balance
 #, fuzzy
-#| msgid "Cancel"
 msgid "Balance"
 msgstr "Annuleer"
 
@@ -134,7 +133,6 @@ msgstr "Bedrijf"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_company_currency_id
 #, fuzzy
-#| msgid "Company"
 msgid "Company Currency"
 msgstr "Bedrijf"
 
@@ -299,14 +297,12 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account
 #, fuzzy
-#| msgid "MIS Budget"
 msgid "MIS Budget by Account"
 msgstr "MIS Budgetten"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
 #, fuzzy
-#| msgid "MIS Budget"
 msgid "MIS Budget by KPI"
 msgstr "MIS Budgetten"
 
@@ -314,7 +310,6 @@ msgstr "MIS Budgetten"
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
 #, fuzzy
-#| msgid "MIS Budget"
 msgid "MIS Budgets (by KPIs)"
 msgstr "MIS Budgetten"
 
