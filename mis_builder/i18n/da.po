@@ -463,7 +463,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date_from
 #, fuzzy
-#| msgid "From"
 msgid "Date From"
 msgstr "Fra"
 
@@ -1449,7 +1448,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__subreport_id
 #, fuzzy
-#| msgid "Report"
 msgid "Subreport"
 msgstr "Rapport"
 
@@ -1468,7 +1466,6 @@ msgstr ""
 #. module: mis_builder
 #: sql_constraint:mis.report.subreport:0
 #, fuzzy
-#| msgid "Period name should be unique by report"
 msgid "Subreport name should be unique by report"
 msgstr "Periodenavn skal være unikt pr rapport"
 
