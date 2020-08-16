@@ -161,9 +161,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
 #, fuzzy
-#| msgid ""
-#| "A 'move line like' model, ie having at least debit, credit, date, "
-#| "account_id and company_id fields."
 msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
@@ -180,7 +177,6 @@ msgstr "Un filtre de data és obligatori per aquest origen a la columna %s."
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
 #, fuzzy
-#| msgid "Sum account details"
 msgid "Account model"
 msgstr "Detalls de compte de la suma"
 
@@ -397,7 +393,6 @@ msgstr "La columna %s no pot ser comparada amb ella mateixa."
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, fuzzy, python-format
-#| msgid "Column %s with actuals source must have from/to dates."
 msgid "Column %s with move lines source must have from/to dates."
 msgstr "La columna %s amb font de dades reals ha de tenir data des de/fins a."
 
@@ -501,7 +496,6 @@ msgstr "Taulell"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date
 #, fuzzy
-#| msgid "Dates"
 msgid "Date"
 msgstr "Dates"
 
@@ -513,7 +507,6 @@ msgstr "Camp data"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date_from
 #, fuzzy
-#| msgid "Date Field"
 msgid "Date From"
 msgstr "Camp data"
 
@@ -534,7 +527,6 @@ msgstr "Tipus de rang de dates"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date_to
 #, fuzzy
-#| msgid "Dates"
 msgid "Date To"
 msgstr "Dates"
 
@@ -926,7 +918,6 @@ msgstr "Seqüència"
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
 #, fuzzy, python-format
-#| msgid "The name must be a valid python identifier"
 msgid "KPI name ({}) must be a valid python identifier"
 msgstr "El nom ha de ser un identificador Python vàlid"
 
@@ -1018,7 +1009,6 @@ msgstr "Disseny"
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_report_mis_builder_mis_report_instance_xlsx
 #, fuzzy
-#| msgid "MIS report instance XLS report"
 msgid "MIS Builder XLSX report"
 msgstr "Informe XLS d'instància d'informe MIS"
 
@@ -1035,7 +1025,6 @@ msgstr "Informe MIS"
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subreport
 #, fuzzy
-#| msgid "MIS Report Result"
 msgid "MIS Report - Sub Reports Relation"
 msgstr "Resultat d'informe MIS"
 
@@ -1185,7 +1174,6 @@ msgstr "Origen dels apunts"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_name
 #, fuzzy
-#| msgid "Move lines source"
 msgid "Move lines source model name"
 msgstr "Origen dels apunts"
 
@@ -1345,7 +1333,6 @@ msgstr "Companyia de la consulta"
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
 #, fuzzy, python-format
-#| msgid "The name must be a valid python identifier"
 msgid "Query name ({}) must be valid python identifier"
 msgstr "El nom ha de ser un identificador Python vàlid"
 
@@ -1502,14 +1489,12 @@ msgstr "Sub KPI's"
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
 #, fuzzy
-#| msgid "MIS Reports"
 msgid "Sub Reports"
 msgstr "Informes MIS"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__subreport_ids
 #, fuzzy
-#| msgid "MIS Reports"
 msgid "Sub reports"
 msgstr "Informes MIS"
 
@@ -1522,7 +1507,6 @@ msgstr "Seqüència"
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
 #, fuzzy, python-format
-#| msgid "The name must be a valid python identifier"
 msgid "Sub-KPI name ({}) must be a valid python identifier"
 msgstr "El nom ha de ser un identificador Python vàlid"
 
@@ -1534,7 +1518,6 @@ msgstr "SubKPI"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__subreport_id
 #, fuzzy
-#| msgid "Report"
 msgid "Subreport"
 msgstr "Informe"
 
@@ -1547,14 +1530,12 @@ msgstr ""
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_subreport.py:0
 #, fuzzy, python-format
-#| msgid "The name must be a valid python identifier"
 msgid "Subreport name ({}) must be a valid python identifier"
 msgstr "El nom ha de ser un identificador Python vàlid"
 
 #. module: mis_builder
 #: model:ir.model.constraint,message:mis_builder.constraint_mis_report_subreport_name_unique
 #, fuzzy
-#| msgid "Period name should be unique by report"
 msgid "Subreport name should be unique by report"
 msgstr "El nom del període ha de ser únic a cada informe"
 
@@ -1641,11 +1622,6 @@ msgstr ""
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 #, fuzzy
-#| msgid ""
-#| "The following special elements are recognized in the expressions to "
-#| "compute accounting data: \n"
-#| "                                         <code>{bal|crd|deb|pbal|nbal}"
-#| "{pieu}[account selector][journal items domain]</code>."
 msgid ""
 "The following special elements are recognized in the expressions to compute "
 "accounting data:\n"
