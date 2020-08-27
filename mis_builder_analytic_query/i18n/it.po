@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* mis_builder_analytic_query
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-27 15:17+0000\n"
+"PO-Revision-Date: 2020-08-27 15:17+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: mis_builder_analytic_query
+#: model:ir.model.fields,help:mis_builder_analytic_query.field_mis_report_query__analytic_account_parent_field_id
+msgid "Alternative of analytic account on model if not exist"
+msgstr "Alternativa al conto analitico del modello se non esiste"
+
+#. module: mis_builder_analytic_query
+#: code:addons/mis_builder_analytic_query/models/mis_report_instance.py:32
+#, python-format
+msgid "Analytic account not found for model %s"
+msgstr "Conto analitico non trovato per il modello %s"
+
+#. module: mis_builder_analytic_query
+#: model:ir.model.fields,field_description:mis_builder_analytic_query.field_mis_report_query__analytic_account_field_id
+msgid "Analytic account on model"
+msgstr "Conto analitico del modello"
+
+#. module: mis_builder_analytic_query
+#: model:ir.model.fields,field_description:mis_builder_analytic_query.field_mis_report_query__analytic_account_parent_field_id
+msgid "Analytic account on parent model"
+msgstr "Conto analitico del modello genitore"
+
+#. module: mis_builder_analytic_query
+#: model:ir.model,name:mis_builder_analytic_query.model_mis_report_instance_period
+msgid "MIS Report Instance Period"
+msgstr "Periodo istanza MIS Report"
+
+#. module: mis_builder_analytic_query
+#: model:ir.model,name:mis_builder_analytic_query.model_mis_report_query
+msgid "MIS Report Query"
+msgstr ""
+
+#. module: mis_builder_analytic_query
+#: model:ir.model.fields,field_description:mis_builder_analytic_query.field_mis_report_query__parent_model_id
+msgid "Parent model"
+msgstr "Modello genitore"
+
+#. module: mis_builder_analytic_query
+#: code:addons/mis_builder_analytic_query/models/mis_report_instance.py:47
+#, python-format
+msgid "Relational field not found for model %s"
+msgstr "Campo relazione non trovato per il modello %s"
+
