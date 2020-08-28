@@ -81,7 +81,7 @@ class ProRataReadGroupMixin(models.AbstractModel):
                 for sum_field in sum_fields:
                     item_dt_from = Date.from_string(item["date_from"])
                     item_dt_to = Date.from_string(item["date_to"])
-                    i_days, item_days = intersect_days(
+                    i_days, item_days = self._intersect_days(
                         item_dt_from, item_dt_to, dt_from, dt_to
                     )
                     res_item[sum_field] += item[sum_field] * i_days / item_days
