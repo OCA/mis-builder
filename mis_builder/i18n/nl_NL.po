@@ -804,7 +804,7 @@ msgid "From (computed)"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/report/mis_report_instance_xlsx.py:167
+#: code:addons/mis_builder/report/mis_report_instance_xlsx.py:171
 #, python-format
 msgid "Generated on {} at {}"
 msgstr ""
