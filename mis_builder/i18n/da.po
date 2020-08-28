@@ -1573,7 +1573,7 @@ msgid "Unexpected accumulation method %s for %s."
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/prorata_read_group_mixin.py:31
+#: code:addons/mis_builder/models/prorata_read_group_mixin.py:32
 #, python-format
 msgid "Unsupported operator %s for searching on date"
 msgstr ""
