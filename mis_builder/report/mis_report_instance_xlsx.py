@@ -135,7 +135,11 @@ class MisBuilderXlsx(models.AbstractModel):
                     val = ""
                 else:
                     divider = float(cell.style_props.get("divider", 1))
-                    if divider != 1 and isinstance(cell.val, numbers.Number):
+                    if (
+                        divider != 1
+                        and isinstance(cell.val, numbers.Number)
+                        and not cell.val_type == "pct"
+                    ):
                         val = cell.val / divider
                     else:
                         val = cell.val
