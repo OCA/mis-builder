@@ -1,3 +1,0 @@
-Having a "Compare columns" added on a KPI with an associated style using a
-Factor/Divider did lead to the said factor being applied on the percentages
-when exporting to XLSX.
