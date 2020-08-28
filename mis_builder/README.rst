@@ -97,6 +97,21 @@ be found on GitHub.
 Changelog
 =========
 
+12.0.3.6.3 (2020-08-28)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Having a "Compare columns" added on a KPI with an associated style using a
+  Factor/Divider did lead to the said factor being applied on the percentages
+  when exporting to XLSX. (`#300 <https://github.com/OCA/mis-builder/issues/300>`_)
+
+
+**Misc**
+
+- `#280 <https://github.com/OCA/mis-builder/issues/280>`_, `#296 <https://github.com/OCA/mis-builder/issues/296>`_
+
+
 12.0.3.6.2 (2020-04-22)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
