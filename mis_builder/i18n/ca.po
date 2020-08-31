@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-10-08 22:55+0000\n"
-"Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
+"PO-Revision-Date: 2020-08-31 13:00+0000\n"
+"Last-Translator: brendapaniagua <brenda.paniagua@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.1.1\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
@@ -160,13 +160,13 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
-#, fuzzy
 msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
 msgstr ""
-"Model que sigui 'de tipus apunt' , és a dir, que tingui almenys els camps "
-"debit, credit, date, account_id y company_id."
+"Un model \"com a línia de moviment\", és a dir, que tingui almenys camps de "
+"dèbit, crèdit, data, account_id i company_id. Aquest model és l’origen de "
+"dades de la columna Actuals."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -176,9 +176,8 @@ msgstr "Un filtre de data és obligatori per aquest origen a la columna %s."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
-#, fuzzy
 msgid "Account model"
-msgstr "Detalls de compte de la suma"
+msgstr "Model de compte"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
@@ -192,6 +191,9 @@ msgid ""
 "Actual (alternative) models used in columns must have the same account model "
 "in the Account field and must be the same defined in the report template: %s"
 msgstr ""
+"Els models actuals (alternatius) utilitzats a les columnes han de tenir el "
+"mateix model de compte al camp Compte i han de ser els mateixos definits a "
+"la plantilla de l’informe: %s"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_instance_period__source__actuals
@@ -224,6 +226,8 @@ msgstr ""
 #: model:ir.model,name:mis_builder.model_prorata_read_group_mixin
 msgid "Adapt model with date_from/date_to for pro-rata temporis read_group"
 msgstr ""
+"Adapta el model amb data_from / date_to per al grup de lectura de temporis "
+"pro-rata"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_add_to_dashboard_action
@@ -253,7 +257,7 @@ msgstr "Tots els assentaments"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__all_kpi_ids
 msgid "All Kpi"
-msgstr ""
+msgstr "Tot Kpi"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_instance__target_move__posted
@@ -278,39 +282,39 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_account_id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_account_id
 msgid "Analytic Account"
-msgstr ""
+msgstr "Compte Analític"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:0
 #, python-format
 msgid "Analytic Account Filter"
-msgstr ""
+msgstr "Filtre Analític de Comptes"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "Analytic Account: %s"
-msgstr ""
+msgstr "Compte Analític: %s"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_tag_ids
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_tag_ids
 msgid "Analytic Tags"
-msgstr ""
+msgstr "Etiquetes Analítiques"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:0
 #, python-format
 msgid "Analytic Tags Filter"
-msgstr ""
+msgstr "Filtre d'Etiquetes Analítiques"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "Analytic Tags: %s"
-msgstr ""
+msgstr "Etiquetes Analítiques: %s"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -386,9 +390,9 @@ msgstr "Columna"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Column %s cannot be compared to itrec."
-msgstr "La columna %s no pot ser comparada amb ella mateixa."
+msgstr "La columna %s no es pot comparar amb itrec."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -495,9 +499,8 @@ msgstr "Taulell"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date
-#, fuzzy
 msgid "Date"
-msgstr "Dates"
+msgstr "Data"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query__date_field
@@ -506,9 +509,8 @@ msgstr "Camp data"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date_from
-#, fuzzy
 msgid "Date From"
-msgstr "Camp data"
+msgstr "Data Des de"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -526,9 +528,8 @@ msgstr "Tipus de rang de dates"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date_to
-#, fuzzy
 msgid "Date To"
-msgstr "Dates"
+msgstr "Data a"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_period_view_form
@@ -582,7 +583,7 @@ msgstr "Desactiva l'expansió dels detalls del compte"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__display_columns_description
 msgid "Display Columns Description"
-msgstr ""
+msgstr "Mostrar Columnes Descripció"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__display_name
@@ -610,7 +611,7 @@ msgstr "Mostrar detalls per compte"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__display_columns_description
 msgid "Display the date range details in the column headers."
-msgstr ""
+msgstr "Mostra els detalls de l'interval de dates a les capçaleres de columna."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__divider_inherit
@@ -632,6 +633,8 @@ msgstr "Dp heretat"
 msgid ""
 "Dummy field that adapts searches on date to searches on date_from/date_to."
 msgstr ""
+"Camp dummy que adapta les cerques en data a les cerques en data_from / "
+"date_to."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__duration
@@ -680,13 +683,12 @@ msgstr "Les expressions poden ser qualsevol expressió vàlida de Python."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-#, fuzzy
 msgid ""
 "Expressions can involve other KPI, sub KPI and query results by name (eg "
 "kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
 msgstr ""
-"L'expressió també pot incloure altres KPI i resultats de consulta per nom "
-"(per exemple, kpi1 + kpi2)."
+"L'expressió també pot incloure altres KPI ,sub KPI  i resultats de consulta "
+"per nom (per exemple, kpi1 + kpi2)."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__normalize_factor
@@ -722,6 +724,9 @@ msgid ""
 "filter is combined with a AND with the report-level filters and cannot be "
 "modified in the preview."
 msgstr ""
+"Filtra la columna de les entrades de diari que tenen totes aquestes "
+"etiquetes analítiques. Aquest filtre es combina amb un AND amb els filtres a "
+"nivell d’informe i no es pot modificar en la previsualització."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_account_id
@@ -730,6 +735,9 @@ msgid ""
 "filter is combined with a AND with the report-level filters and cannot be "
 "modified in the preview."
 msgstr ""
+"Filtra la columna de les entrades de diari que coincideixen amb aquest "
+"compte analític. Aquest filtre es combina amb un AND amb els filtres a "
+"nivell d’informe i no es pot modificar en la previsualització."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_period_view_form
@@ -780,7 +788,7 @@ msgstr "Tamany del tipus de lletra heretat"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__is_ytd
 msgid "Forces the start date to Jan 1st of the relevant year"
-msgstr ""
+msgstr "Obliga la data d'inici a l'1 de gener de l'any corresponent"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__date_from
@@ -792,13 +800,13 @@ msgstr "Des de"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__date_from
 msgid "From (computed)"
-msgstr ""
+msgstr "Des de (computat)"
 
 #. module: mis_builder
 #: code:addons/mis_builder/report/mis_report_instance_xlsx.py:0
 #, python-format
 msgid "Generated on {} at {}"
-msgstr ""
+msgstr "Generat el dia {} a {}"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -818,7 +826,7 @@ msgstr "Amagar sempre heretat"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__hide_analytic_filters
 msgid "Hide Analytic Filters"
-msgstr ""
+msgstr "Amagar filtres analítics"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__hide_empty
@@ -900,6 +908,12 @@ msgid ""
 "\t- Changing the KPI to `multi` mode and giving an explicit value for each "
 "sub-KPI."
 msgstr ""
+"El KPI \"{}\" té el tipus {} mentre s'esperava una tupla.\n"
+"\n"
+"Això es pot solucionar amb:\n"
+"- Canviant el valor del KPI per una tupla de longitud {}\n"
+"o\n"
+"- Canviar el KPI al mode `multi` i donar un valor explícit a cada sub-KPI."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
@@ -908,18 +922,19 @@ msgid ""
 "KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
 "expected."
 msgstr ""
+"El KPI \"{}\" es valora com a tupla de longitud {} mentre que s'espera una "
+"tupla de longitud {}."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq1
-#, fuzzy
 msgid "KPI Sequence"
-msgstr "Seqüència"
+msgstr "Seqüència KPI"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "KPI name ({}) must be a valid python identifier"
-msgstr "El nom ha de ser un identificador Python vàlid"
+msgstr "El nom del KPI ({}) ha de ser un identificador Python vàlid"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__kpi_ids
@@ -930,7 +945,7 @@ msgstr "KPI's"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__all_kpi_ids
 msgid "KPIs of this report and subreports."
-msgstr ""
+msgstr "KPIs d’aquest informe i subinformes."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression__kpi_id
@@ -1024,15 +1039,14 @@ msgstr "Informe MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subreport
-#, fuzzy
 msgid "MIS Report - Sub Reports Relation"
-msgstr "Resultat d'informe MIS"
+msgstr "Informe MIS - Relació Subinformes"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_add_mis_report_instance_dashboard_wizard
 #, fuzzy
 msgid "MIS Report Add to Dashboard Wizard"
-msgstr "Afegir al taulell"
+msgstr "Informe MIS Afegir a l'assistent de tauler de control"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance
@@ -1044,13 +1058,13 @@ msgstr "Instància d'informe MIS"
 #: model:ir.model,name:mis_builder.model_mis_report_instance_period
 #, fuzzy
 msgid "MIS Report Instance Period"
-msgstr "Instància d'informe MIS"
+msgstr "Període Instància d'Informe MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance_period_sum
 #, fuzzy
 msgid "MIS Report Instance Period Sum"
-msgstr "Instància d'informe MIS"
+msgstr "Suma Període Instància d'informe MIS"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
@@ -1065,15 +1079,13 @@ msgstr "KPI d'informe MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
-#, fuzzy
 msgid "MIS Report KPI Expression"
-msgstr "KPI d'informe MIS"
+msgstr "Expressió de KPI del informe MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_query
-#, fuzzy
 msgid "MIS Report Query"
-msgstr "Informe MIS"
+msgstr "Consultar informe MIS"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_result_view_form
@@ -1095,15 +1107,13 @@ msgstr "Estils d'informes MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subkpi
-#, fuzzy
 msgid "MIS Report Sub-KPI"
-msgstr "KPI d'informe MIS"
+msgstr "Consulta d'informe MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report
-#, fuzzy
 msgid "MIS Report Template"
-msgstr "Plantilles d'informe MIS"
+msgstr "Plantilla d'informe MIS"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_view_action
@@ -1175,7 +1185,7 @@ msgstr "Origen dels apunts"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_name
 #, fuzzy
 msgid "Move lines source model name"
-msgstr "Origen dels apunts"
+msgstr "Mou el nom del model d'origen de les línies."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__multi
@@ -1334,7 +1344,7 @@ msgstr "Companyia de la consulta"
 #: code:addons/mis_builder/models/mis_report.py:0
 #, fuzzy, python-format
 msgid "Query name ({}) must be valid python identifier"
-msgstr "El nom ha de ser un identificador Python vàlid"
+msgstr "El nom de la consulta ({}) ha de ser un identificador Python vàlid"
 
 #. module: mis_builder
 #. openerp-web
@@ -1360,9 +1370,8 @@ msgstr "Informe"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_ir_actions_report
-#, fuzzy
 msgid "Report Action"
-msgstr "Instància de l'informe"
+msgstr "Informar de l'acció"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__report_instance_id
@@ -1421,10 +1430,13 @@ msgstr "Configuració"
 
 #. module: mis_builder
 #: model:ir.model.constraint,message:mis_builder.constraint_mis_report_subreport_subreport_unique
+#, fuzzy
 msgid ""
 "Should not include the same report more than once as sub report of a given "
 "report"
 msgstr ""
+"No hauria d’incloure el mateix informe més d’una vegada que el subinforme d’"
+"un informe determinat"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum__sign
@@ -1488,27 +1500,24 @@ msgstr "Sub KPI's"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
-#, fuzzy
 msgid "Sub Reports"
-msgstr "Informes MIS"
+msgstr "Subinformes"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__subreport_ids
-#, fuzzy
 msgid "Sub reports"
-msgstr "Informes MIS"
+msgstr "Subinformes"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq2
-#, fuzzy
 msgid "Sub-KPI Sequence"
-msgstr "Seqüència"
+msgstr "Seqüència Sub-KPI"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Sub-KPI name ({}) must be a valid python identifier"
-msgstr "El nom ha de ser un identificador Python vàlid"
+msgstr "El nom Sub-KPI ({}) ha de ser un identificador Python vàlid"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression__subkpi_id
@@ -1517,27 +1526,26 @@ msgstr "SubKPI"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__subreport_id
-#, fuzzy
 msgid "Subreport"
-msgstr "Informe"
+msgstr "Subinforme"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_subreport.py:0
 #, python-format
 msgid "Subreport loop detected"
-msgstr ""
+msgstr "S'ha detectat un bucle de subinforme"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_subreport.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Subreport name ({}) must be a valid python identifier"
-msgstr "El nom ha de ser un identificador Python vàlid"
+msgstr "El nom del subinforme ({}) ha de ser un identificador Python vàlid"
 
 #. module: mis_builder
 #: model:ir.model.constraint,message:mis_builder.constraint_mis_report_subreport_name_unique
 #, fuzzy
 msgid "Subreport name should be unique by report"
-msgstr "El nom del període ha de ser únic a cada informe"
+msgstr "El nom del subinforme ha de ser únic per a cada informe"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__suffix
@@ -1643,7 +1651,7 @@ msgstr "Fins a"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__date_to
 msgid "To (computed)"
-msgstr ""
+msgstr "Per (calculat)"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_kpi_data.py:0
@@ -1655,7 +1663,7 @@ msgstr "Mètode d'acumulació %s no esperat per a %s."
 #: code:addons/mis_builder/models/prorata_read_group_mixin.py:0
 #, python-format
 msgid "Unsupported operator %s for searching on date"
-msgstr ""
+msgstr "Operador %s no compatible per cercar la data"
 
 #. module: mis_builder
 #: model:ir.actions.server,name:mis_builder.ir_cron_vacuum_temp_reports_ir_actions_server
@@ -1706,7 +1714,7 @@ msgstr "Any"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__is_ytd
 msgid "Year to date"
-msgstr ""
+msgstr "Any fins a la data"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
