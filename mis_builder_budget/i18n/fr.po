@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 07:59+0000\n"
-"PO-Revision-Date: 2020-09-23 13:00+0000\n"
+"PO-Revision-Date: 2020-09-23 17:00+0000\n"
 "Last-Translator: Régis Pirard (ACSONE) <regis.pirard@acsone.eu>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
@@ -75,9 +75,8 @@ msgstr "Montant"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__analytic_tag_ids
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__analytic_tag_ids
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract__analytic_tag_ids
-#, fuzzy
 msgid "Analytic Tags"
-msgstr "Compte analytique"
+msgstr "Étiquettes analytiques"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__analytic_account_id
@@ -371,33 +370,28 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item_abstract
-#, fuzzy
 msgid "MIS Budget Item (Abstract Base Class)"
-msgstr "MIS lignes de budget"
+msgstr "MIS lignes de budget (Classe abstraite)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account_item
-#, fuzzy
 msgid "MIS Budget Item (by Account)"
-msgstr "MIS ligne de budget"
+msgstr "MIS ligne de budget (par compte)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
-#, fuzzy
 msgid "MIS Budget Item (by KPI)"
-msgstr "MIS ligne de budget"
+msgstr "MIS ligne de budget (par KPI)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
-#, fuzzy
 msgid "MIS Budget Items (by KPIs)"
-msgstr "MIS lignes de budget"
+msgstr "MIS Budget (par KPI)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_item_act_window
-#, fuzzy
 msgid "MIS Budget Items (by accounts)"
-msgstr "MIS lignes de budget"
+msgstr "MIS Budget (par compte)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account
@@ -416,16 +410,14 @@ msgstr "MIS ligne de budget"
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
-#, fuzzy
 msgid "MIS Budgets (by KPIs)"
-msgstr "MIS lignes de budget"
+msgstr "MIS Budget (par KPI)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_by_account_menu
-#, fuzzy
 msgid "MIS Budgets (by accounts)"
-msgstr "MIS lignes de budget"
+msgstr "MIS Budget (par compte)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance
