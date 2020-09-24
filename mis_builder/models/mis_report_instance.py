@@ -284,6 +284,15 @@ class MisReportInstancePeriod(models.Model):
             "and cannot be modified in the preview."
         ),
     )
+    analytic_group_id = fields.Many2one(
+        comodel_name="account.analytic.group",
+        string="Analytic Account Group",
+        help=(
+            "Filter column on journal entries that match this analytic account "
+            "group. This filter is combined with a AND with the report-level "
+            "filters and cannot be modified in the preview."
+        ),
+    )
     analytic_tag_ids = fields.Many2many(
         comodel_name="account.analytic.tag",
         string="Analytic Tags",
@@ -403,6 +412,10 @@ class MisReportInstancePeriod(models.Model):
             domain.extend([("move_id.state", "=", "posted")])
         if self.analytic_account_id:
             domain.append(("analytic_account_id", "=", self.analytic_account_id.id))
+        if self.analytic_group_id:
+            domain.append(
+                ("analytic_account_id.group_id", "=", self.analytic_group_id.id)
+            )
         for tag in self.analytic_tag_ids:
             domain.append(("analytic_tag_ids", "=", tag.id))
         return domain
@@ -539,6 +552,9 @@ class MisReportInstance(models.Model):
     analytic_account_id = fields.Many2one(
         comodel_name="account.analytic.account", string="Analytic Account"
     )
+    analytic_group_id = fields.Many2one(
+        comodel_name="account.analytic.group", string="Analytic Account Group",
+    )
     analytic_tag_ids = fields.Many2many(
         comodel_name="account.analytic.tag", string="Analytic Tags"
     )
@@ -572,6 +588,14 @@ class MisReportInstance(models.Model):
             )
             filter_descriptions.append(
                 _("Analytic Account: %s") % analytic_account.display_name
+            )
+        analytic_group_id = filters.get("analytic_account_id.group_id", {}).get("value")
+        if analytic_group_id:
+            analytic_group = self.env["account.analytic.group"].browse(
+                analytic_group_id
+            )
+            filter_descriptions.append(
+                _("Analytic Account Group: %s") % analytic_group.display_name
             )
         analytic_tag_value = filters.get("analytic_tag_ids", {}).get("value")
         if analytic_tag_value:
@@ -657,6 +681,11 @@ class MisReportInstance(models.Model):
         if self.analytic_account_id:
             context["mis_report_filters"]["analytic_account_id"] = {
                 "value": self.analytic_account_id.id,
+                "operator": "=",
+            }
+        if self.analytic_group_id:
+            context["mis_report_filters"]["analytic_account_id.group_id"] = {
+                "value": self.analytic_group_id.id,
                 "operator": "=",
             }
         if self.analytic_tag_ids:
