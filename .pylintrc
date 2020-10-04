@@ -81,6 +81,7 @@ enable=anomalous-backslash-in-string,
     too-complex,
     unnecessary-utf8-coding-comment
 
+
 [REPORTS]
 msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
 output-format=colorized
