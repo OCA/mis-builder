@@ -1,0 +1,12 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: v1.0.0
+_src_path: gh:oca/oca-addons-repo-template
+dependency_installation_mode: PIP
+include_wkhtmltopdf: true
+odoo_version: 13.0
+rebel_module_groups: []
+repo_description: null
+repo_name: MIS Builder
+repo_slug: mis-builder
+travis_apt_packages: []
+travis_apt_sources: []
