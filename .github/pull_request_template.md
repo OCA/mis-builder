@@ -20,10 +20,10 @@ PR.
 
 ## Target branch
 
-MIS Builder is actively maintained for Odoo versions 9, 10, 11 and 12.
+MIS Builder is actively maintained for Odoo versions 10, 11, 12 and 13.
 
 If your feature is applicable with the same implementation to all these versions, please
-target branch 10.0. Maintainers will port it to 9, 11 and 12 soon after merging.
+target branch 10.0. Maintainers will port it to 11, 12 and 13 soon after merging.
 
 In the rare cases your feature or implementation is specific to an Odoo version, then
 target the corresponding branch.
