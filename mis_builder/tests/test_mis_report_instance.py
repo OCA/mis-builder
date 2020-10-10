@@ -26,7 +26,7 @@ def enable_test_report_directory():
 
 
 class TestMisReportInstance(common.HttpCase):
-    """ Basic integration test to exercise mis.report.instance.
+    """Basic integration test to exercise mis.report.instance.
 
     We don't check the actual results here too much as computation correctness
     should be covered by lower level unit tests.

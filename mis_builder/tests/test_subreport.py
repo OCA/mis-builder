@@ -56,16 +56,12 @@ class TestMisSubreport(SavepointCase):
         )
 
     def test_basic(self):
-        ee = ExpressionEvaluator(
-            aep=None, date_from="2017-01-01", date_to="2017-01-16",
-        )
+        ee = ExpressionEvaluator(aep=None, date_from="2017-01-01", date_to="2017-01-16")
         d = self.report._evaluate(ee)
         assert d["k1"] == 12
 
     def test_two_levels(self):
-        ee = ExpressionEvaluator(
-            aep=None, date_from="2017-01-01", date_to="2017-01-16",
-        )
+        ee = ExpressionEvaluator(aep=None, date_from="2017-01-01", date_to="2017-01-16")
         d = self.parent_report._evaluate(ee)
         assert d["pk1"] == 13
 
@@ -86,7 +82,11 @@ class TestMisSubreport(SavepointCase):
             self.report.write(
                 dict(
                     subreport_ids=[
-                        (0, 0, dict(name="preport2", subreport_id=self.report.id),)
+                        (
+                            0,
+                            0,
+                            dict(name="preport2", subreport_id=self.report.id),
+                        )
                     ]
                 )
             )

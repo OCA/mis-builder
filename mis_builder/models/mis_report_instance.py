@@ -62,7 +62,7 @@ class MisReportInstancePeriodSum(models.Model):
 
 
 class MisReportInstancePeriod(models.Model):
-    """ A MIS report instance has the logic to compute
+    """A MIS report instance has the logic to compute
     a report template for a given date period.
 
     Periods have a duration (day, week, fiscal period) and
@@ -379,7 +379,7 @@ class MisReportInstancePeriod(models.Model):
         return filters
 
     def _get_additional_move_line_filter(self):
-        """ Prepare a filter to apply on all move lines
+        """Prepare a filter to apply on all move lines
 
         This filter is applied with a AND operator on all
         accounting expression domains. This hook is intended
@@ -408,7 +408,7 @@ class MisReportInstancePeriod(models.Model):
         return domain
 
     def _get_additional_query_filter(self, query):
-        """ Prepare an additional filter to apply on the query
+        """Prepare an additional filter to apply on the query
 
         This filter is combined to the query domain with a AND
         operator. This hook is intended
@@ -787,7 +787,7 @@ class MisReportInstance(models.Model):
             return self._add_column_cmpcol(aep, kpi_matrix, period, label, description)
 
     def _compute_matrix(self):
-        """ Compute a report and return a KpiMatrix.
+        """Compute a report and return a KpiMatrix.
 
         The key attribute of the matrix columns (KpiMatrixCol)
         is guaranteed to be the id of the mis.report.instance.period.
