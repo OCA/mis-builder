@@ -26,128 +26,152 @@ msgstr "%s (còpia)"
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>AccountingNone</b>: a null value that behaves as 0 in arithmetic "
-"operations."
+"<b>\n"
+"                                                balp[('user_type_id', '=',\n"
+"                                                ref('account.\n"
+"                                                data_account_type_receivable')."
+"id)][]\n"
+"                                            </b>\n"
+"                                            : variation of the balance of "
+"all receivable\n"
+"                                            accounts over the period."
 msgstr ""
-"<b>AccountingNone</b>: un valor nul que es comporta com a 0 en operacions "
-"aritmètiques."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>bal, crd, deb, pbal, nbal</b>: balance, debit, credit, positive balance, "
-"negative balance."
+"<b>\n"
+"                                                balp[][('tax_line_id."
+"tag_ids', '=',\n"
+"                                                ref('l10n_be.tax_tag_56')."
+"id)]\n"
+"                                            </b>\n"
+"                                            : balance of move lines related "
+"to tax grid\n"
+"                                            56."
 msgstr ""
-"<b>bal, crd, deb, pbal, nbal</b>: saldo, deure, haver, saldo positiu, saldo "
-"negatiu."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>bal[70]</b>: variation of the balance of account 70 over the period (it "
-"is the same as balp[70]."
+"<b>\n"
+"                                                debp[55%][('journal_id."
+"code', '=',\n"
+"                                                'BNK1')]\n"
+"                                            </b>\n"
+"                                            : sum of all debits on accounts "
+"55 and\n"
+"                                            journal BNK1 during the period."
 msgstr ""
-"<b>bal[70]</b>: variació del saldo del compte 70 en el període (és el mateix "
-"que balp[70]."
-
-#. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-msgid "<b>bale[1%]</b>: balance of accounts starting with 1 at end of period."
-msgstr ""
-"<b>bale[1%]</b>: saldo al final del període dels comptes que comencen amb 1."
-
-#. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-msgid "<b>bali[70,60]</b>: initial balance of accounts 70 and 60."
-msgstr "<b>bali[70,60]</b>: Saldo inicial dels comptes 70 i 60."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
-"id)][]</b>: variation of the balance of all receivable accounts over the "
-"period."
+"<b>AccountingNone</b>\n"
+"                                            : a null value that behaves as 0 "
+"in\n"
+"                                            arithmetic operations."
 msgstr ""
-"<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
-"id)][]</b>: variació del saldo de tots els comptes a cobrar en el període."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]</b>: "
-"balance of move lines related to tax grid 56."
+"<b>bal, crd, deb, pbal, nbal</b>\n"
+"                                            : balance, debit, credit, "
+"positive balance,\n"
+"                                            negative balance."
 msgstr ""
-"<b>balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]</b>: "
-"saldo dels apunts relacionats amb l'etiqueta d'impost 56."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>balu[]</b>: (u for unallocated) is a special expression that shows the "
-"unallocated profit/loss of previous\n"
+"<b>bal[70]</b>\n"
+"                                            : variation of the balance of "
+"account 70\n"
+"                                            over the period (it is the same "
+"as balp[70]."
+msgstr ""
+
+#. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid ""
+"<b>bale[1%]</b>\n"
+"                                            : balance of accounts starting "
+"with 1 at end\n"
+"                                            of period."
+msgstr ""
+
+#. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid ""
+"<b>bali[70,60]</b>\n"
+"                                            : initial balance of accounts 70 "
+"and 60."
+msgstr ""
+
+#. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid ""
+"<b>balu[]</b>\n"
+"                                            : (u for unallocated) is a "
+"special\n"
+"                                            expression that shows the "
+"unallocated\n"
+"                                            profit/loss of previous\n"
 "                                           fiscal years."
 msgstr ""
-"<b>balu[]</b>: (u for unallocated) es una expressió especial que mostra les "
-"pèrdues y guanys sense assignar dels exercicis fiscals\n"
-"anteriors."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>crdp[40%]</b>: sum of all credits on accounts starting with 40 during the "
+"<b>crdp[40%]</b>\n"
+"                                            : sum of all credits on accounts "
+"starting\n"
+"                                            with 40 during the period."
+msgstr ""
+
+#. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid ""
+"<b>date_from, date_to</b>\n"
+"                                            : beginning and end date of the "
 "period."
 msgstr ""
-"<b>crdp[40%]</b>: suma de tots els haver dels comptes que comencen per 40 "
-"durant el període."
-
-#. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-msgid "<b>date_from, date_to</b>: beginning and end date of the period."
-msgstr "<b>date_from, date_to</b>: data d'inici i data de fi del període."
-
-#. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-msgid "<b>datetime, datetime, dateutil</b>: the python modules."
-msgstr "<b>datetime, datetime, dateutil</b>: els mòduls python."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: sum of all debits on "
-"accounts 55 and journal BNK1 during the period."
+"<b>datetime, datetime, dateutil</b>\n"
+"                                            : the python modules."
 msgstr ""
-"<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: suma de tots els deure "
-"dels comptes que comencen per 55 i en el diari BNK1 durant el període."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-#, fuzzy
 msgid ""
-"<b>p, i, e</b>: respectively variation over the period, initial balance, "
-"ending balance"
+"<b>p, i, e</b>\n"
+"                                            : respectively variation over "
+"the period,\n"
+"                                            initial balance, ending balance"
 msgstr ""
-"<b>p, i, e</b>: variació sobre el període, sobre el saldo inicial o sobre el "
-"saldo final respectivament"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>pbale[55%]</b>: sum of all ending balances of accounts starting with 55 "
-"whose\n"
+"<b>pbale[55%]</b>\n"
+"                                            : sum of all ending balances of "
+"accounts\n"
+"                                            starting with 55 whose\n"
 "                                          ending balance is positive."
 msgstr ""
-"<b>pbale[55%]</b>: suma de tots els saldos finals dels comptes que comencen "
-"per 55\n"
-"                                 el saldo final dels quals és positiu."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"<b>sum, min, max, len, avg</b>: behave as expected, very similar to the "
-"python builtins."
+"<b>sum, min, max, len, avg</b>\n"
+"                                            : behave as expected, very "
+"similar to the\n"
+"                                            python builtins."
 msgstr ""
-"<b>sum, min, max, len, avg</b>: es comporten com s'espera, molt similars als "
-"nadius de Python."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
@@ -239,10 +263,9 @@ msgstr "Afegir al taulell"
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"Additionally following variables are available in the evaluation context:"
+"Additionally following variables are available\n"
+"                                        in the evaluation context:"
 msgstr ""
-"Les següents variables addicionals estan disponibles en el context "
-"d'avaluació:"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query__aggregate
@@ -684,11 +707,11 @@ msgstr "Les expressions poden ser qualsevol expressió vàlida de Python."
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"Expressions can involve other KPI, sub KPI and query results by name (eg "
-"kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
+"Expressions can involve other KPI, sub KPI and\n"
+"                                        query results by name (eg kpi1 + "
+"kpi2,\n"
+"                                        kpi2.subkpi1, query1.field1)."
 msgstr ""
-"L'expressió també pot incloure altres KPI ,sub KPI  i resultats de consulta "
-"per nom (per exemple, kpi1 + kpi2)."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__normalize_factor
@@ -1435,8 +1458,8 @@ msgid ""
 "Should not include the same report more than once as sub report of a given "
 "report"
 msgstr ""
-"No hauria d’incloure el mateix informe més d’una vegada que el subinforme d’"
-"un informe determinat"
+"No hauria d’incloure el mateix informe més d’una vegada que el subinforme "
+"d’un informe determinat"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum__sign
@@ -1614,32 +1637,35 @@ msgstr "Color de text en un codi RGB vàlid (des de #000000 fins a #FFFFFF)"
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"The <b>account selector</b> is a like expression on the account code (eg "
-"70%, etc)."
+"The\n"
+"                                            <b>account selector</b>\n"
+"                                            is a like expression on the "
+"account code (eg\n"
+"                                            70%, etc)."
 msgstr ""
-"El <b>selector de compte</b> és com una expressió en el codi de compte (per "
-"exemple, 70%, etc)."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
-"The <b>journal items domain</b> is an Odoo domain filter on journal items."
+"The\n"
+"                                            <b>journal items domain</b>\n"
+"                                            is an Odoo domain filter on "
+"journal items."
 msgstr ""
-"El <b>domini dels apunts</b> és un filtre de domini Odoo sobe els apunts."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
-#, fuzzy
 msgid ""
-"The following special elements are recognized in the expressions to compute "
+"The following special elements are recognized in\n"
+"                                        the expressions to compute "
 "accounting data:\n"
-"                                         <code>{bal|crd|deb|pbal|nbal}{pieu}"
-"[account selector][journal items domain]</code>."
+"                                        <code>\n"
+"                                            {bal|crd|deb|pbal|nbal}{pieu}"
+"[account\n"
+"                                            selector][journal items domain]\n"
+"                                        </code>\n"
+"                                        ."
 msgstr ""
-"Els següents elements són reconeguts a les expressions per a calcular dades "
-"comptables:\n"
-"                                          <code>{bal|crd|deb|pbal|nbal}{pieu}"
-"[account selector][journal items domain]</code>."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__date_to
@@ -1779,6 +1805,142 @@ msgstr "extra-súper-gran"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "extra-súper-petita"
+
+#~ msgid ""
+#~ "<b>AccountingNone</b>: a null value that behaves as 0 in arithmetic "
+#~ "operations."
+#~ msgstr ""
+#~ "<b>AccountingNone</b>: un valor nul que es comporta com a 0 en operacions "
+#~ "aritmètiques."
+
+#~ msgid ""
+#~ "<b>bal, crd, deb, pbal, nbal</b>: balance, debit, credit, positive "
+#~ "balance, negative balance."
+#~ msgstr ""
+#~ "<b>bal, crd, deb, pbal, nbal</b>: saldo, deure, haver, saldo positiu, "
+#~ "saldo negatiu."
+
+#~ msgid ""
+#~ "<b>bal[70]</b>: variation of the balance of account 70 over the period "
+#~ "(it is the same as balp[70]."
+#~ msgstr ""
+#~ "<b>bal[70]</b>: variació del saldo del compte 70 en el període (és el "
+#~ "mateix que balp[70]."
+
+#~ msgid ""
+#~ "<b>bale[1%]</b>: balance of accounts starting with 1 at end of period."
+#~ msgstr ""
+#~ "<b>bale[1%]</b>: saldo al final del període dels comptes que comencen amb "
+#~ "1."
+
+#~ msgid "<b>bali[70,60]</b>: initial balance of accounts 70 and 60."
+#~ msgstr "<b>bali[70,60]</b>: Saldo inicial dels comptes 70 i 60."
+
+#~ msgid ""
+#~ "<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
+#~ "id)][]</b>: variation of the balance of all receivable accounts over the "
+#~ "period."
+#~ msgstr ""
+#~ "<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
+#~ "id)][]</b>: variació del saldo de tots els comptes a cobrar en el període."
+
+#~ msgid ""
+#~ "<b>balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]</"
+#~ "b>: balance of move lines related to tax grid 56."
+#~ msgstr ""
+#~ "<b>balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]</"
+#~ "b>: saldo dels apunts relacionats amb l'etiqueta d'impost 56."
+
+#~ msgid ""
+#~ "<b>balu[]</b>: (u for unallocated) is a special expression that shows the "
+#~ "unallocated profit/loss of previous\n"
+#~ "                                           fiscal years."
+#~ msgstr ""
+#~ "<b>balu[]</b>: (u for unallocated) es una expressió especial que mostra "
+#~ "les pèrdues y guanys sense assignar dels exercicis fiscals\n"
+#~ "anteriors."
+
+#~ msgid ""
+#~ "<b>crdp[40%]</b>: sum of all credits on accounts starting with 40 during "
+#~ "the period."
+#~ msgstr ""
+#~ "<b>crdp[40%]</b>: suma de tots els haver dels comptes que comencen per 40 "
+#~ "durant el període."
+
+#~ msgid "<b>date_from, date_to</b>: beginning and end date of the period."
+#~ msgstr "<b>date_from, date_to</b>: data d'inici i data de fi del període."
+
+#~ msgid "<b>datetime, datetime, dateutil</b>: the python modules."
+#~ msgstr "<b>datetime, datetime, dateutil</b>: els mòduls python."
+
+#~ msgid ""
+#~ "<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: sum of all debits on "
+#~ "accounts 55 and journal BNK1 during the period."
+#~ msgstr ""
+#~ "<b>debp[55%][('journal_id.code', '=', 'BNK1')]</b>: suma de tots els "
+#~ "deure dels comptes que comencen per 55 i en el diari BNK1 durant el "
+#~ "període."
+
+#, fuzzy
+#~ msgid ""
+#~ "<b>p, i, e</b>: respectively variation over the period, initial balance, "
+#~ "ending balance"
+#~ msgstr ""
+#~ "<b>p, i, e</b>: variació sobre el període, sobre el saldo inicial o sobre "
+#~ "el saldo final respectivament"
+
+#~ msgid ""
+#~ "<b>pbale[55%]</b>: sum of all ending balances of accounts starting with "
+#~ "55 whose\n"
+#~ "                                          ending balance is positive."
+#~ msgstr ""
+#~ "<b>pbale[55%]</b>: suma de tots els saldos finals dels comptes que "
+#~ "comencen per 55\n"
+#~ "                                 el saldo final dels quals és positiu."
+
+#~ msgid ""
+#~ "<b>sum, min, max, len, avg</b>: behave as expected, very similar to the "
+#~ "python builtins."
+#~ msgstr ""
+#~ "<b>sum, min, max, len, avg</b>: es comporten com s'espera, molt similars "
+#~ "als nadius de Python."
+
+#~ msgid ""
+#~ "Additionally following variables are available in the evaluation context:"
+#~ msgstr ""
+#~ "Les següents variables addicionals estan disponibles en el context "
+#~ "d'avaluació:"
+
+#~ msgid ""
+#~ "Expressions can involve other KPI, sub KPI and query results by name (eg "
+#~ "kpi1 + kpi2, kpi2.subkpi1, query1.field1)."
+#~ msgstr ""
+#~ "L'expressió també pot incloure altres KPI ,sub KPI  i resultats de "
+#~ "consulta per nom (per exemple, kpi1 + kpi2)."
+
+#~ msgid ""
+#~ "The <b>account selector</b> is a like expression on the account code (eg "
+#~ "70%, etc)."
+#~ msgstr ""
+#~ "El <b>selector de compte</b> és com una expressió en el codi de compte "
+#~ "(per exemple, 70%, etc)."
+
+#~ msgid ""
+#~ "The <b>journal items domain</b> is an Odoo domain filter on journal items."
+#~ msgstr ""
+#~ "El <b>domini dels apunts</b> és un filtre de domini Odoo sobe els apunts."
+
+#, fuzzy
+#~ msgid ""
+#~ "The following special elements are recognized in the expressions to "
+#~ "compute accounting data:\n"
+#~ "                                         <code>{bal|crd|deb|pbal|nbal}"
+#~ "{pieu}[account selector][journal items domain]</code>."
+#~ msgstr ""
+#~ "Els següents elements són reconeguts a les expressions per a calcular "
+#~ "dades comptables:\n"
+#~ "                                          <code>{bal|crd|deb|pbal|nbal}"
+#~ "{pieu}[account selector][journal items domain]</code>."
 
 #~ msgid "MIS Budget"
 #~ msgstr "Pressupost MIS"
