@@ -3,9 +3,9 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record model="ir.ui.view" id="mis_budget_by_account_item_search_view">
-        <field
-            name="name"
-        >mis.budget.by.account.item.search (in mis_builder_budget)</field>
+        <field name="name">
+            mis.budget.by.account.item.search (in mis_builder_budget)
+        </field>
         <field name="model">mis.budget.by.account.item</field>
         <field name="arch" type="xml">
             <search>
@@ -15,9 +15,9 @@
         </field>
     </record>
     <record model="ir.ui.view" id="mis_budget_by_account_item_tree_view">
-        <field
-            name="name"
-        >mis.budget.by.account.item.tree (in mis_builder_budget)</field>
+        <field name="name">
+            mis.budget.by.account.item.tree (in mis_builder_budget)
+        </field>
         <field name="model">mis.budget.by.account.item</field>
         <field name="arch" type="xml">
             <tree editable="bottom">

@@ -3,9 +3,9 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record model="ir.ui.view" id="mis_report_instance_period_form_view">
-        <field
-            name="name"
-        >mis.report.instance.period.form (in mis_builder_budget)</field>
+        <field name="name">
+            mis.report.instance.period.form (in mis_builder_budget)
+        </field>
         <field name="model">mis.report.instance.period</field>
         <field
             name="inherit_id"

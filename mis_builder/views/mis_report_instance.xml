@@ -137,6 +137,7 @@
                                     <field name="date" />
                                 </group>
                                 <group>
+
                                 </group>
                                 <field
                                     name="period_ids"
@@ -236,32 +237,33 @@
             </div>
             <sheet position="after">
                 <footer>
-                        <button
+                    <button
                         type="object"
                         name="save_report"
                         string="Save"
                         icon="fa-save"
                     />
-                        <button
+                    <button
                         type="object"
                         name="preview"
                         string="Preview"
                         icon="fa-search"
                     />
-                        <button
+                    <button
                         type="object"
                         name="print_pdf"
                         string="Print"
                         icon="fa-print"
                     />
-                        <button
+                    <button
                         type="object"
                         name="export_xls"
                         string="Export"
                         icon="fa-download"
                     />
-                        or <button string="Cancel" class="oe_link" special="cancel" />
-                    </footer>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
             </sheet>
         </field>
     </record>
