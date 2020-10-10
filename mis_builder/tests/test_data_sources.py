@@ -15,8 +15,7 @@ from .common import assert_matrix
 
 
 class TestMisReportInstanceDataSources(common.TransactionCase):
-    """ Test sum and comparison data source.
-    """
+    """Test sum and comparison data source."""
 
     def _create_move(self, date, amount, debit_acc, credit_acc):
         move = self.move_model.create(

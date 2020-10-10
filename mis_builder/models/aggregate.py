@@ -3,7 +3,7 @@
 
 
 def _sum(l):
-    """ Same as stdlib sum but returns None instead of 0
+    """Same as stdlib sum but returns None instead of 0
     in case of empty sequence.
 
     >>> sum([1])
@@ -24,7 +24,7 @@ def _sum(l):
 
 
 def _avg(l):
-    """ Arithmetic mean of a sequence. Returns None in case of empty sequence.
+    """Arithmetic mean of a sequence. Returns None in case of empty sequence.
 
     >>> _avg([1])
     1.0
@@ -38,7 +38,7 @@ def _avg(l):
 
 
 def _min(*args):
-    """ Same as stdlib min but returns None instead of exception
+    """Same as stdlib min but returns None instead of exception
     in case of empty sequence.
 
     >>> min(1, 2)
@@ -81,7 +81,7 @@ def _min(*args):
 
 
 def _max(*args):
-    """ Same as stdlib max but returns None instead of exception
+    """Same as stdlib max but returns None instead of exception
     in case of empty sequence.
 
     >>> max(1, 2)

@@ -135,7 +135,7 @@ class MisReportKpiStyle(models.Model):
 
     @api.model
     def merge(self, styles):
-        """ Merge several styles, giving priority to the last.
+        """Merge several styles, giving priority to the last.
 
         Returns a PropertyDict of style properties.
         """
