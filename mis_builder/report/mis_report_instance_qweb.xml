@@ -26,12 +26,10 @@
                     <div class="page">
                         <h3>
                             <span t-field="o.name" />
-                            <span> - </span>
+                            <span>-</span>
                             <t t-foreach="o.query_company_ids" t-as="company">
                                 <span t-field="company.name" />
-                                <span
-                                    t-if="company != o.query_company_ids[-1]"
-                                >, </span>
+                                <span t-if="company != o.query_company_ids[-1]">,</span>
                             </t>
                         </h3>
                         <p>
