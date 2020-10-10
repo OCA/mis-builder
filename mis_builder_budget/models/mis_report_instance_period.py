@@ -36,7 +36,7 @@ class MisReportInstancePeriod(models.Model):
         return domain
 
     def _get_additional_budget_item_filter(self):
-        """ Prepare a filter to apply on all budget items
+        """Prepare a filter to apply on all budget items
 
         This filter is applied with a AND operator on all
         budget items. This hook is intended

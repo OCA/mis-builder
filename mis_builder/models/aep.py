@@ -31,7 +31,7 @@ def _is_domain(s):
 
 
 class AccountingExpressionProcessor(object):
-    """ Processor for accounting expressions.
+    """Processor for accounting expressions.
 
     Expressions of the form <field><mode>[accounts][optional move line domain]
     are supported, where:
@@ -211,7 +211,7 @@ class AccountingExpressionProcessor(object):
         return bool(cls._ACC_RE.search(expr))
 
     def get_account_ids_for_expr(self, expr):
-        """ Get a set of account ids that are involved in an expression.
+        """Get a set of account ids that are involved in an expression.
 
         Prerequisite: done_parsing() must have been invoked.
         """
@@ -224,7 +224,7 @@ class AccountingExpressionProcessor(object):
     def get_aml_domain_for_expr(
         self, expr, date_from, date_to, target_move, account_id=None
     ):
-        """ Get a domain on account.move.line for an expression.
+        """Get a domain on account.move.line for an expression.
 
         Prerequisite: done_parsing() must have been invoked.
 
@@ -489,7 +489,7 @@ class AccountingExpressionProcessor(object):
 
     @classmethod
     def get_balances_initial(cls, companies, date, target_move="posted"):
-        """ A convenience method to obtain the initial balances of all accounts
+        """A convenience method to obtain the initial balances of all accounts
         at a given date.
 
         It is the same as get_balances_end(date-1).
@@ -504,7 +504,7 @@ class AccountingExpressionProcessor(object):
 
     @classmethod
     def get_balances_end(cls, companies, date, target_move="posted"):
-        """ A convenience method to obtain the ending balances of all accounts
+        """A convenience method to obtain the ending balances of all accounts
         at a given date.
 
         It is the same as get_balances_initial(date+1).
@@ -521,7 +521,7 @@ class AccountingExpressionProcessor(object):
     def get_balances_variation(
         cls, companies, date_from, date_to, target_move="posted"
     ):
-        """ A convenience method to obtain the variation of the
+        """A convenience method to obtain the variation of the
         balances of all accounts over a period.
 
         :param companies:
@@ -536,7 +536,7 @@ class AccountingExpressionProcessor(object):
 
     @classmethod
     def get_unallocated_pl(cls, companies, date, target_move="posted"):
-        """ A convenience method to obtain the unallocated profit/loss
+        """A convenience method to obtain the unallocated profit/loss
         of the previous fiscal years at a given date.
 
         :param companies:

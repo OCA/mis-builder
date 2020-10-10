@@ -175,7 +175,7 @@ class KpiMatrix(object):
         self._multi_company = multi_company
 
     def declare_kpi(self, kpi):
-        """ Declare a new kpi (row) in the matrix.
+        """Declare a new kpi (row) in the matrix.
 
         Invoke this first for all kpi, in display order.
         """
@@ -183,7 +183,7 @@ class KpiMatrix(object):
         self._detail_rows[kpi] = {}
 
     def declare_col(self, col_key, label, description, locals_dict, subkpis):
-        """ Declare a new column, giving it an identifier (key).
+        """Declare a new column, giving it an identifier (key).
 
         Invoke the declare_* methods in display order.
         """
@@ -194,7 +194,7 @@ class KpiMatrix(object):
     def declare_comparison(
         self, cmpcol_key, col_key, base_col_key, label, description=None
     ):
-        """ Declare a new comparison column.
+        """Declare a new comparison column.
 
         Invoke the declare_* methods in display order.
         """
@@ -204,7 +204,7 @@ class KpiMatrix(object):
     def declare_sum(
         self, sumcol_key, col_to_sum_keys, label, description=None, sum_accdet=False
     ):
-        """ Declare a new summation column.
+        """Declare a new summation column.
 
         Invoke the declare_* methods in display order.
         :param col_to_sum_keys: [(sign, col_key)]
@@ -213,7 +213,7 @@ class KpiMatrix(object):
         self._cols[sumcol_key] = None  # reserve slot in insertion order
 
     def set_values(self, kpi, col_key, vals, drilldown_args, tooltips=True):
-        """ Set values for a kpi and a colum.
+        """Set values for a kpi and a colum.
 
         Invoke this after declaring the kpi and the column.
         """
@@ -224,7 +224,7 @@ class KpiMatrix(object):
     def set_values_detail_account(
         self, kpi, col_key, account_id, vals, drilldown_args, tooltips=True
     ):
-        """ Set values for a kpi and a column and a detail account.
+        """Set values for a kpi and a column and a detail account.
 
         Invoke this after declaring the kpi and the column.
         """
@@ -301,7 +301,7 @@ class KpiMatrix(object):
         return common_subkpis
 
     def compute_comparisons(self):
-        """ Compute comparisons.
+        """Compute comparisons.
 
         Invoke this after setting all values.
         """
@@ -380,7 +380,7 @@ class KpiMatrix(object):
                 comparison_col._set_cell_tuple(row, comparison_cell_tuple)
 
     def compute_sums(self):
-        """ Compute comparisons.
+        """Compute comparisons.
 
         Invoke this after setting all values.
         """
@@ -439,7 +439,7 @@ class KpiMatrix(object):
                 )
 
     def iter_rows(self):
-        """ Iterate rows in display order.
+        """Iterate rows in display order.
 
         yields KpiMatrixRow.
         """
@@ -451,7 +451,7 @@ class KpiMatrix(object):
                 yield detail_row
 
     def iter_cols(self):
-        """ Iterate columns in display order.
+        """Iterate columns in display order.
 
         yields KpiMatrixCol: one for each column or comparison.
         """
@@ -459,7 +459,7 @@ class KpiMatrix(object):
             yield col
 
     def iter_subcols(self):
-        """ Iterate sub columns in display order.
+        """Iterate sub columns in display order.
 
         yields KpiMatrixSubCol: one for each subkpi in each column
         and comparison.
