@@ -12,28 +12,23 @@ exclude: |
   (LICENSE.*|COPYING.*)
 default_language_version:
   python: python3
+  node: "14.13.0"
 repos:
   - repo: https://github.com/psf/black
     rev: 20.8b1
     hooks:
       - id: black
   - repo: https://github.com/prettier/prettier
-    rev: "1.19.1"
+    rev: 2.1.2
     hooks:
       - id: prettier
-  # TODO Avoid awebdeveloper/pre-commit-prettier if possible
-  # HACK https://github.com/prettier/prettier/issues/7407
-  - repo: https://github.com/awebdeveloper/pre-commit-prettier
-    rev: v0.0.1
-    hooks:
-      - id: prettier
-        name: prettier xml plugin
+        name: prettier + plugin-xml
         additional_dependencies:
-          - "prettier@1.19.1"
-          - "@prettier/plugin-xml@0.7.2"
-        files: \.xml$
+          - "@prettier/plugin-xml@0.12.0"
+        args:
+          - --plugin=@prettier/plugin-xml
   - repo: https://github.com/pre-commit/mirrors-eslint
-    rev: v6.8.0
+    rev: v7.8.1
     hooks:
       - id: eslint
         verbose: true
