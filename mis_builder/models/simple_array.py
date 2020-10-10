@@ -163,7 +163,7 @@ class SimpleArray(tuple):
 
 
 def named_simple_array(typename, field_names):
-    """ Return a subclass of SimpleArray, with named properties.
+    """Return a subclass of SimpleArray, with named properties.
 
     This method is to SimpleArray what namedtuple is to tuple.
     It's less sophisticated than namedtuple so some namedtuple

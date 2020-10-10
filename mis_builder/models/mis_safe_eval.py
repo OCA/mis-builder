@@ -11,7 +11,7 @@ __all__ = ["mis_safe_eval"]
 
 
 def mis_safe_eval(expr, locals_dict):
-    """ Evaluate an expression using safe_eval
+    """Evaluate an expression using safe_eval
 
     Returns the evaluated value or DataError.
 

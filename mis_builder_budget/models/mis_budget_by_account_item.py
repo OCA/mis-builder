@@ -18,7 +18,10 @@ class MisBudgetByAccountItem(models.Model):
         compute="_compute_balance", store=True, currency_field="company_currency_id"
     )
     company_id = fields.Many2one(
-        "res.company", related="budget_id.company_id", readonly=True, store=True,
+        "res.company",
+        related="budget_id.company_id",
+        readonly=True,
+        store=True,
     )
     company_currency_id = fields.Many2one(
         "res.currency",

@@ -59,7 +59,7 @@ def _is_valid_python_var(name):
 
 
 class MisReportKpi(models.Model):
-    """ A KPI is an element (ie a line) of a MIS report.
+    """A KPI is an element (ie a line) of a MIS report.
 
     In addition to a name and description, it has an expression
     to compute it based on queries defined in the MIS report.
@@ -279,7 +279,7 @@ class MisReportSubkpi(models.Model):
 
 
 class MisReportKpiExpression(models.Model):
-    """ A KPI Expression is an expression of a line of a MIS report Kpi.
+    """A KPI Expression is an expression of a line of a MIS report Kpi.
     It's used to compute the kpi value.
     """
 
@@ -353,7 +353,7 @@ class MisReportKpiExpression(models.Model):
 
 
 class MisReportQuery(models.Model):
-    """ A query to fetch arbitrary data for a MIS report.
+    """A query to fetch arbitrary data for a MIS report.
 
     A query works on a model and has a domain and list of fields to fetch.
     At runtime, the domain is expanded with a "and" on the date/datetime field.
@@ -412,7 +412,7 @@ class MisReportQuery(models.Model):
 
 
 class MisReport(models.Model):
-    """ A MIS report template (without period information)
+    """A MIS report template (without period information)
 
     The MIS report holds:
     * a list of explicit queries; the result of each query is
@@ -442,7 +442,7 @@ class MisReport(models.Model):
         "mis.report.subkpi", "report_id", string="Sub KPI", copy=True
     )
     subreport_ids = fields.One2many(
-        "mis.report.subreport", "report_id", string="Sub reports", copy=True,
+        "mis.report.subreport", "report_id", string="Sub reports", copy=True
     )
     all_kpi_ids = fields.One2many(
         comodel_name="mis.report.kpi",
@@ -485,8 +485,8 @@ class MisReport(models.Model):
 
     @api.onchange("subkpi_ids")
     def _on_change_subkpi_ids(self):
-        """ Update kpi expressions when subkpis change on the report,
-        so the list of kpi expressions is always up-to-date """
+        """Update kpi expressions when subkpis change on the report,
+        so the list of kpi expressions is always up-to-date"""
         for kpi in self.kpi_ids:
             if not kpi.multi:
                 continue
@@ -834,7 +834,7 @@ class MisReport(models.Model):
         locals_dict=None,
         no_auto_expand_accounts=False,
     ):
-        """ Evaluate a report for a given period, populating a KpiMatrix.
+        """Evaluate a report for a given period, populating a KpiMatrix.
 
         :param expression_evaluator: an ExpressionEvaluator instance
         :param kpi_matrix: the KpiMatrix object to be populated created
@@ -859,7 +859,7 @@ class MisReport(models.Model):
         # Evaluate subreports
         for subreport in self.subreport_ids:
             subreport_locals_dict = subreport.subreport_id._evaluate(
-                expression_evaluator, subkpis_filter, get_additional_query_filter,
+                expression_evaluator, subkpis_filter, get_additional_query_filter
             )
             locals_dict[subreport.name] = AutoStruct(
                 **{
@@ -921,7 +921,7 @@ class MisReport(models.Model):
         get_additional_move_line_filter=None,
         get_additional_query_filter=None,
     ):
-        """ Simplified method to evaluate a report over a time period.
+        """Simplified method to evaluate a report over a time period.
 
         :param aep: an AccountingExpressionProcessor instance created
                     using _prepare_aep()
