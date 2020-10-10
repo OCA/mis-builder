@@ -6,7 +6,7 @@ import odoo
 
 
 def _make_acl(env, model_name):
-    """ make a dummy acl and commit it
+    """make a dummy acl and commit it
     so we don't get warning about missing acl
     """
     model_id = env["ir.model"].search([("name", "=", model_name)]).id
