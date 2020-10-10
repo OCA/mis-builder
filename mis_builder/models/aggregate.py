@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 
-def _sum(l):
+def _sum(lst):
     """Same as stdlib sum but returns None instead of 0
     in case of empty sequence.
 
@@ -18,12 +18,12 @@ def _sum(l):
     0
     >>> _sum([])
     """
-    if not l:
+    if not lst:
         return None
-    return sum(l)
+    return sum(lst)
 
 
-def _avg(l):
+def _avg(lst):
     """Arithmetic mean of a sequence. Returns None in case of empty sequence.
 
     >>> _avg([1])
@@ -32,9 +32,9 @@ def _avg(l):
     1.5
     >>> _avg([])
     """
-    if not l:
+    if not lst:
         return None
-    return sum(l) / float(len(l))
+    return sum(lst) / float(len(lst))
 
 
 def _min(*args):
