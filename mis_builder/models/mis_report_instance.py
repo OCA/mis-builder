@@ -369,11 +369,8 @@ class MisReportInstancePeriod(models.Model):
                 if operator == "all":
                     if not isinstance(value, list):
                         value = [value]
-                    many_ids = self.report_instance_id.resolve_2many_commands(
-                        filter_name, value, ["id"]
-                    )
-                    for m in many_ids:
-                        filters.append((filter_name, "in", [m["id"]]))
+                    for m in value:
+                        filters.append((filter_name, "in", [m]))
                 else:
                     filters.append((filter_name, operator, value))
         return filters
@@ -575,6 +572,7 @@ class MisReportInstance(models.Model):
             )
         analytic_tag_value = filters.get("analytic_tag_ids", {}).get("value")
         if analytic_tag_value:
+            # TODO 14 we need a test to cover this
             analytic_tag_names = self.resolve_2many_commands(
                 "analytic_tag_ids", analytic_tag_value, ["name"]
             )
