@@ -314,9 +314,6 @@ class TestMisReportInstance(common.HttpCase):
                 ],
             )
         )
-        self.report_instance.period_ids[1].comparison_column_ids = [
-            (4, self.report_instance.period_ids[0].id, None)
-        ]
         # same for report 2
         self.report_instance_2 = self.env["mis.report.instance"].create(
             dict(
