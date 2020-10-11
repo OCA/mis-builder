@@ -125,7 +125,7 @@ class TestAEP(common.TransactionCase):
             }
         )
         if post:
-            move.post()
+            move._post()
         return move
 
     def _do_queries(self, date_from, date_to):
@@ -403,7 +403,7 @@ class TestAEP(common.TransactionCase):
             if ml.credit:
                 ml.write(dict(tax_ids=[(6, 0, [tax.id])]))
         tax.active = False
-        move.post()
+        move._post()
         # let's query for december 1st
         self._do_queries(
             datetime.date(self.prev_year, 12, 1), datetime.date(self.prev_year, 12, 1)
