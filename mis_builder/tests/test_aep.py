@@ -390,7 +390,7 @@ class TestAEP(common.TransactionCase):
         self.aep.done_parsing()
 
         tax = self.env["account.tax"].create(
-            dict(name="test tax", active=True, amount=0)
+            dict(name="test tax", active=True, amount=0, company_id=self.company.id)
         )
         move = self._create_move(
             date=datetime.date(self.prev_year, 12, 1),
