@@ -81,7 +81,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 cur.date_start <= coalesce(ai.invoice_date, now()) and
                 (cur.date_end is null or cur.date_end > coalesce(ai.invoice_date, now())))
         WHERE ai.state = 'draft'
-          AND ai.type IN ('in_invoice', 'out_refund')
+          AND ai.move_type IN ('in_invoice', 'out_refund')
           AND NOT ail.exclude_from_invoice_tab
 
     UNION ALL
@@ -111,7 +111,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 cur.date_start <= coalesce(ai.invoice_date, now()) and
                 (cur.date_end is null or cur.date_end > coalesce(ai.invoice_date, now())))
         WHERE ai.state = 'draft'
-          AND ai.type IN ('out_invoice', 'in_refund')
+          AND ai.move_type IN ('out_invoice', 'in_refund')
           AND NOT ail.exclude_from_invoice_tab
 
     ) AS mis_committed_purchase
