@@ -499,7 +499,7 @@ class MisReportInstance(models.Model):
         comodel_name="res.company",
         string="Company",
         default=lambda self: self.env.company,
-        required=True,
+        required=False,
     )
     multi_company = fields.Boolean(
         string="Multiple companies",
@@ -511,6 +511,7 @@ class MisReportInstance(models.Model):
         comodel_name="res.company",
         string="Companies",
         help="Select companies for which data will be searched.",
+        domain=lambda self: [("id", "in", self.env.companies.ids)],
     )
     query_company_ids = fields.Many2many(
         comodel_name="res.company",
@@ -544,12 +545,10 @@ class MisReportInstance(models.Model):
     )
     hide_analytic_filters = fields.Boolean(default=True)
 
-    @api.onchange("company_id", "multi_company")
+    @api.onchange("multi_company")
     def _onchange_company(self):
-        if self.company_id and self.multi_company:
-            self.company_ids = self.env["res.company"].search(
-                [("id", "child_of", self.company_id.id)]
-            )
+        if self.multi_company:
+            self.company_id = False
         else:
             self.company_ids = False
 
