@@ -1,0 +1,2 @@
+The mis.report.instance should allow to define as many companies as the user is allowed to operate on when logged.
+The company is only a required field if the flag 'multi_company' is not set.
