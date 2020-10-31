@@ -1,4 +1,5 @@
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import datetime
@@ -90,7 +91,8 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr("crdp[700I%]")
         self.aep.parse_expr("bali[400%]")
         self.aep.parse_expr("bale[700%]")
-        self.aep.parse_expr("balp[]" "[('account_id.code', '=', '400AR')]")
+        self.aep.parse_expr("balp[][('account_id.code', '=', '400AR')]")
+        self.aep.parse_expr("balp[][('account_id.code', 'in', ['400AR'])]")
         self.aep.parse_expr(
             "balp[]"
             "[('account_id.user_type_id', '=', "
@@ -162,6 +164,9 @@ class TestAEP(common.TransactionCase):
         # check variation
         self.assertEquals(self._eval("balp[400AR]"), 100)
         self.assertEquals(self._eval("balp[][('account_id.code', '=', '400AR')]"), 100)
+        self.assertEquals(
+            self._eval("balp[][('account_id.code', 'in', ['400AR'])]"), 100
+        )
         self.assertEquals(
             self._eval(
                 "balp[]"

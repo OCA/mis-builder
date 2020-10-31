@@ -1,4 +1,5 @@
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import datetime
@@ -88,7 +89,7 @@ class AccountingExpressionProcessor(object):
         r"\s*"
         r"(?P<account_sel>_[a-zA-Z0-9]+|\[.*?\])"
         r"\s*"
-        r"(?P<ml_domain>\[.*?\])?"
+        r"(?P<ml_domain>\[.*\])?"
     )
 
     def __init__(self, companies, currency=None, account_model="account.account"):
@@ -169,7 +170,14 @@ class AccountingExpressionProcessor(object):
         # move line domain
         if ml_domain:
             assert ml_domain[0] == "[" and ml_domain[-1] == "]"
-            ml_domain = tuple(safe_eval(ml_domain, domain_eval_context))
+            components = safe_eval(ml_domain, domain_eval_context)
+            ml_domain = []
+            for component in components:
+                left, op, right = component
+                if isinstance(right, list):
+                    right = tuple(right)
+                ml_domain.append((left, op, right))
+            ml_domain = tuple(ml_domain)
         else:
             ml_domain = tuple()
         return field, mode, acc_domain, ml_domain
