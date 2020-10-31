@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import datetime
@@ -73,7 +74,7 @@ class MisReportKpi(models.Model):
     _name = "mis.report.kpi"
     _description = "MIS Report KPI"
 
-    name = fields.Char(size=32, required=True, string="Name")
+    name = fields.Char(required=True, string="Name")
     description = fields.Char(required=True, string="Description", translate=True)
     multi = fields.Boolean()
     expression = fields.Char(
@@ -258,7 +259,7 @@ class MisReportSubkpi(models.Model):
     report_id = fields.Many2one(
         comodel_name="mis.report", required=True, ondelete="cascade"
     )
-    name = fields.Char(size=32, required=True, string="Name")
+    name = fields.Char(required=True, string="Name")
     description = fields.Char(required=True, string="Description", translate=True)
     expression_ids = fields.One2many("mis.report.kpi.expression", "subkpi_id")
 
@@ -369,7 +370,7 @@ class MisReportQuery(models.Model):
             field_names = [field.name for field in record.field_ids]
             record.field_names = ", ".join(field_names)
 
-    name = fields.Char(size=32, required=True, string="Name")
+    name = fields.Char(required=True, string="Name")
     model_id = fields.Many2one(
         "ir.model", required=True, string="Model", ondelete="restrict"
     )
