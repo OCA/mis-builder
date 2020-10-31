@@ -1,4 +1,5 @@
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import datetime
@@ -174,7 +175,7 @@ class MisReportInstancePeriod(models.Model):
     _name = "mis.report.instance.period"
     _description = "MIS Report Instance Period"
 
-    name = fields.Char(size=32, required=True, string="Label", translate=True)
+    name = fields.Char(required=True, string="Label", translate=True)
     mode = fields.Selection(
         [
             (MODE_FIX, "Fixed dates"),
