@@ -9,7 +9,7 @@
         Build 'Management Information System' Reports and Dashboards
     """,
     "author": "ACSONE SA/NV, " "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/mis-builder/",
+    "website": "https://github.com/OCA/mis-builder",
     "depends": [
         "account",
         "board",
