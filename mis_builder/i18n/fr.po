@@ -924,7 +924,7 @@ msgid "KPI"
 msgstr "KPI"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:733
+#: code:addons/mis_builder/models/mis_report.py:734
 #, fuzzy, python-format
 msgid ""
 "KPI \"{}\" has type {} while a tuple was expected.\n"
@@ -944,7 +944,7 @@ msgstr ""
 "à chaque sous-KPI."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:723
+#: code:addons/mis_builder/models/mis_report.py:724
 #, fuzzy, python-format
 msgid ""
 "KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
