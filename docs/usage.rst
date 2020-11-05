@@ -27,7 +27,7 @@ Go to Accounting > Configuration > Financial Reports > MIS Report Templates wher
 you can create report templates by defining KPI's. KPI's constitute the rows of your
 reports. Such report templates are time independent.
 
-.. image:: _static/images/01.png
+.. image:: _static/images/Capture1.PNG
    :width: 1800
 
 MIS Report
@@ -38,7 +38,7 @@ the templates to time period, hence defining the columns of your reports.
 .. image:: _static/images/02.png
    :width: 1800
 
-.. image:: _static/images/03.png
+.. image:: _static/images/Capture2.png
    :width: 1800
 
 Quick start: building a simple P&L report
@@ -55,19 +55,29 @@ between the elements. They can be found in:
 
 How to create a template
 ########################
-#. Provide a Description (Name is automatically proposed but can be amended)
-#. Value type (Numeric, percentage or string)
-#. Comparison Method (Percentage, difference, none)
-#. Style: as defined in the Reports Style
-#. Style expression: An expression that returns a style depending on the KPI value.
-   Such style is applied on top of the row style. Example of syntax: "Style_to_be_used" if name>0 else None
-#. Budgetable (if MIS_Budget module is installed): indicates that a budget can be
-   provided for the KPI (not needed for calculations)
-#. Multi: If True allows to define KPI with multiple values (eg: Initial, Debit,
-   Credit, Ending) using Sub-KPI
-#. Expression: calculation for the KPI (see below)
-#. Display details by account: If set to true will display account details
-#. Style for account detail rows: specific style applied to the detailed accounts.
+
+*  Template information
+
+   #. Name of the template
+   #. Description
+   #. Style: determines the layout of the template
+   #. Move lines source: model that determines the data source for the column Actuals.
+
+*  Create KPI
+
+   #. Provide a Description (Name is automatically proposed but can be amended)
+   #. Value type (Numeric, percentage or string)
+   #. Comparison Method (Percentage, difference, none)
+   #. Style: as defined in the Reports Style
+   #. Style expression: An expression that returns a style depending on the KPI value.
+      Such style is applied on top of the row style. Example of syntax: "Style_to_be_used" if name>0 else None
+   #. Budgetable (if MIS_Budget module is installed): indicates that a budget can be
+      provided for the KPI (not needed for calculations)
+   #. Multi: If True allows to define KPI with multiple values (eg: Initial, Debit,
+      Credit, Ending) using Sub-KPI
+   #. Expression: calculation for the KPI (see below)
+   #. Display details by account: If set to true will display account details
+   #. Style for account detail rows: specific style applied to the detailed accounts.
 
 Adding KPI to the current report
 ################################
@@ -94,7 +104,7 @@ additional series:
 
 You can create a new report with different series based on the selected template.
 
-.. image:: _static/images/11.png
+.. image:: _static/images/Capture3.png
    :width: 1800
 
 Create a report
@@ -102,10 +112,18 @@ Create a report
 
 #. Provide a Name
 #. Select the Template
-#. Select the currency
 #. Comparison mode: set to true if you wish to be able to compare data from
    different series or dates.
 #. Set your filters: Posted entries or not
+#. Set the layout:
+
+   * landscape PDF: landscape the report
+   * Disable account details expansion: do not have account details
+   * Display Columns Description: put the from and to date in the column header
+   * Hide analytic filters: uncheck if you want the user to be able to filter by account or analytical tag on the report
+      .. image:: _static/images/Capture4.png
+         :width: 1800
+
 #. Base date: important for relative date reports (today by default)
 #. Add Columns to your report (if comparison is True)
 
@@ -125,6 +143,8 @@ Create a new column in the report
    * Sum Columns: Creates a new column sum of others existing in the report
    * Compare Columns: Creates a comparison (percentage) of 2 existing columns
    * MIS Budget (If budget installed): Use Budget Series
+   * MIS Budget by GL account (if budget installed): determines a budget by GL account. 
+
 #. Dates Mode:
 
    * Fixed Dates: simply provide the fixed range
@@ -132,6 +152,13 @@ Create a new column in the report
 
      *  `Offset = -1` means previous month.
      *  `Duration = 2` means 2 months from the start of the period
+     *  Year to date: forces the period to begin on January 1st of the relevant year
+
+#. Filters:
+
+   * Analytic Account: filter column on journal entries that match this analytic account
+   * Analytic Tags: filter column on journal entries that match this analytic tags
+
 
 Instances example, column types
 -------------------------------
@@ -194,6 +221,8 @@ Examples
 * crdp[40%]: sum of all credits on accounts starting with 40 during the period.
 * debp[55%][('journal_id.code', '=', 'BNK1')]: sum of all debits on accounts 55 and
   journal BNK1 during the period.
+* bale[18%][('analytic_account_id.display_name', '=', 'name_on_analytic_account')] :Obtain a 18% values that have specific analytic account 
+
 * balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)][]:
   variation of the balance of all receivable accounts over the period.
 * balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]: balance of move
@@ -225,6 +254,10 @@ Conditional Expressions
 
 Zero vs no data, AccountingNone
 -------------------------------
+Examples:
+*********
+
+* x/y if y != 0 else AccountingNone
 
 .. todo::
 
@@ -304,9 +337,19 @@ You can create multi-level styles which will be applied to the different lines o
 
 The styles are used later in the Template Report definition.
 
-.. todo::
-
-  Add a line for each of the options, although they are quite straightforward.
+* style name
+* rounding inherit: if not checked, determine rounding
+* factor inherit: if not checked, determine factor (μ, m, 1, k, M)
+* prefix inherit: if not checked, determine the prefix
+* suffix inherit: if not checked, determine the suffix
+* color inherit: if not checked, determine the color of the text
+* background color inherit: if not checked, determine the color of the background
+* font style inherit: if not checked, determine if text is in italic or normal
+* font weight inherit: if not checked, determine if text is in bold or normal
+* font Size inherit: if not checked, determine the size of the text : medium, xx-small, x-small, small, large, x-large, xx-large
+* indent level inherit: if not checked, determine the level of indent
+* hide empty inherit: hide kpi with null values
+* hide always inherit:
 
 Analytic Filters
 ----------------
@@ -337,6 +380,7 @@ Data sources for columns
   create specific series of data for Committed purchases not yet invoiced.
 - Sum/Difference
 - MIS Budgets
+- MIS Budgets by GL account
 
 .. todo::
 
@@ -415,6 +459,24 @@ for a KPI and a specific data.
    .. image:: _static/images/14.png
       :width: 1800
 
+MIS Budgets by GL account
+-------------------------
+Menu accessible here: `Accounting > Reporting > MIS Budget (by accounts)`
+
+This module lets you create budgets by account for any MIS report. 
+
+The budget usage by GL account is similar to the budget by KPI. The only difference concerns the `Budget items` part: 
+
+#. Select the GL account
+#. Select data range or from/to
+#. Determine the amount to be debited and credited to the GL account
+#. Provide the corresponding analytical account
+
+.. image:: _static/images/Capture6.png
+   :width: 1800
+
+An example of use is to compare the amount spent on renting a machine with the budget allocated to it.
+
 Sub KPI
 -------
 Used when the field `Multi` is set to true for multiple KPI. Thanks to this option,
@@ -428,6 +490,25 @@ Ending Balance).
 
 .. image:: _static/images/18.png
    :width: 1800
+
+It is also possible to use query information in Subkpi. For example, this report that shows the total, average, minimum and maximum purchase amount per customer for the month of October.
+
+.. image:: _static/images/Capture7.png
+   :width: 1800
+
+.. image:: _static/images/Capture8.png
+   :width: 1800
+
+.. image:: _static/images/Capture9.png
+   :width: 1800
+
+Sub Report
+----------
+Ability to create a report that uses kpi computed of other report. Ex: balance sheet.
+
+#. Indicate in the name, the name you are going to give to the subreport. This is the name you will use to get the kpi of the subreport.
+#. Indicate in Subreports, the name of the report so you want to use kpi.
+#. To use the kpi of the subreport in an expression, write it this way: name_of_subreport.kpi_of_subreport
 
 Building your own reports
 -------------------------
