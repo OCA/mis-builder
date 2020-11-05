@@ -23,12 +23,13 @@ repos:
     rev: 20.8b1
     hooks:
       - id: black
-  - repo: https://github.com/prettier/prettier
-    rev: 2.1.2
+  - repo: https://github.com/prettier/pre-commit
+    rev: v2.1.2
     hooks:
       - id: prettier
         name: prettier + plugin-xml
         additional_dependencies:
+          - "prettier@2.1.2"
           - "@prettier/plugin-xml@0.12.0"
         args:
           - --plugin=@prettier/plugin-xml
