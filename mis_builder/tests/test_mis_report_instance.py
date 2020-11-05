@@ -417,6 +417,35 @@ class TestMisReportInstance(common.HttpCase):
         self.assertTrue(("account_id", "in", tuple(account_ids)) in action["domain"])
         self.assertEqual(action["res_model"], "account.move.line")
 
+    def test_drilldown_action_name_with_account(self):
+        period = self.report_instance.period_ids[0]
+        account = self.env["account.account"].search([], limit=1)
+        args = {
+            "period_id": period.id,
+            "kpi_id": self.kpi1.id,
+            "account_id": account.id,
+        }
+        action_name = self.report_instance._get_drilldown_action_name(args)
+        expected_name = "{kpi} - {account} - {period}".format(
+            kpi=self.kpi1.description,
+            account=account.display_name,
+            period=period.display_name,
+        )
+        assert action_name == expected_name
+
+    def test_drilldown_action_name_without_account(self):
+        period = self.report_instance.period_ids[0]
+        args = {
+            "period_id": period.id,
+            "kpi_id": self.kpi1.id,
+        }
+        action_name = self.report_instance._get_drilldown_action_name(args)
+        expected_name = "{kpi} - {period}".format(
+            kpi=self.kpi1.description,
+            period=period.display_name,
+        )
+        assert action_name == expected_name
+
     def test_qweb(self):
         self.report_instance.print_pdf()  # get action
         test_reports.try_report(
