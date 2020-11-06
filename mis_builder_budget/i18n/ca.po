@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2020-08-31 13:00+0000\n"
+"PO-Revision-Date: 2020-11-06 11:08+0000\n"
 "Last-Translator: brendapaniagua <brenda.paniagua@qubiq.es>\n"
 "Language-Team: none\n"
 "Language: ca\n"
@@ -250,6 +250,8 @@ msgstr "Esborrany"
 msgid ""
 "Dummy field that adapts searches on date to searches on date_from/date_to."
 msgstr ""
+"Camp fictici que adapta les cerques a la data a les cerques a data_de / "
+"data_to."
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_follower_ids
