@@ -8,7 +8,7 @@
     "version": "13.0.3.5.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV, " "Odoo Community Association (OCA)",
-    "website": "https://github.com/OCA/mis-builder/",
+    "website": "https://github.com/OCA/mis-builder",
     "depends": ["mis_builder", "account"],
     "data": [
         "views/mis_report_instance_period.xml",
