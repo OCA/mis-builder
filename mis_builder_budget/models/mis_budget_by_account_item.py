@@ -15,7 +15,10 @@ class MisBudgetByAccountItem(models.Model):
     debit = fields.Monetary(default=0.0, currency_field="company_currency_id")
     credit = fields.Monetary(default=0.0, currency_field="company_currency_id")
     balance = fields.Monetary(
-        compute="_compute_balance", store=True, currency_field="company_currency_id"
+        compute="_compute_balance",
+        inverse="_inverse_balance",
+        store=True,
+        currency_field="company_currency_id",
     )
     company_id = fields.Many2one(
         "res.company",
@@ -75,3 +78,20 @@ class MisBudgetByAccountItem(models.Model):
     )
     def _check_dates(self):
         super(MisBudgetByAccountItem, self)._check_dates()
+
+    def _inverse_balance(self):
+        for rec in self:
+            if rec.balance < 0:
+                rec.update(
+                    {
+                        "credit": -rec.balance,
+                        "debit": 0,
+                    }
+                )
+            else:
+                rec.update(
+                    {
+                        "credit": 0,
+                        "debit": rec.balance,
+                    }
+                )
