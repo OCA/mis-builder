@@ -14,3 +14,6 @@ class MisBudgetByAccount(models.Model):
         comodel_name="mis.budget.by.account.item", inverse_name="budget_id", copy=True
     )
     company_id = fields.Many2one(required=True)
+    allow_items_overlap = fields.Boolean(
+        help="If checked, overlap between budget items is allowed"
+    )
