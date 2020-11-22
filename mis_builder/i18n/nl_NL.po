@@ -162,9 +162,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_move_lines_source
 #, fuzzy
-#| msgid ""
-#| "A 'move line like' model, ie having at least debit, credit, date, "
-#| "account_id and company_id fields."
 msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
@@ -181,7 +178,6 @@ msgstr "Een datum filter is verplicht voor deze bron in kolom %s."
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_account_model
 #, fuzzy
-#| msgid "Sum account details"
 msgid "Account model"
 msgstr "Rekening details optellen"
 
@@ -1088,7 +1084,6 @@ msgstr "Bron boekingsregels"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_source_aml_model_name
 #, fuzzy
-#| msgid "Move lines source"
 msgid "Move lines source model name"
 msgstr "Bron boekingsregels"
 

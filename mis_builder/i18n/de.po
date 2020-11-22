@@ -165,7 +165,6 @@ msgstr "Ein Datumsfilter ist Pflicht für diese Quelle in Spalte %s."
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_account_model
 #, fuzzy
-#| msgid "Sum account details"
 msgid "Account model"
 msgstr "Kontodetails summieren"
 
@@ -1059,7 +1058,6 @@ msgstr "Quelle der Bewegungszeilen"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_source_aml_model_name
 #, fuzzy
-#| msgid "Move lines source"
 msgid "Move lines source model name"
 msgstr "Quelle der Bewegungszeilen"
 

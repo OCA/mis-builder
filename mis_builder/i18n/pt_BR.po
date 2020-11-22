@@ -158,9 +158,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_move_lines_source
 #, fuzzy
-#| msgid ""
-#| "A 'move line like' model, ie having at least debit, credit, date, "
-#| "account_id and company_id fields."
 msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
@@ -177,7 +174,6 @@ msgstr "Um filtro de data é obrigatório para esta fonte na coluna %s."
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_account_model
 #, fuzzy
-#| msgid "Sum account details"
 msgid "Account model"
 msgstr "Somar detalhes da conta"
 
@@ -273,7 +269,6 @@ msgstr "Conta Analítica"
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:47
 #, fuzzy, python-format
-#| msgid "Analytic Account"
 msgid "Analytic Account Filter"
 msgstr "Conta Analítica"
 
@@ -286,14 +281,12 @@ msgstr "Conta Analítica: %s"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_analytic_tag_ids
 #, fuzzy
-#| msgid "Analytic Account"
 msgid "Analytic Tags"
 msgstr "Conta Analítica"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:556
 #, fuzzy, python-format
-#| msgid "Analytic Account: %s"
 msgid "Analytic Tags: %s"
 msgstr "Conta Analítica: %s"
 
@@ -1081,7 +1074,6 @@ msgstr "Fonte das linhas de movimento"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_source_aml_model_name
 #, fuzzy
-#| msgid "Move lines source"
 msgid "Move lines source model name"
 msgstr "Fonte das linhas de movimento"
 
