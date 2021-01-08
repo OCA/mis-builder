@@ -562,7 +562,8 @@ class MisReportInstance(models.Model):
         oldname="account_analytic_id",
     )
     analytic_group_id = fields.Many2one(
-        comodel_name="account.analytic.group", string="Analytic Account Group",
+        comodel_name="account.analytic.group",
+        string="Analytic Account Group",
     )
     analytic_tag_ids = fields.Many2many(
         comodel_name="account.analytic.tag", string="Analytic Tags"
