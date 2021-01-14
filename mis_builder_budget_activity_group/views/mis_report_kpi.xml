@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 Ecosoft Co., Ltd (https://ecosoft.co.th)
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html) -->
+<odoo>
+    <record id="mis_report_view_kpi_form" model="ir.ui.view">
+        <field name="name">mis.report.view.kpi.form</field>
+        <field name="model">mis.report.kpi</field>
+        <field name="inherit_id" ref="mis_builder.mis_report_view_kpi_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook//field[@name='multi']" position="after">
+                <field name="activity_expression" />
+                <field
+                    name="budget_activity_group"
+                    attrs="{
+                        'invisible': [('activity_expression', '=', False)],
+                        'required': [('activity_expression', '=', True)]}"
+                />
+                <field
+                    name="respectively_variation"
+                    placeholder="Enter respectively variation, for example p, i, e. See also help tab."
+                    attrs="{'invisible': [('activity_expression', '=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
