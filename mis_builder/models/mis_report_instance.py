@@ -528,7 +528,7 @@ class MisReportInstance(models.Model):
     multi_company = fields.Boolean(
         string="Multiple companies",
         help="Check if you wish to specify "
-        "children companies to be searched for data.",
+        "several companies to be searched for data.",
         default=False,
     )
     company_ids = fields.Many2many(
@@ -576,15 +576,28 @@ class MisReportInstance(models.Model):
     @api.onchange("multi_company")
     def _onchange_company(self):
         if self.multi_company:
+            self.company_ids |= self.company_id
             self.company_id = False
         else:
+            prev = self.company_ids.ids
+            company = False
+            if self.env.company.id in prev:
+                company = self.env.company
+            else:
+                for c_id in prev:
+                    if c_id in self.env.companies.ids:
+                        company = self.env["res.company"].browse(c_id)
+                        break
+
+            self.company_id = company
             self.company_ids = False
 
     @api.depends("multi_company", "company_id", "company_ids")
     def _compute_query_company_ids(self):
         for rec in self:
             if rec.multi_company:
-                rec.query_company_ids = rec.company_ids or rec.company_id
+                # If no companies defined use active companies.
+                rec.query_company_ids = rec.company_ids or self.env.companies
             else:
                 rec.query_company_ids = rec.company_id
 
