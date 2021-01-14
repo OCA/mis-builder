@@ -506,25 +506,22 @@ class TestMisReportInstance(common.HttpCase):
         self.env["res.company"].create(
             dict(name="company 2", parent_id=self.report_instance.company_id.id)
         )
-        companies = self.env["res.company"].search(
-            [("id", "child_of", self.report_instance.company_id.id)]
-        )
         self.report_instance.multi_company = True
         # multi company, company_ids not set
-        self.assertEqual(
-            self.report_instance.query_company_ids[0], self.report_instance.company_id
-        )
+        self.assertEqual(self.report_instance.query_company_ids, self.env.companies)
         # set company_ids
+        previous_company = self.report_instance.company_id
         self.report_instance._onchange_company()
+        self.assertFalse(self.report_instance.company_id)
         self.assertTrue(self.report_instance.multi_company)
-        self.assertEqual(self.report_instance.company_ids, companies)
-        self.assertEqual(self.report_instance.query_company_ids, companies)
+        self.assertEqual(self.report_instance.company_ids, previous_company)
+        self.assertEqual(self.report_instance.query_company_ids, previous_company)
         # reset single company mode
         self.report_instance.multi_company = False
+        self.report_instance._onchange_company()
         self.assertEqual(
             self.report_instance.query_company_ids[0], self.report_instance.company_id
         )
-        self.report_instance._onchange_company()
         self.assertFalse(self.report_instance.company_ids)
 
     def test_mis_report_analytic_filters(self):
