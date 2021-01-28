@@ -401,6 +401,8 @@ class MisReportInstancePeriod(models.Model):
             and self.report_instance_id.target_move == "posted"
         ):
             domain.extend([("move_id.state", "=", "posted")])
+        elif self._get_aml_model_name() == "account.move.line":
+            domain.extend([("move_id.state", "in", ("posted", "draft"))])
         if self.analytic_account_id:
             domain.append(("analytic_account_id", "=", self.analytic_account_id.id))
         for tag in self.analytic_tag_ids:
