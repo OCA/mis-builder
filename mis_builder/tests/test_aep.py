@@ -363,12 +363,15 @@ class TestAEP(common.TransactionCase):
                 ("account_id", "in", (self.account_ar.id,)),
                 ("credit", "<>", 0.0),
                 "&",
+                "&",
                 # for P&L accounts, only after fy start
                 "|",
                 ("date", ">=", "2017-01-01"),
                 ("account_id.user_type_id.include_initial_balance", "=", True),
                 # everything must be before from_date for initial balance
                 ("date", "<", "2017-02-01"),
+                # Cancel entries should be always ignored.
+                ("move_id.state", "in", ("posted", "draft")),
             ],
         )
 

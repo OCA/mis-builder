@@ -290,6 +290,8 @@ class AccountingExpressionProcessor(object):
             ]
         if target_move == "posted":
             domain.append(("move_id.state", "=", "posted"))
+        elif target_move == "all":
+            domain.append(("move_id.state", "in", ("posted", "draft")))
         return expression.normalize_domain(domain)
 
     def _get_company_rates(self, date):
