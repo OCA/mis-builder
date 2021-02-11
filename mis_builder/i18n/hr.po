@@ -308,6 +308,21 @@ msgid "Analytic Account Filter"
 msgstr "Filter analitičkih konta"
 
 #. module: mis_builder
+#. openerp-web
+#: code:addons/mis_builder/static/src/js/mis_report_widget.js:0
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_group_id
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_group_id
+#, python-format
+msgid "Analytic Account Group"
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report_instance.py:0
+#, python-format
+msgid "Analytic Account Group: %s"
+msgstr ""
+
+#. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "Analytic Account: %s"
@@ -727,6 +742,14 @@ msgid ""
 "Filter column on journal entries that have all these analytic tags.This "
 "filter is combined with a AND with the report-level filters and cannot be "
 "modified in the preview."
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_group_id
+msgid ""
+"Filter column on journal entries that match this analytic account group. "
+"This filter is combined with a AND with the report-level filters and cannot "
+"be modified in the preview."
 msgstr ""
 
 #. module: mis_builder

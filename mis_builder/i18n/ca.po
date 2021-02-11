@@ -60,8 +60,8 @@ msgid ""
 "                                            56."
 msgstr ""
 "<b>\n"
-"                                                balp [] [("
-"'tax_line_id.tag_ids', '=',\n"
+"                                                balp [] [('tax_line_id."
+"tag_ids', '=',\n"
 "                                                ref ('l10n_be.tax_tag_56'). "
 "id)]\n"
 "                                            </b>\n"
@@ -82,8 +82,8 @@ msgid ""
 "                                            journal BNK1 during the period."
 msgstr ""
 "<b>\n"
-"                                                debp [55%] [("
-"'journal_id.code', '=',\n"
+"                                                debp [55%] [('journal_id."
+"code', '=',\n"
 "                                                \"BNK1\")]\n"
 "                                            </b>\n"
 "                                            : suma de tots els deutes als "
@@ -390,6 +390,21 @@ msgstr "Compte Analític"
 #, python-format
 msgid "Analytic Account Filter"
 msgstr "Filtre Analític de Comptes"
+
+#. module: mis_builder
+#. openerp-web
+#: code:addons/mis_builder/static/src/js/mis_report_widget.js:0
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_group_id
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_group_id
+#, python-format
+msgid "Analytic Account Group"
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report_instance.py:0
+#, python-format
+msgid "Analytic Account Group: %s"
+msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -832,6 +847,14 @@ msgstr ""
 "Filtra la columna de les entrades de diari que tenen totes aquestes "
 "etiquetes analítiques. Aquest filtre es combina amb un AND amb els filtres a "
 "nivell d’informe i no es pot modificar en la previsualització."
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_group_id
+msgid ""
+"Filter column on journal entries that match this analytic account group. "
+"This filter is combined with a AND with the report-level filters and cannot "
+"be modified in the preview."
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_account_id
@@ -1733,8 +1756,8 @@ msgid ""
 "journal items."
 msgstr ""
 "El\n"
-"                                            <b> domini d’elements de diari "
-"</b>\n"
+"                                            <b> domini d’elements de diari </"
+"b>\n"
 "                                            és un filtre de domini Odoo en "
 "articles del diari."
 
