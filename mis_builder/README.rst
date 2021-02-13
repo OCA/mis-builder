@@ -97,6 +97,15 @@ be found on GitHub.
 Changelog
 =========
 
+12.0.3.7.0 (2021-02-13)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Add analytic group filters on report instance, periods and in the interactive
+  view. (`#320 <https://github.com/OCA/mis-builder/issues/320>`_)
+
+
 12.0.3.6.4 (2020-11-05)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
