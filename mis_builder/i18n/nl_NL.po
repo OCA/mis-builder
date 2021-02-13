@@ -23,7 +23,7 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:530
-#: code:addons/mis_builder/models/mis_report_instance.py:619
+#: code:addons/mis_builder/models/mis_report_instance.py:644
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (kopie)"
@@ -198,7 +198,7 @@ msgstr ""
 "datum, account_id en company_id velden"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:429
+#: code:addons/mis_builder/models/mis_report_instance.py:442
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Een datum filter is verplicht voor deze bron in kolom %s."
@@ -215,7 +215,7 @@ msgid "Accumulation Method"
 msgstr "Accumulatiemethode"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:323
+#: code:addons/mis_builder/models/mis_report_instance.py:332
 #, python-format
 msgid ""
 "Actual (alternative) models used in columns must have the same account model "
@@ -314,7 +314,22 @@ msgid "Analytic Account Filter"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:583
+#. openerp-web
+#: code:addons/mis_builder/static/src/js/mis_report_widget.js:39
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_group_id
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_group_id
+#, python-format
+msgid "Analytic Account Group"
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report_instance.py:608
+#, python-format
+msgid "Analytic Account Group: %s"
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report_instance.py:600
 #, python-format
 msgid "Analytic Account: %s"
 msgstr ""
@@ -327,13 +342,13 @@ msgstr ""
 
 #. module: mis_builder
 #. openerp-web
-#: code:addons/mis_builder/static/src/js/mis_report_widget.js:38
+#: code:addons/mis_builder/static/src/js/mis_report_widget.js:42
 #, python-format
 msgid "Analytic Tags Filter"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:591
+#: code:addons/mis_builder/models/mis_report_instance.py:616
 #, python-format
 msgid "Analytic Tags: %s"
 msgstr ""
@@ -413,13 +428,13 @@ msgid "Column"
 msgstr "Kolom"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:449
+#: code:addons/mis_builder/models/mis_report_instance.py:462
 #, fuzzy, python-format
 msgid "Column %s cannot be compared to itrec."
 msgstr "Kolom %skan niet met zichzelf worden vergeleken."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:735
+#: code:addons/mis_builder/models/mis_report_instance.py:765
 #, fuzzy, python-format
 msgid "Column %s with move lines source must have from/to dates."
 msgstr "Kolom %s met Actuele waardes moet van/tot data hebben."
@@ -430,7 +445,7 @@ msgid "Columns"
 msgstr "Kolommen"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:458
+#: code:addons/mis_builder/models/mis_report_instance.py:471
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr "Te vergelijken kolommen moeten tot hetzelfde rapport in %s behoren"
@@ -750,6 +765,14 @@ msgid ""
 "Filter column on journal entries that have all these analytic tags.This "
 "filter is combined with a AND with the report-level filters and cannot be "
 "modified in the preview."
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_group_id
+msgid ""
+"Filter column on journal entries that match this analytic account group. "
+"This filter is combined with a AND with the report-level filters and cannot "
+"be modified in the preview."
 msgstr ""
 
 #. module: mis_builder
@@ -1242,7 +1265,7 @@ msgid "No date filter"
 msgstr "Geen datum filter"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:435
+#: code:addons/mis_builder/models/mis_report_instance.py:448
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr "Een datum filter is niet toegestaan voor deze bron in kolom %s."
@@ -1323,7 +1346,7 @@ msgid "Pivot date"
 msgstr "Uitgangsdatum"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:445
+#: code:addons/mis_builder/models/mis_report_instance.py:458
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Geef beide kolommen op om te vergelijken in %s."
@@ -1755,7 +1778,7 @@ msgid "You cannot sum period %s with itself."
 msgstr "Periode %s kan niet bij zichzelf worden opgeteld."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:809
+#: code:addons/mis_builder/models/mis_report_instance.py:839
 #, python-format
 msgid "from %s to %s"
 msgstr "van %s tot %s"
