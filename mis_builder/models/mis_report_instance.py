@@ -875,7 +875,7 @@ class MisReportInstance(models.Model):
         account_id = arg.get("account_id")
 
         if account_id:
-            account = self.env["account.account"].browse(account_id)
+            account = self.env[self.report_id.account_model].browse(account_id)
             return "{kpi} - {account} - {period}".format(
                 kpi=kpi.description,
                 account=account.display_name,
