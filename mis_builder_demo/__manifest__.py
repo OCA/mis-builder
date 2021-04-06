@@ -5,7 +5,7 @@
     "name": "MIS Builder Demo",
     "summary": """
         Demo addon for MIS Builder""",
-    "version": "14.0.3.1.2",
+    "version": "14.0.3.1.3",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/mis-builder",
