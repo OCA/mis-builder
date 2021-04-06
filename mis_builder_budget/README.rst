@@ -85,6 +85,14 @@ be found on GitHub.
 Changelog
 =========
 
+13.0.3.5.1 (2021-04-06)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix incorrect budget by account multi company security rules. (`#347 <https://github.com/OCA/mis-builder/issues/347>`_)
+
+
 13.0.3.5.0 (2020-03-28)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
