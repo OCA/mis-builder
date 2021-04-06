@@ -52,9 +52,9 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[mis_builder](mis_builder/) | 14.0.3.6.3 | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 14.0.3.5.0 | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 14.0.3.1.2 | Demo addon for MIS Builder
+[mis_builder](mis_builder/) | 14.0.3.6.4 | Build 'Management Information System' Reports and Dashboards
+[mis_builder_budget](mis_builder_budget/) | 14.0.3.5.1 | Create budgets for MIS reports
+[mis_builder_demo](mis_builder_demo/) | 14.0.3.1.3 | Demo addon for MIS Builder
 
 [//]: # (end addons)
 
