@@ -115,7 +115,7 @@ class TestMultiCompanyAEP(common.TransactionCase):
                 ],
             }
         )
-        move.post()
+        move._post()
         return move
 
     def _do_queries(self, companies, currency, date_from, date_to):

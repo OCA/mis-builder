@@ -13,6 +13,7 @@ class TestKpiData(SavepointCase):
 
         _name = "mis.kpi.data.test.item"
         _inherit = "mis.kpi.data"
+        _description = "MIS Kpi Data test item"
 
     @classmethod
     def setUpClass(cls):

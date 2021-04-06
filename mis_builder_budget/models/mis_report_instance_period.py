@@ -15,7 +15,11 @@ class MisReportInstancePeriod(models.Model):
         selection_add=[
             (SRC_MIS_BUDGET, "MIS Budget by KPI"),
             (SRC_MIS_BUDGET_BY_ACCOUNT, "MIS Budget by Account"),
-        ]
+        ],
+        ondelete={
+            SRC_MIS_BUDGET: "cascade",
+            SRC_MIS_BUDGET_BY_ACCOUNT: "cascade",
+        },
     )
     source_mis_budget_id = fields.Many2one(
         comodel_name="mis.budget", string="Budget by KPI"

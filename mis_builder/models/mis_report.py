@@ -370,7 +370,7 @@ class MisReportQuery(models.Model):
 
     name = fields.Char(size=32, required=True, string="Name")
     model_id = fields.Many2one(
-        "ir.model", required=True, string="Model", ondelete="restrict"
+        "ir.model", required=True, string="Model", ondelete="cascade"
     )
     field_ids = fields.Many2many(
         "ir.model.fields", required=True, string="Fields to fetch"
@@ -391,7 +391,7 @@ class MisReportQuery(models.Model):
         comodel_name="ir.model.fields",
         required=True,
         domain=[("ttype", "in", ("date", "datetime"))],
-        ondelete="restrict",
+        ondelete="cascade",
     )
     domain = fields.Char(string="Domain")
     report_id = fields.Many2one(
@@ -461,6 +461,7 @@ class MisReport(models.Model):
         ],
         default=_default_move_lines_source,
         required=True,
+        ondelete="cascade",
         help="A 'move line like' model, ie having at least debit, credit, "
         "date, account_id and company_id fields. This model is the "
         "data source for column Actuals.",

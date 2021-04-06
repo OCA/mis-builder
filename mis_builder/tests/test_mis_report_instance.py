@@ -314,9 +314,6 @@ class TestMisReportInstance(common.HttpCase):
                 ],
             )
         )
-        self.report_instance.period_ids[1].comparison_column_ids = [
-            (4, self.report_instance.period_ids[0].id, None)
-        ]
         # same for report 2
         self.report_instance_2 = self.env["mis.report.instance"].create(
             dict(
@@ -364,13 +361,13 @@ class TestMisReportInstance(common.HttpCase):
             vals = [c.val for c in row.iter_cells()]
             if row.kpi.name == "k3":
                 # k3 is constant
-                self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
+                self.assertEqual(vals, [AccountingNone, AccountingNone, 1.0])
             elif row.kpi.name == "k6":
                 # k6 is a string kpi
-                self.assertEquals(vals, ["bla", "bla", "blabla"])
+                self.assertEqual(vals, ["bla", "bla", "blabla"])
             elif row.kpi.name == "k7":
                 # k7 references k3 via subkpi names
-                self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
+                self.assertEqual(vals, [AccountingNone, AccountingNone, 1.0])
 
     def test_multi_company_compute(self):
         self.report_instance.write(
@@ -474,7 +471,7 @@ class TestMisReportInstance(common.HttpCase):
         res = self.report.get_kpis_by_account_id(self.env.ref("base.main_company"))
         for account_id in account_ids:
             self.assertTrue(account_id in res)
-            self.assertEquals(res[account_id], kpi200)
+            self.assertEqual(res[account_id], kpi200)
 
     def test_kpi_name_get_name_search(self):
         r = self.env["mis.report.kpi"].name_search("k1")
@@ -539,13 +536,11 @@ class TestMisReportInstance(common.HttpCase):
         for row in matrix.iter_rows():
             vals = [c.val for c in row.iter_cells()]
             if row.kpi.name == "k1":
-                self.assertEquals(
-                    vals, [AccountingNone, AccountingNone, AccountingNone]
-                )
+                self.assertEqual(vals, [AccountingNone, AccountingNone, AccountingNone])
             elif row.kpi.name == "k2":
-                self.assertEquals(vals, [AccountingNone, AccountingNone, None])
+                self.assertEqual(vals, [AccountingNone, AccountingNone, None])
             elif row.kpi.name == "k4":
-                self.assertEquals(vals, [AccountingNone, AccountingNone, 1.0])
+                self.assertEqual(vals, [AccountingNone, AccountingNone, 1.0])
 
     def test_raise_when_unknown_kpi_value_type(self):
         with self.assertRaises(SubKPIUnknownTypeError):

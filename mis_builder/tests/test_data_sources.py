@@ -32,7 +32,7 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
                 ],
             }
         )
-        move.post()
+        move._post()
         return move
 
     def setUp(self):

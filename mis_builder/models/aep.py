@@ -1,18 +1,14 @@
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-import datetime
 import re
-import time
 from collections import defaultdict
-
-import dateutil
 
 from odoo import _, fields
 from odoo.exceptions import UserError
 from odoo.models import expression
 from odoo.tools.float_utils import float_is_zero
-from odoo.tools.safe_eval import safe_eval
+from odoo.tools.safe_eval import datetime, dateutil, safe_eval, time
 
 from .accounting_none import AccountingNone
 

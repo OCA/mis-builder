@@ -10,16 +10,16 @@ class MisBudgetAbstract(models.AbstractModel):
     _description = "MIS Budget (Abstract Base Class)"
     _inherit = ["mail.thread"]
 
-    name = fields.Char(required=True, track_visibility="onchange")
-    description = fields.Char(track_visibility="onchange")
+    name = fields.Char(required=True, tracking=True)
+    description = fields.Char(tracking=True)
     date_range_id = fields.Many2one(comodel_name="date.range", string="Date range")
-    date_from = fields.Date(required=True, string="From", track_visibility="onchange")
-    date_to = fields.Date(required=True, string="To", track_visibility="onchange")
+    date_from = fields.Date(required=True, string="From", tracking=True)
+    date_to = fields.Date(required=True, string="To", tracking=True)
     state = fields.Selection(
         [("draft", "Draft"), ("confirmed", "Confirmed"), ("cancelled", "Cancelled")],
         required=True,
         default="draft",
-        track_visibility="onchange",
+        tracking=True,
     )
     company_id = fields.Many2one(
         comodel_name="res.company",

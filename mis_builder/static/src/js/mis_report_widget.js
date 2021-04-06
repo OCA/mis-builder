@@ -34,6 +34,10 @@ odoo.define("mis_builder.widget", function (require) {
             self.analytic_account_id_domain = []; // TODO unused for now
             self.analytic_account_id_label = _t("Analytic Account Filter");
             self.analytic_account_id_m2o = undefined; // Field widget
+            self.analytic_group_id_domain = []; // TODO unused for now
+            self.analytic_group_filter_name = "analytic_account_id.group_id";
+            self.analytic_group_id_label = _t("Analytic Account Group");
+            self.analytic_group_id_m2o = undefined; // Field widget
             self.analytic_tag_ids_domain = []; // TODO unused for now
             self.analytic_tag_ids_label = _t("Analytic Tags Filter");
             self.analytic_tag_ids_m2m = undefined; // Field widget
@@ -174,6 +178,12 @@ odoo.define("mis_builder.widget", function (require) {
                     name: "filter_analytic_account_id",
                     value: self._getFilterValue("analytic_account_id"),
                 });
+                fields.push({
+                    relation: "account.analytic.group",
+                    type: "many2one",
+                    name: "filter_analytic_account_id.group_id",
+                    value: self._getFilterValue("analytic_account_id.group_id"),
+                });
             }
             if (self.has_group_analytic_tags) {
                 fields.push({
@@ -226,6 +236,28 @@ odoo.define("mis_builder.widget", function (require) {
                     self.analytic_account_id_m2o
                 );
                 self.analytic_account_id_m2o.appendTo(self.getMisBuilderFilterBox());
+
+                self.analytic_group_id_m2o = new relational_fields.FieldMany2One(
+                    self,
+                    "filter_analytic_account_id.group_id",
+                    record,
+                    {
+                        mode: "edit",
+                        attrs: {
+                            placeholder: self.analytic_group_id_label,
+                            options: {
+                                no_create: "True",
+                                no_open: "True",
+                            },
+                        },
+                    }
+                );
+                self._registerWidget(
+                    record.id,
+                    self.analytic_group_id_m2o.name,
+                    self.analytic_group_id_m2o
+                );
+                self.analytic_group_id_m2o.appendTo(self.getMisBuilderFilterBox());
             }
 
             if (self.has_group_analytic_tags) {
@@ -316,6 +348,18 @@ odoo.define("mis_builder.widget", function (require) {
                     );
                 } else {
                     self._setFilterValue("analytic_account_id", undefined);
+                }
+            }
+
+            if (self.analytic_group_id_m2o !== undefined) {
+                if (self.analytic_group_id_m2o.value) {
+                    self._setFilterValue(
+                        self.analytic_group_filter_name,
+                        self.analytic_group_id_m2o.value.res_id,
+                        "="
+                    );
+                } else {
+                    self._setFilterValue(self.analytic_group_filter_name, undefined);
                 }
             }
 

@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 class Report(models.Model):
     _inherit = "ir.actions.report"
 
-    def render_qweb_pdf(self, res_ids=None, data=None):
+    def _render_qweb_pdf(self, res_ids=None, data=None):
         if self.report_name == "mis_builder.report_mis_report_instance":
             if not res_ids:
                 res_ids = self.env.context.get("active_ids")
@@ -22,7 +22,7 @@ class Report(models.Model):
             )
             # data=None, because it was there only to force Odoo
             # to propagate context
-            return super(Report, self.with_context(context)).render_qweb_pdf(
+            return super(Report, self.with_context(context))._render_qweb_pdf(
                 res_ids, data=None
             )
-        return super(Report, self).render_qweb_pdf(res_ids, data)
+        return super(Report, self)._render_qweb_pdf(res_ids, data)
