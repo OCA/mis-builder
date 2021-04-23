@@ -1,3 +1,0 @@
-While duplicating a MIS report instance, comparison columns are ignored because
-they would raise an error otherwise, as they keep the old source_cmpcol_from_id
-and source_cmpcol_to_id from the original record.
