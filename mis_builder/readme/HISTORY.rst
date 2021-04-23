@@ -1,3 +1,11 @@
+13.0.3.7.2 (2021-04-23)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix drilldown action name when the account model has been customized. (`#350 <https://github.com/OCA/mis-builder/issues/350>`_)
+
+
 13.0.3.7.1 (2021-04-23)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
