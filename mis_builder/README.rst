@@ -97,6 +97,14 @@ be found on GitHub.
 Changelog
 =========
 
+10.0.3.6.4 (2021-04-23)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix drilldown action name when the account model has been customized. (`#350 <https://github.com/OCA/mis-builder/issues/350>`_)
+
+
 10.0.3.6.3 (2020-11-05)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -160,7 +168,7 @@ Changelog
   ``account.account`` model). To this end, the model to be used for Actuals
   move lines can be configured on the report template. It can be something else
   than move lines and the only constraint is that its ``account_id`` field
-  as a ``code`` field. (`#149 <https://github.com/oca/mis-builder/issues/149>`_)
+  has a ``code`` field. (`#149 <https://github.com/oca/mis-builder/issues/149>`_)
 - Add ``source_aml_model_name`` field so extension modules providing
   alternative data sources can more easily customize their data source. (`#214 <https://github.com/oca/mis-builder/issues/214>`_)
 - Support analytic tag filters in the backend view and preview widget.
