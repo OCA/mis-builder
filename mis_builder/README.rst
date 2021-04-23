@@ -97,6 +97,16 @@ be found on GitHub.
 Changelog
 =========
 
+14.0.3.6.5 (2021-04-23)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- While duplicating a MIS report instance, comparison columns are ignored because
+  they would raise an error otherwise, as they keep the old source_cmpcol_from_id
+  and source_cmpcol_to_id from the original record. (`#343 <https://github.com/OCA/mis-builder/issues/343>`_)
+
+
 14.0.3.6.4 (2021-04-06)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
