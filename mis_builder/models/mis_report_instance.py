@@ -523,18 +523,19 @@ class MisReportInstance(models.Model):
         comodel_name="res.company",
         string="Company",
         default=lambda self: self.env.company,
-        required=True,
+        required=False,
     )
     multi_company = fields.Boolean(
         string="Multiple companies",
         help="Check if you wish to specify "
-        "children companies to be searched for data.",
+        "several companies to be searched for data.",
         default=False,
     )
     company_ids = fields.Many2many(
         comodel_name="res.company",
         string="Companies",
         help="Select companies for which data will be searched.",
+        domain=lambda self: [("id", "in", self.env.companies.ids)],
     )
     query_company_ids = fields.Many2many(
         comodel_name="res.company",
@@ -572,20 +573,31 @@ class MisReportInstance(models.Model):
     )
     hide_analytic_filters = fields.Boolean(default=True)
 
-    @api.onchange("company_id", "multi_company")
+    @api.onchange("multi_company")
     def _onchange_company(self):
-        if self.company_id and self.multi_company:
-            self.company_ids = self.env["res.company"].search(
-                [("id", "child_of", self.company_id.id)]
-            )
+        if self.multi_company:
+            self.company_ids |= self.company_id
+            self.company_id = False
         else:
+            prev = self.company_ids.ids
+            company = False
+            if self.env.company.id in prev:
+                company = self.env.company
+            else:
+                for c_id in prev:
+                    if c_id in self.env.companies.ids:
+                        company = self.env["res.company"].browse(c_id)
+                        break
+
+            self.company_id = company
             self.company_ids = False
 
     @api.depends("multi_company", "company_id", "company_ids")
     def _compute_query_company_ids(self):
         for rec in self:
             if rec.multi_company:
-                rec.query_company_ids = rec.company_ids or rec.company_id
+                # If no companies defined use active companies.
+                rec.query_company_ids = rec.company_ids or self.env.companies
             else:
                 rec.query_company_ids = rec.company_id
 
