@@ -1,5 +1,6 @@
 # Copyright 2016 Therp BV (<http://therp.nl>)
 # Copyright 2016 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import sys
@@ -111,9 +112,9 @@ class MisReportKpiStyle(models.Model):
     indent_level = fields.Integer()
     # number format
     prefix_inherit = fields.Boolean(default=True)
-    prefix = fields.Char(size=16, string="Prefix")
+    prefix = fields.Char(string="Prefix")
     suffix_inherit = fields.Boolean(default=True)
-    suffix = fields.Char(size=16, string="Suffix")
+    suffix = fields.Char(string="Suffix")
     dp_inherit = fields.Boolean(default=True)
     dp = fields.Integer(string="Rounding", default=0)
     divider_inherit = fields.Boolean(default=True)
