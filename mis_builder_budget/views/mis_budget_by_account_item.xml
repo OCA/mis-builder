@@ -28,8 +28,9 @@
                 <field name="date_range_id" />
                 <field name="date_from" />
                 <field name="date_to" />
-                <field name="debit" />
-                <field name="credit" />
+                <field name="debit" invisible="1" />
+                <field name="credit" invisible="1" />
+                <field name="balance" />
                 <field
                     name="analytic_account_id"
                     groups="analytic.group_analytic_accounting"
