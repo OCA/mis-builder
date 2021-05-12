@@ -274,6 +274,9 @@ class MisReportInstancePeriod(models.Model):
     source_cmpcol_to_id = fields.Many2one(
         comodel_name="mis.report.instance.period", string="Compare"
     )
+    allowed_cmpcol_ids = fields.Many2many(
+        comodel_name="mis.report.instance.period", compute="_compute_allowed_cmpcol_ids"
+    )
     # filters
     analytic_account_id = fields.Many2one(
         comodel_name="account.analytic.account",
@@ -318,6 +321,12 @@ class MisReportInstancePeriod(models.Model):
             "Period name should be unique by report",
         ),
     ]
+
+    @api.depends("report_instance_id")
+    def _compute_allowed_cmpcol_ids(self):
+        """Compute actual records while in NewId context"""
+        for record in self:
+            record.allowed_cmpcol_ids = record.report_instance_id.period_ids - record
 
     @api.constrains("source_aml_model_id")
     def _check_source_aml_model_id(self):
