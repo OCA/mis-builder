@@ -1,0 +1,5 @@
+diff a/.pylintrc-mandatory b/.pylintrc-mandatory	(rejected hunks)
+@@ -23,2 +23,3 @@ enable=anomalous-backslash-in-string,
+     dangerous-view-replace-wo-priority,
++    development-status-allowed,
+     duplicate-id-csv,

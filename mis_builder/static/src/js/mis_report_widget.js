@@ -1,7 +1,7 @@
 /* Copyright 2014-2019 ACSONE SA/NV (<http://acsone.eu>)
    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html). */
 
-odoo.define("mis_builder.widget", function (require) {
+odoo.define("mis_builder.widget", function(require) {
     "use strict";
 
     var AbstractField = require("web.AbstractField");
@@ -26,7 +26,7 @@ odoo.define("mis_builder.widget", function (require) {
             "click .oe_mis_builder_refresh": "refresh",
         }),
 
-        init: function () {
+        init: function() {
             var self = this;
             self._super.apply(self, arguments);
             StandaloneFieldManagerMixin.init.call(self);
@@ -48,13 +48,13 @@ odoo.define("mis_builder.widget", function (require) {
             self.hide_analytic_filters = false;
         },
 
-        _getFilterValue: function (name) {
+        _getFilterValue: function(name) {
             var filters = this.getParent().state.context.mis_report_filters || {};
             var filter = filters[name] || {};
             return filter.value;
         },
 
-        _setFilterValue: function (name, value, operator) {
+        _setFilterValue: function(name, value, operator) {
             var context = this.getParent().state.context;
             var filters = undefined;
             if (context.mis_report_filters === undefined) {
@@ -79,7 +79,7 @@ odoo.define("mis_builder.widget", function (require) {
          *
          * @returns int
          */
-        _instanceId: function () {
+        _instanceId: function() {
             if (this.value) {
                 return this.value;
             }
@@ -102,7 +102,7 @@ odoo.define("mis_builder.widget", function (require) {
          *
          * @returns Promise
          */
-        willStart: function () {
+        willStart: function() {
             var self = this;
             var context = self.getParent().state.context;
 
@@ -113,25 +113,25 @@ odoo.define("mis_builder.widget", function (require) {
                     args: [self._instanceId()],
                     context: context,
                 })
-                .then(function (result) {
+                .then(function(result) {
                     self.mis_report_data = result;
                 });
 
             var def2 = session
                 .user_has_group("account.group_account_user")
-                .then(function (result) {
+                .then(function(result) {
                     self.show_settings = result;
                 });
 
             var def3 = session
                 .user_has_group("analytic.group_analytic_accounting")
-                .then(function (result) {
+                .then(function(result) {
                     self.has_group_analytic_accounting = result;
                 });
 
             var def4 = session
                 .user_has_group("analytic.group_analytic_tags")
-                .then(function (result) {
+                .then(function(result) {
                     self.has_group_analytic_tags = result;
                 });
 
@@ -142,7 +142,7 @@ odoo.define("mis_builder.widget", function (require) {
                     args: [self._instanceId(), ["hide_analytic_filters"]],
                     context: context,
                 })
-                .then(function (result) {
+                .then(function(result) {
                     self.hide_analytic_filters = result[0].hide_analytic_filters;
                 });
 
@@ -156,7 +156,7 @@ odoo.define("mis_builder.widget", function (require) {
             );
         },
 
-        start: function () {
+        start: function() {
             var self = this;
             self._super.apply(self, arguments);
             self._addAnalyticFilters();
@@ -168,7 +168,7 @@ odoo.define("mis_builder.widget", function (require) {
          *
          * @returns list of objects
          */
-        _getFilterFields: function () {
+        _getFilterFields: function() {
             var self = this;
             var fields = [];
             if (self.has_group_analytic_accounting) {
@@ -202,7 +202,7 @@ odoo.define("mis_builder.widget", function (require) {
          *
          * @returns object
          */
-        _getFilterFieldInfo: function () {
+        _getFilterFieldInfo: function() {
             return {};
         },
 
@@ -211,7 +211,7 @@ odoo.define("mis_builder.widget", function (require) {
          *
          * @param {Object} record @see BasicModel.makeRecord
          */
-        _makeFilterFieldWidgets: function (record) {
+        _makeFilterFieldWidgets: function(record) {
             var self = this;
 
             if (self.has_group_analytic_accounting) {
@@ -294,7 +294,7 @@ odoo.define("mis_builder.widget", function (require) {
          *
          * @param {Object} record @see BasicModel.makeRecord
          */
-        _beforeCreateWidgets: function (record) {
+        _beforeCreateWidgets: function(record) {
             var self = this;
             var defs = [];
 
@@ -311,7 +311,7 @@ odoo.define("mis_builder.widget", function (require) {
          * Populate the analytic filters box.
          * This method is not meant to be overridden.
          */
-        _addAnalyticFilters: function () {
+        _addAnalyticFilters: function() {
             var self = this;
             if (self.hide_analytic_filters) {
                 return;
@@ -322,17 +322,17 @@ odoo.define("mis_builder.widget", function (require) {
                     self._getFilterFields(),
                     self._getFilterFieldInfo()
                 )
-                .then(function (recordId) {
+                .then(function(recordId) {
                     var record = self.model.get(recordId);
                     var defs = self._beforeCreateWidgets(record);
-                    $.when.apply($, defs).then(function () {
+                    $.when.apply($, defs).then(function() {
                         record = self.model.get(record.id);
                         self._makeFilterFieldWidgets(record);
                     });
                 });
         },
 
-        _confirmChange: function () {
+        _confirmChange: function() {
             var self = this;
             var result = StandaloneFieldManagerMixin._confirmChange.apply(
                 self,
@@ -381,11 +381,11 @@ odoo.define("mis_builder.widget", function (require) {
             return result;
         },
 
-        refresh: function () {
+        refresh: function() {
             this.replace();
         },
 
-        printPdf: function () {
+        printPdf: function() {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
@@ -393,12 +393,12 @@ odoo.define("mis_builder.widget", function (require) {
                 method: "print_pdf",
                 args: [this._instanceId()],
                 context: context,
-            }).then(function (result) {
+            }).then(function(result) {
                 self.do_action(result);
             });
         },
 
-        exportXls: function () {
+        exportXls: function() {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
@@ -406,12 +406,12 @@ odoo.define("mis_builder.widget", function (require) {
                 method: "export_xls",
                 args: [this._instanceId()],
                 context: context,
-            }).then(function (result) {
+            }).then(function(result) {
                 self.do_action(result);
             });
         },
 
-        displaySettings: function () {
+        displaySettings: function() {
             var self = this;
             var context = self.getParent().state.context;
             this._rpc({
@@ -419,12 +419,12 @@ odoo.define("mis_builder.widget", function (require) {
                 method: "display_settings",
                 args: [this._instanceId()],
                 context: context,
-            }).then(function (result) {
+            }).then(function(result) {
                 self.do_action(result);
             });
         },
 
-        drilldown: function (event) {
+        drilldown: function(event) {
             var self = this;
             var context = self.getParent().state.context;
             var drilldown = $(event.target).data("drilldown");
@@ -433,12 +433,12 @@ odoo.define("mis_builder.widget", function (require) {
                 method: "drilldown",
                 args: [this._instanceId(), drilldown],
                 context: context,
-            }).then(function (result) {
+            }).then(function(result) {
                 self.do_action(result);
             });
         },
 
-        getMisBuilderFilterBox: function () {
+        getMisBuilderFilterBox: function() {
             var self = this;
             return self.$(".oe_mis_builder_analytic_filter_box");
         },

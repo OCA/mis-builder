@@ -1,0 +1,5 @@
+diff a/.pylintrc b/.pylintrc	(rejected hunks)
+@@ -30,2 +30,3 @@ enable=anomalous-backslash-in-string,
+     dangerous-view-replace-wo-priority,
++    development-status-allowed,
+     duplicate-id-csv,
