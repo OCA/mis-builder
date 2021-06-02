@@ -248,6 +248,11 @@ msgid "All Posted Entries"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__allowed_cmpcol_ids
+msgid "Allowed Cmpcol"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__amount
 msgid "Amount"
 msgstr ""
