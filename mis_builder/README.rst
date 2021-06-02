@@ -97,6 +97,14 @@ be found on GitHub.
 Changelog
 =========
 
+14.0.3.6.7 (2021-06-02)
+**Bugfixes**
+
+- When on a MIS Report Instance, if you wanted to generate a new line of type comparison, you couldn't currently select any existing period to compare.
+  This happened because the field domain was searching in a NewId context, thus not finding a correct period.
+  Changing the domain and making it use a computed field with a search for the _origin record solves the problem. (`#361 <https://github.com/OCA/mis-builder/issues/361>`_)
+
+
 14.0.3.6.6 (2021-04-23)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
