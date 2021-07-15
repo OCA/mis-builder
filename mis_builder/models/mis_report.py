@@ -645,6 +645,7 @@ class MisReport(models.Model):
                 for field_name in field_names:
                     setattr(s, field_name, agg([d[field_name] for d in data]))
                 res[query.name] = s
+            res.update({query: {"domain": domain}})
         return res
 
     def _declare_and_compute_col(  # noqa: C901 (TODO simplify this fnction)
