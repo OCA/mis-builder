@@ -10,19 +10,20 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-02-10 07:59+0000\n"
-"PO-Revision-Date: 2018-02-10 07:59+0000\n"
-"Last-Translator: Nicolas JEUDY <njeudy@panda-chi.io>, 2018\n"
+"PO-Revision-Date: 2021-08-09 16:49+0000\n"
+"Last-Translator: Pascal GOUHIER <pascal.gouhier@copagex.fr>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_bud
 msgid "3 M Budget"
-msgstr "3 M Budget"
+msgstr "Budget 3 M"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__account_id
@@ -31,15 +32,13 @@ msgstr "Compte"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_account_id
-#, fuzzy
 msgid "Analytic Account"
-msgstr "Compte"
+msgstr "Compte analytique"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_tag_ids
-#, fuzzy
 msgid "Analytic Tags"
-msgstr "Compte"
+msgstr "Etiquettes analytiques"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
@@ -74,12 +73,12 @@ msgstr "Débit"
 #. module: mis_builder_demo
 #: model:mis.report,name:mis_builder_demo.mis_report_expenses
 msgid "Demo Expenses"
-msgstr "Demo: Frais"
+msgstr "Demo : Frais"
 
 #. module: mis_builder_demo
 #: model:mis.report.instance,name:mis_builder_demo.mis_report_instance_expenses
 msgid "Demo Expenses vs Budget"
-msgstr "Demo: Frais vs Budget"
+msgstr "Demo : Frais vs Budget"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__display_name
@@ -123,9 +122,8 @@ msgstr "M-2"
 
 #. module: mis_builder_demo
 #: model:ir.model,name:mis_builder_demo.model_mis_committed_purchase
-#, fuzzy
 msgid "MIS Commitment"
-msgstr "MIS: Achat engagé"
+msgstr "MIS : Achat engagé"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__name
@@ -140,12 +138,12 @@ msgstr "Autre"
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__res_id
 msgid "Resource ID"
-msgstr ""
+msgstr "ID de la ressource"
 
 #. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__res_model
 msgid "Resource Model Name"
-msgstr ""
+msgstr "Nom du modèle de ressource"
 
 #. module: mis_builder_demo
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
