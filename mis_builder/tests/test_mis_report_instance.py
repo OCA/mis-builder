@@ -494,6 +494,32 @@ class TestMisReportInstance(common.HttpCase):
         r = self.env["mis.report.kpi.expression"].name_search("k4")
         self.assertEqual([i[1] for i in r], ["kpi 4 (k4)"])
 
+    def test_query_company_ids(self):
+        # sanity check single company mode
+        assert not self.report_instance.multi_company
+        assert self.report_instance.company_id
+        assert self.report_instance.query_company_ids == self.report_instance.company_id
+        # create a second company
+        c1 = self.report_instance.company_id
+        c2 = self.env["res.company"].create(
+            dict(
+                name="company 2",
+            )
+        )
+        self.report_instance.write(dict(multi_company=True, company_id=False))
+        self.report_instance.company_ids |= c1
+        self.report_instance.company_ids |= c2
+        assert len(self.report_instance.company_ids) == 2
+        assert self.report_instance.query_company_ids == self.env.companies
+        # In a user context where there is only one company, ensure
+        # query_company_ids only has one company too.
+        assert (
+            self.report_instance.with_context(
+                allowed_company_ids=(c1.id,)
+            ).query_company_ids
+            == c1
+        )
+
     def test_multi_company_onchange(self):
         # not multi company
         self.assertTrue(self.report_instance.company_id)
