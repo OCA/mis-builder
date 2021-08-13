@@ -497,23 +497,22 @@ class MisReportInstance(models.Model):
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
-        string="Company",
+        string="Allowed company",
         default=lambda self: self.env.company,
         required=False,
     )
     multi_company = fields.Boolean(
         string="Multiple companies",
-        help="Check if you wish to specify "
-        "several companies to be searched for data.",
+        help="Check if you wish to specify several companies to be searched for data.",
         default=False,
     )
     company_ids = fields.Many2many(
         comodel_name="res.company",
-        string="Companies",
+        string="Allowed companies",
         help="Select companies for which data will be searched.",
-        domain=lambda self: [("id", "in", self.env.companies.ids)],
     )
     query_company_ids = fields.Many2many(
+        string="Effective companies",
         comodel_name="res.company",
         compute="_compute_query_company_ids",
         help="Companies for which data will be searched.",
@@ -565,13 +564,16 @@ class MisReportInstance(models.Model):
             self.company_ids = False
 
     @api.depends("multi_company", "company_id", "company_ids")
+    @api.depends_context("allowed_company_ids")
     def _compute_query_company_ids(self):
         for rec in self:
             if rec.multi_company:
-                # If no companies defined use active companies.
-                rec.query_company_ids = rec.company_ids or self.env.companies
+                if not rec.company_ids:
+                    rec.query_company_ids = self.env.companies
+                else:
+                    rec.query_company_ids = rec.company_ids & self.env.companies
             else:
-                rec.query_company_ids = rec.company_id
+                rec.query_company_ids = rec.company_id or self.env.company
 
     @api.model
     def get_filter_descriptions_from_context(self):
