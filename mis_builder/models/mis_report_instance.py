@@ -411,13 +411,13 @@ class MisReportInstancePeriod(models.Model):
         compatible with account.move.line."""
         self.ensure_one()
         domain = self._get_filter_domain_from_context()
-        if (
-            self._get_aml_model_name() == "account.move.line"
-            and self.report_instance_id.target_move == "posted"
-        ):
-            domain.extend([("move_id.state", "=", "posted")])
-        elif self._get_aml_model_name() == "account.move.line":
-            domain.extend([("move_id.state", "in", ("posted", "draft"))])
+        aml_model_name = self._get_aml_model_name()
+        if aml_model_name:
+            domain.extend(
+                self.report_id._get_target_move_domain(
+                    self.report_instance_id.target_move, aml_model_name
+                )
+            )
         if self.analytic_account_id:
             domain.append(("analytic_account_id", "=", self.analytic_account_id.id))
         if self.analytic_group_id:
@@ -792,7 +792,6 @@ class MisReportInstance(models.Model):
             aep,
             period.date_from,
             period.date_to,
-            None,  # target_move now part of additional_move_line_filter
             period._get_additional_move_line_filter(),
             period._get_aml_model_name(),
         )
@@ -886,7 +885,6 @@ class MisReportInstance(models.Model):
                 expr,
                 period.date_from,
                 period.date_to,
-                None,  # target_move now part of additional_move_line_filter
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())
