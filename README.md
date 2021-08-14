@@ -30,11 +30,11 @@ It features the following key characteristics:
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[mis_builder](mis_builder/) | 8.0.1.0.2 | Build 'Management Information System' Reports and Dashboards
-[mis_builder_analytic_filter](mis_builder_analytic_filter/) | 8.0.1.0.0 | Add analytic filters to MIS Reports
-[mis_builder_demo](mis_builder_demo/) | 8.0.1.0.0 | Demo data for the mis_builder module
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[mis_builder](mis_builder/) | 8.0.1.0.2 |  | Build 'Management Information System' Reports and Dashboards
+[mis_builder_analytic_filter](mis_builder_analytic_filter/) | 8.0.1.0.0 |  | Add analytic filters to MIS Reports
+[mis_builder_demo](mis_builder_demo/) | 8.0.1.0.0 |  | Demo data for the mis_builder module
 
 [//]: # (end addons)
 
