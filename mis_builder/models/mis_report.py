@@ -210,7 +210,7 @@ class MisReportKpi(models.Model):
 
     @api.onchange("description")
     def _onchange_description(self):
-        """ construct name from description """
+        """construct name from description"""
         if self.description and not self.name:
             self.name = _python_var(self.description)
 
@@ -273,7 +273,7 @@ class MisReportSubkpi(models.Model):
 
     @api.onchange("description")
     def _onchange_description(self):
-        """ construct name from description """
+        """construct name from description"""
         if self.description and not self.name:
             self.name = _python_var(self.description)
 
@@ -788,7 +788,6 @@ class MisReport(models.Model):
         aep,
         date_from,
         date_to,
-        target_move,
         subkpis_filter=None,
         get_additional_move_line_filter=None,
         get_additional_query_filter=None,
@@ -804,7 +803,6 @@ class MisReport(models.Model):
             aep,
             date_from,
             date_to,
-            target_move,
             get_additional_move_line_filter()
             if get_additional_move_line_filter
             else None,
@@ -898,7 +896,7 @@ class MisReport(models.Model):
         )
 
     def get_kpis_by_account_id(self, company):
-        """ Return { account_id: set(kpi) } """
+        """Return { account_id: set(kpi) }"""
         aep = self._prepare_aep(company)
         res = defaultdict(set)
         for kpi in self.kpi_ids:
@@ -909,6 +907,28 @@ class MisReport(models.Model):
                 for account_id in account_ids:
                     res[account_id].add(kpi)
         return res
+
+    @api.model
+    def _get_target_move_domain(self, target_move, aml_model_name):
+        """
+        Obtain a domain to apply on a move-line-like model, to get posted
+        entries or return all of them (always excluding cancelled entries).
+
+        :param: target_move: all|posted
+        :param: aml_model_name: an optional move-line-like model name
+                (defaults to accaount.move.line)
+        """
+        if "parent_state" in self.env[aml_model_name]._fields:
+            if target_move == "posted":
+                return [("parent_state", "=", "posted")]
+            elif target_move == "all":
+                # all (in Odoo 13+, there is also the cancel state that we must ignore)
+                return [("parent_state", "in", ("posted", "draft"))]
+            else:
+                raise UserError(
+                    _("Unexpected value %s for target_move.") % (target_move,)
+                )
+        return []
 
     def evaluate(
         self,
@@ -928,7 +948,7 @@ class MisReport(models.Model):
         :param date_from, date_to: the starting and ending date
         :param target_move: all|posted
         :param aml_model: the name of a model that is compatible with
-                          account.move.line
+                          account.move.line (default: account.move.line)
         :param subkpis_filter: a list of subkpis to include in the evaluation
                                (if empty, use all subkpis)
         :param get_additional_move_line_filter: a bound method that takes
@@ -944,14 +964,16 @@ class MisReport(models.Model):
                  these should be ignored as they might be removed in
                  the future.
         """
+        additional_move_line_filter = self._get_target_move_domain(
+            target_move, aml_model or "account.move.line"
+        )
+        if get_additional_move_line_filter:
+            additional_move_line_filter.extend(get_additional_move_line_filter())
         expression_evaluator = ExpressionEvaluator(
             aep,
             date_from,
             date_to,
-            target_move,
-            get_additional_move_line_filter()
-            if get_additional_move_line_filter
-            else None,
+            additional_move_line_filter,
             aml_model,
         )
         return self._evaluate(expression_evaluator, subkpis_filter)
