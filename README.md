@@ -43,11 +43,11 @@ Here are some presentations:
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[mis_builder](mis_builder/) | 10.0.3.6.4 | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 10.0.3.5.0 | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 10.0.3.1.1 | Demo addon for MIS Builder
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[mis_builder](mis_builder/) | 10.0.3.6.4 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Build 'Management Information System' Reports and Dashboards
+[mis_builder_budget](mis_builder_budget/) | 10.0.3.5.0 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Create budgets for MIS reports
+[mis_builder_demo](mis_builder_demo/) | 10.0.3.1.1 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Demo addon for MIS Builder
 
 [//]: # (end addons)
 
