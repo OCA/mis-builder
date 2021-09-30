@@ -83,16 +83,8 @@ class MisBudgetByAccountItem(models.Model):
     def _inverse_balance(self):
         for rec in self:
             if rec.balance < 0:
-                rec.update(
-                    {
-                        "credit": -rec.balance,
-                        "debit": 0,
-                    }
-                )
+                rec.credit = -rec.balance
+                rec.debit = 0
             else:
-                rec.update(
-                    {
-                        "credit": 0,
-                        "debit": rec.balance,
-                    }
-                )
+                rec.credit = 0
+                rec.debit = rec.balance
