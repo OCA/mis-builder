@@ -1,2 +1,3 @@
-The mis.report.instance should allow to define as many companies as the user is allowed to operate on when logged.
-The company is only a required field if the flag 'multi_company' is not set.
+Support for the Odoo 13+ multi-company model. In multi-company mode, several allowed
+companies can be declared on MIS Report instances, and the report operates on the
+intersection of report companies and companies selected in the user context.
