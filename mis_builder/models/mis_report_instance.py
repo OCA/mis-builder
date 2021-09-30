@@ -521,22 +521,22 @@ class MisReportInstance(models.Model):
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
-        string="Company",
+        string="Allowed company",
         default=lambda self: self.env.company,
-        required=True,
+        required=False,
     )
     multi_company = fields.Boolean(
         string="Multiple companies",
-        help="Check if you wish to specify "
-        "children companies to be searched for data.",
+        help="Check if you wish to specify several companies to be searched for data.",
         default=False,
     )
     company_ids = fields.Many2many(
         comodel_name="res.company",
-        string="Companies",
+        string="Allowed companies",
         help="Select companies for which data will be searched.",
     )
     query_company_ids = fields.Many2many(
+        string="Effective companies",
         comodel_name="res.company",
         compute="_compute_query_company_ids",
         help="Companies for which data will be searched.",
@@ -572,22 +572,36 @@ class MisReportInstance(models.Model):
     )
     hide_analytic_filters = fields.Boolean(default=True)
 
-    @api.onchange("company_id", "multi_company")
+    @api.onchange("multi_company")
     def _onchange_company(self):
-        if self.company_id and self.multi_company:
-            self.company_ids = self.env["res.company"].search(
-                [("id", "child_of", self.company_id.id)]
-            )
+        if self.multi_company:
+            self.company_ids |= self.company_id
+            self.company_id = False
         else:
+            prev = self.company_ids.ids
+            company = False
+            if self.env.company.id in prev:
+                company = self.env.company
+            else:
+                for c_id in prev:
+                    if c_id in self.env.companies.ids:
+                        company = self.env["res.company"].browse(c_id)
+                        break
+
+            self.company_id = company
             self.company_ids = False
 
     @api.depends("multi_company", "company_id", "company_ids")
+    @api.depends_context("allowed_company_ids")
     def _compute_query_company_ids(self):
         for rec in self:
             if rec.multi_company:
-                rec.query_company_ids = rec.company_ids or rec.company_id
+                if not rec.company_ids:
+                    rec.query_company_ids = self.env.companies
+                else:
+                    rec.query_company_ids = rec.company_ids & self.env.companies
             else:
-                rec.query_company_ids = rec.company_id
+                rec.query_company_ids = rec.company_id or self.env.company
 
     @api.model
     def get_filter_descriptions_from_context(self):
