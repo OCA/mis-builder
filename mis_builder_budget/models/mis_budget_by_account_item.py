@@ -65,7 +65,11 @@ class MisBudgetByAccountItem(models.Model):
     def _prepare_overlap_domain(self):
         """Prepare a domain to check for overlapping budget items."""
         if self.budget_id.allow_items_overlap:
-            return [("id", "=", False)]
+            # Trick mis.budget.abstract._check_dates into never seeing
+            # overlapping budget items. This "hack" is necessary because, for now,
+            # overlapping budget items is only possible for budget by account items
+            # and kpi budget items.
+            return [("id", "=", 0)]
         domain = super(MisBudgetByAccountItem, self)._prepare_overlap_domain()
         domain.extend([("account_id", "=", self.account_id.id)])
         return domain
