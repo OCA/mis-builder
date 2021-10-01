@@ -17,8 +17,8 @@ msgstr ""
 "X-Generator: Weblate 3.10\n"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:530
-#: code:addons/mis_builder/models/mis_report_instance.py:644
+#: code:addons/mis_builder/models/mis_report.py:531
+#: code:addons/mis_builder/models/mis_report_instance.py:645
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (kópia)"
@@ -192,7 +192,7 @@ msgstr ""
 "dátum, id účtu a id spoločnosti. Tento model je zdrojom pre stĺpec Aktuálne."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:442
+#: code:addons/mis_builder/models/mis_report_instance.py:443
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Filter dátumu je povinný pre tento zdroj v stĺpci %s."
@@ -208,7 +208,7 @@ msgid "Accumulation Method"
 msgstr "Metóda akumulácie"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:332
+#: code:addons/mis_builder/models/mis_report_instance.py:333
 #, python-format
 msgid ""
 "Actual (alternative) models used in columns must have the same account model "
@@ -316,13 +316,13 @@ msgid "Analytic Account Group"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:608
+#: code:addons/mis_builder/models/mis_report_instance.py:609
 #, python-format
 msgid "Analytic Account Group: %s"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:600
+#: code:addons/mis_builder/models/mis_report_instance.py:601
 #, python-format
 msgid "Analytic Account: %s"
 msgstr "Analytický účet: %s"
@@ -341,7 +341,7 @@ msgid "Analytic Tags Filter"
 msgstr "Filter analytického štítku"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:616
+#: code:addons/mis_builder/models/mis_report_instance.py:617
 #, python-format
 msgid "Analytic Tags: %s"
 msgstr "Analytické štítky: %s"
@@ -352,8 +352,8 @@ msgid "Auto expand"
 msgstr "Automatické rozbalenie"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:124
-#: code:addons/mis_builder/models/mis_report.py:384
+#: code:addons/mis_builder/models/mis_report.py:125
+#: code:addons/mis_builder/models/mis_report.py:385
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -386,7 +386,7 @@ msgid "Bold"
 msgstr "Tučný"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:184
+#: code:addons/mis_builder/models/mis_report.py:185
 #, python-format
 msgid "Can not update a multi kpi from the kpi line"
 msgstr "Nie je možné aktualizovať viac kpi z riadku kpi"
@@ -419,13 +419,13 @@ msgid "Column"
 msgstr "Stĺpec"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:462
+#: code:addons/mis_builder/models/mis_report_instance.py:463
 #, python-format
 msgid "Column %s cannot be compared to itrec."
 msgstr "Stĺpec %s sa nemôže porovnávať s itrec."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:765
+#: code:addons/mis_builder/models/mis_report_instance.py:766
 #, python-format
 msgid "Column %s with move lines source must have from/to dates."
 msgstr "Stĺpec %s s riadkami pohybu musí mať dátum od / do."
@@ -436,7 +436,7 @@ msgid "Columns"
 msgstr "Stĺpce"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:471
+#: code:addons/mis_builder/models/mis_report_instance.py:472
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
 msgstr "Stĺpce na porovnanie musia patriť do toho istého reportu v %s"
@@ -543,7 +543,7 @@ msgid "Date From"
 msgstr "Dátum od"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:193
+#: code:addons/mis_builder/models/mis_report_instance.py:194
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__date_range_id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__date_range_id
 #: selection:mis.report.instance.period,type:0
@@ -567,7 +567,7 @@ msgid "Dates"
 msgstr "Dátumy"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:189
+#: code:addons/mis_builder/models/mis_report_instance.py:190
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Day"
@@ -598,7 +598,7 @@ msgstr ""
 "Priemer: hodnoty zahrnutého obdobia sa spriemerujú s váhou pro-rata temporis."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:115
+#: code:addons/mis_builder/models/mis_report.py:116
 #: selection:mis.report.kpi,compare_method:0
 #, python-format
 msgid "Difference"
@@ -914,7 +914,7 @@ msgid "Indent Level Inherit"
 msgstr "Zdedená úroveň odsadenia"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_style.py:59
+#: code:addons/mis_builder/models/mis_report_style.py:60
 #, python-format
 msgid "Indent level must be greater than or equal to 0"
 msgstr "Odsadenie musí byť väčšie alebo rovné nule"
@@ -930,7 +930,7 @@ msgid "KPI"
 msgstr "KPI"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:734
+#: code:addons/mis_builder/models/mis_report.py:735
 #, python-format
 msgid ""
 "KPI \"{}\" has type {} while a tuple was expected.\n"
@@ -943,7 +943,7 @@ msgid ""
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:724
+#: code:addons/mis_builder/models/mis_report.py:725
 #, python-format
 msgid ""
 "KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
@@ -956,7 +956,7 @@ msgid "KPI Sequence"
 msgstr "Postupnosť KPI"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:161
+#: code:addons/mis_builder/models/mis_report.py:162
 #, python-format
 msgid "KPI name ({}) must be a valid python identifier"
 msgstr "Názov KPI ({}) musí byť platný identifikátor python"
@@ -1171,14 +1171,14 @@ msgid "MIS report instance XLS report"
 msgstr "Výkaz inštancie MIS formát XLS"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:386
+#: code:addons/mis_builder/models/mis_report.py:387
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Max"
 msgstr "Max"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:385
+#: code:addons/mis_builder/models/mis_report.py:386
 #: selection:mis.report.query,aggregate:0
 #, python-format
 msgid "Min"
@@ -1195,7 +1195,7 @@ msgid "Model"
 msgstr "Model"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:191
+#: code:addons/mis_builder/models/mis_report_instance.py:192
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Month"
@@ -1242,14 +1242,14 @@ msgid "No date filter"
 msgstr "Bez filtra dátumu"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:448
+#: code:addons/mis_builder/models/mis_report_instance.py:449
 #, python-format
 msgid "No date filter is allowed for this source in column %s."
 msgstr "Pre tento zdroj nie je v stĺpci %s povolený žiadny filter dátumu."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:117
-#: code:addons/mis_builder/models/mis_report.py:124
+#: code:addons/mis_builder/models/mis_report.py:118
+#: code:addons/mis_builder/models/mis_report.py:125
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.kpi,compare_method:0
 #, python-format
@@ -1273,7 +1273,7 @@ msgid "Number of periods"
 msgstr "Počet období"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:105
+#: code:addons/mis_builder/models/mis_report.py:106
 #: selection:mis.report.kpi,type:0
 #, python-format
 msgid "Numeric"
@@ -1295,8 +1295,8 @@ msgid "Parent column"
 msgstr "Nadradený stĺpec"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:106
-#: code:addons/mis_builder/models/mis_report.py:116
+#: code:addons/mis_builder/models/mis_report.py:107
+#: code:addons/mis_builder/models/mis_report.py:117
 #: selection:mis.report.kpi,compare_method:0 selection:mis.report.kpi,type:0
 #, python-format
 msgid "Percentage"
@@ -1323,7 +1323,7 @@ msgid "Pivot date"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:458
+#: code:addons/mis_builder/models/mis_report_instance.py:459
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Zadajte prosím oba stĺpce na porovnanie v %s."
@@ -1367,7 +1367,7 @@ msgid "Query Company"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:408
+#: code:addons/mis_builder/models/mis_report.py:409
 #, python-format
 msgid "Query name ({}) must be valid python identifier"
 msgstr "Názov dotazu ({}) musí byť platný identifikátor python"
@@ -1474,7 +1474,7 @@ msgid "Source"
 msgstr "Zdroj"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:107
+#: code:addons/mis_builder/models/mis_report.py:108
 #: selection:mis.report.kpi,type:0
 #, python-format
 msgid "String"
@@ -1538,7 +1538,7 @@ msgid "Sub-KPI Sequence"
 msgstr "Postupnosť Sub KPI"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:269
+#: code:addons/mis_builder/models/mis_report.py:270
 #, python-format
 msgid "Sub-KPI name ({}) must be a valid python identifier"
 msgstr "Názov Sub KPI ({}) musí byť platný identifikátor python"
@@ -1581,8 +1581,8 @@ msgid "Suffix Inherit"
 msgstr "Zdedená prípona"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:124
-#: code:addons/mis_builder/models/mis_report.py:383
+#: code:addons/mis_builder/models/mis_report.py:125
+#: code:addons/mis_builder/models/mis_report.py:384
 #: selection:mis.report.kpi,accumulation_method:0
 #: selection:mis.report.query,aggregate:0
 #, python-format
@@ -1715,7 +1715,7 @@ msgid "Visibility"
 msgstr "Viditeľnosť"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:190
+#: code:addons/mis_builder/models/mis_report_instance.py:191
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Week"
@@ -1732,7 +1732,7 @@ msgid "Wrong normalize factor, it must be positive!"
 msgstr "Nesprávny normalizačný faktor, musí byť pozitívny!"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:192
+#: code:addons/mis_builder/models/mis_report_instance.py:193
 #: selection:mis.report.instance.period,type:0
 #, python-format
 msgid "Year"
@@ -1744,13 +1744,13 @@ msgid "Year to date"
 msgstr "Rok do dnešného dňa"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:60
+#: code:addons/mis_builder/models/mis_report_instance.py:61
 #, python-format
 msgid "You cannot sum period %s with itself."
 msgstr "Nemôžete spočítať obdobie %s so samým sebou."
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_instance.py:839
+#: code:addons/mis_builder/models/mis_report_instance.py:840
 #, python-format
 msgid "from %s to %s"
 msgstr "od %s do %s"
@@ -1772,7 +1772,7 @@ msgid "or"
 msgstr "alebo"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_style.py:239
+#: code:addons/mis_builder/models/mis_report_style.py:240
 #, python-format
 msgid "pp"
 msgstr ""
