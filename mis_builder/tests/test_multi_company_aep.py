@@ -139,7 +139,6 @@ class TestMultiCompanyAEP(common.TransactionCase):
         aep.do_queries(
             date_from=fields.Date.to_string(date_from),
             date_to=fields.Date.to_string(date_to),
-            target_move="posted",
         )
         return aep
 
