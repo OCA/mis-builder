@@ -11,6 +11,7 @@ class MisBudgetByAccountItem(models.Model):
     _description = "MIS Budget Item (by Account)"
     _order = "budget_id, date_from, account_id"
 
+    name = fields.Char(string="Label")
     budget_id = fields.Many2one(comodel_name="mis.budget.by.account")
     debit = fields.Monetary(default=0.0, currency_field="company_currency_id")
     credit = fields.Monetary(default=0.0, currency_field="company_currency_id")
