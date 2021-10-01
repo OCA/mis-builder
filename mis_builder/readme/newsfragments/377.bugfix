@@ -1,0 +1,9 @@
+Use the ``parent_state`` field of ``account.move.line`` to filter entries in ``posted``
+and ``draft`` state only. Before, when reporting in draft mode, all entries were used
+(i.e. there was no filter), and that started including the cancelled entries/invoices in
+Odoo 13.+.
+
+This change also contains a **breaking change** in the internal API. For quite a while
+the ``target_move argument`` of AEP and other methods was not used by MIS Builder itself
+and was kept for backward compatibility. To avoid rippling effects of the necessary
+change to use ``parent_state``, we now remove this argument.
