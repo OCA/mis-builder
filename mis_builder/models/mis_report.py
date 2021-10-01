@@ -909,6 +909,10 @@ class MisReport(models.Model):
         return res
 
     @api.model
+    def _supports_target_move_filter(self, aml_model_name):
+        return "parent_state" in self.env[aml_model_name]._fields
+
+    @api.model
     def _get_target_move_domain(self, target_move, aml_model_name):
         """
         Obtain a domain to apply on a move-line-like model, to get posted
@@ -918,17 +922,16 @@ class MisReport(models.Model):
         :param: aml_model_name: an optional move-line-like model name
                 (defaults to accaount.move.line)
         """
-        if "parent_state" in self.env[aml_model_name]._fields:
-            if target_move == "posted":
-                return [("parent_state", "=", "posted")]
-            elif target_move == "all":
-                # all (in Odoo 13+, there is also the cancel state that we must ignore)
-                return [("parent_state", "in", ("posted", "draft"))]
-            else:
-                raise UserError(
-                    _("Unexpected value %s for target_move.") % (target_move,)
-                )
-        return []
+        if not self._supports_target_move_filter(aml_model_name):
+            return []
+
+        if target_move == "posted":
+            return [("parent_state", "=", "posted")]
+        elif target_move == "all":
+            # all (in Odoo 13+, there is also the cancel state that we must ignore)
+            return [("parent_state", "in", ("posted", "draft"))]
+        else:
+            raise UserError(_("Unexpected value %s for target_move.") % (target_move,))
 
     def evaluate(
         self,
@@ -976,7 +979,9 @@ class MisReport(models.Model):
             additional_move_line_filter,
             aml_model,
         )
-        return self._evaluate(expression_evaluator, subkpis_filter)
+        return self._evaluate(
+            expression_evaluator, subkpis_filter, get_additional_query_filter
+        )
 
     def _evaluate(
         self,
