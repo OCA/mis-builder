@@ -1,0 +1,2 @@
+The ``get_additional_query_filter`` argument of ``evaluate()`` is now propagated
+correctly.
