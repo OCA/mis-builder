@@ -554,6 +554,9 @@ Contributors
 * Arnaud Pineux <arnaud.pineux@acsone.eu>
 * Ernesto Tejeda <ernesto.tejeda@tecnativa.com>
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
+* `CorporateHub <https://corporatehub.eu/>`__
+
+  * Alexey Pelykh <alexey.pelykh@corphub.eu>
 
 Maintainers
 ~~~~~~~~~~~
