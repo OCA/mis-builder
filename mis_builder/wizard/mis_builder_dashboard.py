@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from lxml import etree
@@ -11,7 +12,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
     _name = "add.mis.report.instance.dashboard.wizard"
     _description = "MIS Report Add to Dashboard Wizard"
 
-    name = fields.Char("Name", size=32, required=True)
+    name = fields.Char("Name", required=True)
 
     dashboard_id = fields.Many2one(
         "ir.actions.act_window",
