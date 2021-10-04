@@ -590,10 +590,9 @@ class MisReport(models.Model):
                     ]
                 )
             else:
-                datetime_from = _utc_midnight(date_from, self._context.get("tz", "UTC"))
-                datetime_to = _utc_midnight(
-                    date_to, self._context.get("tz", "UTC"), add_day=1
-                )
+                tz = str(self.env["ir.fields.converter"]._input_tz())
+                datetime_from = _utc_midnight(date_from, tz)
+                datetime_to = _utc_midnight(date_to, tz, add_day=1)
                 domain.extend(
                     [
                         (query.date_field.name, ">=", datetime_from),
