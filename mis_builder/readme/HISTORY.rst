@@ -1,3 +1,12 @@
+12.0.3.7.3 (2021-12-20)
+**Bugfixes**
+
+- [FIX] balu[] and budgets by account
+
+  The balu[] expression (MODE_UNALLOCATED) need a user_type_id One2many to
+  account.account.type. We get it from account_id as in v14 (`#364 <https://github.com/OCA/mis-builder/issues/364>`_)
+
+
 12.0.3.7.1 (2021-04-23)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
