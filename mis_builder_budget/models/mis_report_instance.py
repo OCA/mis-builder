@@ -16,7 +16,6 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
             aep=None,
             date_from=date_from,
             date_to=date_to,
-            target_move=None,
             additional_move_line_filter=additional_move_line_filter,
             aml_model=None,
         )
