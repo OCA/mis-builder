@@ -86,6 +86,8 @@ Changelog
 =========
 
 13.0.4.0.0 (2022-01-07)
+~~~~~~~~~~~~~~~~~~~~~~~
+
 **Features**
 
 - A label field has been added to MIS Budget by Account items. When overlap between budget

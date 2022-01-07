@@ -98,6 +98,8 @@ Changelog
 =========
 
 13.0.4.0.0 (2022-01-07)
+~~~~~~~~~~~~~~~~~~~~~~~
+
 **Features**
 
 - Remove various field size limits. (`#332 <https://github.com/OCA/mis-builder/issues/332>`_)
