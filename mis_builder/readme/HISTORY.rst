@@ -1,3 +1,27 @@
+13.0.4.0.0 (2022-01-07)
+**Features**
+
+- Remove various field size limits. (`#332 <https://github.com/OCA/mis-builder/issues/332>`_)
+
+
+**Bugfixes**
+
+- Support for the Odoo 13+ multi-company model. In multi-company mode, several allowed
+  companies can be declared on MIS Report instances, and the report operates on the
+  intersection of report companies and companies selected in the user context. (`#327 <https://github.com/OCA/mis-builder/issues/327>`_)
+- The ``get_additional_query_filter`` argument of ``evaluate()`` is now propagated
+  correctly. (`#375 <https://github.com/OCA/mis-builder/issues/375>`_)
+- Use the ``parent_state`` field of ``account.move.line`` to filter entries in ``posted``
+  and ``draft`` state only. Before, when reporting in draft mode, all entries were used
+  (i.e. there was no filter), and that started including the cancelled entries/invoices in
+  Odoo 13.+.
+
+  This change also contains a **breaking change** in the internal API. For quite a while
+  the ``target_move argument`` of AEP and other methods was not used by MIS Builder itself
+  and was kept for backward compatibility. To avoid rippling effects of the necessary
+  change to use ``parent_state``, we now remove this argument. (`#377 <https://github.com/OCA/mis-builder/issues/377>`_)
+
+
 13.0.3.7.2 (2021-04-23)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
