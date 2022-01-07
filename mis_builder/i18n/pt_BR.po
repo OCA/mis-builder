@@ -285,6 +285,16 @@ msgid "All Posted Entries"
 msgstr "Todas as Entradas Postadas"
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
+msgid "Allowed companies"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
+msgid "Allowed company"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__amount
 msgid "Amount"
 msgstr "Montante"
@@ -403,11 +413,8 @@ msgstr "Cancelar"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__multi_company
-msgid ""
-"Check if you wish to specify children companies to be searched for data."
+msgid "Check if you wish to specify several companies to be searched for data."
 msgstr ""
-"Verifique se deseja especificar empresas filhas para serem pesquisadas por "
-"dados."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
@@ -459,19 +466,9 @@ msgid "Columns {} and {} are not comparable"
 msgstr "Colunas {} e {} não são comparáveis"
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
-msgid "Companies"
-msgstr "Empresas"
-
-#. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__query_company_ids
 msgid "Companies for which data will be searched."
 msgstr "Empresas para as quais os dados serão pesquisados."
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
-msgid "Company"
-msgstr "Empresa"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_cmpcol_to_id
@@ -675,6 +672,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__duration
 msgid "Duration"
 msgstr "Duração"
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__query_company_ids
+msgid "Effective companies"
+msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -1369,11 +1371,6 @@ msgid "Queries"
 msgstr "Consultas"
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__query_company_ids
-msgid "Query Company"
-msgstr "Empresa de Consulta"
-
-#. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
 #, fuzzy, python-format
 msgid "Query name ({}) must be valid python identifier"
@@ -1696,6 +1693,12 @@ msgid "Unexpected accumulation method %s for %s."
 msgstr "Método de acumulação %s não esperado para %s."
 
 #. module: mis_builder
+#: code:addons/mis_builder/models/mis_report.py:0
+#, python-format
+msgid "Unexpected value %s for target_move."
+msgstr ""
+
+#. module: mis_builder
 #: code:addons/mis_builder/models/prorata_read_group_mixin.py:0
 #, python-format
 msgid "Unsupported operator %s for searching on date"
@@ -1815,6 +1818,21 @@ msgstr "grandíssimo"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "Pequeníssimo"
+
+#~ msgid ""
+#~ "Check if you wish to specify children companies to be searched for data."
+#~ msgstr ""
+#~ "Verifique se deseja especificar empresas filhas para serem pesquisadas "
+#~ "por dados."
+
+#~ msgid "Companies"
+#~ msgstr "Empresas"
+
+#~ msgid "Company"
+#~ msgstr "Empresa"
+
+#~ msgid "Query Company"
+#~ msgstr "Empresa de Consulta"
 
 #~ msgid ""
 #~ "<b>AccountingNone</b>: a null value that behaves as 0 in arithmetic "
