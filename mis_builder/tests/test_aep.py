@@ -263,9 +263,7 @@ class TestAEP(common.TransactionCase):
         self.assertEqual(end, {self.account_ar.id: 900, self.account_in.id: -800})
 
     def test_aep_convenience_methods(self):
-        initial = AEP.get_balances_initial(
-            self.company, time.strftime("%Y") + "-03-01", "posted"
-        )
+        initial = AEP.get_balances_initial(self.company, time.strftime("%Y") + "-03-01")
         self.assertEqual(
             initial, {self.account_ar.id: (400, 0), self.account_in.id: (0, 300)}
         )
@@ -277,9 +275,7 @@ class TestAEP(common.TransactionCase):
         self.assertEqual(
             variation, {self.account_ar.id: (500, 0), self.account_in.id: (0, 500)}
         )
-        end = AEP.get_balances_end(
-            self.company, time.strftime("%Y") + "-03-31", "posted"
-        )
+        end = AEP.get_balances_end(self.company, time.strftime("%Y") + "-03-31")
         self.assertEqual(
             end, {self.account_ar.id: (900, 0), self.account_in.id: (0, 800)}
         )
@@ -298,9 +294,7 @@ class TestAEP(common.TransactionCase):
             debit_acc=self.account_in,
             credit_acc=self.account_ar,
         )
-        initial = AEP.get_balances_initial(
-            self.company, time.strftime("%Y") + "-01-01", "posted"
-        )
+        initial = AEP.get_balances_initial(self.company, time.strftime("%Y") + "-01-01")
         self.assertEqual(initial, {self.account_ar.id: (100.00, 100.01)})
         # make initial balance at Jan 1st equal to 0.001
         self._create_move(
