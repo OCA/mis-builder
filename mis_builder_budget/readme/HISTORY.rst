@@ -1,3 +1,17 @@
+14.0.4.0.0 (2022-01-08)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- A label field has been added to MIS Budget by Account items. When overlap between budget
+  items is allowed this allows creating a budget with several contributions for a given
+  account. (`#382 <https://github.com/OCA/mis-builder/issues/382>`_)
+- The balance field on MIS Budget by Account items is now writeable. This allows for
+  easier data entry and import. (`#383 <https://github.com/OCA/mis-builder/issues/383>`_)
+- MIS Budget by Account can now be configured to allow budget items with overlapping
+  dates. Each overlapping item contributes to the budget of the corresponding period. (`#384 <https://github.com/OCA/mis-builder/issues/384>`_)
+
+
 14.0.3.5.1 (2021-04-06)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
