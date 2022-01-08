@@ -11,11 +11,15 @@ class MisBudgetByAccountItem(models.Model):
     _description = "MIS Budget Item (by Account)"
     _order = "budget_id, date_from, account_id"
 
+    name = fields.Char(string="Label")
     budget_id = fields.Many2one(comodel_name="mis.budget.by.account")
     debit = fields.Monetary(default=0.0, currency_field="company_currency_id")
     credit = fields.Monetary(default=0.0, currency_field="company_currency_id")
     balance = fields.Monetary(
-        compute="_compute_balance", store=True, currency_field="company_currency_id"
+        compute="_compute_balance",
+        inverse="_inverse_balance",
+        store=True,
+        currency_field="company_currency_id",
     )
     company_id = fields.Many2one(
         "res.company",
@@ -60,6 +64,12 @@ class MisBudgetByAccountItem(models.Model):
 
     def _prepare_overlap_domain(self):
         """Prepare a domain to check for overlapping budget items."""
+        if self.budget_id.allow_items_overlap:
+            # Trick mis.budget.abstract._check_dates into never seeing
+            # overlapping budget items. This "hack" is necessary because, for now,
+            # overlapping budget items is only possible for budget by account items
+            # and kpi budget items.
+            return [("id", "=", 0)]
         domain = super(MisBudgetByAccountItem, self)._prepare_overlap_domain()
         domain.extend([("account_id", "=", self.account_id.id)])
         return domain
@@ -75,3 +85,12 @@ class MisBudgetByAccountItem(models.Model):
     )
     def _check_dates(self):
         super(MisBudgetByAccountItem, self)._check_dates()
+
+    def _inverse_balance(self):
+        for rec in self:
+            if rec.balance < 0:
+                rec.credit = -rec.balance
+                rec.debit = 0
+            else:
+                rec.credit = 0
+                rec.debit = rec.balance

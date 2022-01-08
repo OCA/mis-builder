@@ -1,4 +1,6 @@
 14.0.3.6.7 (2021-06-02)
+~~~~~~~~~~~~~~~~~~~~~~~
+
 **Bugfixes**
 
 - When on a MIS Report Instance, if you wanted to generate a new line of type comparison, you couldn't currently select any existing period to compare.

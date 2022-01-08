@@ -54,7 +54,7 @@ class MisReportInstancePeriod(models.Model):
           [(field_name, {'value': value, 'operator': operator})]
 
         This default filter is the same as the one set by
-        _get_additional_move_line_filter on mis.report.instance, so
+        _get_additional_move_line_filter on mis.report.instance.period, so
         a budget.item is expected to have the same analytic fields as
         a move line.
 

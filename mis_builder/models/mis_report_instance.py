@@ -1,4 +1,5 @@
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import datetime
@@ -174,7 +175,7 @@ class MisReportInstancePeriod(models.Model):
     _name = "mis.report.instance.period"
     _description = "MIS Report Instance Period"
 
-    name = fields.Char(size=32, required=True, string="Label", translate=True)
+    name = fields.Char(required=True, string="Label", translate=True)
     mode = fields.Selection(
         [
             (MODE_FIX, "Fixed dates"),
@@ -411,11 +412,13 @@ class MisReportInstancePeriod(models.Model):
         compatible with account.move.line."""
         self.ensure_one()
         domain = self._get_filter_domain_from_context()
-        if (
-            self._get_aml_model_name() == "account.move.line"
-            and self.report_instance_id.target_move == "posted"
-        ):
-            domain.extend([("move_id.state", "=", "posted")])
+        aml_model_name = self._get_aml_model_name()
+        if aml_model_name:
+            domain.extend(
+                self.report_id._get_target_move_domain(
+                    self.report_instance_id.target_move, aml_model_name
+                )
+            )
         if self.analytic_account_id:
             domain.append(("analytic_account_id", "=", self.analytic_account_id.id))
         if self.analytic_group_id:
@@ -527,22 +530,22 @@ class MisReportInstance(models.Model):
     )
     company_id = fields.Many2one(
         comodel_name="res.company",
-        string="Company",
+        string="Allowed company",
         default=lambda self: self.env.company,
-        required=True,
+        required=False,
     )
     multi_company = fields.Boolean(
         string="Multiple companies",
-        help="Check if you wish to specify "
-        "children companies to be searched for data.",
+        help="Check if you wish to specify several companies to be searched for data.",
         default=False,
     )
     company_ids = fields.Many2many(
         comodel_name="res.company",
-        string="Companies",
+        string="Allowed companies",
         help="Select companies for which data will be searched.",
     )
     query_company_ids = fields.Many2many(
+        string="Effective companies",
         comodel_name="res.company",
         compute="_compute_query_company_ids",
         help="Companies for which data will be searched.",
@@ -578,22 +581,36 @@ class MisReportInstance(models.Model):
     )
     hide_analytic_filters = fields.Boolean(default=True)
 
-    @api.onchange("company_id", "multi_company")
+    @api.onchange("multi_company")
     def _onchange_company(self):
-        if self.company_id and self.multi_company:
-            self.company_ids = self.env["res.company"].search(
-                [("id", "child_of", self.company_id.id)]
-            )
+        if self.multi_company:
+            self.company_ids |= self.company_id
+            self.company_id = False
         else:
+            prev = self.company_ids.ids
+            company = False
+            if self.env.company.id in prev:
+                company = self.env.company
+            else:
+                for c_id in prev:
+                    if c_id in self.env.companies.ids:
+                        company = self.env["res.company"].browse(c_id)
+                        break
+
+            self.company_id = company
             self.company_ids = False
 
     @api.depends("multi_company", "company_id", "company_ids")
+    @api.depends_context("allowed_company_ids")
     def _compute_query_company_ids(self):
         for rec in self:
             if rec.multi_company:
-                rec.query_company_ids = rec.company_ids or rec.company_id
+                if not rec.company_ids:
+                    rec.query_company_ids = self.env.companies
+                else:
+                    rec.query_company_ids = rec.company_ids & self.env.companies
             else:
-                rec.query_company_ids = rec.company_id
+                rec.query_company_ids = rec.company_id or self.env.company
 
     @api.model
     def get_filter_descriptions_from_context(self):
@@ -776,7 +793,6 @@ class MisReportInstance(models.Model):
             aep,
             period.date_from,
             period.date_to,
-            None,  # target_move now part of additional_move_line_filter
             period._get_additional_move_line_filter(),
             period._get_aml_model_name(),
         )
@@ -870,7 +886,6 @@ class MisReportInstance(models.Model):
                 expr,
                 period.date_from,
                 period.date_to,
-                None,  # target_move now part of additional_move_line_filter
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())

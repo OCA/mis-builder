@@ -161,19 +161,24 @@
                             <group name="filters">
                                 <field name="target_move" widget="radio" />
                                 <field
-                                    name="company_id"
+                                    name="multi_company"
                                     groups="base.group_multi_company"
                                 />
                                 <field
-                                    name="multi_company"
+                                    name="company_id"
                                     groups="base.group_multi_company"
+                                    attrs="{'required': [('multi_company', '=', False)], 'invisible': [('multi_company', '=', True)]}"
                                 />
                                 <field
                                     name="company_ids"
                                     groups="base.group_multi_company"
                                     widget="many2many_tags"
-                                    domain="[('id', 'child_of', company_id)]"
                                     attrs="{'invisible': [('multi_company', '=', False)]}"
+                                />
+                                <field
+                                    name="query_company_ids"
+                                    groups="base.group_multi_company"
+                                    widget="many2many_tags"
                                 />
                                 <field
                                     name="analytic_account_id"
