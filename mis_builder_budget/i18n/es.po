@@ -72,6 +72,11 @@ msgstr ""
 "Comparar con columna: comparar con otra columna.\n"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__allow_items_overlap
+msgid "Allow Items Overlap"
+msgstr ""
+
+#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__amount
 msgid "Amount"
 msgstr "Importe"
@@ -238,6 +243,10 @@ msgstr "Descripción"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract__display_name
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance__display_name
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__display_name
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi__display_name
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi_expression__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -294,6 +303,10 @@ msgstr "Desde"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract__id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance__id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi__id
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi_expression__id
 msgid "ID"
 msgstr "ID"
 
@@ -306,6 +319,11 @@ msgstr "ID"
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_unread
 msgid "If checked, new messages require your attention."
 msgstr "Si está marcado, los nuevos mensajes requieren su atención."
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__allow_items_overlap
+msgid "If checked, overlap between budget items is allowed"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
@@ -341,12 +359,21 @@ msgid "KPI Sequence"
 msgstr "KPI de Secuencia"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__name
+msgid "Label"
+msgstr ""
+
+#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract____last_update
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance____last_update
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period____last_update
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi____last_update
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi_expression____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
 
