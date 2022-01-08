@@ -292,6 +292,16 @@ msgid "Allowed Cmpcol"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
+msgid "Allowed companies"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
+msgid "Allowed company"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__amount
 msgid "Amount"
 msgstr "Hoeveelheid"
@@ -410,11 +420,8 @@ msgstr "Annuleer"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__multi_company
-msgid ""
-"Check if you wish to specify children companies to be searched for data."
+msgid "Check if you wish to specify several companies to be searched for data."
 msgstr ""
-"Controleer of u dochterbedrijven wilt selecteren waarvan de data moet worden "
-"meegenomen."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
@@ -466,19 +473,9 @@ msgid "Columns {} and {} are not comparable"
 msgstr "Kolommen {} en {} zijn niet vergelijkbaar"
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
-msgid "Companies"
-msgstr "Bedrijven"
-
-#. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__query_company_ids
 msgid "Companies for which data will be searched."
 msgstr "Bedrijven waarvoor de data wordt doorzocht."
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
-msgid "Company"
-msgstr "Bedrijf"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_cmpcol_to_id
@@ -686,6 +683,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__duration
 msgid "Duration"
 msgstr "Duur"
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__query_company_ids
+msgid "Effective companies"
+msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -1385,11 +1387,6 @@ msgid "Queries"
 msgstr "Query's"
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__query_company_ids
-msgid "Query Company"
-msgstr "Query Bedrijf"
-
-#. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
 #, fuzzy, python-format
 msgid "Query name ({}) must be valid python identifier"
@@ -1714,6 +1711,12 @@ msgid "Unexpected accumulation method %s for %s."
 msgstr "Onverwachte accumulatiemethode %s voor %s."
 
 #. module: mis_builder
+#: code:addons/mis_builder/models/mis_report.py:0
+#, python-format
+msgid "Unexpected value %s for target_move."
+msgstr ""
+
+#. module: mis_builder
 #: code:addons/mis_builder/models/prorata_read_group_mixin.py:0
 #, python-format
 msgid "Unsupported operator %s for searching on date"
@@ -1833,6 +1836,21 @@ msgstr "XXL"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "XXS"
+
+#~ msgid ""
+#~ "Check if you wish to specify children companies to be searched for data."
+#~ msgstr ""
+#~ "Controleer of u dochterbedrijven wilt selecteren waarvan de data moet "
+#~ "worden meegenomen."
+
+#~ msgid "Companies"
+#~ msgstr "Bedrijven"
+
+#~ msgid "Company"
+#~ msgstr "Bedrijf"
+
+#~ msgid "Query Company"
+#~ msgstr "Query Bedrijf"
 
 #~ msgid ""
 #~ "<b>AccountingNone</b>: a null value that behaves as 0 in arithmetic "

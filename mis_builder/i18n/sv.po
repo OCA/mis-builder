@@ -29,9 +29,11 @@ msgid ""
 "<b>\n"
 "                                                balp[('user_type_id', '=',\n"
 "                                                ref('account.\n"
-"                                                data_account_type_receivable').id)][]\n"
+"                                                data_account_type_receivable')."
+"id)][]\n"
 "                                            </b>\n"
-"                                            : variation of the balance of all receivable\n"
+"                                            : variation of the balance of "
+"all receivable\n"
 "                                            accounts over the period."
 msgstr ""
 
@@ -39,10 +41,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>\n"
-"                                                balp[][('tax_line_id.tag_ids', '=',\n"
-"                                                ref('l10n_be.tax_tag_56').id)]\n"
+"                                                balp[][('tax_line_id."
+"tag_ids', '=',\n"
+"                                                ref('l10n_be.tax_tag_56')."
+"id)]\n"
 "                                            </b>\n"
-"                                            : balance of move lines related to tax grid\n"
+"                                            : balance of move lines related "
+"to tax grid\n"
 "                                            56."
 msgstr ""
 
@@ -50,10 +55,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>\n"
-"                                                debp[55%][('journal_id.code', '=',\n"
+"                                                debp[55%][('journal_id."
+"code', '=',\n"
 "                                                'BNK1')]\n"
 "                                            </b>\n"
-"                                            : sum of all debits on accounts 55 and\n"
+"                                            : sum of all debits on accounts "
+"55 and\n"
 "                                            journal BNK1 during the period."
 msgstr ""
 
@@ -61,7 +68,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>AccountingNone</b>\n"
-"                                            : a null value that behaves as 0 in\n"
+"                                            : a null value that behaves as 0 "
+"in\n"
 "                                            arithmetic operations."
 msgstr ""
 
@@ -69,7 +77,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>bal, crd, deb, pbal, nbal</b>\n"
-"                                            : balance, debit, credit, positive balance,\n"
+"                                            : balance, debit, credit, "
+"positive balance,\n"
 "                                            negative balance."
 msgstr ""
 
@@ -77,15 +86,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>bal[70]</b>\n"
-"                                            : variation of the balance of account 70\n"
-"                                            over the period (it is the same as balp[70]."
+"                                            : variation of the balance of "
+"account 70\n"
+"                                            over the period (it is the same "
+"as balp[70]."
 msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>bale[1%]</b>\n"
-"                                            : balance of accounts starting with 1 at end\n"
+"                                            : balance of accounts starting "
+"with 1 at end\n"
 "                                            of period."
 msgstr ""
 
@@ -93,15 +105,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>bali[70,60]</b>\n"
-"                                            : initial balance of accounts 70 and 60."
+"                                            : initial balance of accounts 70 "
+"and 60."
 msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>balu[]</b>\n"
-"                                            : (u for unallocated) is a special\n"
-"                                            expression that shows the unallocated\n"
+"                                            : (u for unallocated) is a "
+"special\n"
+"                                            expression that shows the "
+"unallocated\n"
 "                                            profit/loss of previous\n"
 "                                           fiscal years."
 msgstr ""
@@ -110,7 +125,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>crdp[40%]</b>\n"
-"                                            : sum of all credits on accounts starting\n"
+"                                            : sum of all credits on accounts "
+"starting\n"
 "                                            with 40 during the period."
 msgstr ""
 
@@ -118,7 +134,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>date_from, date_to</b>\n"
-"                                            : beginning and end date of the period."
+"                                            : beginning and end date of the "
+"period."
 msgstr ""
 
 #. module: mis_builder
@@ -132,7 +149,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>p, i, e</b>\n"
-"                                            : respectively variation over the period,\n"
+"                                            : respectively variation over "
+"the period,\n"
 "                                            initial balance, ending balance"
 msgstr ""
 
@@ -140,7 +158,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>pbale[55%]</b>\n"
-"                                            : sum of all ending balances of accounts\n"
+"                                            : sum of all ending balances of "
+"accounts\n"
 "                                            starting with 55 whose\n"
 "                                          ending balance is positive."
 msgstr ""
@@ -149,22 +168,23 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "<b>sum, min, max, len, avg</b>\n"
-"                                            : behave as expected, very similar to the\n"
+"                                            : behave as expected, very "
+"similar to the\n"
 "                                            python builtins."
 msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid ""
-"A 'move line like' model, ie having at least debit, credit, date, account_id"
-" and company_id fields."
+"A 'move line like' model, ie having at least debit, credit, date, account_id "
+"and company_id fields."
 msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
 msgid ""
-"A 'move line like' model, ie having at least debit, credit, date, account_id"
-" and company_id fields. This model is the data source for column Actuals."
+"A 'move line like' model, ie having at least debit, credit, date, account_id "
+"and company_id fields. This model is the data source for column Actuals."
 msgstr ""
 
 #. module: mis_builder
@@ -187,9 +207,8 @@ msgstr ""
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid ""
-"Actual (alternative) models used in columns must have the same account model"
-" in the Account field and must be the same defined in the report template: "
-"%s"
+"Actual (alternative) models used in columns must have the same account model "
+"in the Account field and must be the same defined in the report template: %s"
 msgstr ""
 
 #. module: mis_builder
@@ -206,7 +225,8 @@ msgstr ""
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source
 msgid ""
 "Actuals: current data, from accounting and other queries.\n"
-"Actuals (alternative): current data from an alternative source (eg a database view providing look-alike account move lines).\n"
+"Actuals (alternative): current data from an alternative source (eg a "
+"database view providing look-alike account move lines).\n"
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
 msgstr ""
@@ -256,6 +276,16 @@ msgid "Allowed Cmpcol"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
+msgid "Allowed companies"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
+msgid "Allowed company"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__amount
 msgid "Amount"
 msgstr ""
@@ -263,8 +293,8 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_kpi__style_expression
 msgid ""
-"An expression that returns a style depending on the KPI value. Such style is"
-" applied on top of the row style."
+"An expression that returns a style depending on the KPI value. Such style is "
+"applied on top of the row style."
 msgstr ""
 
 #. module: mis_builder
@@ -327,7 +357,6 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
-#: code:addons/mis_builder/models/mis_report.py:0
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_kpi__accumulation_method__avg
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_query__aggregate__avg
 #, python-format
@@ -373,8 +402,7 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__multi_company
-msgid ""
-"Check if you wish to specify children companies to be searched for data."
+msgid "Check if you wish to specify several companies to be searched for data."
 msgstr ""
 
 #. module: mis_builder
@@ -427,19 +455,9 @@ msgid "Columns {} and {} are not comparable"
 msgstr ""
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
-msgid "Companies"
-msgstr ""
-
-#. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__query_company_ids
 msgid "Companies for which data will be searched."
 msgstr ""
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
-msgid "Company"
-msgstr "Bolag"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_cmpcol_to_id
@@ -558,8 +576,12 @@ msgstr "Beskrivning"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_kpi__accumulation_method
 msgid ""
-"Determines how values of this kpi spanning over a time period are transformed to match the reporting period. Sum: values of shorter period are added, values of longest or partially overlapping periods are adjusted pro-rata temporis.\n"
-"Average: values of included period are averaged with a pro-rata temporis weight."
+"Determines how values of this kpi spanning over a time period are "
+"transformed to match the reporting period. Sum: values of shorter period are "
+"added, values of longest or partially overlapping periods are adjusted pro-"
+"rata temporis.\n"
+"Average: values of included period are averaged with a pro-rata temporis "
+"weight."
 msgstr ""
 
 #. module: mis_builder
@@ -635,6 +657,11 @@ msgid "Duration"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__query_company_ids
+msgid "Effective companies"
+msgstr ""
+
+#. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "Enter expression here, for example balp[70%]. See also help tab."
 msgstr ""
@@ -676,7 +703,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "Expressions can involve other KPI, sub KPI and\n"
-"                                        query results by name (eg kpi1 + kpi2,\n"
+"                                        query results by name (eg kpi1 + "
+"kpi2,\n"
 "                                        kpi2.subkpi1, query1.field1)."
 msgstr ""
 
@@ -895,7 +923,8 @@ msgid ""
 "This can be fixed by either:\n"
 "\t- Changing the KPI value to a tuple of length {}\n"
 "or\n"
-"\t- Changing the KPI to `multi` mode and giving an explicit value for each sub-KPI."
+"\t- Changing the KPI to `multi` mode and giving an explicit value for each "
+"sub-KPI."
 msgstr ""
 
 #. module: mis_builder
@@ -1201,7 +1230,6 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
-#: code:addons/mis_builder/models/mis_report.py:0
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_kpi__accumulation_method__none
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_kpi__compare_method__none
 #, python-format
@@ -1247,7 +1275,6 @@ msgid "Parent column"
 msgstr ""
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report.py:0
 #: code:addons/mis_builder/models/mis_report.py:0
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_kpi__compare_method__pct
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_kpi__type__pct
@@ -1312,11 +1339,6 @@ msgstr "Skriv ut"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__query_ids
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
 msgid "Queries"
-msgstr ""
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__query_company_ids
-msgid "Query Company"
 msgstr ""
 
 #. module: mis_builder
@@ -1532,7 +1554,6 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
-#: code:addons/mis_builder/models/mis_report.py:0
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_kpi__accumulation_method__sum
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_query__aggregate__sum
 #, python-format
@@ -1588,7 +1609,8 @@ msgstr ""
 msgid ""
 "The\n"
 "                                            <b>account selector</b>\n"
-"                                            is a like expression on the account code (eg\n"
+"                                            is a like expression on the "
+"account code (eg\n"
 "                                            70%, etc)."
 msgstr ""
 
@@ -1597,16 +1619,19 @@ msgstr ""
 msgid ""
 "The\n"
 "                                            <b>journal items domain</b>\n"
-"                                            is an Odoo domain filter on journal items."
+"                                            is an Odoo domain filter on "
+"journal items."
 msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "The following special elements are recognized in\n"
-"                                        the expressions to compute accounting data:\n"
+"                                        the expressions to compute "
+"accounting data:\n"
 "                                        <code>\n"
-"                                            {bal|crd|deb|pbal|nbal}{pieu}[account\n"
+"                                            {bal|crd|deb|pbal|nbal}{pieu}"
+"[account\n"
 "                                            selector][journal items domain]\n"
 "                                        </code>\n"
 "                                        ."
@@ -1628,6 +1653,12 @@ msgstr ""
 #: code:addons/mis_builder/models/mis_kpi_data.py:0
 #, python-format
 msgid "Unexpected accumulation method %s for %s."
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report.py:0
+#, python-format
+msgid "Unexpected value %s for target_move."
 msgstr ""
 
 #. module: mis_builder
@@ -1750,3 +1781,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr ""
+
+#~ msgid "Company"
+#~ msgstr "Bolag"

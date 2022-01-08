@@ -274,6 +274,16 @@ msgid "Allowed Cmpcol"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
+msgid "Allowed companies"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
+msgid "Allowed company"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__amount
 msgid "Amount"
 msgstr ""
@@ -390,8 +400,7 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__multi_company
-msgid ""
-"Check if you wish to specify children companies to be searched for data."
+msgid "Check if you wish to specify several companies to be searched for data."
 msgstr ""
 
 #. module: mis_builder
@@ -444,18 +453,8 @@ msgid "Columns {} and {} are not comparable"
 msgstr ""
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
-msgid "Companies"
-msgstr ""
-
-#. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__query_company_ids
 msgid "Companies for which data will be searched."
-msgstr ""
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
-msgid "Company"
 msgstr ""
 
 #. module: mis_builder
@@ -653,6 +652,11 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__duration
 msgid "Duration"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__query_company_ids
+msgid "Effective companies"
 msgstr ""
 
 #. module: mis_builder
@@ -1336,11 +1340,6 @@ msgid "Queries"
 msgstr ""
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__query_company_ids
-msgid "Query Company"
-msgstr ""
-
-#. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
 #, python-format
 msgid "Query name ({}) must be valid python identifier"
@@ -1652,6 +1651,12 @@ msgstr ""
 #: code:addons/mis_builder/models/mis_kpi_data.py:0
 #, python-format
 msgid "Unexpected accumulation method %s for %s."
+msgstr ""
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report.py:0
+#, python-format
+msgid "Unexpected value %s for target_move."
 msgstr ""
 
 #. module: mis_builder
