@@ -1,7 +1,7 @@
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/14.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
-[![Build Status](https://travis-ci.com/OCA/mis-builder.svg?branch=14.0)](https://travis-ci.com/OCA/mis-builder)
-[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/14.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
-[![Translation Status](https://translation.odoo-community.org/widgets/mis-builder-14-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/mis-builder-14-0/?utm_source=widget)
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/15.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
+[![Build Status](https://travis-ci.com/OCA/mis-builder.svg?branch=15.0)](https://travis-ci.com/OCA/mis-builder)
+[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/15.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
+[![Translation Status](https://translation.odoo-community.org/widgets/mis-builder-15-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/mis-builder-15-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
@@ -10,10 +10,10 @@
 Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
 
-**This is the 14.0 branch. Please note the development of new features occurs mainly on
-the 10.0 branch, to be forward-ported to 14.0. Please submit pull requests to the 10.0
-branch in priority, unless they are 14.0 specific bugs, or they rely on
-Odoo features that are not present in 10.0.**
+**This is the 15.0 branch. Please note the development of new features occurs mainly on
+the 13.0 branch, to be forward-ported to 14.0 and 15.0. Please submit pull requests to
+the 13.0 branch in priority, unless they are 14.0 specific bugs, or they rely on Odoo
+features that are not present in 13.0.**
 
 This project implements a class of reports where KPI (Key Performance Indicators)
 are displayed in rows, and time periods in columns. It focuses on very fast reporting
@@ -48,13 +48,7 @@ Here are some presentations:
 
 [//]: # (addons)
 
-Available addons
-----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[mis_builder](mis_builder/) | 14.0.4.0.0 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 14.0.4.0.0 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 14.0.3.1.3 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Demo addon for MIS Builder
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
 
 [//]: # (end addons)
 
