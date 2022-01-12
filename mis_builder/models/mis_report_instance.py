@@ -205,17 +205,15 @@ class MisReportInstancePeriod(models.Model):
         string="Date Range Type",
         domain=[("allow_overlap", "=", False)],
     )
-    offset = fields.Integer(
-        string="Offset", help="Offset from current period", default=-1
-    )
-    duration = fields.Integer(string="Duration", help="Number of periods", default=1)
+    offset = fields.Integer(help="Offset from current period", default=-1)
+    duration = fields.Integer(help="Number of periods", default=1)
     date_from = fields.Date(compute="_compute_dates", string="From (computed)")
     date_to = fields.Date(compute="_compute_dates", string="To (computed)")
     manual_date_from = fields.Date(string="From")
     manual_date_to = fields.Date(string="To")
     date_range_id = fields.Many2one(comodel_name="date.range", string="Date Range")
-    valid = fields.Boolean(compute="_compute_dates", type="boolean", string="Valid")
-    sequence = fields.Integer(string="Sequence", default=100)
+    valid = fields.Boolean(compute="_compute_dates", type="boolean")
+    sequence = fields.Integer(default=100)
     report_instance_id = fields.Many2one(
         comodel_name="mis.report.instance",
         string="Report Instance",
@@ -508,12 +506,12 @@ class MisReportInstance(models.Model):
     _name = "mis.report.instance"
     _description = "MIS Report Instance"
 
-    name = fields.Char(required=True, string="Name", translate=True)
+    name = fields.Char(required=True, translate=True)
     description = fields.Char(related="report_id.description", readonly=True)
     date = fields.Date(
         string="Base date", help="Report base date " "(leave empty to use current date)"
     )
-    pivot_date = fields.Date(compute="_compute_pivot_date", string="Pivot date")
+    pivot_date = fields.Date(compute="_compute_pivot_date")
     report_id = fields.Many2one("mis.report", required=True, string="Report")
     period_ids = fields.One2many(
         comodel_name="mis.report.instance.period",
@@ -757,7 +755,7 @@ class MisReportInstance(models.Model):
         context = dict(self._context_with_filters(), landscape=self.landscape_pdf)
         return (
             self.env.ref("mis_builder.qweb_pdf_export")
-            .with_context(context)
+            .with_context(**context)
             .report_action(self, data=dict(dummy=True))  # required to propagate context
         )
 
@@ -766,7 +764,7 @@ class MisReportInstance(models.Model):
         context = dict(self._context_with_filters())
         return (
             self.env.ref("mis_builder.xls_export")
-            .with_context(context)
+            .with_context(**context)
             .report_action(self, data=dict(dummy=True))  # required to propagate context
         )
 
@@ -859,7 +857,7 @@ class MisReportInstance(models.Model):
             elif period.date_from and period.date_to:
                 date_from = self._format_date(period.date_from)
                 date_to = self._format_date(period.date_to)
-                description = _("from %s to %s") % (date_from, date_to)
+                description = _("from %(df)s to %(dt)s", df=date_from, dt=date_to)
             self._add_column(aep, kpi_matrix, period, period.name, description)
         kpi_matrix.compute_comparisons()
         kpi_matrix.compute_sums()

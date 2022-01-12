@@ -1,6 +1,7 @@
 # Copyright 2014 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import logging
 import re
 from collections import defaultdict
 
@@ -12,9 +13,12 @@ from odoo.tools.safe_eval import datetime, dateutil, safe_eval, time
 
 from .accounting_none import AccountingNone
 
+_logger = logging.getLogger(__name__)
+
 try:
     import itertools.izip as zip
 except ImportError:
+    _logger.debug("Itertools not imported", exc_info=1)
     pass  # python 3
 
 

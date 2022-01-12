@@ -12,13 +12,13 @@ from .mis_kpi_data import ACC_SUM
 from .mis_safe_eval import DataError, mis_safe_eval
 from .simple_array import SimpleArray
 
+_logger = logging.getLogger(__name__)
+
 try:
     import itertools.izip as zip
 except ImportError:
+    _logger.debug("Itertools not imported", exc_info=1)
     pass  # python 3
-
-
-_logger = logging.getLogger(__name__)
 
 
 class KpiMatrixRow(object):

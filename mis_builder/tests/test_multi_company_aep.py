@@ -21,8 +21,12 @@ class TestMultiCompanyAEP(common.TransactionCase):
         self.currency_model = self.env["res.currency"]
         self.curr_year = datetime.date.today().year
         self.prev_year = self.curr_year - 1
-        self.usd = self.currency_model.search([("name", "=", "USD")])
-        self.eur = self.currency_model.search([("name", "=", "EUR")])
+        self.usd = self.currency_model.with_context(active_test=False).search(
+            [("name", "=", "USD")]
+        )
+        self.eur = self.currency_model.with_context(active_test=False).search(
+            [("name", "=", "EUR")]
+        )
         # create company A and B
         self.company_eur = self.res_company.create(
             {"name": "CYEUR", "currency_id": self.eur.id}

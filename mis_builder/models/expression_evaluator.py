@@ -1,11 +1,16 @@
 # Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import logging
+
 from .mis_safe_eval import NameDataError, mis_safe_eval
+
+_logger = logging.getLogger(__name__)
 
 try:
     import itertools.izip as zip
 except ImportError:
+    _logger.debug("Itertools not imported", exc_info=1)
     pass  # python 3
 
 
