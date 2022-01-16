@@ -1,5 +1,6 @@
 [![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/14.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
-[![Build Status](https://travis-ci.com/OCA/mis-builder.svg?branch=14.0)](https://travis-ci.com/OCA/mis-builder)
+[![Pre-commit Status](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml/badge.svg?branch=14.0)](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml?query=branch%3A14.0)
+[![Build Status](https://github.com/OCA/mis-builder/actions/workflows/test.yml/badge.svg?branch=14.0)](https://github.com/OCA/mis-builder/actions/workflows/test.yml?query=branch%3A14.0)
 [![codecov](https://codecov.io/gh/OCA/mis-builder/branch/14.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
 [![Translation Status](https://translation.odoo-community.org/widgets/mis-builder-14-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/mis-builder-14-0/?utm_source=widget)
 
