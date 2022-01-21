@@ -9,6 +9,19 @@ on:
       - "14.0*"
 
 jobs:
+  unreleased-deps:
+    runs-on: ubuntu-latest
+    name: Detect unreleased dependencies
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          if [ -f test-requirements.txt ] ; then
+            grep "://" test-requirements.txt
+            if [ $? -eq 0 ] ; then
+              echo "Unreleased dependencies found in test-requirement.txt."
+              exit 1
+            fi
+          fi
   test:
     runs-on: ubuntu-latest
     container: ${{ matrix.container }}
