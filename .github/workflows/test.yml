@@ -16,11 +16,12 @@ jobs:
       - uses: actions/checkout@v2
       - run: |
           if [ -f test-requirements.txt ] ; then
-            grep "://" test-requirements.txt
-            if [ $? -eq 0 ] ; then
-              echo "Unreleased dependencies found in test-requirement.txt."
-              exit 1
-            fi
+              # reject non-comment lines that contain a / (i.e. URLs, relative paths)
+              grep "^[^#].*/" test-requirements.txt
+              if [ $? -eq 0 ] ; then
+                  echo "Unreleased dependencies found in test-requirements.txt."
+                  exit 1
+              fi
           fi
   test:
     runs-on: ubuntu-latest
