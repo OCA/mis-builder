@@ -1,0 +1,4 @@
+httpx
+# see https://github.com/oca/mis-builder/issues/1
+git+https://github.com/oca/server-auth@14.0#subdirectory=setup/auth_jwt
+./setup/brol
