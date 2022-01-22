@@ -1,14 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <template id="assets_backend" name="mis_builder" inherit_id="web.assets_backend">
-        <xpath expr="." position="inside">
-            <link rel="stylesheet" href="/mis_builder/static/src/css/custom.css" />
-            <script
-                type="text/javascript"
-                src="/mis_builder/static/src/js/mis_report_widget.js"
-            />
-        </xpath>
-    </template>
     <record model="ir.ui.view" id="mis_report_instance_result_view_form">
         <field name="name">mis.report.instance.result.view.form</field>
         <field name="model">mis.report.instance</field>

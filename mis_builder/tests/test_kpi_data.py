@@ -2,13 +2,13 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import models
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 from ..models.mis_kpi_data import ACC_AVG, ACC_SUM
 from .common import setup_test_model, teardown_test_model
 
 
-class TestKpiData(SavepointCase):
+class TestKpiData(TransactionCase):
     class MisKpiDataTestItem(models.Model):
 
         _name = "mis.kpi.data.test.item"

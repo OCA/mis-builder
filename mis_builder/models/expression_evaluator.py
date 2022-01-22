@@ -4,8 +4,6 @@
 from .mis_safe_eval import NameDataError, mis_safe_eval
 
 
-
-
 class ExpressionEvaluator(object):
     def __init__(
         self,

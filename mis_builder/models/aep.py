@@ -12,9 +12,6 @@ from odoo.tools.safe_eval import datetime, dateutil, safe_eval, time
 
 from .accounting_none import AccountingNone
 
-
-
-
 _DOMAIN_START_RE = re.compile(r"\(|(['\"])[!&|]\1")
 
 

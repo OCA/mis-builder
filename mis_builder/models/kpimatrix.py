@@ -12,9 +12,6 @@ from .mis_kpi_data import ACC_SUM
 from .mis_safe_eval import DataError, mis_safe_eval
 from .simple_array import SimpleArray
 
-
-
-
 _logger = logging.getLogger(__name__)
 
 
