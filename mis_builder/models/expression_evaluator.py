@@ -3,10 +3,7 @@
 
 from .mis_safe_eval import NameDataError, mis_safe_eval
 
-try:
-    import itertools.izip as zip
-except ImportError:
-    pass  # python 3
+
 
 
 class ExpressionEvaluator(object):

@@ -12,10 +12,7 @@ from odoo.tools.safe_eval import datetime, dateutil, safe_eval, time
 
 from .accounting_none import AccountingNone
 
-try:
-    import itertools.izip as zip
-except ImportError:
-    pass  # python 3
+
 
 
 _DOMAIN_START_RE = re.compile(r"\(|(['\"])[!&|]\1")

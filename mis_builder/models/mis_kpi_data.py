@@ -101,8 +101,11 @@ class MisKpiData(models.AbstractModel):
                 res_avg[item.kpi_expression_id].append((i_days, item.amount))
             else:
                 raise UserError(
-                    _("Unexpected accumulation method %s for %s.")
-                    % (item.kpi_expression_id.kpi_id.accumulation_method, item.name)
+                    _(
+                        "Unexpected accumulation method %(method)s for %(name)s.",
+                        method=item.kpi_expression_id.kpi_id.accumulation_method,
+                        name=item.name,
+                    )
                 )
         # compute weighted average for ACC_AVG
         for kpi_expression, amounts in res_avg.items():

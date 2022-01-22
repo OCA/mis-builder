@@ -12,10 +12,7 @@ from .mis_kpi_data import ACC_SUM
 from .mis_safe_eval import DataError, mis_safe_eval
 from .simple_array import SimpleArray
 
-try:
-    import itertools.izip as zip
-except ImportError:
-    pass  # python 3
+
 
 
 _logger = logging.getLogger(__name__)
