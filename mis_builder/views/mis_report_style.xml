@@ -4,7 +4,7 @@
         <field name="name">mis.report.style.view.tree</field>
         <field name="model">mis.report.style</field>
         <field name="arch" type="xml">
-            <tree string="MIS Report Styles">
+            <tree>
                 <field name="name" />
             </tree>
         </field>

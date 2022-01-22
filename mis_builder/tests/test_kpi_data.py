@@ -74,7 +74,7 @@ class TestKpiData(SavepointCase):
     @classmethod
     def tearDownClass(cls):
         teardown_test_model(cls.env, cls.MisKpiDataTestItem)
-        super(TestKpiData, cls).tearDownClass()
+        return super(TestKpiData, cls).tearDownClass()
 
     def test_kpi_data_name(self):
         self.assertEqual(self.kd11.name, "k1: 2017-05-01 - 2017-05-10")
