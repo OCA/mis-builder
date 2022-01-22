@@ -112,9 +112,9 @@ class MisReportKpiStyle(models.Model):
     indent_level = fields.Integer()
     # number format
     prefix_inherit = fields.Boolean(default=True)
-    prefix = fields.Char(string="Prefix")
+    prefix = fields.Char()
     suffix_inherit = fields.Boolean(default=True)
-    suffix = fields.Char(string="Suffix")
+    suffix = fields.Char()
     dp_inherit = fields.Boolean(default=True)
     dp = fields.Integer(string="Rounding", default=0)
     divider_inherit = fields.Boolean(default=True)
