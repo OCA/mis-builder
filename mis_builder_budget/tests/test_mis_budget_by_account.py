@@ -1,7 +1,7 @@
 # Copyright 2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 from odoo.addons.mis_builder.models.expression_evaluator import ExpressionEvaluator
 from odoo.addons.mis_builder.tests.common import assert_matrix
@@ -9,7 +9,7 @@ from odoo.addons.mis_builder.tests.common import assert_matrix
 from ..models.mis_report_instance_period import SRC_MIS_BUDGET_BY_ACCOUNT
 
 
-class TestMisBudgetByAccount(SavepointCase):
+class TestMisBudgetByAccount(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -64,7 +64,7 @@ class TestMisBudgetByAccount(SavepointCase):
         )
 
     def test_basic(self):
-        """ Sum all budget items in period """
+        """Sum all budget items in period"""
         aep = self.report._prepare_aep(self.env.ref("base.main_company"))
         ee = ExpressionEvaluator(
             aep=aep,
