@@ -11,7 +11,6 @@ from ..models.mis_report_instance_period import SRC_MIS_BUDGET
 
 
 class TestMisBudget(TransactionCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

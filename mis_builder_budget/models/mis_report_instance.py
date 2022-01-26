@@ -31,9 +31,7 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
                 vals.append(self.kpi_data.get(expression, AccountingNone))
                 drilldown_args.append({"expr_id": expression.id})
             return vals, drilldown_args, False
-        return super().eval_expressions(
-            expressions, locals_dict
-        )
+        return super().eval_expressions(expressions, locals_dict)
 
 
 class MisReportInstance(models.Model):
@@ -80,9 +78,7 @@ class MisReportInstance(models.Model):
                 aep, kpi_matrix, period, label, description
             )
         else:
-            return super()._add_column(
-                aep, kpi_matrix, period, label, description
-            )
+            return super()._add_column(aep, kpi_matrix, period, label, description)
 
     def drilldown(self, arg):
         self.ensure_one()

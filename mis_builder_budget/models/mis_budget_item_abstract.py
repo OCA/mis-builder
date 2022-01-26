@@ -79,14 +79,21 @@ class MisBudgetItemAbstract(models.AbstractModel):
             # within budget dates
             if rec.date_from < rec.budget_date_from or rec.date_to > rec.budget_date_to:
                 raise ValidationError(
-                    _("%s is not within budget %s date range.")
-                    % (rec.display_name, rec.budget_id.display_name)
+                    _(
+                        "%(rec_name)s is not within budget %(budget_name)s date range.",
+                        rec_name=rec.display_name,
+                        budget_name=rec.budget_id.display_name,
+                    )
                 )
             # overlaps
             domain = rec._prepare_overlap_domain()
             res = self.search(domain, limit=1)
             if res:
                 raise ValidationError(
-                    _("%s overlaps %s in budget %s")
-                    % (rec.display_name, res.display_name, rec.budget_id.display_name)
+                    _(
+                        "%(rec_name)s overlaps %(res_name)s in budget %(budget_name)s",
+                        rec_name=rec.display_name,
+                        res_name=res.display_name,
+                        budget_name=rec.budget_id.display_name,
+                    )
                 )
