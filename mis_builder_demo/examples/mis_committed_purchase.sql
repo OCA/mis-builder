@@ -1,3 +1,4 @@
+-- pylint: skip-file
 CREATE OR REPLACE VIEW mis_committed_purchase AS (
     SELECT ROW_NUMBER() OVER() AS id, mis_committed_purchase.* FROM (
 
