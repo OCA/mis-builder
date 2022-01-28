@@ -33,7 +33,7 @@ class MisBudgetAbstract(models.AbstractModel):
             default = {}
         if "name" not in default:
             default["name"] = _("%s (copy)") % self.name
-        return super(MisBudgetAbstract, self).copy(default=default)
+        return super().copy(default=default)
 
     @api.onchange("date_range_id")
     def _onchange_date_range(self):

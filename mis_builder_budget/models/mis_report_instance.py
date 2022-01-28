@@ -12,7 +12,7 @@ from .mis_report_instance_period import SRC_MIS_BUDGET, SRC_MIS_BUDGET_BY_ACCOUN
 
 class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
     def __init__(self, date_from, date_to, kpi_data, additional_move_line_filter):
-        super(MisBudgetAwareExpressionEvaluator, self).__init__(
+        super().__init__(
             aep=None,
             date_from=date_from,
             date_to=date_to,
@@ -31,9 +31,7 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
                 vals.append(self.kpi_data.get(expression, AccountingNone))
                 drilldown_args.append({"expr_id": expression.id})
             return vals, drilldown_args, False
-        return super(MisBudgetAwareExpressionEvaluator, self).eval_expressions(
-            expressions, locals_dict
-        )
+        return super().eval_expressions(expressions, locals_dict)
 
 
 class MisReportInstance(models.Model):
@@ -80,9 +78,7 @@ class MisReportInstance(models.Model):
                 aep, kpi_matrix, period, label, description
             )
         else:
-            return super(MisReportInstance, self)._add_column(
-                aep, kpi_matrix, period, label, description
-            )
+            return super()._add_column(aep, kpi_matrix, period, label, description)
 
     def drilldown(self, arg):
         self.ensure_one()
@@ -109,4 +105,4 @@ class MisReportInstance(models.Model):
                     "view_mode": "list",
                     "target": "current",
                 }
-        return super(MisReportInstance, self).drilldown(arg)
+        return super().drilldown(arg)

@@ -21,6 +21,4 @@ class MisReportKpiExpression(models.Model):
                 args += [("kpi_id.report_id", "=", report_id)]
                 if "." in name:
                     args += [("subkpi_id.report_id", "=", report_id)]
-        return super(MisReportKpiExpression, self).name_search(
-            name, args, operator, limit
-        )
+        return super().name_search(name, args, operator, limit)

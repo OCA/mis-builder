@@ -70,7 +70,7 @@ class MisBudgetByAccountItem(models.Model):
             # overlapping budget items is only possible for budget by account items
             # and kpi budget items.
             return [("id", "=", 0)]
-        domain = super(MisBudgetByAccountItem, self)._prepare_overlap_domain()
+        domain = super()._prepare_overlap_domain()
         domain.extend([("account_id", "=", self.account_id.id)])
         return domain
 
@@ -84,7 +84,7 @@ class MisBudgetByAccountItem(models.Model):
         "account_id",
     )
     def _check_dates(self):
-        super(MisBudgetByAccountItem, self)._check_dates()
+        super()._check_dates()
 
     def _inverse_balance(self):
         for rec in self:
