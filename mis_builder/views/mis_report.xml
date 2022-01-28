@@ -4,7 +4,7 @@
         <field name="name">mis.report.view.tree</field>
         <field name="model">mis.report</field>
         <field name="arch" type="xml">
-            <tree string="MIS Reports">
+            <tree>
                 <field name="name" />
                 <field name="description" />
             </tree>
@@ -30,7 +30,7 @@
                                 colspan="2"
                                 context="{'default_report_id': id}"
                             >
-                                <tree string="KPI's">
+                                <tree>
                                     <field name="sequence" widget="handle" />
                                     <field name="description" />
                                     <field name="name" />
@@ -54,7 +54,7 @@
                                 colspan="2"
                                 context="{'default_report_id': id}"
                             >
-                                <tree string="Queries" editable="bottom">
+                                <tree editable="bottom">
                                     <field name="name" />
                                     <field name="model_id" />
                                     <field
@@ -74,7 +74,7 @@
                         </page>
                         <page string="Sub KPI's">
                             <field name="subkpi_ids" nolabel="1" colspan="2">
-                                <tree string="Sub KPI's" editable="bottom">
+                                <tree editable="bottom">
                                     <field name="sequence" widget="handle" />
                                     <field name="description" />
                                     <field name="name" />
@@ -88,7 +88,7 @@
                                 colspan="2"
                                 context="{'default_report_id': id}"
                             >
-                                <tree string="Sub Reports" editable="bottom">
+                                <tree editable="bottom">
                                     <field name="name" />
                                     <field
                                         name="subreport_id"

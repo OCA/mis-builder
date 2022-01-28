@@ -11,7 +11,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
     _name = "add.mis.report.instance.dashboard.wizard"
     _description = "MIS Report Add to Dashboard Wizard"
 
-    name = fields.Char("Name", required=True)
+    name = fields.Char(required=True)
 
     dashboard_id = fields.Many2one(
         "ir.actions.act_window",
