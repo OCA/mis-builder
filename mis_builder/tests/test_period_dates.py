@@ -17,7 +17,7 @@ from .common import assert_matrix
 
 class TestPeriodDates(common.TransactionCase):
     def setUp(self):
-        super(TestPeriodDates, self).setUp()
+        super().setUp()
         self.report_obj = self.env["mis.report"]
         self.instance_obj = self.env["mis.report.instance"]
         self.period_obj = self.env["mis.report.instance.period"]
