@@ -12,7 +12,7 @@ from ..models.mis_report_instance_period import SRC_MIS_BUDGET_BY_ACCOUNT
 class TestMisBudgetByAccount(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestMisBudgetByAccount, cls).setUpClass()
+        super().setUpClass()
         # create account
         account = cls.env["account.account"].create(
             dict(
