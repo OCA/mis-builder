@@ -13,7 +13,7 @@ from odoo.addons.mis_builder.models.mis_report_subreport import (
 class TestMisSubreport(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(TestMisSubreport, cls).setUpClass()
+        super().setUpClass()
         # create report
         cls.subreport = cls.env["mis.report"].create(dict(name="test subreport"))
         cls.subreport_kpi1 = cls.env["mis.report.kpi"].create(
