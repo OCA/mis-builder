@@ -31,10 +31,10 @@ class MisReportInstancePeriod(models.Model):
     def _get_aml_model_name(self):
         if self.source == SRC_MIS_BUDGET_BY_ACCOUNT:
             return "mis.budget.by.account.item"
-        return super(MisReportInstancePeriod, self)._get_aml_model_name()
+        return super()._get_aml_model_name()
 
     def _get_additional_move_line_filter(self):
-        domain = super(MisReportInstancePeriod, self)._get_additional_move_line_filter()
+        domain = super()._get_additional_move_line_filter()
         if self.source == SRC_MIS_BUDGET_BY_ACCOUNT:
             domain.extend([("budget_id", "=", self.source_mis_budget_by_account_id.id)])
         return domain
