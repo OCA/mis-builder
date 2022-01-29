@@ -12,7 +12,7 @@ from ..models.mis_report_instance_period import SRC_MIS_BUDGET
 
 class TestMisBudget(TransactionCase):
     def setUp(self):
-        super(TestMisBudget, self).setUp()
+        super().setUp()
         # create report
         self.report = self.env["mis.report"].create(dict(name="test report"))
         self.kpi1 = self.env["mis.report.kpi"].create(
