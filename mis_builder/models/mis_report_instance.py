@@ -666,7 +666,7 @@ class MisReportInstance(models.Model):
         self.ensure_one()
         default = dict(default or {})
         default["name"] = _("%s (copy)") % self.name
-        return super(MisReportInstance, self).copy(default)
+        return super().copy(default)
 
     def _format_date(self, date):
         # format date following user language

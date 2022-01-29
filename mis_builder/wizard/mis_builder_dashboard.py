@@ -24,7 +24,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
     def default_get(self, fields_list):
         res = {}
         if self.env.context.get("active_id", False):
-            res = super(AddMisReportInstanceDashboard, self).default_get(fields_list)
+            res = super().default_get(fields_list)
             # get report instance name
             res["name"] = (
                 self.env["mis.report.instance"]

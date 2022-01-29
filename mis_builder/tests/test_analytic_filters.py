@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestAnalyticFilters(TransactionCase):
     def setUp(self):
-        super(TestAnalyticFilters, self).setUp()
+        super().setUp()
         self.aag = self.env["account.analytic.group"].search([], limit=1)
 
     def test_context_with_filters(self):

@@ -524,7 +524,7 @@ class MisReport(models.Model):
         self.ensure_one()
         default = dict(default or [])
         default["name"] = _("%s (copy)") % self.name
-        new = super(MisReport, self).copy(default)
+        new = super().copy(default)
         # after a copy, we have new subkpis, but the expressions
         # subkpi_id fields still point to the original one, so
         # we patch them after copying
