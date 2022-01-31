@@ -645,11 +645,11 @@ class MisReportInstance(models.Model):
     def save_report(self):
         self.ensure_one()
         self.write({"temporary": False})
-        action = self.env.ref("mis_builder.mis_report_instance_view_action")
-        res = action.read()[0]
+        xmlid = "mis_builder.mis_report_instance_view_action"
+        action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
         view = self.env.ref("mis_builder.mis_report_instance_view_form")
-        res.update({"views": [(view.id, "form")], "res_id": self.id})
-        return res
+        action.update({"views": [(view.id, "form")], "res_id": self.id})
+        return action
 
     @api.model
     def _vacuum_report(self, hours=24):
