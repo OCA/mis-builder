@@ -514,10 +514,10 @@ class MisReport(models.Model):
                 kpi.expressions_ids = expressions
 
     def get_wizard_report_action(self):
-        action = self.env.ref("mis_builder.mis_report_instance_view_action")
-        res = action.read()[0]
+        xmlid = "mis_builder.mis_report_instance_view_action"
+        action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
         view = self.env.ref("mis_builder.wizard_mis_report_instance_view_form")
-        res.update(
+        action.update(
             {
                 "view_id": view.id,
                 "views": [(view.id, "form")],
@@ -529,7 +529,7 @@ class MisReport(models.Model):
                 },
             }
         )
-        return res
+        return action
 
     def copy(self, default=None):
         self.ensure_one()
