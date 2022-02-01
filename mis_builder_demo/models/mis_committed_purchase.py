@@ -1,8 +1,7 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import os
-from os.path import join as opj
+from os.path import dirname, join as opj
 
 from odoo import fields, models, tools
 
@@ -37,7 +36,9 @@ class MisCommittedPurchase(models.Model):
     )
 
     def init(self):
-        script = opj(os.path.dirname(__file__), "mis_committed_purchase.sql")
+        script = opj(
+            dirname(dirname(__file__)), "examples", "mis_committed_purchase.sql"
+        )
         with open(script) as f:
             tools.drop_view_if_exists(self.env.cr, "mis_committed_purchase")
             self.env.cr.execute(f.read())

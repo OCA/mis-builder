@@ -37,3 +37,4 @@ class MisBudgetItem(models.Model):
     )
     def _check_dates(self):
         super()._check_dates()
+        return

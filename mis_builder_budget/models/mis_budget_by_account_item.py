@@ -85,6 +85,7 @@ class MisBudgetByAccountItem(models.Model):
     )
     def _check_dates(self):
         super()._check_dates()
+        return
 
     def _inverse_balance(self):
         for rec in self:
