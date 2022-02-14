@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-11-17 11:36+0000\n"
+"PO-Revision-Date: 2022-02-14 11:16+0000\n"
 "Last-Translator: Simon S <simon.stromberg@vertel.se>\n"
 "Language-Team: none\n"
 "Language: sv\n"
@@ -965,7 +965,7 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__name
 msgid "Label"
-msgstr ""
+msgstr "Etikett"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__landscape_pdf
@@ -1010,7 +1010,7 @@ msgstr "Senast genererade rapporter"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__write_uid
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Senast uppdaterad av"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__write_date
@@ -1025,7 +1025,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__write_date
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Senast uppdaterad den"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
@@ -1647,7 +1647,7 @@ msgstr "Till"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__date_to
 msgid "To (computed)"
-msgstr ""
+msgstr "Till (beräknad)"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_kpi_data.py:0
