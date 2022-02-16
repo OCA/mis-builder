@@ -10,7 +10,7 @@ from ..models.mis_report_style import CMP_DIFF, CMP_PCT, TYPE_NUM, TYPE_PCT, TYP
 
 class TestRendering(common.TransactionCase):
     def setUp(self):
-        super(TestRendering, self).setUp()
+        super().setUp()
         self.style_obj = self.env["mis.report.style"]
         self.kpi_obj = self.env["mis.report.kpi"]
         self.style = self.style_obj.create(dict(name="teststyle"))

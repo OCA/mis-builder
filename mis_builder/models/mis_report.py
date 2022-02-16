@@ -73,13 +73,12 @@ class MisReportKpi(models.Model):
     _name = "mis.report.kpi"
     _description = "MIS Report KPI"
 
-    name = fields.Char(required=True, string="Name")
-    description = fields.Char(required=True, string="Description", translate=True)
+    name = fields.Char(required=True)
+    description = fields.Char(required=True, translate=True)
     multi = fields.Boolean()
     expression = fields.Char(
         compute="_compute_expression",
         inverse="_inverse_expression",
-        string="Expression",
     )
     expression_ids = fields.One2many(
         comodel_name="mis.report.kpi.expression",
@@ -97,7 +96,6 @@ class MisReportKpi(models.Model):
         string="Style", comodel_name="mis.report.style", required=False
     )
     style_expression = fields.Char(
-        string="Style expression",
         help="An expression that returns a style depending on the KPI value. "
         "Such style is applied on top of the row style.",
     )
@@ -124,7 +122,6 @@ class MisReportKpi(models.Model):
     accumulation_method = fields.Selection(
         [(ACC_SUM, _("Sum")), (ACC_AVG, _("Average")), (ACC_NONE, _("None"))],
         required=True,
-        string="Accumulation Method",
         default=ACC_SUM,
         help="Determines how values of this kpi spanning over a "
         "time period are transformed to match the reporting period. "
@@ -134,10 +131,8 @@ class MisReportKpi(models.Model):
         "Average: values of included period are averaged "
         "with a pro-rata temporis weight.",
     )
-    sequence = fields.Integer(string="Sequence", default=100)
-    report_id = fields.Many2one(
-        "mis.report", string="Report", required=True, ondelete="cascade"
-    )
+    sequence = fields.Integer(default=100)
+    report_id = fields.Many2one("mis.report", required=True, ondelete="cascade")
 
     _order = "sequence, id"
 
@@ -258,8 +253,8 @@ class MisReportSubkpi(models.Model):
     report_id = fields.Many2one(
         comodel_name="mis.report", required=True, ondelete="cascade"
     )
-    name = fields.Char(required=True, string="Name")
-    description = fields.Char(required=True, string="Description", translate=True)
+    name = fields.Char(required=True)
+    description = fields.Char(required=True, translate=True)
     expression_ids = fields.One2many("mis.report.kpi.expression", "subkpi_id")
 
     @api.constrains("name")
@@ -369,10 +364,8 @@ class MisReportQuery(models.Model):
             field_names = [field.name for field in record.field_ids]
             record.field_names = ", ".join(field_names)
 
-    name = fields.Char(required=True, string="Name")
-    model_id = fields.Many2one(
-        "ir.model", required=True, string="Model", ondelete="restrict"
-    )
+    name = fields.Char(required=True)
+    model_id = fields.Many2one("ir.model", required=True, ondelete="restrict")
     field_ids = fields.Many2many(
         "ir.model.fields", required=True, string="Fields to fetch"
     )
@@ -386,7 +379,6 @@ class MisReportQuery(models.Model):
             ("min", _("Min")),
             ("max", _("Max")),
         ],
-        string="Aggregate",
     )
     date_field = fields.Many2one(
         comodel_name="ir.model.fields",
@@ -394,9 +386,9 @@ class MisReportQuery(models.Model):
         domain=[("ttype", "in", ("date", "datetime"))],
         ondelete="restrict",
     )
-    domain = fields.Char(string="Domain")
+    domain = fields.Char()
     report_id = fields.Many2one(
-        comodel_name="mis.report", string="Report", required=True, ondelete="cascade"
+        comodel_name="mis.report", required=True, ondelete="cascade"
     )
 
     _order = "name"
@@ -432,8 +424,8 @@ class MisReport(models.Model):
     def _default_move_lines_source(self):
         return self.env["ir.model"].search([("model", "=", "account.move.line")])
 
-    name = fields.Char(required=True, string="Name", translate=True)
-    description = fields.Char(required=False, string="Description", translate=True)
+    name = fields.Char(required=True, translate=True)
+    description = fields.Char(required=False, translate=True)
     style_id = fields.Many2one(string="Style", comodel_name="mis.report.style")
     query_ids = fields.One2many(
         "mis.report.query", "report_id", string="Queries", copy=True
@@ -452,7 +444,6 @@ class MisReport(models.Model):
     )
     move_lines_source = fields.Many2one(
         comodel_name="ir.model",
-        string="Move lines source",
         domain=[
             ("field_id.name", "=", "debit"),
             ("field_id.name", "=", "credit"),
@@ -466,9 +457,7 @@ class MisReport(models.Model):
         "date, account_id and company_id fields. This model is the "
         "data source for column Actuals.",
     )
-    account_model = fields.Char(
-        compute="_compute_account_model", string="Account model"
-    )
+    account_model = fields.Char(compute="_compute_account_model")
 
     @api.depends("kpi_ids", "subreport_ids")
     def _compute_all_kpi_ids(self):
@@ -529,7 +518,7 @@ class MisReport(models.Model):
         self.ensure_one()
         default = dict(default or [])
         default["name"] = _("%s (copy)") % self.name
-        new = super(MisReport, self).copy(default)
+        new = super().copy(default)
         # after a copy, we have new subkpis, but the expressions
         # subkpi_id fields still point to the original one, so
         # we patch them after copying

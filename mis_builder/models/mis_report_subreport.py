@@ -4,7 +4,7 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
-from odoo.addons.mis_builder.models.mis_report import _is_valid_python_var
+from .mis_report import _is_valid_python_var
 
 
 class ParentLoopError(ValidationError):

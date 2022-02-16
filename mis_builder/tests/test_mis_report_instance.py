@@ -16,7 +16,7 @@ class TestMisReportInstance(common.HttpCase):
     """
 
     def setUp(self):
-        super(TestMisReportInstance, self).setUp()
+        super().setUp()
         partner_model_id = self.env.ref("base.model_res_partner").id
         partner_create_date_field_id = self.env.ref(
             "base.field_res_partner__create_date"

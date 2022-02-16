@@ -25,4 +25,4 @@ class Report(models.Model):
             return super(Report, self.with_context(context)).render_qweb_pdf(
                 res_ids, data=None
             )
-        return super(Report, self).render_qweb_pdf(res_ids, data)
+        return super()._render_qweb_pdf(res_ids, data)
