@@ -43,8 +43,8 @@ msgstr ""
 "<b>\n"
 "                                                balp[('user_type_id', '=',\n"
 "                                                ref('account.\n"
-"                                                "
-"data_account_type_receivable').id)][]\n"
+"                                                data_account_type_receivable')."
+"id)][]\n"
 "                                            </b>\n"
 "                                            :variation du solde de toutes "
 "les créances\n"
@@ -64,8 +64,8 @@ msgid ""
 "                                            56."
 msgstr ""
 "<b>\n"
-"                                                balp[][("
-"'tax_line_id.tag_ids', '=',\n"
+"                                                balp[][('tax_line_id."
+"tag_ids', '=',\n"
 "                                                ref('l10n_be.tax_tag_56')."
 "id)]\n"
 "                                            </b>\n"
@@ -86,8 +86,8 @@ msgid ""
 "                                            journal BNK1 during the period."
 msgstr ""
 "<b>\n"
-"                                                debp[55%][("
-"'journal_id.code', '=',\n"
+"                                                debp[55%][('journal_id."
+"code', '=',\n"
 "                                                'BNK1')]\n"
 "                                            </b>\n"
 "                                            : somme de tous les debits sur "
@@ -279,8 +279,8 @@ msgstr "Un filtre date est obligatoire pour cette source dans la colonne %s."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
-msgid "Account model"
-msgstr "Additionne le détail des comptes"
+msgid "Account Model"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
@@ -530,8 +530,8 @@ msgstr "Colonne %s ne peut pas être comparée à  elle-même."
 #, python-format
 msgid "Column %s with move lines source must have from/to dates."
 msgstr ""
-"Colonne %s avec les lignes d’écritures comme source doit avoir des dates dé"
-"but/fin ."
+"Colonne %s avec les lignes d’écritures comme source doit avoir des dates "
+"début/fin ."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
@@ -756,8 +756,8 @@ msgstr "Dp par défaut"
 msgid ""
 "Dummy field that adapts searches on date to searches on date_from/date_to."
 msgstr ""
-"Champ factice qui adapte les recherches sur dates aux recherches sur date dé"
-"but/fin."
+"Champ factice qui adapte les recherches sur dates aux recherches sur date "
+"début/fin."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__duration
@@ -1210,11 +1210,6 @@ msgid "MIS Report Instance Period Sum"
 msgstr "Somme sur la période d'Instance de rapport MIS"
 
 #. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
-msgid "MIS Report Instances"
-msgstr "Instances de rapport MIS"
-
-#. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "MIS Report KPI"
@@ -1244,7 +1239,6 @@ msgstr "Style de Rapport MIS"
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_style_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_style_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_tree
 msgid "MIS Report Styles"
 msgstr "Styles de Rapport MIS"
 
@@ -1273,7 +1267,6 @@ msgstr "MIS Reporting"
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_instance_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_tree
 msgid "MIS Reports"
 msgstr "Rapports MIS"
 
@@ -1320,6 +1313,10 @@ msgstr "Mois"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
+msgid "Move Lines Source"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid "Move lines source"
 msgstr "Source des lignes d'écriture"
@@ -1435,8 +1432,8 @@ msgstr "Périodes"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__pivot_date
-msgid "Pivot date"
-msgstr "Date pivot"
+msgid "Pivot Date"
+msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -1542,7 +1539,8 @@ msgstr "Sauvegarder"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__company_ids
 msgid "Select companies for which data will be searched."
-msgstr "Sélectionnez les sociétés pour lesquelles les données seront cherchées."
+msgstr ""
+"Sélectionnez les sociétés pour lesquelles les données seront cherchées."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__currency_id
@@ -1574,8 +1572,8 @@ msgid ""
 "Should not include the same report more than once as sub report of a given "
 "report"
 msgstr ""
-"Ne devrait pas inclure le même rapport plus d’une fois comme sous-rapport d’"
-"un rapport donné"
+"Ne devrait pas inclure le même rapport plus d’une fois comme sous-rapport "
+"d’un rapport donné"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum__sign
@@ -1604,8 +1602,8 @@ msgstr "Style"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__style_expression
-msgid "Style expression"
-msgstr "Expression du style"
+msgid "Style Expression"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__auto_expand_accounts_style_id
@@ -1796,8 +1794,8 @@ msgstr ""
 "                                         les expressions pour calculer les "
 "données comptables :\n"
 "                                         <code>\n"
-"                                             {bal|crd|deb|pbal|nbal}{pieu}["
-"sélecteur de compte\n"
+"                                             {bal|crd|deb|pbal|nbal}{pieu}"
+"[sélecteur de compte\n"
 "                                             ][domaine des écritures de "
 "journal]\n"
 "                                         </code>\n"
@@ -1947,6 +1945,18 @@ msgstr "xx-grand"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "xx-petit"
+
+#~ msgid "Account model"
+#~ msgstr "Additionne le détail des comptes"
+
+#~ msgid "MIS Report Instances"
+#~ msgstr "Instances de rapport MIS"
+
+#~ msgid "Pivot date"
+#~ msgstr "Date pivot"
+
+#~ msgid "Style expression"
+#~ msgstr "Expression du style"
 
 #~ msgid ""
 #~ "Check if you wish to specify children companies to be searched for data."

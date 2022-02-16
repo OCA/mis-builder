@@ -202,9 +202,8 @@ msgstr "Een datum filter is verplicht voor deze bron in kolom %s."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
-#, fuzzy
-msgid "Account model"
-msgstr "Rekening details optellen"
+msgid "Account Model"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
@@ -1111,11 +1110,6 @@ msgid "MIS Report Instance Period Sum"
 msgstr "MIS Rapport Instantie"
 
 #. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
-msgid "MIS Report Instances"
-msgstr "MIS Rapport Instanties"
-
-#. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "MIS Report KPI"
@@ -1147,7 +1141,6 @@ msgstr "MIS Rapport Stijl"
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_style_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_style_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_tree
 msgid "MIS Report Styles"
 msgstr "MIS Rapport Stijlen"
 
@@ -1178,7 +1171,6 @@ msgstr "MIS Rapportage"
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_instance_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_tree
 msgid "MIS Reports"
 msgstr "MIS Rapporten"
 
@@ -1225,6 +1217,10 @@ msgstr "Maand"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
+msgid "Move Lines Source"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid "Move lines source"
 msgstr "Bron boekingsregels"
@@ -1341,8 +1337,8 @@ msgstr "Periodes"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__pivot_date
-msgid "Pivot date"
-msgstr "Uitgangsdatum"
+msgid "Pivot Date"
+msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -1506,8 +1502,8 @@ msgstr "Stijl"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__style_expression
-msgid "Style expression"
-msgstr "Stijl uitdrukking"
+msgid "Style Expression"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__auto_expand_accounts_style_id
@@ -1833,6 +1829,19 @@ msgstr "XXL"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "XXS"
+
+#, fuzzy
+#~ msgid "Account model"
+#~ msgstr "Rekening details optellen"
+
+#~ msgid "MIS Report Instances"
+#~ msgstr "MIS Rapport Instanties"
+
+#~ msgid "Pivot date"
+#~ msgstr "Uitgangsdatum"
+
+#~ msgid "Style expression"
+#~ msgstr "Stijl uitdrukking"
 
 #~ msgid ""
 #~ "Check if you wish to specify children companies to be searched for data."
