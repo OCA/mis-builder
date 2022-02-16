@@ -177,14 +177,14 @@ class MisReportKpiStyle(models.Model):
     ):
         # format number following user language
         if value is None or value is AccountingNone:
-            return u""
+            return ""
         value = round(value / float(divider or 1), dp or 0) or 0
         r = lang.format("%%%s.%df" % (sign, dp or 0), value, grouping=True)
-        r = r.replace("-", u"\N{NON-BREAKING HYPHEN}")
+        r = r.replace("-", "\N{NON-BREAKING HYPHEN}")
         if prefix:
-            r = prefix + u"\N{NO-BREAK SPACE}" + r
+            r = prefix + "\N{NO-BREAK SPACE}" + r
         if suffix:
-            r = r + u"\N{NO-BREAK SPACE}" + suffix
+            r = r + "\N{NO-BREAK SPACE}" + suffix
         return r
 
     @api.model
@@ -194,7 +194,7 @@ class MisReportKpiStyle(models.Model):
     @api.model
     def render_str(self, lang, value):
         if value is None or value is AccountingNone:
-            return u""
+            return ""
         return unicode(value)
 
     @api.model
@@ -275,20 +275,20 @@ class MisReportKpiStyle(models.Model):
             ("bg_color", props.background_color),
         ]
         if type == TYPE_NUM:
-            num_format = u"#,##0"
+            num_format = "#,##0"
             if props.dp:
-                num_format += u"."
-                num_format += u"0" * props.dp
+                num_format += "."
+                num_format += "0" * props.dp
             if props.prefix:
-                num_format = u'"{} "{}'.format(props.prefix, num_format)
+                num_format = '"{} "{}'.format(props.prefix, num_format)
             if props.suffix:
-                num_format = u'{}" {}"'.format(num_format, props.suffix)
+                num_format = '{}" {}"'.format(num_format, props.suffix)
             xlsx_attributes.append(("num_format", num_format))
         elif type == TYPE_PCT:
-            num_format = u"0"
+            num_format = "0"
             if props.dp:
-                num_format += u"."
-                num_format += u"0" * props.dp
+                num_format += "."
+                num_format += "0" * props.dp
             num_format += "%"
             xlsx_attributes.append(("num_format", num_format))
         if props.indent_level is not None and not no_indent:
