@@ -372,7 +372,7 @@ class MisReportInstancePeriod(models.Model):
     def _get_aml_model_name(self):
         self.ensure_one()
         if self.source == SRC_ACTUALS:
-            return self.report_id.move_lines_source.model
+            return self.report_id.sudo().move_lines_source.model
         elif self.source == SRC_ACTUALS_ALT:
             return self.source_aml_model_name
         return False
