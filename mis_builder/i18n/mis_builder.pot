@@ -172,7 +172,7 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
-msgid "Account model"
+msgid "Account Model"
 msgstr ""
 
 #. module: mis_builder
@@ -1047,11 +1047,6 @@ msgid "MIS Report Instance Period Sum"
 msgstr ""
 
 #. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
-msgid "MIS Report Instances"
-msgstr ""
-
-#. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "MIS Report KPI"
@@ -1081,7 +1076,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_style_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_style_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_tree
 msgid "MIS Report Styles"
 msgstr ""
 
@@ -1110,7 +1104,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_instance_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_tree
 msgid "MIS Reports"
 msgstr ""
 
@@ -1157,6 +1150,10 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
+msgid "Move Lines Source"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid "Move lines source"
 msgstr ""
@@ -1274,7 +1271,7 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__pivot_date
-msgid "Pivot date"
+msgid "Pivot Date"
 msgstr ""
 
 #. module: mis_builder
@@ -1436,7 +1433,7 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__style_expression
-msgid "Style expression"
+msgid "Style Expression"
 msgstr ""
 
 #. module: mis_builder
