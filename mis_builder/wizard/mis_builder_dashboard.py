@@ -11,7 +11,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
     _name = "add.mis.report.instance.dashboard.wizard"
     _description = "MIS Report Add to Dashboard Wizard"
 
-    name = fields.Char("Name", required=True)
+    name = fields.Char(required=True)
 
     dashboard_id = fields.Many2one(
         "ir.actions.act_window",
@@ -24,7 +24,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
     def default_get(self, fields_list):
         res = {}
         if self.env.context.get("active_id", False):
-            res = super(AddMisReportInstanceDashboard, self).default_get(fields_list)
+            res = super().default_get(fields_list)
             # get report instance name
             res["name"] = (
                 self.env["mis.report.instance"]

@@ -25,7 +25,7 @@
         <field name="name">mis.report.instance.view.tree</field>
         <field name="model">mis.report.instance</field>
         <field name="arch" type="xml">
-            <tree string="MIS Report Instances">
+            <tree>
                 <button
                     type="object"
                     name="preview"
@@ -230,6 +230,7 @@
     />
     <record id="wizard_mis_report_instance_view_form" model="ir.ui.view">
         <field name="model">mis.report.instance</field>
+        <field name="priority">99</field>
         <field name="inherit_id" ref="mis_builder.mis_report_instance_view_form" />
         <field name="mode">primary</field>
         <field name="arch" type="xml">

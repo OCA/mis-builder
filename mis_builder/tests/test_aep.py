@@ -14,7 +14,7 @@ from ..models.aep import AccountingExpressionProcessor as AEP, _is_domain
 
 class TestAEP(common.TransactionCase):
     def setUp(self):
-        super(TestAEP, self).setUp()
+        super().setUp()
         self.res_company = self.env["res.company"]
         self.account_model = self.env["account.account"]
         self.move_model = self.env["account.move"]

@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestAnalyticFilters(TransactionCase):
     def setUp(self):
-        super(TestAnalyticFilters, self).setUp()
+        super().setUp()
         self.aag = self.env["account.analytic.group"].search([], limit=1)
 
     def test_context_with_filters(self):
@@ -23,9 +23,9 @@ class TestAnalyticFilters(TransactionCase):
         }
         # test _context_with_filters does nothing is a filter is already
         # in the context
-        mri.with_context(mis_report_filters={"f": 1})._context_with_filters().get(
-            "mis_report_filters"
-        ) == {"f": 1}
+        assert mri.with_context(
+            mis_report_filters={"f": 1}
+        )._context_with_filters().get("mis_report_filters") == {"f": 1}
 
     def _check_get_filter_domain_from_context(
         self, mis_report_filters, expected_domain

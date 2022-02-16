@@ -13,7 +13,7 @@ from ..models.aep import AccountingExpressionProcessor as AEP
 
 class TestMultiCompanyAEP(common.TransactionCase):
     def setUp(self):
-        super(TestMultiCompanyAEP, self).setUp()
+        super().setUp()
         self.res_company = self.env["res.company"]
         self.account_model = self.env["account.account"]
         self.move_model = self.env["account.move"]

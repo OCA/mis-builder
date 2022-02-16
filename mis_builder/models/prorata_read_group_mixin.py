@@ -85,7 +85,7 @@ class ProRataReadGroupMixin(models.AbstractModel):
                     )
                     res_item[sum_field] += item[sum_field] * i_days / item_days
             return res.values()
-        return super(ProRataReadGroupMixin, self).read_group(
+        return super().read_group(
             domain,
             fields,
             groupby,

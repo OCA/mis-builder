@@ -22,7 +22,7 @@ class MisBudgetItem(models.Model):
 
     def _prepare_overlap_domain(self):
         """Prepare a domain to check for overlapping budget items."""
-        domain = super(MisBudgetItem, self)._prepare_overlap_domain()
+        domain = super()._prepare_overlap_domain()
         domain.extend([("kpi_expression_id", "=", self.kpi_expression_id.id)])
         return domain
 
@@ -36,4 +36,4 @@ class MisBudgetItem(models.Model):
         "kpi_expression_id",
     )
     def _check_dates(self):
-        super(MisBudgetItem, self)._check_dates()
+        super()._check_dates()

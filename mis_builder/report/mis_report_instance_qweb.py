@@ -22,7 +22,7 @@ class Report(models.Model):
             )
             # data=None, because it was there only to force Odoo
             # to propagate context
-            return super(Report, self.with_context(context))._render_qweb_pdf(
+            return super(Report, self.with_context(**context))._render_qweb_pdf(
                 res_ids, data=None
             )
-        return super(Report, self)._render_qweb_pdf(res_ids, data)
+        return super()._render_qweb_pdf(res_ids, data)

@@ -17,7 +17,7 @@ class TestKpiData(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestKpiData, cls).setUpClass()
+        super().setUpClass()
         setup_test_model(cls.env, cls.MisKpiDataTestItem)
 
         report = cls.env["mis.report"].create(dict(name="test report"))
@@ -75,7 +75,7 @@ class TestKpiData(SavepointCase):
     @classmethod
     def tearDownClass(cls):
         teardown_test_model(cls.env, cls.MisKpiDataTestItem)
-        super(TestKpiData, cls).tearDownClass()
+        return super().tearDownClass()
 
     def test_kpi_data_name(self):
         self.assertEqual(self.kd11.name, "k1: 2017-05-01 - 2017-05-10")
