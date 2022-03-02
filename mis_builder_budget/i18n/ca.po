@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2018-10-06 12:25+0000\n"
-"Last-Translator: Harald Panten <harald.panten@qubiq.es>\n"
+"PO-Revision-Date: 2022-03-02 12:17+0000\n"
+"Last-Translator: Noel estudillo <noelestudilloviera@gmail.com>\n"
 "Language-Team: none\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.1.1\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_abstract.py:37
@@ -42,9 +42,8 @@ msgstr "La data d'inici de %s no pot ser posterior a la data de finalització"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_account_id
-#, fuzzy
 msgid "Account"
-msgstr "Compte analític"
+msgstr "Compte"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_analytic_tag_ids
@@ -62,9 +61,8 @@ msgstr "Compte analític"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_balance
-#, fuzzy
 msgid "Balance"
-msgstr "Cancel·lar"
+msgstr "Balanç"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_budget_id
@@ -77,7 +75,6 @@ msgstr "Pressupost"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_budget_date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_budget_date_from
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_from
-#, fuzzy
 msgid "Budget Date From"
 msgstr "Elements de pressupost"
 
@@ -85,20 +82,18 @@ msgstr "Elements de pressupost"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_budget_date_to
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract_budget_date_to
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_budget_date_to
-#, fuzzy
 msgid "Budget Date To"
-msgstr "Elements de pressupost"
+msgstr "Data final del pressupost"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period_source_mis_budget_by_account_id
 msgid "Budget by Account"
-msgstr ""
+msgstr "Pressupost per compte"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period_source_mis_budget_id
-#, fuzzy
 msgid "Budget by KPI"
-msgstr "Pressupost"
+msgstr "Pressupost per KPI"
 
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
@@ -133,9 +128,8 @@ msgstr "Companyia"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_company_currency_id
-#, fuzzy
 msgid "Company Currency"
-msgstr "Companyia"
+msgstr "Tipus de moneda de l'empresa"
 
 #. module: mis_builder_budget
 #: model:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
@@ -168,7 +162,7 @@ msgstr "Creat el"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_credit
 msgid "Credit"
-msgstr ""
+msgstr "Crèdit"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_date_range_id
@@ -183,7 +177,7 @@ msgstr "Rang de data"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item_debit
 msgid "Debit"
-msgstr ""
+msgstr "Debit"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract_description
@@ -268,86 +262,74 @@ msgstr "Última actualització el"
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_abstract
 msgid "MIS Budget (Abstract Base Class)"
-msgstr ""
+msgstr "MIS Budget (Classe Base Abstracta)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item_abstract
-#, fuzzy
 msgid "MIS Budget Item (Abstract Base Class)"
-msgstr "Objectes de pressupostos MIS"
+msgstr "MIS Budget Item (Classe Base Abstracta)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account_item
-#, fuzzy
 msgid "MIS Budget Item (by Account)"
-msgstr "Objecte de pressupost MIS"
+msgstr "Partida pressupostària MIS (per compte)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
-#, fuzzy
 msgid "MIS Budget Item (by KPI)"
-msgstr "Objecte de pressupost MIS"
+msgstr "Partida pressupostària MIS (per KPI)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
-#, fuzzy
 msgid "MIS Budget Items (by KPIs)"
-msgstr "Objectes de pressupostos MIS"
+msgstr "Partides pressupostàries MIS (per KPI)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_item_act_window
-#, fuzzy
 msgid "MIS Budget Items (by accounts)"
-msgstr "Objectes de pressupostos MIS"
+msgstr "Partides pressupostàries MIS (per comptes)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account
-#, fuzzy
 msgid "MIS Budget by Account"
-msgstr "Objecte de pressupost MIS"
+msgstr "Pressupost per compte MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
-#, fuzzy
 msgid "MIS Budget by KPI"
-msgstr "Objecte de pressupost MIS"
+msgstr "Pressupost MIS per KPI"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
-#, fuzzy
 msgid "MIS Budgets (by KPIs)"
-msgstr "Objectes de pressupostos MIS"
+msgstr "Pressupostos MIS (per KPI)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_by_account_menu
-#, fuzzy
 msgid "MIS Budgets (by accounts)"
-msgstr "Objectes de pressupostos MIS"
+msgstr "Pressupostos MIS (per comptes)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance
-#, fuzzy
 msgid "MIS Report Instance"
-msgstr "Plantilla de pressupost MIS"
+msgstr "Instància d'informe MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
-#, fuzzy
 msgid "MIS Report Instance Period"
-msgstr "mis.report.instance.period"
+msgstr "Període de la instància de l'informe MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_kpi
-#, fuzzy
 msgid "MIS Report KPI"
-msgstr "Plantilla de pressupost MIS"
+msgstr "Informe MIS KPI"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_kpi_expression
 msgid "MIS Report KPI Expression"
-msgstr ""
+msgstr "Expressió de KPI en Informes MIS"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_report_id
@@ -388,7 +370,7 @@ msgstr "a"
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account_item_company_currency_id
 msgid "Utility field to express amount currency"
-msgstr ""
+msgstr "Camp d'utilitat per expressar l'import de la moneda"
 
 #. module: mis_builder_budget
 #: sql_constraint:mis.budget.by.account.item:0
@@ -396,12 +378,16 @@ msgid ""
 "Wrong credit or debit value in budget item! Credit and debit should be "
 "positive."
 msgstr ""
+"Valor de crèdit o dèbit incorrecte a la partida del pressupost! El crèdit i "
+"el dèbit han de ser positius."
 
 #. module: mis_builder_budget
 #: sql_constraint:mis.budget.by.account.item:0
 msgid ""
 "Wrong credit or debit value in budget item! Credit or debit should be zero."
 msgstr ""
+"Valor de crèdit o dèbit incorrecte a la partida del pressupost! El crèdit o "
+"el dèbit hauria de ser zero."
 
 #~ msgid "MIS Budget"
 #~ msgstr "Pressupost MIS"
