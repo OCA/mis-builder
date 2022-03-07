@@ -409,7 +409,14 @@ class TestMisReportInstance(common.HttpCase):
             dict(expr="balp[200%]", period_id=self.report_instance.period_ids[0].id)
         )
         account_ids = (
-            self.env["account.account"].search([("code", "=like", "200%")]).ids
+            self.env["account.account"]
+            .search(
+                [
+                    ("code", "=like", "200%"),
+                    ("company_id", "=", self.env.ref("base.main_company").id),
+                ]
+            )
+            .ids
         )
         self.assertTrue(("account_id", "in", tuple(account_ids)) in action["domain"])
         self.assertEqual(action["res_model"], "account.move.line")
@@ -465,7 +472,14 @@ class TestMisReportInstance(common.HttpCase):
 
     def test_get_kpis_by_account_id(self):
         account_ids = (
-            self.env["account.account"].search([("code", "=like", "200%")]).mapped("id")
+            self.env["account.account"]
+            .search(
+                [
+                    ("code", "=like", "200%"),
+                    ("company_id", "=", self.env.ref("base.main_company").id),
+                ]
+            )
+            .ids
         )
         kpi200 = {self.kpi1, self.kpi2}
         res = self.report.get_kpis_by_account_id(self.env.ref("base.main_company"))
@@ -510,7 +524,7 @@ class TestMisReportInstance(common.HttpCase):
         self.report_instance.company_ids |= c1
         self.report_instance.company_ids |= c2
         assert len(self.report_instance.company_ids) == 2
-        assert self.report_instance.query_company_ids == self.env.companies
+        self.assertFalse(self.report_instance.query_company_ids - self.env.companies)
         # In a user context where there is only one company, ensure
         # query_company_ids only has one company too.
         assert (
