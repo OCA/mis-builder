@@ -745,6 +745,7 @@ class MisReportInstance(models.Model):
 
     def print_pdf(self):
         self.ensure_one()
+        self._compute_matrix()
         context = dict(self._context_with_filters(), landscape=self.landscape_pdf)
         return (
             self.env.ref("mis_builder.qweb_pdf_export")
@@ -754,6 +755,7 @@ class MisReportInstance(models.Model):
 
     def export_xls(self):
         self.ensure_one()
+        self._compute_matrix()
         context = dict(self._context_with_filters())
         return (
             self.env.ref("mis_builder.xls_export")
