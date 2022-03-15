@@ -8,6 +8,7 @@ from odoo import _
 from odoo.exceptions import UserError
 
 from .accounting_none import AccountingNone
+from .aep import UNCLASSIFIED_ROW_DETAIL
 from .mis_kpi_data import ACC_SUM
 from .mis_safe_eval import DataError, mis_safe_eval
 from .simple_array import SimpleArray
@@ -22,13 +23,13 @@ class KpiMatrixRow(object):
     #       It is already ignorant of period and only knowns about columns.
     #       This will require a correct abstraction for expanding row details.
 
-    def __init__(self, matrix, kpi, account_id=None, parent_row=None):
+    def __init__(self, matrix, kpi, row_detail_identifier=None, parent_row=None):
         self._matrix = matrix
         self.kpi = kpi
-        self.account_id = account_id
+        self.row_detail_identifier = row_detail_identifier
         self.description = ""
         self.parent_row = parent_row
-        if not self.account_id:
+        if not self.row_detail_identifier:
             self.style_props = self._matrix._style_model.merge(
                 [self.kpi.report_id.style_id, self.kpi.style_id]
             )
@@ -39,17 +40,17 @@ class KpiMatrixRow(object):
 
     @property
     def label(self):
-        if not self.account_id:
+        if not self.row_detail_identifier:
             return self.kpi.description
         else:
-            return self._matrix.get_account_name(self.account_id)
+            return self._matrix.get_rdi_name(self.row_detail_identifier)
 
     @property
     def row_id(self):
-        if not self.account_id:
+        if not self.row_detail_identifier:
             return self.kpi.name
         else:
-            return "{}:{}".format(self.kpi.name, self.account_id)
+            return "{}:{}".format(self.kpi.name, self.row_detail_identifier)
 
     def iter_cell_tuples(self, cols=None):
         if cols is None:
@@ -147,12 +148,12 @@ class KpiMatrixCell(object):  # noqa: B903 (immutable data class)
 
 
 class KpiMatrix(object):
-    def __init__(self, env, multi_company=False, account_model="account.account"):
+    def __init__(self, env, multi_company=False, rdi_model="account.account"):
         # cache language id for faster rendering
         lang_model = env["res.lang"]
         self.lang = lang_model._lang_get(env.user.lang)
         self._style_model = env["mis.report.style"]
-        self._account_model = env[account_model]
+        self._rdi_model = env[rdi_model]
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
@@ -165,7 +166,7 @@ class KpiMatrix(object):
         # { col_key (left of sum): (col_key, [(sign, sum_col_key)])
         self._sum_todo = {}
         # { account_id: account_name }
-        self._account_names = {}
+        self._rdi_names = {}
         self._multi_company = multi_company
 
     def declare_kpi(self, kpi):
@@ -215,22 +216,23 @@ class KpiMatrix(object):
             kpi, col_key, None, vals, drilldown_args, tooltips
         )
 
+    # TODO this could be renamed set_values_detail
     def set_values_detail_account(
-        self, kpi, col_key, account_id, vals, drilldown_args, tooltips=True
+        self, kpi, col_key, row_detail_identifier, vals, drilldown_args, tooltips=True
     ):
         """Set values for a kpi and a column and a detail account.
 
         Invoke this after declaring the kpi and the column.
         """
-        if not account_id:
+        if not row_detail_identifier:
             row = self._kpi_rows[kpi]
         else:
             kpi_row = self._kpi_rows[kpi]
-            if account_id in self._detail_rows[kpi]:
-                row = self._detail_rows[kpi][account_id]
+            if row_detail_identifier in self._detail_rows[kpi]:
+                row = self._detail_rows[kpi][row_detail_identifier]
             else:
-                row = KpiMatrixRow(self, kpi, account_id, parent_row=kpi_row)
-                self._detail_rows[kpi][account_id] = row
+                row = KpiMatrixRow(self, kpi, row_detail_identifier, parent_row=kpi_row)
+                self._detail_rows[kpi][row_detail_identifier] = row
         col = self._cols[col_key]
         cell_tuple = []
         assert len(vals) == col.colspan
@@ -406,7 +408,7 @@ class KpiMatrix(object):
             for row in self.iter_rows():
                 acc = SimpleArray([AccountingNone] * (len(common_subkpis) or 1))
                 if row.kpi.accumulation_method == ACC_SUM and not (
-                    row.account_id and not sum_accdet
+                    row.row_detail_identifier and not sum_accdet
                 ):
                     for sign, col_to_sum in col_to_sum_keys:
                         cell_tuple = self._cols[col_to_sum].get_cell_tuple_for_row(row)
@@ -426,7 +428,7 @@ class KpiMatrix(object):
                 self.set_values_detail_account(
                     row.kpi,
                     sumcol_key,
-                    row.account_id,
+                    row.row_detail_identifier,
                     acc,
                     [None] * (len(common_subkpis) or 1),
                     tooltips=False,
@@ -462,23 +464,27 @@ class KpiMatrix(object):
             for subcol in col.iter_subcols():
                 yield subcol
 
-    def _load_account_names(self):
-        account_ids = set()
+    def _load_rdi_names(self):
+        rdi_ids = set()
         for detail_rows in self._detail_rows.values():
-            account_ids.update(detail_rows.keys())
-        accounts = self._account_model.search([("id", "in", list(account_ids))])
-        self._account_names = {a.id: self._get_account_name(a) for a in accounts}
+            rdi_ids.update(detail_rows.keys())
+        rdi_ids = list(rdi_ids)
+        if UNCLASSIFIED_ROW_DETAIL in rdi_ids:
+            rdi_ids.remove(UNCLASSIFIED_ROW_DETAIL)
+        rdis = self._rdi_model.search([("id", "in", rdi_ids)])
+        self._rdi_names = {rdi.id: self._get_rdi_name(rdi) for rdi in rdis}
+        self._rdi_names[UNCLASSIFIED_ROW_DETAIL] = _("Other")
 
-    def _get_account_name(self, account):
-        result = "{} {}".format(account.code, account.name)
-        if self._multi_company:
-            result = "{} [{}]".format(result, account.company_id.name)
+    def _get_rdi_name(self, rdi):
+        result = rdi.name_get()[0][1]
+        if self._multi_company and rdi.company_id:
+            result = "{} [{}]".format(result, rdi.company_id.name)
         return result
 
-    def get_account_name(self, account_id):
-        if account_id not in self._account_names:
-            self._load_account_names()
-        return self._account_names[account_id]
+    def get_rdi_name(self, rdi_id):
+        if rdi_id not in self._rdi_names:
+            self._load_rdi_names()
+        return self._rdi_names[rdi_id]
 
     def as_dict(self):
         header = [{"cols": []}, {"cols": []}]

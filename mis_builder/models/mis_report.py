@@ -91,11 +91,11 @@ class MisReportKpi(models.Model):
         copy=True,
         string="Expressions",
     )
-    auto_expand_accounts = fields.Boolean(string="Display details by account")
+
+    # TODO : this fields should be renamed to auto_expand_details or something like this
+    auto_expand_accounts = fields.Boolean(string="Display details")
     auto_expand_accounts_style_id = fields.Many2one(
-        string="Style for account detail rows",
-        comodel_name="mis.report.style",
-        required=False,
+        string="Style for details rows", comodel_name="mis.report.style", required=False
     )
     style_id = fields.Many2one(
         string="Style", comodel_name="mis.report.style", required=False
@@ -465,6 +465,20 @@ class MisReport(models.Model):
     )
     account_model = fields.Char(compute="_compute_account_model")
 
+    auto_expand_col_name = fields.Selection(
+        [
+            ("account_id", _("Accounts")),
+            ("analytic_account_id", _("Analytic Accounts")),
+            ("partner_id", _("Parner")),
+        ],
+        required=True,
+        string="Auto Expand Details",
+        default="account_id",
+        help="Allow to drilldown kpis by the specified field, "
+        "it need to be activated in each kpi. You should use "
+        "style configuration to hide null.",
+    )
+
     @api.depends("kpi_ids", "subreport_ids")
     def _compute_all_kpi_ids(self):
         for rec in self:
@@ -539,10 +553,14 @@ class MisReport(models.Model):
         return new
 
     # TODO: kpi name cannot be start with query name
-
     def prepare_kpi_matrix(self, multi_company=False):
         self.ensure_one()
-        kpi_matrix = KpiMatrix(self.env, multi_company, self.account_model)
+        auto_expand_model = self.move_lines_source.field_id.filtered(
+            lambda f: f.name == self.auto_expand_col_name
+        ).mapped("relation")
+        kpi_matrix = KpiMatrix(
+            self.env, multi_company, auto_expand_model[0] if auto_expand_model else None
+        )
         for kpi in self.kpi_ids:
             kpi_matrix.declare_kpi(kpi)
         return kpi_matrix
@@ -748,21 +766,23 @@ class MisReport(models.Model):
                 ):
                     continue
 
-                for (
-                    account_id,
-                    vals,
-                    drilldown_args,
-                    _name_error,
-                ) in expression_evaluator.eval_expressions_by_account(
-                    expressions, locals_dict
-                ):
+                rdis = expression_evaluator.eval_expressions_by_row_detail(
+                    expressions, locals_dict  # , self.auto_expand_col_name
+                )
+                for (rdi, vals, drilldown_args, _name_error) in rdis:
                     for drilldown_arg in drilldown_args:
                         if not drilldown_arg:
                             continue
                         drilldown_arg["period_id"] = col_key
                         drilldown_arg["kpi_id"] = kpi.id
+                        drilldown_arg[
+                            "auto_expand_col_name"
+                        ] = self.auto_expand_col_name
+                        drilldown_arg["auto_expand_id"] = rdi
+                    if not self._should_display_auto_expand(kpi, rdi, vals):
+                        continue
                     kpi_matrix.set_values_detail_account(
-                        kpi, col_key, account_id, vals, drilldown_args
+                        kpi, col_key, rdi, vals, drilldown_args
                     )
 
             if len(recompute_queue) == 0:
@@ -880,7 +900,7 @@ class MisReport(models.Model):
         )
 
         # use AEP to do the accounting queries
-        expression_evaluator.aep_do_queries()
+        expression_evaluator.aep_do_queries(self.auto_expand_col_name)
 
         self._declare_and_compute_col(
             expression_evaluator,
@@ -1001,3 +1021,6 @@ class MisReport(models.Model):
             no_auto_expand_accounts=True,
         )
         return locals_dict
+
+    def _should_display_auto_expand(self, kpi, rdi, vals):
+        return True

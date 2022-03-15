@@ -887,6 +887,10 @@ class MisReportInstance(models.Model):
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())
+            if arg.get("auto_expand_id") and arg.get("auto_expand_col_name"):
+                domain.extend(
+                    [(arg.get("auto_expand_col_name"), "=", arg.get("auto_expand_id"))]
+                )
             return {
                 "name": self._get_drilldown_action_name(arg),
                 "domain": domain,

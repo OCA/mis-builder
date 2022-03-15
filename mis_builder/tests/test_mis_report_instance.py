@@ -376,22 +376,22 @@ class TestMisReportInstance(common.HttpCase):
                 "company_ids": [(6, 0, self.report_instance.company_id.ids)],
             }
         )
+        self.report_instance.report_id.write({"auto_expand_col_name": "account_id"})
         self.report_instance.report_id.kpi_ids.write({"auto_expand_accounts": True})
         matrix = self.report_instance._compute_matrix()
         for row in matrix.iter_rows():
-            if row.account_id:
-                account = self.env["account.account"].browse(row.account_id)
+            if row.row_detail_identifier:
+                account = self.env["account.account"].browse(row.row_detail_identifier)
                 self.assertEqual(
                     row.label,
-                    "%s %s [%s]"
-                    % (account.code, account.name, account.company_id.name),
+                    "%s [%s]" % (account.name_get()[0][1], account.company_id.name),
                 )
         self.report_instance.write({"multi_company": False})
         matrix = self.report_instance._compute_matrix()
         for row in matrix.iter_rows():
-            if row.account_id:
-                account = self.env["account.account"].browse(row.account_id)
-                self.assertEqual(row.label, "{} {}".format(account.code, account.name))
+            if row.row_detail_identifier:
+                account = self.env["account.account"].browse(row.row_detail_identifier)
+                self.assertEqual(row.label, account.name_get()[0][1])
 
     def test_evaluate(self):
         company = self.env.ref("base.main_company")
