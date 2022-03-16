@@ -8,40 +8,7 @@
 
 # MIS Builder
 
-Management Information System reports for Odoo: easily build super fast,
-beautiful, custom reports such as P&L, Balance Sheets and more.
-
-**This is the 15.0 branch. Please note the development of new features occurs mainly on
-the 13.0 branch, to be forward-ported to 14.0 and 15.0. Please submit pull requests to
-the 13.0 branch in priority, unless they are 14.0 specific bugs, or they rely on Odoo
-features that are not present in 13.0.**
-
-This project implements a class of reports where KPI (Key Performance Indicators)
-are displayed in rows, and time periods in columns. It focuses on very fast reporting
-on accounting data but can also use data from any other Odoo model.
-
-It features the following key characteristics:
-
-- User configurable: end users can create new report templates without development,
-  using simple Excel-like formulas.
-- Very fast balance reporting for accounting data, even on million lines databases
-  and very complex account charts.
-- Use the same template for different reports.
-- Compare data over different time periods.
-- User-configurable styles, rendered perfectly in the UI as well as Excel and PDF exports.
-- Interactive display with drill-down.
-- Export to PDF and Excel.
-- A budgeting module.
-- Evaluate KPI over various data sources, such as actuals, simulation, committed costs
-  (some custom development is required to create the data source).
-- For developers, the accounting balance computation engine is exposed as an easy
-  to use API.
-
-Here are some presentations:
-
-- Odoo Experience 2017 ([slides](https://www.slideshare.net/acsone/budget-control-with-misbuilder-3-2017), [video](https://youtu.be/0PpxGAf2l-0))
-- Odoo Experience 2016 ([slides](https://www.slideshare.net/acsone/misbuilder-2016))
-- Odoo Experience 2015 ([slides](https://www.slideshare.net/acsone/misbuilder))
+None
 
 <!-- /!\ do not modify below this line -->
 
@@ -49,13 +16,7 @@ Here are some presentations:
 
 [//]: # (addons)
 
-Available addons
-----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[mis_builder](mis_builder/) | 15.0.4.0.3 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 15.0.4.0.1 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 15.0.3.1.1 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Demo addon for MIS Builder
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
 
 [//]: # (end addons)
 

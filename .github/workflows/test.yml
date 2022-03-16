@@ -17,9 +17,10 @@ jobs:
       - run: |
           for reqfile in requirements.txt test-requirements.txt ; do
               if [ -f ${reqfile} ] ; then
+                  result=0
                   # reject non-comment lines that contain a / (i.e. URLs, relative paths)
-                  grep "^[^#].*/" ${reqfile}
-                  if [ $? -eq 0 ] ; then
+                  grep "^[^#].*/" ${reqfile} || result=$?
+                  if [ $result -eq 0 ] ; then
                       echo "Unreleased dependencies found in ${reqfile}."
                       exit 1
                   fi
