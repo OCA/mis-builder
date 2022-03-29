@@ -33,8 +33,8 @@ class MisBuilderXlsx(models.AbstractModel):
         style_obj = self.env["mis.report.style"]
 
         # create worksheet
-        report_name = u"{} - {}".format(
-            objects[0].name, u", ".join([a.name for a in objects[0].query_company_ids])
+        report_name = "{} - {}".format(
+            objects[0].name, ", ".join([a.name for a in objects[0].query_company_ids])
         )
         sheet = workbook.add_worksheet(report_name[:31])
         row_pos = 0
