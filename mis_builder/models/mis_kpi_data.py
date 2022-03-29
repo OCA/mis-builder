@@ -62,7 +62,7 @@ class MisKpiData(models.AbstractModel):
                 subkpi_name = "." + subkpi_name
             else:
                 subkpi_name = ""
-            rec.name = u"{}{}: {} - {}".format(
+            rec.name = "{}{}: {} - {}".format(
                 rec.kpi_expression_id.kpi_id.name,
                 subkpi_name,
                 rec.date_from,
