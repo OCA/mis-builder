@@ -64,7 +64,7 @@ class TestMisBudgetByAccount(SavepointCase):
         )
 
     def test_basic(self):
-        """ Sum all budget items in period """
+        """Sum all budget items in period"""
         aep = self.report._prepare_aep(self.env.ref("base.main_company"))
         ee = ExpressionEvaluator(
             aep=aep,
