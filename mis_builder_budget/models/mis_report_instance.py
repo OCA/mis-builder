@@ -22,9 +22,17 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
         self.kpi_data = kpi_data
 
     def eval_expressions(self, expressions, locals_dict):
-        kpi_id = expressions.mapped("kpi_id")
-        assert len(kpi_id) == 1
-        if kpi_id.budgetable:
+        # find the kpi (expressions may be a list)
+        if expressions and expressions[0] is not None:
+            expressions_obj = expressions[0]
+            for expr in expressions:
+                expressions_obj |= expr
+            kpi_id = expressions_obj.kpi_id
+            assert len(kpi_id) == 1
+        else:
+            kpi_id = False
+
+        if kpi_id and kpi_id.budgetable:
             vals = []
             drilldown_args = []
             for expression in expressions:
