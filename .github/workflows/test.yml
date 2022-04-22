@@ -55,6 +55,7 @@ jobs:
           persist-credentials: false
       - run: git --version
       - run: ls -al .git/
+      - run: git config --global --add safe.directory $PWD
       - run: git status
       - run: git config -l
       - run: git config user.name toto
