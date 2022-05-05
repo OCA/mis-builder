@@ -20,8 +20,16 @@ class MisReportSubReport(models.Model):
     _description = "MIS Report - Sub Reports Relation"
 
     name = fields.Char(required=True)
-    report_id = fields.Many2one(comodel_name="mis.report", required=True)
-    subreport_id = fields.Many2one(comodel_name="mis.report", required=True)
+    report_id = fields.Many2one(
+        comodel_name="mis.report",
+        required=True,
+        ondelete="cascade",
+    )
+    subreport_id = fields.Many2one(
+        comodel_name="mis.report",
+        required=True,
+        ondelete="restrict",
+    )
 
     _sql_constraints = [
         (
