@@ -356,7 +356,7 @@ odoo.define("mis_builder.widget", function (require) {
                     self._setFilterValue(
                         self.analytic_group_filter_name,
                         self.analytic_group_id_m2o.value.res_id,
-                        "="
+                        "child_of"
                     );
                 } else {
                     self._setFilterValue(self.analytic_group_filter_name, undefined);

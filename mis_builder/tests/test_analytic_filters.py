@@ -19,7 +19,10 @@ class TestAnalyticFilters(TransactionCase):
         mri.analytic_group_id = self.aag
         assert mri._context_with_filters().get("mis_report_filters") == {
             "analytic_account_id": {"value": aaa.id, "operator": "="},
-            "analytic_account_id.group_id": {"value": self.aag.id, "operator": "="},
+            "analytic_account_id.group_id": {
+                "value": self.aag.id,
+                "operator": "child_of",
+            },
         }
         # test _context_with_filters does nothing is a filter is already
         # in the context
@@ -112,4 +115,4 @@ class TestAnalyticFilters(TransactionCase):
             }
         )
         domain = instance_period._get_additional_move_line_filter()
-        assert domain == [("analytic_account_id.group_id", "=", self.aag.id)]
+        assert domain == [("analytic_account_id.group_id", "child_of", self.aag.id)]

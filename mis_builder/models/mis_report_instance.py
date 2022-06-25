@@ -421,7 +421,7 @@ class MisReportInstancePeriod(models.Model):
             domain.append(("analytic_account_id", "=", self.analytic_account_id.id))
         if self.analytic_group_id:
             domain.append(
-                ("analytic_account_id.group_id", "=", self.analytic_group_id.id)
+                ("analytic_account_id.group_id", "child_of", self.analytic_group_id.id)
             )
         for tag in self.analytic_tag_ids:
             domain.append(("analytic_tag_ids", "=", tag.id))
@@ -720,7 +720,7 @@ class MisReportInstance(models.Model):
         if self.analytic_group_id:
             context["mis_report_filters"]["analytic_account_id.group_id"] = {
                 "value": self.analytic_group_id.id,
-                "operator": "=",
+                "operator": "child_of",
             }
         if self.analytic_tag_ids:
             context["mis_report_filters"]["analytic_tag_ids"] = {
