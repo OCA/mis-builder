@@ -500,7 +500,7 @@ class MisReport(models.Model):
                     (0, None, {"name": False, "subkpi_id": subkpi.id})
                 )  # add empty expressions for new subkpis
             if expressions:
-                kpi.expressions_ids = expressions
+                kpi.expression_ids = expressions
 
     def get_wizard_report_action(self):
         xmlid = "mis_builder.mis_report_instance_view_action"
