@@ -1,7 +1,11 @@
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/248/11.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-mis-builder-248)
-[![Build Status](https://travis-ci.org/OCA/mis-builder.svg?branch=11.0)](https://travis-ci.org/OCA/mis-builder)
+
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&target_branch=11.0)
+[![Pre-commit Status](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml/badge.svg?branch=11.0)](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml?query=branch%3A11.0)
+[![Build Status](https://github.com/OCA/mis-builder/actions/workflows/test.yml/badge.svg?branch=11.0)](https://github.com/OCA/mis-builder/actions/workflows/test.yml?query=branch%3A11.0)
 [![codecov](https://codecov.io/gh/OCA/mis-builder/branch/11.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
-[![docs](https://media.readthedocs.org/static/projects/badges/passing.svg)](http://oca-mis-builder.readthedocs.io/en/11.0/)
+[![Translation Status](https://translation.odoo-community.org/widgets/mis-builder-11-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/mis-builder-11-0/?utm_source=widget)
+
+<!-- /!\ do not modify above this line -->
 
 # MIS Builder
 
@@ -40,25 +44,27 @@ Here are some presentations:
 - Odoo Experience 2016 ([slides](https://www.slideshare.net/acsone/misbuilder-2016))
 - Odoo Experience 2015 ([slides](https://www.slideshare.net/acsone/misbuilder))
 
+<!-- /!\ do not modify below this line -->
+
+<!-- prettier-ignore-start -->
 
 [//]: # (addons)
 
-Available addons
-----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[mis_builder](mis_builder/) | 11.0.3.6.7 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 11.0.3.5.0 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 11.0.3.1.1 | [![sbidoul](https://github.com/sbidoul.png?size=30px)](https://github.com/sbidoul) | Demo addon for MIS Builder
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
 
 [//]: # (end addons)
 
-Translation Status
-------------------
-[![Translation status](https://translation.odoo-community.org/widgets/mis-builder-11-0/-/multi-auto.svg)](https://translation.odoo-community.org/engage/mis-builder-11-0/?utm_source=widget)
+<!-- prettier-ignore-end -->
+
+## Licenses
+
+This repository is licensed under [AGPL-3.0](LICENSE).
+
+However, each module can have a totally different license, as long as they adhere to Odoo Community Association (OCA)
+policy. Consult each module's `__manifest__.py` file, which contains a `license` key
+that explains its license.
 
 ----
-
-OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
+OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
+organization whose mission is to support the collaborative development of Odoo features
+and promote its widespread use.
