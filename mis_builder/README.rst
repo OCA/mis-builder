@@ -97,6 +97,14 @@ be found on GitHub.
 Changelog
 =========
 
+14.0.4.0.6 (2022-07-19)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Support users without timezone. (`#388 <https://github.com/OCA/mis-builder/issues/388>`_)
+
+
 14.0.4.0.5 (2022-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
