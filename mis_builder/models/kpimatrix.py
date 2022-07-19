@@ -244,13 +244,13 @@ class KpiMatrix(object):
                     self.lang, row.style_props, kpi.type, val
                 )
                 if row.kpi.multi and subcol.subkpi:
-                    val_comment = u"{}.{} = {}".format(
+                    val_comment = "{}.{} = {}".format(
                         row.kpi.name,
                         subcol.subkpi.name,
                         row.kpi._get_expression_str_for_subkpi(subcol.subkpi),
                     )
                 else:
-                    val_comment = u"{} = {}".format(row.kpi.name, row.kpi.expression)
+                    val_comment = "{} = {}".format(row.kpi.name, row.kpi.expression)
             cell_style_props = row.style_props
             if row.kpi.style_expression:
                 # evaluate style expression
@@ -313,7 +313,7 @@ class KpiMatrix(object):
                     )
                 )
             if not label:
-                label = u"{} vs {}".format(col.label, base_col.label)
+                label = "{} vs {}".format(col.label, base_col.label)
             comparison_col = KpiMatrixCol(
                 cmpcol_key,
                 label,
@@ -470,9 +470,9 @@ class KpiMatrix(object):
         self._account_names = {a.id: self._get_account_name(a) for a in accounts}
 
     def _get_account_name(self, account):
-        result = u"{} {}".format(account.code, account.name)
+        result = "{} {}".format(account.code, account.name)
         if self._multi_company:
-            result = u"{} [{}]".format(result, account.company_id.name)
+            result = "{} [{}]".format(result, account.company_id.name)
         return result
 
     def get_account_name(self, account_id):
