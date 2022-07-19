@@ -1656,13 +1656,13 @@ msgid "Subreport"
 msgstr "Subrelatório"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_subreport.py:64
+#: code:addons/mis_builder/models/mis_report_subreport.py:72
 #, python-format
 msgid "Subreport loop detected"
 msgstr "Loop de subrelatório detectado"
 
 #. module: mis_builder
-#: code:addons/mis_builder/models/mis_report_subreport.py:45
+#: code:addons/mis_builder/models/mis_report_subreport.py:53
 #, python-format
 msgid "Subreport name ({}) must be a valid python identifier"
 msgstr "O nome do Subrelatório ({}) deve ser um identificador python válido"
