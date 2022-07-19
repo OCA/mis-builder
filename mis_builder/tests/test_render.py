@@ -37,150 +37,144 @@ class TestRendering(common.TransactionCase):
             return r
 
     def test_render(self):
-        self.assertEquals(u"1", self._render(1))
-        self.assertEquals(u"1", self._render(1.1))
-        self.assertEquals(u"2", self._render(1.6))
+        self.assertEqual("1", self._render(1))
+        self.assertEqual("1", self._render(1.1))
+        self.assertEqual("2", self._render(1.6))
         self.style.dp_inherit = False
         self.style.dp = 2
-        self.assertEquals(u"1.00", self._render(1))
-        self.assertEquals(u"1.10", self._render(1.1))
-        self.assertEquals(u"1.60", self._render(1.6))
-        self.assertEquals(u"1.61", self._render(1.606))
-        self.assertEquals(u"12,345.67", self._render(12345.67))
+        self.assertEqual("1.00", self._render(1))
+        self.assertEqual("1.10", self._render(1.1))
+        self.assertEqual("1.60", self._render(1.6))
+        self.assertEqual("1.61", self._render(1.606))
+        self.assertEqual("12,345.67", self._render(12345.67))
 
     def test_render_negative(self):
         # non breaking hyphen
-        self.assertEquals(u"\u20111", self._render(-1))
+        self.assertEqual("\u20111", self._render(-1))
 
     def test_render_zero(self):
-        self.assertEquals(u"0", self._render(0))
-        self.assertEquals(u"", self._render(None))
-        self.assertEquals(u"", self._render(AccountingNone))
+        self.assertEqual("0", self._render(0))
+        self.assertEqual("", self._render(None))
+        self.assertEqual("", self._render(AccountingNone))
 
     def test_render_suffix(self):
         self.style.suffix_inherit = False
-        self.style.suffix = u"€"
-        self.assertEquals(u"1\xa0€", self._render(1))
-        self.style.suffix = u"k€"
+        self.style.suffix = "€"
+        self.assertEqual("1\xa0€", self._render(1))
+        self.style.suffix = "k€"
         self.style.divider_inherit = False
         self.style.divider = "1e3"
-        self.assertEquals(u"1\xa0k€", self._render(1000))
+        self.assertEqual("1\xa0k€", self._render(1000))
 
     def test_render_prefix(self):
         self.style.prefix_inherit = False
-        self.style.prefix = u"$"
-        self.assertEquals(u"$\xa01", self._render(1))
-        self.style.prefix = u"k$"
+        self.style.prefix = "$"
+        self.assertEqual("$\xa01", self._render(1))
+        self.style.prefix = "k$"
         self.style.divider_inherit = False
         self.style.divider = "1e3"
-        self.assertEquals(u"k$\xa01", self._render(1000))
+        self.assertEqual("k$\xa01", self._render(1000))
 
     def test_render_divider(self):
         self.style.divider_inherit = False
         self.style.divider = "1e3"
         self.style.dp_inherit = False
         self.style.dp = 0
-        self.assertEquals(u"1", self._render(1000))
+        self.assertEqual("1", self._render(1000))
         self.style.divider = "1e6"
         self.style.dp = 3
-        self.assertEquals(u"0.001", self._render(1000))
+        self.assertEqual("0.001", self._render(1000))
         self.style.divider = "1e-3"
         self.style.dp = 0
-        self.assertEquals(u"1,000", self._render(1))
+        self.assertEqual("1,000", self._render(1))
         self.style.divider = "1e-6"
         self.style.dp = 0
-        self.assertEquals(u"1,000,000", self._render(1))
+        self.assertEqual("1,000,000", self._render(1))
 
     def test_render_pct(self):
-        self.assertEquals(u"100\xa0%", self._render(1, TYPE_PCT))
-        self.assertEquals(u"50\xa0%", self._render(0.5, TYPE_PCT))
+        self.assertEqual("100\xa0%", self._render(1, TYPE_PCT))
+        self.assertEqual("50\xa0%", self._render(0.5, TYPE_PCT))
         self.style.dp_inherit = False
         self.style.dp = 2
-        self.assertEquals(u"51.23\xa0%", self._render(0.5123, TYPE_PCT))
+        self.assertEqual("51.23\xa0%", self._render(0.5123, TYPE_PCT))
 
     def test_render_string(self):
-        self.assertEquals(u"", self._render("", TYPE_STR))
-        self.assertEquals(u"", self._render(None, TYPE_STR))
-        self.assertEquals(u"abcdé", self._render(u"abcdé", TYPE_STR))
+        self.assertEqual("", self._render("", TYPE_STR))
+        self.assertEqual("", self._render(None, TYPE_STR))
+        self.assertEqual("abcdé", self._render("abcdé", TYPE_STR))
 
     def test_compare_num_pct(self):
-        self.assertEquals((1.0, u"+100.0\xa0%"), self._compare_and_render(100, 50))
-        self.assertEquals((0.5, u"+50.0\xa0%"), self._compare_and_render(75, 50))
-        self.assertEquals((0.5, u"+50.0\xa0%"), self._compare_and_render(-25, -50))
-        self.assertEquals((1.0, u"+100.0\xa0%"), self._compare_and_render(0, -50))
-        self.assertEquals((2.0, u"+200.0\xa0%"), self._compare_and_render(50, -50))
-        self.assertEquals((-0.5, u"\u201150.0\xa0%"), self._compare_and_render(25, 50))
-        self.assertEquals((-1.0, u"\u2011100.0\xa0%"), self._compare_and_render(0, 50))
-        self.assertEquals(
-            (-2.0, u"\u2011200.0\xa0%"), self._compare_and_render(-50, 50)
+        self.assertEqual((1.0, "+100.0\xa0%"), self._compare_and_render(100, 50))
+        self.assertEqual((0.5, "+50.0\xa0%"), self._compare_and_render(75, 50))
+        self.assertEqual((0.5, "+50.0\xa0%"), self._compare_and_render(-25, -50))
+        self.assertEqual((1.0, "+100.0\xa0%"), self._compare_and_render(0, -50))
+        self.assertEqual((2.0, "+200.0\xa0%"), self._compare_and_render(50, -50))
+        self.assertEqual((-0.5, "\u201150.0\xa0%"), self._compare_and_render(25, 50))
+        self.assertEqual((-1.0, "\u2011100.0\xa0%"), self._compare_and_render(0, 50))
+        self.assertEqual((-2.0, "\u2011200.0\xa0%"), self._compare_and_render(-50, 50))
+        self.assertEqual((-0.5, "\u201150.0\xa0%"), self._compare_and_render(-75, -50))
+        self.assertEqual(
+            (AccountingNone, ""), self._compare_and_render(50, AccountingNone)
         )
-        self.assertEquals(
-            (-0.5, u"\u201150.0\xa0%"), self._compare_and_render(-75, -50)
+        self.assertEqual((AccountingNone, ""), self._compare_and_render(50, None))
+        self.assertEqual((AccountingNone, ""), self._compare_and_render(50, 50))
+        self.assertEqual((0.002, "+0.2\xa0%"), self._compare_and_render(50.1, 50))
+        self.assertEqual((AccountingNone, ""), self._compare_and_render(50.01, 50))
+        self.assertEqual(
+            (-1.0, "\u2011100.0\xa0%"), self._compare_and_render(AccountingNone, 50)
         )
-        self.assertEquals(
-            (AccountingNone, u""), self._compare_and_render(50, AccountingNone)
+        self.assertEqual((-1.0, "\u2011100.0\xa0%"), self._compare_and_render(None, 50))
+        self.assertEqual(
+            (AccountingNone, ""), self._compare_and_render(DataError("#ERR", "."), 1)
         )
-        self.assertEquals((AccountingNone, u""), self._compare_and_render(50, None))
-        self.assertEquals((AccountingNone, u""), self._compare_and_render(50, 50))
-        self.assertEquals((0.002, u"+0.2\xa0%"), self._compare_and_render(50.1, 50))
-        self.assertEquals((AccountingNone, u""), self._compare_and_render(50.01, 50))
-        self.assertEquals(
-            (-1.0, u"\u2011100.0\xa0%"), self._compare_and_render(AccountingNone, 50)
-        )
-        self.assertEquals(
-            (-1.0, u"\u2011100.0\xa0%"), self._compare_and_render(None, 50)
-        )
-        self.assertEquals(
-            (AccountingNone, u""), self._compare_and_render(DataError("#ERR", "."), 1)
-        )
-        self.assertEquals(
-            (AccountingNone, u""), self._compare_and_render(1, DataError("#ERR", "."))
+        self.assertEqual(
+            (AccountingNone, ""), self._compare_and_render(1, DataError("#ERR", "."))
         )
 
     def test_compare_num_diff(self):
-        self.assertEquals(
-            (25, u"+25"), self._compare_and_render(75, 50, TYPE_NUM, CMP_DIFF)
+        self.assertEqual(
+            (25, "+25"), self._compare_and_render(75, 50, TYPE_NUM, CMP_DIFF)
         )
-        self.assertEquals(
-            (-25, u"\u201125"), self._compare_and_render(25, 50, TYPE_NUM, CMP_DIFF)
+        self.assertEqual(
+            (-25, "\u201125"), self._compare_and_render(25, 50, TYPE_NUM, CMP_DIFF)
         )
         self.style.suffix_inherit = False
-        self.style.suffix = u"€"
-        self.assertEquals(
-            (-25, u"\u201125\xa0€"),
+        self.style.suffix = "€"
+        self.assertEqual(
+            (-25, "\u201125\xa0€"),
             self._compare_and_render(25, 50, TYPE_NUM, CMP_DIFF),
         )
-        self.style.suffix = u""
-        self.assertEquals(
-            (50.0, u"+50"),
+        self.style.suffix = ""
+        self.assertEqual(
+            (50.0, "+50"),
             self._compare_and_render(50, AccountingNone, TYPE_NUM, CMP_DIFF),
         )
-        self.assertEquals(
-            (50.0, u"+50"), self._compare_and_render(50, None, TYPE_NUM, CMP_DIFF)
+        self.assertEqual(
+            (50.0, "+50"), self._compare_and_render(50, None, TYPE_NUM, CMP_DIFF)
         )
-        self.assertEquals(
-            (-50.0, u"\u201150"),
+        self.assertEqual(
+            (-50.0, "\u201150"),
             self._compare_and_render(AccountingNone, 50, TYPE_NUM, CMP_DIFF),
         )
-        self.assertEquals(
-            (-50.0, u"\u201150"), self._compare_and_render(None, 50, TYPE_NUM, CMP_DIFF)
+        self.assertEqual(
+            (-50.0, "\u201150"), self._compare_and_render(None, 50, TYPE_NUM, CMP_DIFF)
         )
         self.style.dp_inherit = False
         self.style.dp = 2
-        self.assertEquals(
-            (0.1, u"+0.10"), self._compare_and_render(1.1, 1.0, TYPE_NUM, CMP_DIFF)
+        self.assertEqual(
+            (0.1, "+0.10"), self._compare_and_render(1.1, 1.0, TYPE_NUM, CMP_DIFF)
         )
-        self.assertEquals(
-            (AccountingNone, u""),
+        self.assertEqual(
+            (AccountingNone, ""),
             self._compare_and_render(1.001, 1.0, TYPE_NUM, CMP_DIFF),
         )
 
     def test_compare_pct(self):
-        self.assertEquals(
-            (0.25, u"+25\xa0pp"), self._compare_and_render(0.75, 0.50, TYPE_PCT)
+        self.assertEqual(
+            (0.25, "+25\xa0pp"), self._compare_and_render(0.75, 0.50, TYPE_PCT)
         )
-        self.assertEquals(
-            (AccountingNone, u""), self._compare_and_render(0.751, 0.750, TYPE_PCT)
+        self.assertEqual(
+            (AccountingNone, ""), self._compare_and_render(0.751, 0.750, TYPE_PCT)
         )
 
     def test_compare_pct_result_type(self):
@@ -188,16 +182,16 @@ class TestRendering(common.TransactionCase):
         result = self.style_obj.compare_and_render(
             self.lang, style_props, TYPE_PCT, CMP_DIFF, 0.75, 0.50
         )
-        self.assertEquals(result[3], TYPE_NUM)
+        self.assertEqual(result[3], TYPE_NUM)
 
     def test_merge(self):
         self.style.color = "#FF0000"
         self.style.color_inherit = False
         style_props = self.style_obj.merge([self.style])
-        self.assertEquals(style_props, {"color": "#FF0000"})
+        self.assertEqual(style_props, {"color": "#FF0000"})
         style_dict = {"color": "#00FF00", "dp": 0}
         style_props = self.style_obj.merge([self.style, style_dict])
-        self.assertEquals(style_props, {"color": "#00FF00", "dp": 0})
+        self.assertEqual(style_props, {"color": "#00FF00", "dp": 0})
         style2 = self.style_obj.create(
             dict(
                 name="teststyle2",
@@ -208,7 +202,7 @@ class TestRendering(common.TransactionCase):
             )
         )
         style_props = self.style_obj.merge([self.style, style_dict, style2])
-        self.assertEquals(style_props, {"color": "#00FF00", "dp": 1})
+        self.assertEqual(style_props, {"color": "#00FF00", "dp": 1})
 
     def test_css(self):
         self.style.color_inherit = False
@@ -229,7 +223,7 @@ class TestRendering(common.TransactionCase):
         self.style.indent_level = 2
         style_props = self.style_obj.merge([self.style])
         css = self.style_obj.to_css_style(style_props)
-        self.assertEquals(
+        self.assertEqual(
             css,
             "font-style: italic; "
             "font-weight: bold; "
@@ -239,7 +233,7 @@ class TestRendering(common.TransactionCase):
             "text-indent: 2em",
         )
         css = self.style_obj.to_css_style(style_props, no_indent=True)
-        self.assertEquals(
+        self.assertEqual(
             css,
             "font-style: italic; "
             "font-weight: bold; "
@@ -269,53 +263,53 @@ class TestRendering(common.TransactionCase):
         self.style.indent_level = 2
         style_props = self.style_obj.merge([self.style])
         xlsx = self.style_obj.to_xlsx_style(TYPE_NUM, style_props)
-        self.assertEquals(
+        self.assertEqual(
             xlsx,
             {
                 "italic": True,
                 "bold": True,
                 "size": 9,
-                "font_color": u"#FF0000",
-                "bg_color": u"#0000FF",
-                "num_format": u'"p "#,##0.00" s"',
+                "font_color": "#FF0000",
+                "bg_color": "#0000FF",
+                "num_format": '"p "#,##0.00" s"',
                 "indent": 2,
             },
         )
         xlsx = self.style_obj.to_xlsx_style(TYPE_NUM, style_props, no_indent=True)
-        self.assertEquals(
+        self.assertEqual(
             xlsx,
             {
                 "italic": True,
                 "bold": True,
                 "size": 9,
-                "font_color": u"#FF0000",
-                "bg_color": u"#0000FF",
-                "num_format": u'"p "#,##0.00" s"',
+                "font_color": "#FF0000",
+                "bg_color": "#0000FF",
+                "num_format": '"p "#,##0.00" s"',
             },
         )
         # percent type ignore prefix and suffix
         xlsx = self.style_obj.to_xlsx_style(TYPE_PCT, style_props, no_indent=True)
-        self.assertEquals(
+        self.assertEqual(
             xlsx,
             {
                 "italic": True,
                 "bold": True,
                 "size": 9,
-                "font_color": u"#FF0000",
-                "bg_color": u"#0000FF",
-                "num_format": u"0.00%",
+                "font_color": "#FF0000",
+                "bg_color": "#0000FF",
+                "num_format": "0.00%",
             },
         )
 
         # str type have no num_format style
         xlsx = self.style_obj.to_xlsx_style(TYPE_STR, style_props, no_indent=True)
-        self.assertEquals(
+        self.assertEqual(
             xlsx,
             {
                 "italic": True,
                 "bold": True,
                 "size": 9,
-                "font_color": u"#FF0000",
-                "bg_color": u"#0000FF",
+                "font_color": "#FF0000",
+                "bg_color": "#0000FF",
             },
         )
