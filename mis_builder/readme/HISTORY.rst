@@ -1,3 +1,11 @@
+12.0.3.7.7 (2022-07-19)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Support users without timezone. (`#388 <https://github.com/OCA/mis-builder/issues/388>`_)
+
+
 12.0.3.7.6 (2022-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
