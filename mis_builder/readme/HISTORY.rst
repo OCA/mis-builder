@@ -1,12 +1,9 @@
 14.0.4.0.5 (2022-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-**Features**
+**Bugfixes**
 
-- A mis.report.subreport record is a dependency between a report and a subreport.
-  ONDELETE is now set on these fields, so that if you delete a mis.report:
-  (1) If the report depends on other reports, the dependencies will be deleted.
-  (2) If other reports depend on the report, raise restrict error. (`#431 <https://github.com/OCA/mis-builder/issues/431>`_)
+- Allow deleting a report that has subreports. (`#431 <https://github.com/OCA/mis-builder/issues/431>`_)
 
 
 14.0.4.0.2 (2022-02-16)
