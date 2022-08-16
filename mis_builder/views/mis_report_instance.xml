@@ -220,6 +220,7 @@
         parent="account.menu_finance_reports"
         name="MIS Reporting"
         sequence="101"
+        groups="account.group_account_user"
     />
     <menuitem
         id="mis_report_instance_view_menu"
