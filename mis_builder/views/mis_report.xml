@@ -310,7 +310,6 @@
         parent="account.menu_finance_configuration"
         name="MIS Reporting"
         sequence="90"
-        groups="account.group_account_user"
     />
     <menuitem
         id="mis_report_view_menu"
