@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2019-12-20 04:05+0000\n"
-"Last-Translator: Eder Brito <britoederr@gmail.com>\n"
+"PO-Revision-Date: 2022-09-22 17:07+0000\n"
+"Last-Translator: Douglas Custódio <douglascstd@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_abstract.py:0
@@ -72,7 +72,7 @@ msgstr ""
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__allow_items_overlap
 msgid "Allow Items Overlap"
-msgstr ""
+msgstr "Permitir Sobreposição de Itens"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__amount
@@ -102,9 +102,8 @@ msgstr "Contar Anexo"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__balance
-#, fuzzy
 msgid "Balance"
-msgstr "Cancelar"
+msgstr "Balanço"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__budget_id
@@ -130,13 +129,12 @@ msgstr "Data do Orçamento Até"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__source_mis_budget_by_account_id
 msgid "Budget by Account"
-msgstr ""
+msgstr "Orçamento por Conta"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__source_mis_budget_id
-#, fuzzy
 msgid "Budget by KPI"
-msgstr "Orçamento"
+msgstr "Orçamento por KPI"
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
@@ -172,9 +170,8 @@ msgstr "Empresa"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__company_currency_id
-#, fuzzy
 msgid "Company Currency"
-msgstr "Empresa"
+msgstr "Moeda da Empresa"
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
@@ -208,7 +205,7 @@ msgstr "Criado em"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__credit
 msgid "Credit"
-msgstr ""
+msgstr "Crédito"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__date
@@ -228,7 +225,7 @@ msgstr "Período"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__debit
 msgid "Debit"
-msgstr ""
+msgstr "Débito"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__description
@@ -322,7 +319,7 @@ msgstr "Se selecionado, novas mensagens exigirão sua atenção."
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__allow_items_overlap
 msgid "If checked, overlap between budget items is allowed"
-msgstr ""
+msgstr "Se marcado, a sobreposição entre itens do orçamento é permitida"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
@@ -430,35 +427,31 @@ msgstr "Itens do Orçamento SIG"
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account
 #: model:ir.model.fields.selection,name:mis_builder_budget.selection__mis_report_instance_period__source__mis_budget_by_account
-#, fuzzy
 msgid "MIS Budget by Account"
-msgstr "Item do Orçamento SIG"
+msgstr "Orçamento SIG por Conta"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget
 #: model:ir.model.fields.selection,name:mis_builder_budget.selection__mis_report_instance_period__source__mis_budget
-#, fuzzy
 msgid "MIS Budget by KPI"
-msgstr "Item do Orçamento SIG"
+msgstr "Orçamento SIG por KPI"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_menu
-#, fuzzy
 msgid "MIS Budgets (by KPIs)"
-msgstr "Itens do Orçamento SIG"
+msgstr "Orçamentos SIG (por KPIs)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_act_window
 #: model:ir.ui.menu,name:mis_builder_budget.mis_budget_by_account_menu
-#, fuzzy
 msgid "MIS Budgets (by accounts)"
-msgstr "Itens do Orçamento SIG"
+msgstr "Orçamentos SIG (por contas)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance
 msgid "MIS Report Instance"
-msgstr "Instância de Relatório SIG"
+msgstr "Instância do Relatório SIG"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_report_instance_period
@@ -521,9 +514,8 @@ msgstr "Número de Ações"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_error_counter
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_error_counter
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_error_counter
-#, fuzzy
 msgid "Number of errors"
-msgstr "Número de erro"
+msgstr "Número de erros"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_needaction_counter
@@ -550,9 +542,8 @@ msgstr "Número de mensagens não lidas"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_sms_error
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
-#, fuzzy
 msgid "SMS Delivery error"
-msgstr "Erro de Entrega de Mensagem"
+msgstr "Erro na Entrega de SMS"
 
 #. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
@@ -604,7 +595,7 @@ msgstr "Contagem de Mensagens Não Lidas"
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account_item__company_currency_id
 msgid "Utility field to express amount currency"
-msgstr ""
+msgstr "Campo útil para expressar a quantidade em moeda"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__website_message_ids
@@ -626,12 +617,16 @@ msgid ""
 "Wrong credit or debit value in budget item! Credit and debit should be "
 "positive."
 msgstr ""
+"Valor errado de crédito ou débito no item do orçamento! Crédito e débito "
+"devem ser positivos."
 
 #. module: mis_builder_budget
 #: model:ir.model.constraint,message:mis_builder_budget.constraint_mis_budget_by_account_item_credit_debit1
 msgid ""
 "Wrong credit or debit value in budget item! Credit or debit should be zero."
 msgstr ""
+"Valor errado de crédito ou débito no item do orçamento! Crédito e débito "
+"devem ser zero."
 
 #~ msgid "Actuals"
 #~ msgstr "Reais"
