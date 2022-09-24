@@ -471,9 +471,9 @@ class KpiMatrix(object):
         rdi_ids = list(rdi_ids)
         if UNCLASSIFIED_ROW_DETAIL in rdi_ids:
             rdi_ids.remove(UNCLASSIFIED_ROW_DETAIL)
-        rdis = self._rdi_model.search([("id", "in", rdi_ids)])
+        rdis = self._rdi_model.with_context(test_active=False).search([("id", "in", rdi_ids)])
         self._rdi_names = {rdi.id: self._get_rdi_name(rdi) for rdi in rdis}
-        self._rdi_names[UNCLASSIFIED_ROW_DETAIL] = _("Other")
+        self._rdi_names[UNCLASSIFIED_ROW_DETAIL] = _("(not set)")
 
     def _get_rdi_name(self, rdi):
         result = rdi.name_get()[0][1]

@@ -381,7 +381,7 @@ class TestMisReportInstance(common.HttpCase):
         matrix = self.report_instance._compute_matrix()
         for row in matrix.iter_rows():
             if row.row_detail_identifier:
-                account = self.env["account.account"].browse(row.row_detail_identifier)
+                account = self.env[row.row_detail_model].browse(row.row_detail_identifier)
                 self.assertEqual(
                     row.label,
                     "%s [%s]" % (account.name_get()[0][1], account.company_id.name),
@@ -390,7 +390,7 @@ class TestMisReportInstance(common.HttpCase):
         matrix = self.report_instance._compute_matrix()
         for row in matrix.iter_rows():
             if row.row_detail_identifier:
-                account = self.env["account.account"].browse(row.row_detail_identifier)
+                account = self.env[row.row_detail_model].browse(row.row_detail_identifier)
                 self.assertEqual(row.label, account.name_get()[0][1])
 
     def test_evaluate(self):
