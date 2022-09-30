@@ -20,16 +20,16 @@ class TestRendering(common.TransactionCase):
             .search([("code", "=", "en_US")])[0]
         )
 
-    def _render(self, value, type=TYPE_NUM):
+    def _render(self, value, var_type=TYPE_NUM):
         style_props = self.style_obj.merge([self.style])
-        return self.style_obj.render(self.lang, style_props, type, value)
+        return self.style_obj.render(self.lang, style_props, var_type, value)
 
     def _compare_and_render(
-        self, value, base_value, type=TYPE_NUM, compare_method=CMP_PCT
+        self, value, base_value, var_type=TYPE_NUM, compare_method=CMP_PCT
     ):
         style_props = self.style_obj.merge([self.style])
         r = self.style_obj.compare_and_render(
-            self.lang, style_props, type, compare_method, value, base_value
+            self.lang, style_props, var_type, compare_method, value, base_value
         )[:2]
         if r[0]:
             return (round(r[0], 8), r[1])
