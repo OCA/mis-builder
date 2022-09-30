@@ -263,7 +263,7 @@ class AccountingExpressionProcessor(object):
             domain = [
                 "|",
                 ("date", ">=", fields.Date.to_string(fy_date_from)),
-                ("account_id.user_type_id.include_initial_balance", "=", True),
+                ("account_id.include_initial_balance", "=", True),
             ]
             if mode == self.MODE_INITIAL:
                 domain.append(("date", "<", date_from))
@@ -278,7 +278,7 @@ class AccountingExpressionProcessor(object):
             ]
             domain = [
                 ("date", "<", fields.Date.to_string(fy_date_from)),
-                ("account_id.user_type_id.include_initial_balance", "=", False),
+                ("account_id.include_initial_balance", "=", False),
             ]
         return expression.normalize_domain(domain)
 

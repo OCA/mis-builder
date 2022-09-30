@@ -7,13 +7,13 @@ odoo.define("mis_builder.widget", function (require) {
     var AbstractField = require("web.AbstractField");
     var StandaloneFieldManagerMixin = require("web.StandaloneFieldManagerMixin");
     var field_registry = require("web.field_registry");
-    var relational_fields = require("web.relational_fields");
+    var basic_fields = require("web.basic_fields");
     var BasicModel = require("web.BasicModel");
 
-    var core = require("web.core");
+    // Var core = require("web.core");
     var session = require("web.session");
 
-    var _t = core._t;
+    // Var _t = core._t;
 
     var MisReportWidget = AbstractField.extend(StandaloneFieldManagerMixin, {
         template: "MisReportWidgetTemplate",
@@ -31,31 +31,32 @@ odoo.define("mis_builder.widget", function (require) {
             self._super.apply(self, arguments);
             StandaloneFieldManagerMixin.init.call(self);
             self.model = new BasicModel(self); // For FieldManagerMixin
-            self.analytic_account_id_domain = []; // TODO unused for now
-            self.analytic_account_id_label = _t("Analytic Account Filter");
-            self.analytic_account_id_m2o = undefined; // Field widget
-            self.analytic_group_id_domain = []; // TODO unused for now
-            self.analytic_group_filter_name = "analytic_account_id.group_id";
-            self.analytic_group_id_label = _t("Analytic Account Group");
-            self.analytic_group_id_m2o = undefined; // Field widget
-            self.analytic_tag_ids_domain = []; // TODO unused for now
-            self.analytic_tag_ids_label = _t("Analytic Tags Filter");
-            self.analytic_tag_ids_m2m = undefined; // Field widget
+            // TODO
+            // self.analytic_account_id_domain = []; // TODO unused for now
+            // self.analytic_account_id_label = _t("Analytic Account Filter");
+            self.analytic_distribution = undefined; // Field widget
+            // self.analytic_group_id_domain = []; // TODO unused for now
+            // self.analytic_group_filter_name = "analytic_account_id.group_id";
+            // self.analytic_group_id_label = _t("Analytic Account Group");
+            // self.analytic_group_id_m2o = undefined; // Field widget
+            // self.analytic_tag_ids_domain = []; // TODO unused for now
+            // self.analytic_tag_ids_label = _t("Analytic Tags Filter");
+            // self.analytic_tag_ids_m2m = undefined; // Field widget
             self.mis_report_data = undefined;
             self.show_settings = false;
             self.has_group_analytic_accounting = false;
-            self.has_group_analytic_tags = false;
+            // Self.has_group_analytic_tags = false;
             self.hide_analytic_filters = false;
         },
 
         _getFilterValue: function (name) {
-            var filters = this.getParent().state.context.mis_report_filters || {};
+            var filters = session.user_context.mis_report_filters || {};
             var filter = filters[name] || {};
             return filter.value;
         },
 
         _setFilterValue: function (name, value, operator) {
-            var context = this.getParent().state.context;
+            var context = session.user_context;
             var filters = undefined;
             if (context.mis_report_filters === undefined) {
                 filters = {};
@@ -90,7 +91,7 @@ odoo.define("mis_builder.widget", function (require) {
              * of Odoo dashboards that are not designed to contain forms but
              * rather tree views or charts.
              */
-            var context = this.getParent().state.context;
+            var context = session.user_context;
             if (context.active_model === "mis.report.instance") {
                 return context.active_id;
             }
@@ -104,7 +105,7 @@ odoo.define("mis_builder.widget", function (require) {
          */
         willStart: function () {
             var self = this;
-            var context = self.getParent().state.context;
+            var context = session.user_context;
 
             var def1 = self
                 ._rpc({
@@ -129,13 +130,13 @@ odoo.define("mis_builder.widget", function (require) {
                     self.has_group_analytic_accounting = result;
                 });
 
-            var def4 = session
-                .user_has_group("analytic.group_analytic_tags")
-                .then(function (result) {
-                    self.has_group_analytic_tags = result;
-                });
+            // Var def4 = session
+            //     .user_has_group("analytic.group_analytic_tags")
+            //     .then(function (result) {
+            //         self.has_group_analytic_tags = result;
+            //     });
 
-            var def5 = self
+            var def4 = self
                 ._rpc({
                     model: "mis.report.instance",
                     method: "read",
@@ -146,14 +147,7 @@ odoo.define("mis_builder.widget", function (require) {
                     self.hide_analytic_filters = result[0].hide_analytic_filters;
                 });
 
-            return $.when(
-                this._super.apply(this, arguments),
-                def1,
-                def2,
-                def3,
-                def4,
-                def5
-            );
+            return $.when(this._super.apply(this, arguments), def1, def2, def3, def4);
         },
 
         start: function () {
@@ -173,24 +167,9 @@ odoo.define("mis_builder.widget", function (require) {
             var fields = [];
             if (self.has_group_analytic_accounting) {
                 fields.push({
-                    relation: "account.analytic.account",
-                    type: "many2one",
-                    name: "filter_analytic_account_id",
-                    value: self._getFilterValue("analytic_account_id"),
-                });
-                fields.push({
-                    relation: "account.analytic.group",
-                    type: "many2one",
-                    name: "filter_analytic_account_id.group_id",
-                    value: self._getFilterValue("analytic_account_id.group_id"),
-                });
-            }
-            if (self.has_group_analytic_tags) {
-                fields.push({
-                    relation: "account.analytic.tag",
-                    type: "many2many",
-                    name: "filter_analytic_tag_ids",
-                    value: self._getFilterValue("analytic_tag_ids"),
+                    type: "char",
+                    name: "filter_analytic_distribution",
+                    value: self._getFilterValue("analytic_distribution"),
                 });
             }
             return fields;
@@ -215,73 +194,18 @@ odoo.define("mis_builder.widget", function (require) {
             var self = this;
 
             if (self.has_group_analytic_accounting) {
-                self.analytic_account_id_m2o = new relational_fields.FieldMany2One(
+                self.analytic_distribution = new basic_fields.FieldChar(
                     self,
-                    "filter_analytic_account_id",
+                    "analytic_distribution",
                     record,
-                    {
-                        mode: "edit",
-                        attrs: {
-                            placeholder: self.analytic_account_id_label,
-                            options: {
-                                no_create: "True",
-                                no_open: "True",
-                            },
-                        },
-                    }
+                    {mode: "edit"}
                 );
                 self._registerWidget(
                     record.id,
-                    self.analytic_account_id_m2o.name,
-                    self.analytic_account_id_m2o
+                    self.analytic_distribution.name,
+                    self.analytic_distribution
                 );
-                self.analytic_account_id_m2o.appendTo(self.getMisBuilderFilterBox());
-
-                self.analytic_group_id_m2o = new relational_fields.FieldMany2One(
-                    self,
-                    "filter_analytic_account_id.group_id",
-                    record,
-                    {
-                        mode: "edit",
-                        attrs: {
-                            placeholder: self.analytic_group_id_label,
-                            options: {
-                                no_create: "True",
-                                no_open: "True",
-                            },
-                        },
-                    }
-                );
-                self._registerWidget(
-                    record.id,
-                    self.analytic_group_id_m2o.name,
-                    self.analytic_group_id_m2o
-                );
-                self.analytic_group_id_m2o.appendTo(self.getMisBuilderFilterBox());
-            }
-
-            if (self.has_group_analytic_tags) {
-                self.analytic_tag_ids_m2m = new relational_fields.FieldMany2ManyTags(
-                    self,
-                    "filter_analytic_tag_ids",
-                    record,
-                    {
-                        mode: "edit",
-                        attrs: {
-                            placeholder: self.analytic_tag_ids_label,
-                            options: {
-                                no_create: "True",
-                                no_open: "True",
-                            },
-                        },
-                    }
-                );
-                self._registerWidget(
-                    record.id,
-                    self.analytic_tag_ids_m2m.name,
-                    self.analytic_tag_ids_m2m
-                );
-                self.analytic_tag_ids_m2m.appendTo(self.getMisBuilderFilterBox());
+                self.analytic_distribution.appendTo(self.getMisBuilderFilterBox());
             }
         },
 
@@ -339,42 +263,15 @@ odoo.define("mis_builder.widget", function (require) {
                 arguments
             );
 
-            if (self.analytic_account_id_m2o !== undefined) {
-                if (self.analytic_account_id_m2o.value) {
+            if (self.analytic_distribution !== undefined) {
+                if (self.analytic_distribution.value) {
                     self._setFilterValue(
-                        "analytic_account_id",
-                        self.analytic_account_id_m2o.value.res_id,
+                        "analytic_distribution",
+                        self.analytic_distribution.value, // TODO
                         "="
                     );
                 } else {
-                    self._setFilterValue("analytic_account_id", undefined);
-                }
-            }
-
-            if (self.analytic_group_id_m2o !== undefined) {
-                if (self.analytic_group_id_m2o.value) {
-                    self._setFilterValue(
-                        self.analytic_group_filter_name,
-                        self.analytic_group_id_m2o.value.res_id,
-                        "="
-                    );
-                } else {
-                    self._setFilterValue(self.analytic_group_filter_name, undefined);
-                }
-            }
-
-            if (self.analytic_tag_ids_m2m !== undefined) {
-                if (
-                    self.analytic_tag_ids_m2m.value &&
-                    self.analytic_tag_ids_m2m.value.res_ids.length > 0
-                ) {
-                    self._setFilterValue(
-                        "analytic_tag_ids",
-                        self.analytic_tag_ids_m2m.value.res_ids,
-                        "all"
-                    );
-                } else {
-                    self._setFilterValue("analytic_tag_ids", undefined);
+                    self._setFilterValue("analytic_distribution", undefined);
                 }
             }
 
@@ -387,7 +284,7 @@ odoo.define("mis_builder.widget", function (require) {
 
         printPdf: function () {
             var self = this;
-            var context = self.getParent().state.context;
+            var context = session.user_context;
             this._rpc({
                 model: "mis.report.instance",
                 method: "print_pdf",
@@ -400,7 +297,7 @@ odoo.define("mis_builder.widget", function (require) {
 
         exportXls: function () {
             var self = this;
-            var context = self.getParent().state.context;
+            var context = session.user_context;
             this._rpc({
                 model: "mis.report.instance",
                 method: "export_xls",
@@ -413,7 +310,7 @@ odoo.define("mis_builder.widget", function (require) {
 
         displaySettings: function () {
             var self = this;
-            var context = self.getParent().state.context;
+            var context = session.user_context;
             this._rpc({
                 model: "mis.report.instance",
                 method: "display_settings",
@@ -426,7 +323,7 @@ odoo.define("mis_builder.widget", function (require) {
 
         drilldown: function (event) {
             var self = this;
-            var context = self.getParent().state.context;
+            var context = session.user_context;
             var drilldown = $(event.target).data("drilldown");
             this._rpc({
                 model: "mis.report.instance",
