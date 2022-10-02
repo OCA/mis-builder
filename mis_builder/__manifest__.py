@@ -40,7 +40,7 @@
         ],
     },
     "qweb": ["static/src/xml/mis_report_widget.xml"],
-    "installable": True,
+    "installable": False,
     "application": True,
     "license": "AGPL-3",
     "development_status": "Production/Stable",
