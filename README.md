@@ -1,9 +1,9 @@
 
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&target_branch=15.0)
-[![Pre-commit Status](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml/badge.svg?branch=15.0)](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml?query=branch%3A15.0)
-[![Build Status](https://github.com/OCA/mis-builder/actions/workflows/test.yml/badge.svg?branch=15.0)](https://github.com/OCA/mis-builder/actions/workflows/test.yml?query=branch%3A15.0)
-[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/15.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
-[![Translation Status](https://translation.odoo-community.org/widgets/mis-builder-15-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/mis-builder-15-0/?utm_source=widget)
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&target_branch=16.0)
+[![Pre-commit Status](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml/badge.svg?branch=16.0)](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml?query=branch%3A16.0)
+[![Build Status](https://github.com/OCA/mis-builder/actions/workflows/test.yml/badge.svg?branch=16.0)](https://github.com/OCA/mis-builder/actions/workflows/test.yml?query=branch%3A16.0)
+[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/16.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
+[![Translation Status](https://translation.odoo-community.org/widgets/mis-builder-16-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/mis-builder-16-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
@@ -11,11 +11,6 @@
 
 Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
-
-**This is the 15.0 branch. Please note the development of new features occurs mainly on
-the 13.0 branch, to be forward-ported to 14.0 and 15.0. Please submit pull requests to
-the 13.0 branch in priority, unless they are 14.0 specific bugs, or they rely on Odoo
-features that are not present in 13.0.**
 
 This project implements a class of reports where KPI (Key Performance Indicators)
 are displayed in rows, and time periods in columns. It focuses on very fast reporting
