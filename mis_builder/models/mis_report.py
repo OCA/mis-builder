@@ -475,9 +475,11 @@ class MisReport(models.Model):
     @api.depends("move_lines_source")
     def _compute_account_model(self):
         for record in self:
-            record.account_model = record.move_lines_source.field_id.filtered(
-                lambda r: r.name == "account_id"
-            ).relation
+            record.account_model = (
+                record.move_lines_source.sudo()
+                .field_id.filtered(lambda r: r.name == "account_id")
+                .relation
+            )
 
     @api.onchange("subkpi_ids")
     def _on_change_subkpi_ids(self):
