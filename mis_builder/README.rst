@@ -97,6 +97,14 @@ be found on GitHub.
 Changelog
 =========
 
+15.0.4.1.2 (2022-11-15)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix access error when previewing or printing report. (`#415 <https://github.com/OCA/mis-builder/issues/415>`_)
+
+
 15.0.4.0.5 (2022-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -625,6 +633,7 @@ Contributors
 * `CorporateHub <https://corporatehub.eu/>`__
 
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
+* Jairo Llopis (https://www.moduon.team/)
 
 Maintainers
 ~~~~~~~~~~~
