@@ -92,9 +92,8 @@ class MisReportKpi(models.Model):
         string="Expressions",
     )
 
-    # TODO : this fields should be renamed to auto_expand_details or something like this
-    auto_expand_accounts = fields.Boolean(string="Display details")
-    auto_expand_accounts_style_id = fields.Many2one(
+    auto_expand = fields.Boolean(string="Display details")
+    auto_expand_style_id = fields.Many2one(
         string="Style for details rows", comodel_name="mis.report.style", required=False
     )
     style_id = fields.Many2one(
@@ -767,7 +766,7 @@ class MisReport(models.Model):
                     continue
 
                 rdis = expression_evaluator.eval_expressions_by_row_detail(
-                    expressions, locals_dict  # , self.auto_expand_col_name
+                    expressions, locals_dict
                 )
                 for (rdi, vals, drilldown_args, _name_error) in rdis:
                     for drilldown_arg in drilldown_args:
