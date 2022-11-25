@@ -260,10 +260,19 @@ class AccountingExpressionProcessor(object):
             fy_date_from = self.companies[0].compute_fiscalyear_dates(date_from_date)[
                 "date_from"
             ]
+            account_type_ignore = (
+                self.env.ref("account.data_account_type_revenue")
+                + self.env.ref("account.data_account_type_other_income")
+                + self.env.ref("account.data_account_type_expenses")
+                + self.env.ref("account.data_account_type_depreciation")
+                + self.env.ref("account.data_account_type_direct_costs")
+            )
             domain = [
+                "|",
                 "|",
                 ("date", ">=", fields.Date.to_string(fy_date_from)),
                 ("account_id.user_type_id.include_initial_balance", "=", True),
+                ("account_id.user_type_id.id", "in", account_type_ignore.ids),
             ]
             if mode == self.MODE_INITIAL:
                 domain.append(("date", "<", date_from))
