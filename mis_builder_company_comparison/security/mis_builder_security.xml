@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--Copyright 2023 ForgeFlow S.L. - -->
+    <record id="ir_rule_mis_builder_allowed_companies" model="ir.rule">
+        <field name="model_id" ref="mis_builder.model_mis_report_instance" />
+        <field
+            name="domain_force"
+        >['|',('company_ids','=',False),('company_ids','in',[g.id for g in user.company_ids])]</field>
+        <field name="name">MIS Reports from allowed companies</field>
+        <field name="global" eval="True" />
+        <field eval="1" name="perm_unlink" />
+        <field eval="1" name="perm_write" />
+        <field eval="1" name="perm_read" />
+        <field eval="1" name="perm_create" />
+    </record>
+</odoo>
