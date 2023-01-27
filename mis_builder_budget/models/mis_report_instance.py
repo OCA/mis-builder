@@ -1,7 +1,7 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models
+from odoo import api, models
 from odoo.osv.expression import AND
 
 from odoo.addons.mis_builder.models.accounting_none import AccountingNone
@@ -21,10 +21,23 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
         )
         self.kpi_data = kpi_data
 
+    @api.model
+    def _get_kpi_for_expressions(self, expressions):
+        kpi = None
+        for expression in expressions:
+            if not expression:
+                continue
+            if kpi is None:
+                kpi = expression.kpi_id
+            else:
+                assert (
+                    kpi == expression.kpi_id
+                ), "expressions must belong to the same kpi"
+        return kpi
+
     def eval_expressions(self, expressions, locals_dict):
-        kpi_id = expressions.mapped("kpi_id")
-        assert len(kpi_id) == 1
-        if kpi_id.budgetable:
+        kpi = self._get_kpi_for_expressions(expressions)
+        if kpi and kpi.budgetable:
             vals = []
             drilldown_args = []
             for expression in expressions:
