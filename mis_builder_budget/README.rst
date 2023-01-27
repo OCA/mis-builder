@@ -85,6 +85,14 @@ be found on GitHub.
 Changelog
 =========
 
+14.0.4.0.2 (2023-01-27)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix display of budgets in presence of sub KPIs. (`#428 <https://github.com/OCA/mis-builder/issues/428>`_)
+
+
 14.0.4.0.0 (2022-01-08)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
