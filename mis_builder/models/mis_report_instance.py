@@ -633,15 +633,11 @@ class MisReportInstance(models.Model):
             filter_descriptions.append(
                 _("Analytic Account Group: %s") % analytic_group.display_name
             )
-        analytic_tag_value = filters.get("analytic_tag_ids", {}).get("value")
-        if analytic_tag_value:
-            # TODO 14 we need a test to cover this
-            analytic_tag_names = self.resolve_2many_commands(
-                "analytic_tag_ids", analytic_tag_value, ["name"]
-            )
+        analytic_tag_ids = filters.get("analytic_tag_ids", {}).get("value")
+        if analytic_tag_ids:
+            analytic_tags = self.env["account.analytic.tag"].browse(analytic_tag_ids)
             filter_descriptions.append(
-                _("Analytic Tags: %s")
-                % ", ".join([rec["name"] for rec in analytic_tag_names])
+                _("Analytic Tags: %s") % ", ".join(analytic_tags.mapped("name"))
             )
         return filter_descriptions
 
