@@ -1,3 +1,11 @@
+14.0.4.1.2 (2023-01-27)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Fix display of analytic tags in PDF and Excel reports. (`#353 <https://github.com/OCA/mis-builder/issues/353>`_)
+
+
 14.0.4.0.6 (2022-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
