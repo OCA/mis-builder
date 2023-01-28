@@ -171,16 +171,6 @@
                                     groups="base.group_multi_company"
                                     widget="many2many_tags"
                                 />
-                                <field
-                                    name="analytic_distribution_stored_char"
-                                    invisible="1"
-                                />
-                                <field
-                                    name="analytic_distribution"
-                                    widget="analytic_distribution"
-                                    groups="analytic.group_analytic_accounting"
-                                    readonly="1"
-                                />
                             </group>
                         </page>
                         <page string="Layout">
@@ -393,13 +383,6 @@
                     </group>
                 </group>
                 <group string="Filters">
-                    <field name="analytic_distribution_stored_char" invisible="1" />
-                    <field
-                        name="analytic_distribution"
-                        widget="analytic_distribution"
-                        groups="analytic.group_analytic_accounting"
-                        readonly="1"
-                    />
                 </group>
             </form>
         </field>
