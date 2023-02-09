@@ -744,6 +744,23 @@ class MisReportInstance(models.Model):
         self._add_analytic_filters_to_context(context)
         return context
 
+    @api.model
+    def get_views(self, views, options=None):
+        """
+        Override to get correct form view on dashboard
+        """
+        context = self.env.context
+        if context.get('from_dashboard') \
+            and context.get('active_model') == 'mis.report.instance':
+            view_id = self.env.ref("mis_builder." "mis_report_instance_result_view_form")
+            mis_report_form_view = view_id and [view_id.id, 'form']
+            for view in views:
+                if view and view[1] == 'form':
+                    views.remove(view)
+                    views.append(mis_report_form_view)
+        result = super().get_views(views, options)
+        return result
+
     def preview(self):
         self.ensure_one()
         view_id = self.env.ref("mis_builder." "mis_report_instance_result_view_form")

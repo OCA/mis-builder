@@ -156,7 +156,7 @@ class MisReportKpiStyle(models.Model):
 
     @api.model
     def render(self, lang, style_props, var_type, value, sign="-"):
-        if type == TYPE_NUM:
+        if var_type == TYPE_NUM:
             return self.render_num(
                 lang,
                 value,
