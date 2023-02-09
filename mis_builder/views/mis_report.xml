@@ -10,6 +10,7 @@
             </tree>
         </field>
     </record>
+
     <record model="ir.ui.view" id="mis_report_view_form">
         <field name="name">mis.report.view.form</field>
         <field name="model">mis.report</field>
@@ -102,6 +103,7 @@
             </form>
         </field>
     </record>
+
     <record id="mis_report_view_kpi_form" model="ir.ui.view">
         <field name="name">mis.report.view.kpi.form</field>
         <field name="model">mis.report.kpi</field>

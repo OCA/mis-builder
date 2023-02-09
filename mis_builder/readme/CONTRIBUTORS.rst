@@ -24,3 +24,6 @@
 * `CorporateHub <https://corporatehub.eu/>`__
 
   * Alexey Pelykh <alexey.pelykh@corphub.eu>
+* `Trobz <https://trobz.com>`_:
+    * Dzung Tran <dungtd@trobz.com>
+    * Hoang Diep <hoang@trobz.com>

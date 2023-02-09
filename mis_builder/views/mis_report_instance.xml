@@ -6,9 +6,7 @@
         <field name="priority" eval="20 " />
         <field name="arch" type="xml">
             <form string="MIS Report Result" edit="false" create="false" delete="false">
-                <group colspan="4">
-                    <field name="id" widget="mis_report_widget" nolabel="1" />
-                </group>
+                <field name="id" widget="mis_report_widget" nolabel="1" style="width:100%"/>
             </form>
         </field>
     </record>
@@ -48,7 +46,7 @@
             <form string="MIS Report Instance">
                 <sheet>
                     <field name="temporary" invisible="1" />
-                    <div class="oe_read_only oe_right oe_button_box" name="buttons">
+                    <div class="oe_right oe_button_box" name="buttons">
                         <button
                             type="object"
                             name="preview"
