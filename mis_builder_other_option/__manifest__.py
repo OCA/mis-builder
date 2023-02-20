@@ -1,0 +1,15 @@
+{
+    "name": "MIS Builder Other Option",
+    "version": "14.0.1.0.0",
+    "author": "WilldooIT Pty Ltd, " "ACSONE SA/NV, " "Odoo Community Association (OCA)",
+    "contributors": ["Michael Villamar"],
+    "license": "AGPL-3",
+    "category": "Reporting",
+    "website": "https://github.com/OCA/mis-builder",
+    "summary": "Build MIS Report with Other Option: Period Offset and Period Range",
+    "depends": ["mis_builder"],
+    "data": ["views/mis_report_views.xml"],
+    "installable": True,
+    "application": False,
+    "auto_install": False,
+}
