@@ -234,11 +234,11 @@ class TestPeriodDates(common.TransactionCase):
                 report_id=self.report.id,
                 name="k1",
                 description="kpi 1",
-                expression="""
-                    (period.with_context(period_offset=-1).date_to
-                     - period.with_context(period_offset=-1).date_from).days
-                    + 1
-                """,
+                expression=(
+                    "(period.with_context(period_offset=-1).date_to"
+                    " - period.with_context(period_offset=-1).date_from).days"
+                    "+ 1"
+                ),
             )
         )
         self.instance.date_from = "2017-01-01"
@@ -252,10 +252,11 @@ class TestPeriodDates(common.TransactionCase):
                 report_id=self.report.id,
                 name="k1",
                 description="kpi 1",
-                expression="""
-                    (period.with_context(period_range=2).date_to
-                     - period.with_context(period_range=2).date_from).days
-                    + 1""",
+                expression=(
+                    "(period.with_context(period_range=2).date_to"
+                    " - period.with_context(period_range=2).date_from).days"
+                    "+ 1"
+                ),
             )
         )
         self.instance.date_from = "2017-01-01"
