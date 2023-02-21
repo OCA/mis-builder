@@ -52,7 +52,7 @@ class MisReportInstancePeriod(models.Model):
                 period.date_from += date_utils.get_timedelta(qty, granularity)
                 if period_offset:
                     date_to = period.date_to + date_utils.get_timedelta(
-                        period_offset, granularity
+                        qty, granularity
                     )
                     period.date_to = date_utils.end_of(date_to, granularity)
 

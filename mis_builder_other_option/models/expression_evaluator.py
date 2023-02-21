@@ -33,7 +33,6 @@ class ExpressionEvaluator(OriginalExpressionEvaluator):
                 mis_options = options and mis_safe_eval(options, {}) or {}
                 if mis_options.get("period_offset") or mis_options.get("period_range"):
                     period = locals_dict["period"].with_context(mis_options)
-                    period._compute_dates()
                     aep.do_queries(
                         period.date_from,
                         period.date_to,
