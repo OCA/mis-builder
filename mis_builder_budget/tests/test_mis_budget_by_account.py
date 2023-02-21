@@ -15,11 +15,7 @@ class TestMisBudgetByAccount(TransactionCase):
         super().setUpClass()
         # create account
         account = cls.env["account.account"].create(
-            dict(
-                name="test account",
-                code="1",
-                user_type_id=cls.env.ref("account.data_account_type_revenue").id,
-            )
+            dict(name="test account", code="1", account_type="income")
         )
         # create report
         cls.report = cls.env["mis.report"].create(dict(name="test report"))
