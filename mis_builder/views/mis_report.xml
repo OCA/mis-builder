@@ -295,6 +295,18 @@
                             </group>
                         </group>
                     </page>
+                    <page string="Help (for Domain)">
+                        <div>
+                            <p>
+                                Use this tool to build the desired Domain.
+                            </p>
+                            <p>
+                                Copy and paste it in the KPI's Expression field.
+                            </p>
+                        </div>
+                        <field name='model_name' invisible='1'/>
+                        <field name="domain_string" widget="domain" options="{'model': 'model_name'}"/>
+                    </page>
                 </notebook>
             </form>
         </field>

@@ -1794,6 +1794,21 @@ msgstr ""
 msgid "xx-small"
 msgstr ""
 
+#. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid "Help (for Domain)"
+msgstr "Help (per il Domain)"
+
+#. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid "Use this tool to build the desired Domain."
+msgstr "Usa questo strumento per costruire il Domain desiderato."
+
+#. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
+msgid "Copy and paste it in the KPI's Expression field."
+msgstr "Copialo ed incollalo nel campo Espressione dei KPI."
+
 #~ msgid "Account model"
 #~ msgstr "Modello contabile"
 
