@@ -42,7 +42,7 @@
                         <tr
                             t-foreach="state.mis_report_data.header"
                             t-as="row"
-                            t-key="_index"
+                            t-key="row_index"
                             class="oe_list_header_columns"
                         >
                             <th class="oe_list_header_char">
@@ -51,7 +51,7 @@
                             <th
                                 t-foreach="row.cols"
                                 t-as="col"
-                                t-key="_index"
+                                t-key="col_index"
                                 class="oe_list_header_char mis_builder_collabel"
                                 t-att-colspan="col.colspan"
                             >
@@ -64,7 +64,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-foreach="state.mis_report_data.body" t-as="row" t-key="_index">
+                        <tr
+                            t-foreach="state.mis_report_data.body"
+                            t-as="row"
+                            t-key="row_index"
+                        >
                             <td t-att="{'style': row.style}">
                                 <t t-esc="row.label" />
                                 <t t-if="row.description">
@@ -75,7 +79,7 @@
                             <td
                                 t-foreach="row.cells"
                                 t-as="cell"
-                                t-key="_index"
+                                t-key="cell_index"
                                 t-att="{'style': cell.style, 'title': cell.val_c}"
                                 class="mis_builder_amount"
                             >
