@@ -691,12 +691,16 @@ class MisReportInstance(models.Model):
         Override to get correct form view on dashboard
         """
         context = self.env.context
-        if context.get('from_dashboard') \
-            and context.get('active_model') == 'mis.report.instance':
-            view_id = self.env.ref("mis_builder." "mis_report_instance_result_view_form")
-            mis_report_form_view = view_id and [view_id.id, 'form']
+        if (
+            context.get("from_dashboard")
+            and context.get("active_model") == "mis.report.instance"
+        ):
+            view_id = self.env.ref(
+                "mis_builder." "mis_report_instance_result_view_form"
+            )
+            mis_report_form_view = view_id and [view_id.id, "form"]
             for view in views:
-                if view and view[1] == 'form':
+                if view and view[1] == "form":
                     views.remove(view)
                     views.append(mis_report_form_view)
         result = super().get_views(views, options)

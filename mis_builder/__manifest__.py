@@ -30,7 +30,8 @@
     "assets": {
         "web.assets_backend": [
             "mis_builder/static/src/css/custom.css",
-            'mis_builder/static/src/components/*',
+            "mis_builder/static/src/components/mis_report_widget.esm.js",
+            "mis_builder/static/src/components/mis_report_widget.xml",
         ],
         "web.report_assets_common": [
             "/mis_builder/static/src/css/report.css",

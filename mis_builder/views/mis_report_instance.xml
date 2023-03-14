@@ -6,7 +6,12 @@
         <field name="priority" eval="20 " />
         <field name="arch" type="xml">
             <form string="MIS Report Result" edit="false" create="false" delete="false">
-                <field name="id" widget="mis_report_widget" nolabel="1" style="width:100%"/>
+                <field
+                    name="id"
+                    widget="mis_report_widget"
+                    nolabel="1"
+                    style="width:100%"
+                />
             </form>
         </field>
     </record>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <templates>
 
     <t t-name="mis_builder.MisReportWidget" owl="1">
@@ -13,15 +13,24 @@
                         style="position: relative; display: inline-block;"
                     />
                     <div class="oe_mis_builder_buttons oe_right oe_button_box">
-                        <button t-on-click="refresh" class="oe_mis_builder_refresh btn btn-sm oe_button">
+                        <button
+                            t-on-click="refresh"
+                            class="oe_mis_builder_refresh btn btn-sm oe_button"
+                        >
                             <span class="fa fa-refresh" />
                             Refresh
                         </button>
-                        <button t-on-click="printPdf" class="oe_mis_builder_print btn btn-sm oe_button">
+                        <button
+                            t-on-click="printPdf"
+                            class="oe_mis_builder_print btn btn-sm oe_button"
+                        >
                             <span class="fa fa-print" />
                             Print
                         </button>
-                        <button t-on-click="exportXls" class="oe_mis_builder_export btn btn-sm oe_button">
+                        <button
+                            t-on-click="exportXls"
+                            class="oe_mis_builder_export btn btn-sm oe_button"
+                        >
                             <span class="fa fa-download" />
                             Export
                         </button>
