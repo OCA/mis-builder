@@ -31,11 +31,6 @@
                     name="analytic_account_id"
                     groups="analytic.group_analytic_accounting"
                 />
-                <field
-                    name="analytic_tag_ids"
-                    widget="many2many_tags"
-                    groups="analytic.group_analytic_tags"
-                />
             </tree>
         </field>
     </record>

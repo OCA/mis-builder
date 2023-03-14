@@ -27,14 +27,6 @@ class MisCommittedPurchase(models.Model):
     res_id = fields.Integer(string="Resource ID")
     res_model = fields.Char(string="Resource Model Name")
 
-    analytic_tag_ids = fields.Many2many(
-        comodel_name="account.analytic.tag",
-        relation="mis_committed_purchase_tag_rel",
-        column1="mis_committed_purchase_id",
-        column2="account_analytic_tag_id",
-        string="Analytic Tags",
-    )
-
     def init(self):
         script = opj(
             dirname(dirname(__file__)), "examples", "mis_committed_purchase.sql"
@@ -42,26 +34,3 @@ class MisCommittedPurchase(models.Model):
         with open(script) as f:
             tools.drop_view_if_exists(self.env.cr, "mis_committed_purchase")
             self.env.cr.execute(f.read())
-
-            # Create many2many relation for account.analytic.tag
-            tools.drop_view_if_exists(self.env.cr, "mis_committed_purchase_tag_rel")
-            self.env.cr.execute(
-                """
-            CREATE OR REPLACE VIEW mis_committed_purchase_tag_rel AS
-            (SELECT
-                po_mcp.id AS mis_committed_purchase_id,
-                po_rel.account_analytic_tag_id AS account_analytic_tag_id
-            FROM account_analytic_tag_purchase_order_line_rel AS po_rel
-            INNER JOIN mis_committed_purchase AS po_mcp ON
-                po_mcp.res_id = po_rel.purchase_order_line_id
-            WHERE po_mcp.res_model = 'purchase.order.line'
-            UNION ALL
-            SELECT
-                inv_mcp.id AS mis_committed_purchase_id,
-                inv_rel.account_analytic_tag_id AS account_analytic_tag_id
-            FROM account_analytic_tag_account_move_line_rel AS inv_rel
-            INNER JOIN mis_committed_purchase AS inv_mcp ON
-                inv_mcp.res_id = inv_rel.account_move_line_id
-            WHERE inv_mcp.res_model = 'account.move.line')
-            """
-            )

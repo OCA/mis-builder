@@ -278,34 +278,15 @@ class MisReportInstancePeriod(models.Model):
         comodel_name="mis.report.instance.period", compute="_compute_allowed_cmpcol_ids"
     )
     # filters
-    # TODO : migrate to analytic distribution
-    # analytic_account_id = fields.Many2one(
-    #     comodel_name="account.analytic.account",
-    #     string="Analytic Account",
-    #     help=(
-    #         "Filter column on journal entries that match this analytic account."
-    #         "This filter is combined with a AND with the report-level filters "
-    #         "and cannot be modified in the preview."
-    #     ),
-    # )
-    # analytic_group_id = fields.Many2one(
-    #     comodel_name="account.analytic.group",
-    #     string="Analytic Account Group",
-    #     help=(
-    #         "Filter column on journal entries that match this analytic account "
-    #         "group. This filter is combined with a AND with the report-level "
-    #         "filters and cannot be modified in the preview."
-    #     ),
-    # )
-    # analytic_tag_ids = fields.Many2many(
-    #     comodel_name="account.analytic.tag",
-    #     string="Analytic Tags",
-    #     help=(
-    #         "Filter column on journal entries that have all these analytic tags."
-    #         "This filter is combined with a AND with the report-level filters "
-    #         "and cannot be modified in the preview."
-    #     ),
-    # )
+    analytic_account_id = fields.Many2one(
+        comodel_name="account.analytic.account",
+        string="Analytic Account",
+        help=(
+            "Filter column on journal entries that match this analytic account."
+            "This filter is combined with a AND with the report-level filters "
+            "and cannot be modified in the preview."
+        ),
+    )
 
     _order = "sequence, id"
 
@@ -422,14 +403,9 @@ class MisReportInstancePeriod(models.Model):
                     self.report_instance_id.target_move, aml_model_name
                 )
             )
+        # TODO MIG16
         # if self.analytic_account_id:
         #     domain.append(("analytic_account_id", "=", self.analytic_account_id.id))
-        # if self.analytic_group_id:
-        #     domain.append(
-        #         ("analytic_account_id.group_id", "=", self.analytic_group_id.id)
-        #     )
-        # for tag in self.analytic_tag_ids:
-        #     domain.append(("analytic_tag_ids", "=", tag.id))
         return domain
 
     def _get_additional_query_filter(self, query):
@@ -573,17 +549,9 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
-    # TODO : migrate to analytic distribution
-    # analytic_account_id = fields.Many2one(
-    #     comodel_name="account.analytic.account", string="Analytic Account"
-    # )
-    # analytic_group_id = fields.Many2one(
-    #     comodel_name="account.analytic.group",
-    #     string="Analytic Account Group",
-    # )
-    # analytic_tag_ids = fields.Many2many(
-    #     comodel_name="account.analytic.tag", string="Analytic Tags"
-    # )
+    analytic_account_id = fields.Many2one(
+        comodel_name="account.analytic.account", string="Analytic Account"
+    )
     hide_analytic_filters = fields.Boolean(default=True)
 
     @api.onchange("multi_company")
@@ -619,34 +587,16 @@ class MisReportInstance(models.Model):
 
     @api.model
     def get_filter_descriptions_from_context(self):
-        self.env.context.get("mis_report_filters", {})
-        # analytic_account_id = filters.get("analytic_account_id", {}).get("value")
+        filters = self.env.context.get("mis_report_filters", {})
+        analytic_account_id = filters.get("analytic_account_id", {}).get("value")
         filter_descriptions = []
-        # if analytic_account_id:
-        #     analytic_account = self.env["account.analytic.account"].browse(
-        #         analytic_account_id
-        #     )
-        #     filter_descriptions.append(
-        #         _("Analytic Account: %s") % analytic_account.display_name
-        #     )
-        # analytic_group_id = filters.get("analytic_account_id.group_id", {}).get("value")
-        # if analytic_group_id:
-        #     analytic_group = self.env["account.analytic.group"].browse(
-        #         analytic_group_id
-        #     )
-        #     filter_descriptions.append(
-        #         _("Analytic Account Group: %s") % analytic_group.display_name
-        #     )
-        # analytic_tag_value = filters.get("analytic_tag_ids", {}).get("value")
-        # if analytic_tag_value:
-        #     # TODO 14 we need a test to cover this
-        #     analytic_tag_names = self.resolve_2many_commands(
-        #         "analytic_tag_ids", analytic_tag_value, ["name"]
-        #     )
-        #     filter_descriptions.append(
-        #         _("Analytic Tags: %s")
-        #         % ", ".join([rec["name"] for rec in analytic_tag_names])
-        #     )
+        if analytic_account_id:
+            analytic_account = self.env["account.analytic.account"].browse(
+                analytic_account_id
+            )
+            filter_descriptions.append(
+                _("Analytic Account: %s") % analytic_account.display_name
+            )
         return filter_descriptions
 
     def save_report(self):
@@ -719,21 +669,12 @@ class MisReportInstance(models.Model):
 
     def _add_analytic_filters_to_context(self, context):
         self.ensure_one()
-        # if self.analytic_account_id:
-        #     context["mis_report_filters"]["analytic_account_id"] = {
-        #         "value": self.analytic_account_id.id,
-        #         "operator": "=",
-        #     }
-        # if self.analytic_group_id:
-        #     context["mis_report_filters"]["analytic_account_id.group_id"] = {
-        #         "value": self.analytic_group_id.id,
-        #         "operator": "=",
-        #     }
-        # if self.analytic_tag_ids:
-        #     context["mis_report_filters"]["analytic_tag_ids"] = {
-        #         "value": self.analytic_tag_ids.ids,
-        #         "operator": "all",
-        #     }
+        # TODO MIG16
+        if self.analytic_account_id:
+            context["mis_report_filters"]["analytic_account_id"] = {
+                "value": self.analytic_account_id.id,
+                "operator": "=",
+            }
 
     def _context_with_filters(self):
         self.ensure_one()
