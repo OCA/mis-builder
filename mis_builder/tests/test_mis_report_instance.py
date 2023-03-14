@@ -586,3 +586,9 @@ class TestMisReportInstance(common.HttpCase):
     def test_raise_when_wrong_tuple_length_with_subkpis(self):
         with self.assertRaises(SubKPITupleLengthError):
             self.report_instance_3.compute()
+
+    def test_unprivileged(self):
+        test_user = common.new_test_user(
+            self.env, "mis_you", groups="base.group_user,account.group_account_user"
+        )
+        self.report_instance.with_user(test_user).compute()

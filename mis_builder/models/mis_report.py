@@ -427,7 +427,7 @@ class MisReport(models.Model):
     _description = "MIS Report Template"
 
     def _default_move_lines_source(self):
-        return self.env["ir.model"].search([("model", "=", "account.move.line")])
+        return self.env["ir.model"].sudo().search([("model", "=", "account.move.line")])
 
     name = fields.Char(required=True, translate=True)
     description = fields.Char(required=False, translate=True)
@@ -475,9 +475,11 @@ class MisReport(models.Model):
     @api.depends("move_lines_source")
     def _compute_account_model(self):
         for record in self:
-            record.account_model = record.move_lines_source.field_id.filtered(
-                lambda r: r.name == "account_id"
-            ).relation
+            record.account_model = (
+                record.move_lines_source.sudo()
+                .field_id.filtered(lambda r: r.name == "account_id")
+                .relation
+            )
 
     @api.onchange("subkpi_ids")
     def _on_change_subkpi_ids(self):
@@ -575,7 +577,8 @@ class MisReport(models.Model):
         self.ensure_one()
         res = {}
         for query in self.query_ids:
-            model = self.env[query.model_id.model]
+            query_sudo = query.sudo()
+            model = self.env[query_sudo.model_id.model]
             eval_context = {
                 "env": self.env,
                 "time": safe_time,
@@ -588,11 +591,11 @@ class MisReport(models.Model):
             domain = query.domain and safe_eval(query.domain, eval_context) or []
             if get_additional_query_filter:
                 domain.extend(get_additional_query_filter(query))
-            if query.date_field.ttype == "date":
+            if query_sudo.date_field.ttype == "date":
                 domain.extend(
                     [
-                        (query.date_field.name, ">=", date_from),
-                        (query.date_field.name, "<=", date_to),
+                        (query_sudo.date_field.name, ">=", date_from),
+                        (query_sudo.date_field.name, "<=", date_to),
                     ]
                 )
             else:
@@ -601,11 +604,11 @@ class MisReport(models.Model):
                 datetime_to = _utc_midnight(date_to, tz, add_day=1)
                 domain.extend(
                     [
-                        (query.date_field.name, ">=", datetime_from),
-                        (query.date_field.name, "<", datetime_to),
+                        (query_sudo.date_field.name, ">=", datetime_from),
+                        (query_sudo.date_field.name, "<", datetime_to),
                     ]
                 )
-            field_names = [f.name for f in query.field_ids]
+            field_names = [f.name for f in query_sudo.field_ids]
             all_stored = all([model._fields[f].store for f in field_names])
             if not query.aggregate:
                 data = model.search_read(domain, field_names)

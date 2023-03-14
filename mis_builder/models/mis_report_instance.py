@@ -365,11 +365,14 @@ class MisReportInstancePeriod(models.Model):
     def _onchange_source(self):
         if self.source in (SRC_SUMCOL, SRC_CMPCOL):
             self.mode = MODE_NONE
+        # Dirty hack to solve bug https://github.com/OCA/mis-builder/issues/393
+        if self.source and not self.report_instance_id.id:
+            self.report_instance_id = self.report_instance_id._origin.id
 
     def _get_aml_model_name(self):
         self.ensure_one()
         if self.source == SRC_ACTUALS:
-            return self.report_id.move_lines_source.model
+            return self.report_id.sudo().move_lines_source.model
         elif self.source == SRC_ACTUALS_ALT:
             return self.source_aml_model_name
         return False
@@ -587,7 +590,7 @@ class MisReportInstance(models.Model):
         else:
             prev = self.company_ids.ids
             company = False
-            if self.env.company.id in prev:
+            if self.env.company.id in prev or not prev:
                 company = self.env.company
             else:
                 for c_id in prev:
