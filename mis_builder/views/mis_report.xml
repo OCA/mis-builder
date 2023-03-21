@@ -304,8 +304,12 @@
                                 Copy and paste it in the KPI's Expression field.
                             </p>
                         </div>
-                        <field name='model_name' invisible='1'/>
-                        <field name="domain_string" widget="domain" options="{'model': 'model_name'}"/>
+                        <field name='model_name' invisible='1' />
+                        <field
+                            name="domain_string"
+                            widget="domain"
+                            options="{'model': 'model_name'}"
+                        />
                     </page>
                 </notebook>
             </form>

@@ -138,7 +138,9 @@ class MisReportKpi(models.Model):
     )
     sequence = fields.Integer(default=100)
     report_id = fields.Many2one("mis.report", required=True, ondelete="cascade")
-    model_name = fields.Char(related="report_id.move_lines_source.model", store=True, readonly=True)
+    model_name = fields.Char(
+        related="report_id.move_lines_source.model", store=True, readonly=True
+    )
     domain_string = fields.Text(string="Domain string")
 
     _order = "sequence, id"
