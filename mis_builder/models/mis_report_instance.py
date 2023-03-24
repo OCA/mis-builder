@@ -173,7 +173,6 @@ class MisReportInstancePeriod(models.Model):
                 )
 
     _name = "mis.report.instance.period"
-    _inherit = "analytic.mixin"
     _description = "MIS Report Instance Period"
 
     name = fields.Char(required=True, string="Label", translate=True)
@@ -485,7 +484,6 @@ class MisReportInstance(models.Model):
                 record.pivot_date = fields.Date.context_today(record)
 
     _name = "mis.report.instance"
-    _inherit = "analytic.mixin"
     _description = "MIS Report Instance"
 
     name = fields.Char(required=True, translate=True)
