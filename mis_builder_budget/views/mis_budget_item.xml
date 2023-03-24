@@ -27,10 +27,6 @@
                 <field name="date_from" />
                 <field name="date_to" />
                 <field name="amount" />
-                <field
-                    name="analytic_account_id"
-                    groups="analytic.group_analytic_accounting"
-                />
             </tree>
         </field>
     </record>

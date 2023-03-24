@@ -31,7 +31,6 @@ class MisBudgetItem(models.Model):
         "date_from",
         "date_to",
         "budget_id",
-        "analytic_account_id",
         "kpi_expression_id",
     )
     def _check_dates(self):

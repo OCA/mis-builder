@@ -79,7 +79,6 @@ class MisBudgetByAccountItem(models.Model):
         "date_from",
         "date_to",
         "budget_id",
-        "analytic_account_id",
         "account_id",
     )
     def _check_dates(self):

@@ -32,10 +32,6 @@
                 <field name="debit" />
                 <field name="credit" />
                 <field name="balance" />
-                <field
-                    name="analytic_account_id"
-                    groups="analytic.group_analytic_accounting"
-                />
             </tree>
         </field>
     </record>
