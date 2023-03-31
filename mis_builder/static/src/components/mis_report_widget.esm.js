@@ -1,9 +1,10 @@
 /** @odoo-module **/
 
+import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
+import {SearchBar} from "@web/search/search_bar/search_bar";
+import {SearchModel} from "@web/search/search_model";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
-
-const {Component, onWillStart, useState} = owl;
 
 export class MisReportWidget extends Component {
     setup() {
@@ -11,36 +12,65 @@ export class MisReportWidget extends Component {
         this.orm = useService("orm");
         this.user = useService("user");
         this.action = useService("action");
+        this.view = useService("view");
         this.JSON = JSON;
-        this.user_context = Component.env.session.user_context;
-        this.state = useState({mis_report_data: {}});
+        this.state = useState({mis_report_data: {header: [], body: []}});
+        this.searchModel = new SearchModel(this.env, {
+            user: this.user,
+            orm: this.orm,
+            view: this.view,
+        });
+        useSubEnv({searchModel: this.searchModel});
         onWillStart(this.willStart);
     }
+
     // Lifecycle
     async willStart() {
-        this.state.mis_report_data = await this.orm.call(
-            "mis.report.instance",
-            "compute",
-            [this._instanceId()],
-            {context: this.user_context}
-        );
+        this.showSettings = await this.user.hasGroup("account.group_account_user");
 
-        this.props.show_settings = await this.user.hasGroup(
-            "account.group_account_user"
-        );
-
-        this.props.has_group_analytic_accounting = await this.user.hasGroup(
-            "analytic.group_analytic_accounting"
-        );
-
-        var result = await this.orm.call(
+        const result = await this.orm.call(
             "mis.report.instance",
             "read",
-            [this._instanceId(), ["hide_analytic_filters"]],
+            [
+                this._instanceId(),
+                [
+                    "hide_analytic_filters",
+                    "source_aml_model_name",
+                    "search_view_id",
+                    "analytic_domain",
+                ],
+            ],
             {context: this.user_context}
         );
-        this.props.hide_analytic_filters = result && result[0].hide_analytic_filters;
+        this.hide_analytic_filters = result && result[0].hide_analytic_filters;
+        this.source_aml_model_name = result && result[0].source_aml_model_name;
+        this.search_view_id =
+            result && result[0].search_view_id && result[0].search_view_id[0];
+
+        if (this.showSearchBar) {
+            // Initialize the search model
+            await this.searchModel.load({
+                resModel: this.source_aml_model_name,
+                searchViewId: this.search_view_id,
+            });
+        }
+
+        // Compute the report
+        this.refresh();
     }
+
+    get showAnalyticFilters() {
+        return !this.hide_analytic_filters;
+    }
+
+    get showSearchBar() {
+        return (
+            this.showAnalyticFilters &&
+            this.source_aml_model_name &&
+            this.search_view_id
+        );
+    }
+
     /**
      * Return the id of the mis.report.instance to which the widget is
      * bound.
@@ -63,22 +93,34 @@ export class MisReportWidget extends Component {
             return context.active_id;
         }
     }
+
+    get context() {
+        if (this.showSearchBar) {
+            return {
+                ...super.context,
+                mis_analytic_domain: this.searchModel.searchDomain,
+            };
+        }
+        return super.context;
+    }
+
     async drilldown(event) {
         const drilldown = $(event.target).data("drilldown");
         const action = await this.orm.call(
             "mis.report.instance",
             "drilldown",
             [this._instanceId(), drilldown],
-            {context: this.user_context}
+            {context: this.context}
         );
         this.action.doAction(action);
     }
+
     async refresh() {
         this.state.mis_report_data = await this.orm.call(
             "mis.report.instance",
             "compute",
             [this._instanceId()],
-            {context: this.user_context}
+            {context: this.context}
         );
     }
 
@@ -87,7 +129,7 @@ export class MisReportWidget extends Component {
             "mis.report.instance",
             "print_pdf",
             [this._instanceId()],
-            {context: this.user_context}
+            {context: this.context}
         );
         this.action.doAction(action);
     }
@@ -97,7 +139,7 @@ export class MisReportWidget extends Component {
             "mis.report.instance",
             "export_xls",
             [this._instanceId()],
-            {context: this.user_context}
+            {context: this.context}
         );
         this.action.doAction(action);
     }
@@ -107,17 +149,13 @@ export class MisReportWidget extends Component {
             "mis.report.instance",
             "display_settings",
             [this._instanceId()],
-            {context: this.user_context}
+            {context: this.context}
         );
         this.action.doAction(action);
     }
 }
+
+MisReportWidget.components = {SearchBar};
 MisReportWidget.template = "mis_builder.MisReportWidget";
-MisReportWidget.defaultProps = {
-    mis_report_data: undefined,
-    show_settings: false,
-    has_group_analytic_accounting: false,
-    hide_analytic_filters: false,
-};
 
 registry.category("fields").add("mis_report_widget", MisReportWidget);

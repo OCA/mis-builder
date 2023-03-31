@@ -9,9 +9,12 @@
                 </h2>
                 <div>
                     <div
-                        class="oe_mis_builder_analytic_filter_box oe_left o_form_view o_form_editable"
+                        t-if="showAnalyticFilters"
+                        class="oe_mis_builder_analytic_filter_box oe_left"
                         style="position: relative; display: inline-block;"
-                    />
+                    >
+                        <SearchBar t-if="showSearchBar" />
+                    </div>
                     <div class="oe_mis_builder_buttons oe_right oe_button_box">
                         <button
                             t-on-click="refresh"
@@ -36,7 +39,7 @@
                         </button>
                         <button
                             t-on-click="displaySettings"
-                            t-if="props.show_settings"
+                            t-if="showSettings"
                             class="oe_mis_builder_settings btn btn-sm oe_button"
                         >
                             <span class="fa fa-cog" />

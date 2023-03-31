@@ -19,13 +19,9 @@ class Report(models.Model):
             if not res_ids:
                 res_ids = self.env.context.get("active_ids")
             mis_report_instance = self.env["mis.report.instance"].browse(res_ids)[0]
-            context = dict(
-                mis_report_instance._context_with_filters(),
-                landscape=mis_report_instance.landscape_pdf,
-            )
             # data=None, because it was there only to force Odoo
             # to propagate context
-            return super(Report, self.with_context(**context))._render_qweb_pdf(
-                report_ref, res_ids, data=None
-            )
+            return super(
+                Report, self.with_context(landscape=mis_report_instance.landscape_pdf)
+            )._render_qweb_pdf(report_ref, res_ids, data=None)
         return super()._render_qweb_pdf(report_ref, res_ids, data)

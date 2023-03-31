@@ -38,7 +38,6 @@ class AddMisReportInstanceDashboard(models.TransientModel):
         assert active_model == "mis.report.instance"
         active_id = self.env.context.get("active_id")
         assert active_id
-        mis_report_instance = self.env[active_model].browse(active_id)
         # create the act_window corresponding to this report
         self.env.ref("mis_builder.mis_report_instance_result_view_form")
         view = self.env.ref("mis_builder.mis_report_instance_result_view_form")
@@ -54,7 +53,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
                     "target": "current",
                     "view_mode": "form",
                     "view_id": view.id,
-                    "context": mis_report_instance._context_with_filters(),
+                    "context": self.env.context,
                 }
             )
         )

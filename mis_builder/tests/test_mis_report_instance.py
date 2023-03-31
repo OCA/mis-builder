@@ -565,10 +565,9 @@ class TestMisReportInstance(common.HttpCase):
         self.assertFalse(self.report_instance.company_ids)
 
     def test_mis_report_analytic_filters(self):
-        # Check that matrix has no values when using a filter with a non
-        # existing value
+        # Check that matrix has no values when using a filter with a non existing value
         matrix = self.report_instance.with_context(
-            mis_report_filters={"partner_id": {"value": -1}}
+            analytic_domain=[("partner_id", "=", -1)]
         )._compute_matrix()
         for row in matrix.iter_rows():
             vals = [c.val for c in row.iter_cells()]
