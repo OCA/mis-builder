@@ -5,7 +5,7 @@ import {SearchBar} from "@web/search/search_bar/search_bar";
 import {FilterMenu} from "@web/search/filter_menu/filter_menu";
 import {SearchModel} from "@web/search/search_model";
 import {registry} from "@web/core/registry";
-import {useService} from "@web/core/utils/hooks";
+import {useBus, useService} from "@web/core/utils/hooks";
 
 export class MisReportWidget extends Component {
     setup() {
@@ -22,6 +22,10 @@ export class MisReportWidget extends Component {
             view: this.view,
         });
         useSubEnv({searchModel: this.searchModel});
+        useBus(this.env.searchModel, "update", async () => {
+            await this.env.searchModel.sectionsPromise;
+            this.refresh();
+        });
         onWillStart(this.willStart);
     }
 
