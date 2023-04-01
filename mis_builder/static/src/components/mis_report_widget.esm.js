@@ -2,6 +2,7 @@
 
 import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
 import {SearchBar} from "@web/search/search_bar/search_bar";
+import {FilterMenu} from "@web/search/filter_menu/filter_menu";
 import {SearchModel} from "@web/search/search_model";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
@@ -155,7 +156,7 @@ export class MisReportWidget extends Component {
     }
 }
 
-MisReportWidget.components = {SearchBar};
+MisReportWidget.components = {FilterMenu, SearchBar};
 MisReportWidget.template = "mis_builder.MisReportWidget";
 
 registry.category("fields").add("mis_report_widget", MisReportWidget);

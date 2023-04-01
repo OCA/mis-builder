@@ -4,47 +4,49 @@
     <t t-name="mis_builder.MisReportWidget" owl="1">
         <div class="oe_mis_builder_content">
             <t t-if="state.mis_report_data">
-                <h2 t-if="state.mis_report_data.report_name">
-                    <t t-esc="state.mis_report_data.report_name" />
-                </h2>
-                <div>
-                    <div
-                        t-if="showAnalyticFilters"
-                        class="oe_mis_builder_analytic_filter_box oe_left"
-                        style="position: relative; display: inline-block;"
-                    >
-                        <SearchBar t-if="showSearchBar" />
+                <div class="oe_mis_builder_cp">
+                    <div class="oe_mis_builder_cp_left">
                     </div>
-                    <div class="oe_mis_builder_buttons oe_right oe_button_box">
-                        <button
-                            t-on-click="refresh"
-                            class="oe_mis_builder_refresh btn btn-sm oe_button"
-                        >
-                            <span class="fa fa-refresh" />
-                            Refresh
-                        </button>
-                        <button
-                            t-on-click="printPdf"
-                            class="oe_mis_builder_print btn btn-sm oe_button"
-                        >
-                            <span class="fa fa-print" />
-                            Print
-                        </button>
-                        <button
-                            t-on-click="exportXls"
-                            class="oe_mis_builder_export btn btn-sm oe_button"
-                        >
-                            <span class="fa fa-download" />
-                            Export
-                        </button>
-                        <button
-                            t-on-click="displaySettings"
-                            t-if="showSettings"
-                            class="oe_mis_builder_settings btn btn-sm oe_button"
-                        >
-                            <span class="fa fa-cog" />
-                            Settings
-                        </button>
+                    <div class="oe_mis_builder_cp_right">
+                        <div class="oe_mis_builder_cp_right_top">
+                            <SearchBar t-if="showSearchBar" />
+                        </div>
+                        <div class="oe_mis_builder_cp_right_bottom">
+                            <div class="oe_mis_builder_filter_buttons">
+                                <FilterMenu t-if="showSearchBar" />
+                            </div>
+                            <div class="oe_mis_builder_action_buttons">
+                                <button
+                                    t-on-click="refresh"
+                                    class="btn"
+                                >
+                                    <span class="fa fa-refresh" />
+                                    Refresh
+                                </button>
+                                <button
+                                    t-on-click="printPdf"
+                                    class="btn"
+                                >
+                                    <span class="fa fa-print" />
+                                    Print
+                                </button>
+                                <button
+                                    t-on-click="exportXls"
+                                    class="btn"
+                                >
+                                    <span class="fa fa-download" />
+                                    Export
+                                </button>
+                                <button
+                                    t-on-click="displaySettings"
+                                    t-if="showSettings"
+                                    class="btn"
+                                >
+                                    <span class="fa fa-cog" />
+                                    Settings
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <table
