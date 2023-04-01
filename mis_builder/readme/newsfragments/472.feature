@@ -5,7 +5,7 @@ Migration to 16.0
   per report.
 - Huge improvement of the widget style. This was long overdue.
 - Make the MIS Report menu accessible to the Billing Administrator group
-  (instead of the hiddent Show Full Accounting Features), to align with the access rules
+  (instead of the hidden Show Full Accounting Features), to align with the access rules
   and avoid giving a false sense of security. This also makes the menu discoverable to
   new users.
 - Removal of analytic fetures because the upstream ``analytic_distribution`` mechanism
