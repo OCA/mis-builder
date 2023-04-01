@@ -1,3 +1,31 @@
+16.0.5.0.0 (2023-04-01)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Migration to 16.0
+
+  - Addition of a generic filter domain on reports and columns.
+  - Addition of a search bar to the widget. The corresponding search view is configurable
+    per report.
+  - Huge improvement of the widget style. This was long overdue.
+  - Make the MIS Report menu accessible to the Billing Administrator group
+    (instead of the hidden Show Full Accounting Features), to align with the access rules
+    and avoid giving a false sense of security. This also makes the menu discoverable to
+    new users.
+  - Removal of analytic fetures because the upstream ``analytic_distribution`` mechanism
+    is not compatible; support may be introduced in separate module, depending on use
+    cases.
+  - Abandon the ``mis_report_filters`` context key which had security implication.
+    It is replaced by a ``mis_analytic_domain`` context key which is ANDed with other
+    report-defined filters. (`#472 <https://github.com/OCA/mis-builder/issues/472>`_)
+
+
+**Bugfixes**
+
+- Fix access error when previewing or printing report. (`#415 <https://github.com/OCA/mis-builder/issues/415>`_)
+
+
 15.0.4.0.5 (2022-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
