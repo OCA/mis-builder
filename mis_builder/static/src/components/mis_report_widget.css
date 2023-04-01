@@ -21,7 +21,6 @@
 }
 
 .oe_mis_builder_content {
-    padding: 10px;
 }
 
 /* style for the control panel (search box and buttons) */
@@ -29,6 +28,7 @@
 .oe_mis_builder_cp {
     display: flex;
     flex-direction: row;
+    padding-bottom: 20px;
 }
 
 .oe_mis_builder_cp_left {

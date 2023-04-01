@@ -5,13 +5,20 @@
         <field name="model">mis.report.instance</field>
         <field name="priority" eval="20 " />
         <field name="arch" type="xml">
-            <form string="MIS Report Result" edit="false" create="false" delete="false">
-                <field
-                    name="id"
-                    widget="mis_report_widget"
-                    nolabel="1"
-                    style="width:100%"
-                />
+            <form
+                string="MIS Report Preview"
+                edit="false"
+                create="false"
+                delete="false"
+            >
+                <sheet>
+                    <field
+                        name="id"
+                        widget="mis_report_widget"
+                        nolabel="1"
+                        style="width:100%"
+                    />
+                </sheet>
             </form>
         </field>
     </record>
@@ -261,9 +268,7 @@
                         name="export_xls"
                         string="Export"
                         icon="fa-download"
-                    />
-                    or
-                    <button string="Cancel" class="oe_link" special="cancel" />
+                    /> or <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </sheet>
         </field>
