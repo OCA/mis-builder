@@ -301,7 +301,7 @@ class MisReportInstancePeriod(models.Model):
         ),
     ]
 
-    @api.depends("source", "report_instance_id.report_id")
+    @api.depends("source", "report_instance_id.report_id.move_lines_source")
     def _compute_source_aml_model_id(self):
         for record in self:
             if record.source == SRC_ACTUALS:
