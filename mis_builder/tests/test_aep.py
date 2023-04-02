@@ -6,6 +6,7 @@ import time
 
 import odoo.tests.common as common
 from odoo import fields
+from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
 from ..models.accounting_none import AccountingNone
@@ -382,3 +383,14 @@ class TestAEP(common.TransactionCase):
         )
         # let's see if there was a match
         self.assertEqual(self._eval(expr), -100)
+
+    def test_invalid_field(self):
+        expr = 'balp[][("invalid_field", "=", "...")]'
+        self.aep.parse_expr(expr)
+        self.aep.done_parsing()
+        with self.assertRaises(UserError) as cm:
+            self._do_queries(
+                datetime.date(self.prev_year, 12, 1),
+                datetime.date(self.prev_year, 12, 1),
+            )
+        assert "Error while querying move line source" in str(cm.exception)

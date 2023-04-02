@@ -335,12 +335,26 @@ class AccountingExpressionProcessor(object):
                 domain.extend(additional_move_line_filter)
             # fetch sum of debit/credit, grouped by account_id
             _logger.debug("read_group domain: %s", domain)
-            accs = aml_model.read_group(
-                domain,
-                ["debit", "credit", "account_id", "company_id"],
-                ["account_id", "company_id"],
-                lazy=False,
-            )
+            try:
+                accs = aml_model.read_group(
+                    domain,
+                    ["debit", "credit", "account_id", "company_id"],
+                    ["account_id", "company_id"],
+                    lazy=False,
+                )
+            except ValueError as e:
+                raise UserError(
+                    _(
+                        'Error while querying move line source "%(model_name)s". '
+                        "This is likely due to a filter or expression referencing "
+                        "a field that does not exist in the model.\n\n"
+                        "The technical error message is: %(exception)s. "
+                    )
+                    % dict(
+                        model_name=aml_model._description,
+                        exception=e,
+                    )
+                ) from e
             for acc in accs:
                 rate, dp = company_rates[acc["company_id"][0]]
                 debit = acc["debit"] or 0.0
