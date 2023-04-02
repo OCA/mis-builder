@@ -24,7 +24,7 @@
                                     <span class="fa fa-download" /> Export </button>
                                 <button
                                     t-on-click="displaySettings"
-                                    t-if="showSettings"
+                                    t-if="widget_show_settings_button"
                                     class="btn"
                                 >
                                     <span class="fa fa-cog" /> Settings </button>

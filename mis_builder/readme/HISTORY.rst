@@ -19,7 +19,15 @@
   - Abandon the ``mis_report_filters`` context key which had security implication.
     It is replaced by a ``mis_analytic_domain`` context key which is ANDed with other
     report-defined filters. (`#472 <https://github.com/OCA/mis-builder/issues/472>`_)
-
+  - Rename the ``get_filter_descriptions_from_context`` method to
+    ``get_filter_descriptions``. This method may be overridden to provide additional
+    subtitles on the PDF or XLS report, representing user-selected filters.
+  - The ``hide_analytic_filters`` has been replaced by ``widget_show_filters``.
+  - The visibility of the settings button on the widget is now controlled by a
+    ``show_settings_button``. Before it was visible only for the ``account_user`` group
+    but this was not flexible enough.
+  - The widget configuration settings are now grouped in a dedicated ``Widget`` tab in
+    the report configuration form.
 
 **Bugfixes**
 

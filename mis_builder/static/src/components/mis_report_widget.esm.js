@@ -31,32 +31,34 @@ export class MisReportWidget extends Component {
 
     // Lifecycle
     async willStart() {
-        this.showSettings = await this.user.hasGroup("account.group_account_user");
-
         const result = await this.orm.call(
             "mis.report.instance",
             "read",
             [
                 this._instanceId(),
                 [
-                    "hide_analytic_filters",
                     "source_aml_model_name",
-                    "search_view_id",
-                    "analytic_domain",
+                    "widget_show_filters",
+                    "widget_show_settings_button",
+                    "widget_search_view_id",
                 ],
             ],
             {context: this.user_context}
         );
-        this.hide_analytic_filters = result && result[0].hide_analytic_filters;
         this.source_aml_model_name = result && result[0].source_aml_model_name;
-        this.search_view_id =
-            result && result[0].search_view_id && result[0].search_view_id[0];
+        this.widget_show_filters = result && result[0].widget_show_filters;
+        this.widget_show_settings_button =
+            result && result[0].widget_show_settings_button;
+        this.widget_search_view_id =
+            result &&
+            result[0].widget_search_view_id &&
+            result[0].widget_search_view_id[0];
 
         if (this.showSearchBar) {
             // Initialize the search model
             await this.searchModel.load({
                 resModel: this.source_aml_model_name,
-                searchViewId: this.search_view_id,
+                searchViewId: this.widget_search_view_id,
             });
         }
 
@@ -64,15 +66,11 @@ export class MisReportWidget extends Component {
         this.refresh();
     }
 
-    get showAnalyticFilters() {
-        return !this.hide_analytic_filters;
-    }
-
     get showSearchBar() {
         return (
-            this.showAnalyticFilters &&
             this.source_aml_model_name &&
-            this.search_view_id
+            this.widget_show_filters &&
+            this.widget_search_view_id
         );
     }
 

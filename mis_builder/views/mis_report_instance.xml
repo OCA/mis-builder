@@ -195,11 +195,16 @@
                                 <field name="landscape_pdf" />
                                 <field name="no_auto_expand_accounts" />
                                 <field name="display_columns_description" />
-                                <field name="hide_analytic_filters" />
+                            </group>
+                        </page>
+                        <page string="Widget">
+                            <group name="widget">
+                                <field name="widget_show_filters" />
                                 <field
-                                    name="search_view_id"
-                                    attrs="{'invisible': [('hide_analytic_filters', '=', True)]}"
+                                    name="widget_search_view_id"
+                                    attrs="{'invisible': [('widget_show_filters', '=', False)]}"
                                 />
+                                <field name="widget_show_settings_button" />
                             </group>
                         </page>
                     </notebook>

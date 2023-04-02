@@ -534,7 +534,6 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
-    hide_analytic_filters = fields.Boolean(default=True)
     source_aml_model_id = fields.Many2one(
         related="report_id.move_lines_source",
         readonly=True,
@@ -554,20 +553,30 @@ class MisReportInstance(models.Model):
             "all move line sources."
         ),
     )
-    search_view_id = fields.Many2one(
+    widget_show_filters = fields.Boolean(
+        default=True,
+        string="Show filters box",
+        help="Show the filter bar in the report widget.",
+    )
+    widget_show_settings_button = fields.Boolean(
+        default=False,
+        string="Show settings button",
+        help="Show the settings button in the report widget.",
+    )
+    widget_search_view_id = fields.Many2one(
         comodel_name="ir.ui.view",
         domain='[("type", "=", "search"), ("model", "=", source_aml_model_name)]',
-        compute="_compute_search_view_id",
+        compute="_compute_widget_search_view_id",
         store=True,
         readonly=False,
-        string="Search View",
-        help="Search view to customize the search box in the report widget.",
+        string="Filter box search view",
+        help="Search view to customize the filter box in the report widget.",
     )
 
     @api.depends("report_id.move_lines_source")
-    def _compute_search_view_id(self):
+    def _compute_widget_search_view_id(self):
         for rec in self:
-            rec.search_view_id = (
+            rec.widget_search_view_id = (
                 self.env["ir.ui.view"]
                 .sudo()
                 .search(
@@ -611,7 +620,7 @@ class MisReportInstance(models.Model):
                 rec.query_company_ids = rec.company_id or self.env.company
 
     @api.model
-    def get_filter_descriptions_from_context(self):
+    def get_filter_descriptions(self):
         return []
 
     def save_report(self):

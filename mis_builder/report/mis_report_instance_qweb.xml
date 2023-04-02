@@ -30,7 +30,7 @@
                         <p>
                             <div class="mis_report_filers">
                                 <t
-                                    t-foreach="o.get_filter_descriptions_from_context()"
+                                    t-foreach="o.get_filter_descriptions()"
                                     t-as="filter_description"
                                 >
                                     <div>
