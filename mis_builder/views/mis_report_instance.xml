@@ -151,6 +151,7 @@
                                         <field name="sequence" widget="handle" />
                                         <field name="name" />
                                         <field name="source" />
+                                        <field name="source_aml_model_id" />
                                         <field name="date_from" />
                                         <field name="date_to" />
                                         <field name="valid" invisible="1" />
