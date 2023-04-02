@@ -31,28 +31,22 @@ export class MisReportWidget extends Component {
 
     // Lifecycle
     async willStart() {
-        const result = await this.orm.call(
+        const [result] = await this.orm.read(
             "mis.report.instance",
-            "read",
+            [this._instanceId()],
             [
-                this._instanceId(),
-                [
-                    "source_aml_model_name",
-                    "widget_show_filters",
-                    "widget_show_settings_button",
-                    "widget_search_view_id",
-                ],
+                "source_aml_model_name",
+                "widget_show_filters",
+                "widget_show_settings_button",
+                "widget_search_view_id",
             ],
-            {context: this.user_context}
+            {context: this.context}
         );
-        this.source_aml_model_name = result && result[0].source_aml_model_name;
-        this.widget_show_filters = result && result[0].widget_show_filters;
-        this.widget_show_settings_button =
-            result && result[0].widget_show_settings_button;
+        this.source_aml_model_name = result.source_aml_model_name;
+        this.widget_show_filters = result.widget_show_filters;
+        this.widget_show_settings_button = result.widget_show_settings_button;
         this.widget_search_view_id =
-            result &&
-            result[0].widget_search_view_id &&
-            result[0].widget_search_view_id[0];
+            result.widget_search_view_id && result.widget_search_view_id[0];
 
         if (this.showSearchBar) {
             // Initialize the search model
