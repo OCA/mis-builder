@@ -465,7 +465,9 @@ class MisReportInstance(models.Model):
     @api.depends("date")
     def _compute_pivot_date(self):
         for record in self:
-            if record.date:
+            if self.env.context.get("mis_pivot_date"):
+                record.pivot_date = self.env.context.get("mis_pivot_date")
+            elif record.date:
                 record.pivot_date = record.date
             else:
                 record.pivot_date = fields.Date.context_today(record)
@@ -562,6 +564,11 @@ class MisReportInstance(models.Model):
         default=False,
         string="Show settings button",
         help="Show the settings button in the report widget.",
+    )
+    widget_show_pivot_date = fields.Boolean(
+        default=False,
+        string="Show Pivot Date",
+        help="Show the Pivot Date in the report widget filter bar.",
     )
     widget_search_view_id = fields.Many2one(
         comodel_name="ir.ui.view",

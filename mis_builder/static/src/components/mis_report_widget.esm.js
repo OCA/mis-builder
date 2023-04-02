@@ -1,11 +1,13 @@
 /** @odoo-module **/
 
 import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
-import {SearchBar} from "@web/search/search_bar/search_bar";
-import {FilterMenu} from "@web/search/filter_menu/filter_menu";
-import {SearchModel} from "@web/search/search_model";
-import {registry} from "@web/core/registry";
 import {useBus, useService} from "@web/core/utils/hooks";
+import {DatePicker} from "@web/core/datepicker/datepicker";
+import {FilterMenu} from "@web/search/filter_menu/filter_menu";
+import {SearchBar} from "@web/search/search_bar/search_bar";
+import {SearchModel} from "@web/search/search_model";
+import {parseDate} from "@web/core/l10n/dates";
+import {registry} from "@web/core/registry";
 
 export class MisReportWidget extends Component {
     setup() {
@@ -15,7 +17,10 @@ export class MisReportWidget extends Component {
         this.action = useService("action");
         this.view = useService("view");
         this.JSON = JSON;
-        this.state = useState({mis_report_data: {header: [], body: []}});
+        this.state = useState({
+            mis_report_data: {header: [], body: []},
+            pivot_date: null,
+        });
         this.searchModel = new SearchModel(this.env, {
             user: this.user,
             orm: this.orm,
@@ -39,6 +44,8 @@ export class MisReportWidget extends Component {
                 "widget_show_filters",
                 "widget_show_settings_button",
                 "widget_search_view_id",
+                "pivot_date",
+                "widget_show_pivot_date",
             ],
             {context: this.context}
         );
@@ -47,7 +54,8 @@ export class MisReportWidget extends Component {
         this.widget_show_settings_button = result.widget_show_settings_button;
         this.widget_search_view_id =
             result.widget_search_view_id && result.widget_search_view_id[0];
-
+        this.state.pivot_date = parseDate(result.pivot_date);
+        this.widget_show_pivot_date = result.widget_show_pivot_date;
         if (this.showSearchBar) {
             // Initialize the search model
             await this.searchModel.load({
@@ -66,6 +74,10 @@ export class MisReportWidget extends Component {
             this.widget_show_filters &&
             this.widget_search_view_id
         );
+    }
+
+    get showPivotDate() {
+        return this.widget_show_pivot_date;
     }
 
     /**
@@ -92,13 +104,20 @@ export class MisReportWidget extends Component {
     }
 
     get context() {
+        var ctx = super.context;
         if (this.showSearchBar) {
-            return {
-                ...super.context,
+            ctx = {
+                ...ctx,
                 mis_analytic_domain: this.searchModel.searchDomain,
             };
         }
-        return super.context;
+        if (this.showPivotDate && this.state.pivot_date) {
+            ctx = {
+                ...ctx,
+                mis_pivot_date: this.state.pivot_date,
+            };
+        }
+        return ctx;
     }
 
     async drilldown(event) {
@@ -150,9 +169,14 @@ export class MisReportWidget extends Component {
         );
         this.action.doAction(action);
     }
+
+    onDateTimeChanged(ev) {
+        this.state.pivot_date = ev;
+        this.refresh();
+    }
 }
 
-MisReportWidget.components = {FilterMenu, SearchBar};
+MisReportWidget.components = {FilterMenu, SearchBar, DatePicker};
 MisReportWidget.template = "mis_builder.MisReportWidget";
 
 registry.category("fields").add("mis_report_widget", MisReportWidget);
