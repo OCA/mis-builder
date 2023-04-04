@@ -1,3 +1,39 @@
+16.0.5.0.0 (2023-04-01)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Migration to 16.0
+
+  - Addition of a generic filter domain on reports and columns.
+  - Addition of a search bar to the widget. The corresponding search view is configurable
+    per report.
+  - Huge improvement of the widget style. This was long overdue.
+  - Make the MIS Report menu accessible to the Billing Administrator group
+    (instead of the hidden Show Full Accounting Features), to align with the access rules
+    and avoid giving a false sense of security. This also makes the menu discoverable to
+    new users.
+  - Removal of analytic fetures because the upstream ``analytic_distribution`` mechanism
+    is not compatible; support may be introduced in separate module, depending on use
+    cases.
+  - Abandon the ``mis_report_filters`` context key which had security implication.
+    It is replaced by a ``mis_analytic_domain`` context key which is ANDed with other
+    report-defined filters. (`#472 <https://github.com/OCA/mis-builder/issues/472>`_)
+  - Rename the ``get_filter_descriptions_from_context`` method to
+    ``get_filter_descriptions``. This method may be overridden to provide additional
+    subtitles on the PDF or XLS report, representing user-selected filters.
+  - The ``hide_analytic_filters`` has been replaced by ``widget_show_filters``.
+  - The visibility of the settings button on the widget is now controlled by a
+    ``show_settings_button``. Before it was visible only for the ``account_user`` group
+    but this was not flexible enough.
+  - The widget configuration settings are now grouped in a dedicated ``Widget`` tab in
+    the report configuration form.
+
+**Bugfixes**
+
+- Fix access error when previewing or printing report. (`#415 <https://github.com/OCA/mis-builder/issues/415>`_)
+
+
 15.0.4.0.5 (2022-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -298,7 +334,7 @@ New features:
   (`#26 <https://github.com/OCA/mis-builder/issues/26>`_).
 * [ADD] extended account selectors: you can now select accounts using
   any domain on account.account, not only account codes
-  ``balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)]``
+  ``balp[('account_type', '=', 'asset_receivable')]``
   (`#4 <https://github.com/OCA/mis-builder/issues/4>`_).
 * [IMP] in the report instance configuration form, the filters are
   now grouped in a notebook page, this improves readability and

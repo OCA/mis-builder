@@ -1,7 +1,7 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 SRC_MIS_BUDGET = "mis_budget"
 SRC_MIS_BUDGET_BY_ACCOUNT = "mis_budget_by_account"
@@ -28,10 +28,18 @@ class MisReportInstancePeriod(models.Model):
         comodel_name="mis.budget.by.account", string="Budget by Account"
     )
 
-    def _get_aml_model_name(self):
-        if self.source == SRC_MIS_BUDGET_BY_ACCOUNT:
-            return "mis.budget.by.account.item"
-        return super()._get_aml_model_name()
+    @api.depends("source")
+    def _compute_source_aml_model_id(self):
+        for record in self:
+            if record.source == SRC_MIS_BUDGET:
+                record.source_aml_model_id = False
+            elif record.source == SRC_MIS_BUDGET_BY_ACCOUNT:
+                record.source_aml_model_id = (
+                    self.env["ir.model"]
+                    .sudo()
+                    .search([("model", "=", "mis.budget.by.account.item")])
+                )
+        return super()._compute_source_aml_model_id()
 
     def _get_additional_move_line_filter(self):
         domain = super()._get_additional_move_line_filter()

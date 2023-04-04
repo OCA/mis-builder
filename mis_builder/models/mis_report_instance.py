@@ -2,6 +2,7 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import ast
 import datetime
 import logging
 
@@ -255,6 +256,9 @@ class MisReportInstancePeriod(models.Model):
             ("field_id.name", "=", "company_id"),
             ("field_id.model_id.model", "!=", "account.move.line"),
         ],
+        compute="_compute_source_aml_model_id",
+        store=True,
+        readonly=False,
         help="A 'move line like' model, ie having at least debit, credit, "
         "date, account_id and company_id fields.",
     )
@@ -276,33 +280,9 @@ class MisReportInstancePeriod(models.Model):
     allowed_cmpcol_ids = fields.Many2many(
         comodel_name="mis.report.instance.period", compute="_compute_allowed_cmpcol_ids"
     )
-    # filters
-    analytic_account_id = fields.Many2one(
-        comodel_name="account.analytic.account",
-        string="Analytic Account",
-        help=(
-            "Filter column on journal entries that match this analytic account."
-            "This filter is combined with a AND with the report-level filters "
-            "and cannot be modified in the preview."
-        ),
-    )
-    analytic_group_id = fields.Many2one(
-        comodel_name="account.analytic.group",
-        string="Analytic Account Group",
-        help=(
-            "Filter column on journal entries that match this analytic account "
-            "group. This filter is combined with a AND with the report-level "
-            "filters and cannot be modified in the preview."
-        ),
-    )
-    analytic_tag_ids = fields.Many2many(
-        comodel_name="account.analytic.tag",
-        string="Analytic Tags",
-        help=(
-            "Filter column on journal entries that have all these analytic tags."
-            "This filter is combined with a AND with the report-level filters "
-            "and cannot be modified in the preview."
-        ),
+    analytic_domain = fields.Text(
+        default="[]",
+        help="A domain to additionally filter move lines considered in this column.",
     )
 
     _order = "sequence, id"
@@ -320,6 +300,26 @@ class MisReportInstancePeriod(models.Model):
             "Period name should be unique by report",
         ),
     ]
+
+    @api.depends("source", "report_instance_id.report_id.move_lines_source")
+    def _compute_source_aml_model_id(self):
+        for record in self:
+            if record.source == SRC_ACTUALS:
+                if not self.report_instance_id.report_id:
+                    raise UserError(
+                        _(
+                            "Please select a report template and/or "
+                            "save the report before adding columns."
+                        )
+                    )
+                # use the default model defined on the report template
+                record.source_aml_model_id = (
+                    self.report_instance_id.report_id.move_lines_source
+                )
+            elif record.source in (SRC_SUMCOL, SRC_CMPCOL):
+                record.source_aml_model_id = False
+            elif record.source == SRC_ACTUALS_ALT:
+                pass  # let the user choose
 
     @api.depends("report_instance_id")
     def _compute_allowed_cmpcol_ids(self):
@@ -369,65 +369,29 @@ class MisReportInstancePeriod(models.Model):
         if self.source and not self.report_instance_id.id:
             self.report_instance_id = self.report_instance_id._origin.id
 
-    def _get_aml_model_name(self):
-        self.ensure_one()
-        if self.source == SRC_ACTUALS:
-            return self.report_id.sudo().move_lines_source.model
-        elif self.source == SRC_ACTUALS_ALT:
-            return self.source_aml_model_name
-        return False
-
-    @api.model
-    def _get_filter_domain_from_context(self):
-        filters = []
-        mis_report_filters = self.env.context.get("mis_report_filters", {})
-        for filter_name, domain in mis_report_filters.items():
-            if domain:
-                value = domain.get("value")
-                operator = domain.get("operator", "=")
-                # Operator = 'all' when coming from JS widget
-                if operator == "all":
-                    if not isinstance(value, list):
-                        value = [value]
-                    for m in value:
-                        filters.append((filter_name, "in", [m]))
-                else:
-                    filters.append((filter_name, operator, value))
-        return filters
-
     def _get_additional_move_line_filter(self):
         """Prepare a filter to apply on all move lines
 
-        This filter is applied with a AND operator on all
-        accounting expression domains. This hook is intended
-        to be inherited, and is useful to implement filtering
-        on analytic dimensions or operational units.
+        This filter will be applied with a AND operator on all accounting expression
+        domains. This hook is intended to be inherited, and is useful to implement
+        filtering on analytic dimensions or operational units.
 
-        The default filter is built from a ``mis_report_filters`` context
-        key, which is a list set by the analytic filtering mechanism
-        of the mis report widget::
+        The default filter is obtained from the report-instance-level
+        ``_get_filter_domain`` method, extended with a per column analytic domain.
 
-          [(field_name, {'value': value, 'operator': operator})]
-
-        Returns an Odoo domain expression (a python list)
-        compatible with account.move.line."""
+        Returns an Odoo domain expression (a python list) compatible with
+        account.move.line.
+        """
         self.ensure_one()
-        domain = self._get_filter_domain_from_context()
-        aml_model_name = self._get_aml_model_name()
-        if aml_model_name:
-            domain.extend(
-                self.report_id._get_target_move_domain(
-                    self.report_instance_id.target_move, aml_model_name
-                )
-            )
-        if self.analytic_account_id:
-            domain.append(("analytic_account_id", "=", self.analytic_account_id.id))
-        if self.analytic_group_id:
-            domain.append(
-                ("analytic_account_id.group_id", "=", self.analytic_group_id.id)
-            )
-        for tag in self.analytic_tag_ids:
-            domain.append(("analytic_tag_ids", "=", tag.id))
+        if not self.source_aml_model_name:
+            # This column does not have a move line source, so this additional move line
+            # filter does not apply
+            return []
+        # First get the report-level filter domain.
+        domain = self.report_instance_id._get_filter_domain(self.source_aml_model_name)
+        if self.analytic_domain:
+            # Then extend it with the column-level analytic domain.
+            domain.extend(ast.literal_eval(self.analytic_domain))
         return domain
 
     def _get_additional_query_filter(self, query):
@@ -570,17 +534,59 @@ class MisReportInstance(models.Model):
     date_from = fields.Date(string="From")
     date_to = fields.Date(string="To")
     temporary = fields.Boolean(default=False)
-    analytic_account_id = fields.Many2one(
-        comodel_name="account.analytic.account", string="Analytic Account"
+    source_aml_model_id = fields.Many2one(
+        related="report_id.move_lines_source",
+        readonly=True,
     )
-    analytic_group_id = fields.Many2one(
-        comodel_name="account.analytic.group",
-        string="Analytic Account Group",
+    source_aml_model_name = fields.Char(
+        related="source_aml_model_id.model",
+        related_sudo=True,
+        readonly=True,
     )
-    analytic_tag_ids = fields.Many2many(
-        comodel_name="account.analytic.tag", string="Analytic Tags"
+    analytic_domain = fields.Text(
+        default="[]",
+        help=(
+            "A domain to additionally filter move lines considered in this report. "
+            "Caution: when using different move line sources in different columns, "
+            "such as budgets by account, "
+            "make sure to use only fields that are available in "
+            "all move line sources."
+        ),
     )
-    hide_analytic_filters = fields.Boolean(default=True)
+    widget_show_filters = fields.Boolean(
+        default=True,
+        string="Show filters box",
+        help="Show the filter bar in the report widget.",
+    )
+    widget_show_settings_button = fields.Boolean(
+        default=False,
+        string="Show settings button",
+        help="Show the settings button in the report widget.",
+    )
+    widget_search_view_id = fields.Many2one(
+        comodel_name="ir.ui.view",
+        domain='[("type", "=", "search"), ("model", "=", source_aml_model_name)]',
+        compute="_compute_widget_search_view_id",
+        store=True,
+        readonly=False,
+        string="Filter box search view",
+        help="Search view to customize the filter box in the report widget.",
+    )
+
+    @api.depends("report_id.move_lines_source")
+    def _compute_widget_search_view_id(self):
+        for rec in self:
+            rec.widget_search_view_id = (
+                self.env["ir.ui.view"]
+                .sudo()
+                .search(
+                    [
+                        ("type", "=", "search"),
+                        ("model", "=", rec.report_id.move_lines_source.model),
+                    ],
+                    limit=1,
+                )
+            )
 
     @api.onchange("multi_company")
     def _onchange_company(self):
@@ -614,36 +620,8 @@ class MisReportInstance(models.Model):
                 rec.query_company_ids = rec.company_id or self.env.company
 
     @api.model
-    def get_filter_descriptions_from_context(self):
-        filters = self.env.context.get("mis_report_filters", {})
-        analytic_account_id = filters.get("analytic_account_id", {}).get("value")
-        filter_descriptions = []
-        if analytic_account_id:
-            analytic_account = self.env["account.analytic.account"].browse(
-                analytic_account_id
-            )
-            filter_descriptions.append(
-                _("Analytic Account: %s") % analytic_account.display_name
-            )
-        analytic_group_id = filters.get("analytic_account_id.group_id", {}).get("value")
-        if analytic_group_id:
-            analytic_group = self.env["account.analytic.group"].browse(
-                analytic_group_id
-            )
-            filter_descriptions.append(
-                _("Analytic Account Group: %s") % analytic_group.display_name
-            )
-        analytic_tag_value = filters.get("analytic_tag_ids", {}).get("value")
-        if analytic_tag_value:
-            # TODO 14 we need a test to cover this
-            analytic_tag_names = self.resolve_2many_commands(
-                "analytic_tag_ids", analytic_tag_value, ["name"]
-            )
-            filter_descriptions.append(
-                _("Analytic Tags: %s")
-                % ", ".join([rec["name"] for rec in analytic_tag_names])
-            )
-        return filter_descriptions
+    def get_filter_descriptions(self):
+        return []
 
     def save_report(self):
         self.ensure_one()
@@ -715,30 +693,51 @@ class MisReportInstance(models.Model):
 
     def _add_analytic_filters_to_context(self, context):
         self.ensure_one()
-        if self.analytic_account_id:
-            context["mis_report_filters"]["analytic_account_id"] = {
-                "value": self.analytic_account_id.id,
-                "operator": "=",
-            }
-        if self.analytic_group_id:
-            context["mis_report_filters"]["analytic_account_id.group_id"] = {
-                "value": self.analytic_group_id.id,
-                "operator": "=",
-            }
-        if self.analytic_tag_ids:
-            context["mis_report_filters"]["analytic_tag_ids"] = {
-                "value": self.analytic_tag_ids.ids,
-                "operator": "all",
-            }
+        context["mis_analytic_domain"] = ast.literal_eval(self.analytic_domain)
 
-    def _context_with_filters(self):
-        self.ensure_one()
-        if "mis_report_filters" in self.env.context:
-            # analytic filters are already in context, do nothing
-            return self.env.context
-        context = dict(self.env.context, mis_report_filters={})
-        self._add_analytic_filters_to_context(context)
-        return context
+    def _get_filter_domain(self, source_aml_model_name):
+        """Return the domain to filter the source move lines.
+
+        It combines
+          - the draft/posted filter (if the move line source has a parent_state
+            field).
+          - the analytic domain field configured on this report instance
+          - a mis_analytic_domain obtained from the context (typically populated
+            by the mis builder widget)
+        """
+        domain = []
+        # draft/posted filter
+        domain.extend(
+            self.report_id._get_target_move_domain(
+                self.target_move, source_aml_model_name
+            )
+        )
+        # report-level analytic domain filter
+        domain.extend(ast.literal_eval(self.analytic_domain))
+        # contextual analytic domain filter
+        domain.extend(self.env.context.get("mis_analytic_domain", []))
+        return domain
+
+    @api.model
+    def get_views(self, views, options=None):
+        """
+        Override to get correct form view on dashboard
+        """
+        context = self.env.context
+        if (
+            context.get("from_dashboard")
+            and context.get("active_model") == "mis.report.instance"
+        ):
+            view_id = self.env.ref(
+                "mis_builder." "mis_report_instance_result_view_form"
+            )
+            mis_report_form_view = view_id and [view_id.id, "form"]
+            for view in views:
+                if view and view[1] == "form":
+                    views.remove(view)
+                    views.append(mis_report_form_view)
+        result = super().get_views(views, options)
+        return result
 
     def preview(self):
         self.ensure_one()
@@ -750,26 +749,22 @@ class MisReportInstance(models.Model):
             "view_mode": "form",
             "view_id": view_id.id,
             "target": "current",
-            "context": self._context_with_filters(),
+            "context": self.env.context,
         }
 
     def print_pdf(self):
         self.ensure_one()
-        context = dict(self._context_with_filters(), landscape=self.landscape_pdf)
         return (
             self.env.ref("mis_builder.qweb_pdf_export")
-            .with_context(**context)
+            .with_context(landscape=self.landscape_pdf)
             .report_action(self, data=dict(dummy=True))  # required to propagate context
         )
 
     def export_xls(self):
         self.ensure_one()
-        context = dict(self._context_with_filters())
-        return (
-            self.env.ref("mis_builder.xls_export")
-            .with_context(**context)
-            .report_action(self, data=dict(dummy=True))  # required to propagate context
-        )
+        return self.env.ref("mis_builder.xls_export").report_action(
+            self, data=dict(dummy=True)
+        )  # required to propagate context
 
     def display_settings(self):
         assert len(self.ids) <= 1
@@ -795,7 +790,7 @@ class MisReportInstance(models.Model):
             period.date_from,
             period.date_to,
             period._get_additional_move_line_filter(),
-            period._get_aml_model_name(),
+            period.source_aml_model_name,
         )
         self.report_id._declare_and_compute_period(
             expression_evaluator,
@@ -898,7 +893,7 @@ class MisReportInstance(models.Model):
                 "name": self._get_drilldown_action_name(arg),
                 "domain": domain,
                 "type": "ir.actions.act_window",
-                "res_model": period._get_aml_model_name(),
+                "res_model": period.source_aml_model_name,
                 "views": [[False, "list"], [False, "form"]],
                 "view_mode": "list",
                 "target": "current",

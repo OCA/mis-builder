@@ -10,6 +10,7 @@
             </tree>
         </field>
     </record>
+
     <record model="ir.ui.view" id="mis_report_view_form">
         <field name="name">mis.report.view.form</field>
         <field name="model">mis.report</field>
@@ -102,6 +103,7 @@
             </form>
         </field>
     </record>
+
     <record id="mis_report_view_kpi_form" model="ir.ui.view">
         <field name="name">mis.report.view.kpi.form</field>
         <field name="model">mis.report.kpi</field>
@@ -160,140 +162,118 @@
                         </group>
                     </page>
                     <page string="Help (for KPI expressions)">
-                        <group>
-                            <group>
-                                <div>
-                                    <p>
-                                        Expressions can be any valid python expressions.
-                                    </p>
-                                    <p>
-                                        The following special elements are recognized in
-                                        the expressions to compute accounting data:
+                        <div style="display: flex; width: 100;">
+                            <div>
+                                <p>
+                                    Expressions can be any valid python expressions.
+                                </p>
+                                <p
+                                > The following special elements are recognized in the expressions
+                                    to compute accounting data: <code
+                                    >{bal|crd|deb|pbal|nbal}{pieu}[account
+                                    selector][journal items domain]</code>. </p>
+                                <ul>
+                                    <li>
+                                        <code>bal</code>, <code>crd</code>, <code
+                                        >deb</code>, <code>
+                                        pbal</code>, <code
+                                        >nbal</code> : balance, debit, credit,
+                                        positive balance, negative balance. </li>
+                                    <li>
+                                        <code>p</code>, <code>i</code>, <code
+                                        >e</code> : respectively variation over the period,
+                                        initial balance, ending balance </li>
+                                    <li> The <b
+                                        >account selector</b> is a like expression on the
+                                        account code (eg <code
+                                        >70%</code>, etc), or a domain over accounts
+                                        (eg <code
+                                        >[('code', 'like', '60%')]</code>). </li>
+                                    <li> The <b
+                                        >journal items domain</b> is an Odoo domain filter on
+                                        journal items. </li>
+                                    <li>
+                                        <code>balu[]</code> : (<code
+                                        >u</code> for unallocated) is a special expression
+                                        that shows the unallocated profit/loss of previous fiscal
+                                        years. </li>
+                                </ul>
+                                <p>
+                                    Expressions can involve other KPI, sub KPI and
+                                    query results by name (eg <code>kpi1 + kpi2</code>,
+                                    <code>kpi2.subkpi1</code>, <code
+                                    >query1.field1</code>).
+                                </p>
+                                <p>
+                                    Additionally following variables are available
+                                    in the evaluation context:
+                                </p>
+                                <ul>
+                                    <li>
+                                        <code>sum</code>, <code>min</code>,
+                                        <code>max</code>, <code>len</code>,
+                                        <code>avg</code> : behave as expected, very
+                                        similar to the python builtins. </li>
+                                    <li>
+                                        <code>datetime</code>, <code
+                                        >datetime</code>, <code
+                                        >dateutil</code> : the python modules. </li>
+                                    <li>
+                                        <code>date_from</code>, <code
+                                        >date_to</code> : beginning and end date of the
+                                        period. </li>
+                                    <li>
+                                        <code
+                                        >AccountingNone</code> : a null value that behaves as 0 in
+                                        arithmetic operations. </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <p>Examples:</p>
+                                <ul>
+                                    <li>
+                                        <code
+                                        >bal[70]</code> : variation of the balance of account 70 over
+                                        the period (it is the same as <code
+                                        >balp[70]</code>. </li>
+                                    <li>
+                                        <code
+                                        >bali[70,60]</code> : initial balance of accounts 70 and 60. </li>
+                                    <li>
+                                        <code
+                                        >bale[1%%]</code> : balance of accounts starting with 1 at
+                                        end of period. </li>
+                                    <li>
+                                        <code
+                                        >crdp[40%]</code> : sum of all credits on accounts starting
+                                        with 40 during the period. </li>
+                                    <li>
                                         <code>
-                                            {bal|crd|deb|pbal|nbal}{pieu}[account
-                                            selector][journal items domain]
+                                            debp[55%][('journal_id.code', '=',
+                                            'BNK1')]
                                         </code>
-                                        .
-                                    </p>
-                                    <ul>
-                                        <li>
-                                            <b>bal, crd, deb, pbal, nbal</b>
-                                            : balance, debit, credit, positive balance,
-                                            negative balance.
-                                        </li>
-                                        <li>
-                                            <b>p, i, e</b>
-                                            : respectively variation over the period,
-                                            initial balance, ending balance
-                                        </li>
-                                        <li>
-                                            The
-                                            <b>account selector</b>
-                                            is a like expression on the account code (eg
-                                            70%, etc).
-                                        </li>
-                                        <li>
-                                            The
-                                            <b>journal items domain</b>
-                                            is an Odoo domain filter on journal items.
-                                        </li>
-                                        <li>
-                                            <b>balu[]</b>
-                                            : (u for unallocated) is a special
-                                            expression that shows the unallocated
-                                            profit/loss of previous
-                                           fiscal years.
-                                        </li>
-                                    </ul>
-                                    <p>
-                                        Expressions can involve other KPI, sub KPI and
-                                        query results by name (eg kpi1 + kpi2,
-                                        kpi2.subkpi1, query1.field1).
-                                    </p>
-                                    <p>
-                                        Additionally following variables are available
-                                        in the evaluation context:
-                                    </p>
-                                    <ul>
-                                        <li>
-                                            <b>sum, min, max, len, avg</b>
-                                            : behave as expected, very similar to the
-                                            python builtins.
-                                        </li>
-                                        <li>
-                                            <b>datetime, datetime, dateutil</b>
-                                            : the python modules.
-                                        </li>
-                                        <li>
-                                            <b>date_from, date_to</b>
-                                            : beginning and end date of the period.
-                                        </li>
-                                        <li>
-                                            <b>AccountingNone</b>
-                                            : a null value that behaves as 0 in
-                                            arithmetic operations.
-                                        </li>
-                                    </ul>
-                                </div>
-                            </group>
-                            <group>
-                                <div>
-                                    <p>Examples:</p>
-                                    <ul>
-                                        <li>
-                                            <b>bal[70]</b>
-                                            : variation of the balance of account 70
-                                            over the period (it is the same as balp[70].
-                                        </li>
-                                        <li>
-                                            <b>bali[70,60]</b>
-                                            : initial balance of accounts 70 and 60.
-                                        </li>
-                                        <li>
-                                            <b>bale[1%%]</b>
-                                            : balance of accounts starting with 1 at end
-                                            of period.
-                                        </li>
-                                        <li>
-                                            <b>crdp[40%]</b>
-                                            : sum of all credits on accounts starting
-                                            with 40 during the period.
-                                        </li>
-                                        <li>
-                                            <b>
-                                                debp[55%][('journal_id.code', '=',
-                                                'BNK1')]
-                                            </b>
-                                            : sum of all debits on accounts 55 and
-                                            journal BNK1 during the period.
-                                        </li>
-                                        <li>
-                                            <b>
-                                                balp[('user_type_id', '=',
-                                                ref('account.
-                                                data_account_type_receivable').id)][]
-                                            </b>
-                                            : variation of the balance of all receivable
-                                            accounts over the period.
-                                        </li>
-                                        <li>
-                                            <b>
-                                                balp[][('tax_line_id.tag_ids', '=',
-                                                ref('l10n_be.tax_tag_56').id)]
-                                            </b>
-                                            : balance of move lines related to tax grid
-                                            56.
-                                        </li>
-                                        <li>
-                                            <b>pbale[55%]</b>
-                                            : sum of all ending balances of accounts
-                                            starting with 55 whose
-                                          ending balance is positive.
-                                        </li>
-                                    </ul>
-                                </div>
-                            </group>
-                        </group>
+                                        : sum of all debits on accounts 55 and journal BNK1 during
+                                        the period. </li>
+                                    <li>
+                                        <code>
+                                            balp[('user_type_id', '=',
+                                            ref('account.
+                                            data_account_type_receivable').id)][]
+                                        </code>
+                                        : variation of the balance of all receivable accounts over
+                                        the period. </li>
+                                    <li>
+                                        <code>
+                                            balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]
+                                        </code>
+                                        : balance of move lines related to tax grid 56. </li>
+                                    <li>
+                                        <code
+                                        >pbale[55%]</code> : sum of all ending balances of accounts
+                                        starting with 55 whose ending balance is positive. </li>
+                                </ul>
+                            </div>
+                        </div>
                     </page>
                 </notebook>
             </form>

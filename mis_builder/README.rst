@@ -397,7 +397,7 @@ New features:
   (`#26 <https://github.com/OCA/mis-builder/issues/26>`_).
 * [ADD] extended account selectors: you can now select accounts using
   any domain on account.account, not only account codes
-  ``balp[('user_type_id', '=', ref('account.data_account_type_receivable').id)]``
+  ``balp[('account_type', '=', 'asset_receivable')]``
   (`#4 <https://github.com/OCA/mis-builder/issues/4>`_).
 * [IMP] in the report instance configuration form, the filters are
   now grouped in a notebook page, this improves readability and

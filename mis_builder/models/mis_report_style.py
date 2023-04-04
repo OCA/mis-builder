@@ -155,8 +155,8 @@ class MisReportKpiStyle(models.Model):
         return r
 
     @api.model
-    def render(self, lang, style_props, type, value, sign="-"):
-        if type == TYPE_NUM:
+    def render(self, lang, style_props, var_type, value, sign="-"):
+        if var_type == TYPE_NUM:
             return self.render_num(
                 lang,
                 value,
@@ -166,7 +166,7 @@ class MisReportKpiStyle(models.Model):
                 style_props.suffix,
                 sign=sign,
             )
-        elif type == TYPE_PCT:
+        elif var_type == TYPE_PCT:
             return self.render_pct(lang, value, style_props.dp, sign=sign)
         else:
             return self.render_str(lang, value)
@@ -202,7 +202,7 @@ class MisReportKpiStyle(models.Model):
         self,
         lang,
         style_props,
-        type,
+        var_type,
         compare_method,
         value,
         base_value,
@@ -212,7 +212,7 @@ class MisReportKpiStyle(models.Model):
         """
         :param lang: res.lang record
         :param style_props: PropertyDict with style properties
-        :param type: num, pct or str
+        :param var_type: num, pct or str
         :param compare_method: diff, pct, none
         :param value: value to compare (value - base_value)
         :param base_value: value compared with (value - base_value)
@@ -234,13 +234,13 @@ class MisReportKpiStyle(models.Model):
             value = AccountingNone
         if base_value is None:
             base_value = AccountingNone
-        if type == TYPE_PCT:
+        if var_type == TYPE_PCT:
             delta = value - base_value
             if delta and round(delta, (style_props.dp or 0) + 2) != 0:
                 delta_style.update(divider=0.01, prefix="", suffix=_("pp"))
             else:
                 delta = AccountingNone
-        elif type == TYPE_NUM:
+        elif var_type == TYPE_NUM:
             if value and average_value:
                 # pylint: disable=redefined-variable-type
                 value = value / float(average_value)
@@ -266,7 +266,7 @@ class MisReportKpiStyle(models.Model):
         return delta, delta_r, delta_style, delta_type
 
     @api.model
-    def to_xlsx_style(self, type, props, no_indent=False):
+    def to_xlsx_style(self, var_type, props, no_indent=False):
         xlsx_attributes = [
             ("italic", props.font_style == "italic"),
             ("bold", props.font_weight == "bold"),
@@ -274,7 +274,7 @@ class MisReportKpiStyle(models.Model):
             ("font_color", props.color),
             ("bg_color", props.background_color),
         ]
-        if type == TYPE_NUM:
+        if var_type == TYPE_NUM:
             num_format = "#,##0"
             if props.dp:
                 num_format += "."
@@ -284,7 +284,7 @@ class MisReportKpiStyle(models.Model):
             if props.suffix:
                 num_format = '{}" {}"'.format(num_format, props.suffix)
             xlsx_attributes.append(("num_format", num_format))
-        elif type == TYPE_PCT:
+        elif var_type == TYPE_PCT:
             num_format = "0"
             if props.dp:
                 num_format += "."

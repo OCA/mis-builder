@@ -920,7 +920,7 @@ class MisReport(models.Model):
 
         :param: target_move: all|posted
         :param: aml_model_name: an optional move-line-like model name
-                (defaults to accaount.move.line)
+                (defaults to account.move.line)
         """
         if not self._supports_target_move_filter(aml_model_name):
             return []

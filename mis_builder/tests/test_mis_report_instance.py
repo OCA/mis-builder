@@ -565,10 +565,9 @@ class TestMisReportInstance(common.HttpCase):
         self.assertFalse(self.report_instance.company_ids)
 
     def test_mis_report_analytic_filters(self):
-        # Check that matrix has no values when using a filter with a non
-        # existing account
+        # Check that matrix has no values when using a filter with a non existing value
         matrix = self.report_instance.with_context(
-            mis_report_filters={"analytic_account_id": {"value": 999}}
+            analytic_domain=[("partner_id", "=", -1)]
         )._compute_matrix()
         for row in matrix.iter_rows():
             vals = [c.val for c in row.iter_cells()]
@@ -589,6 +588,6 @@ class TestMisReportInstance(common.HttpCase):
 
     def test_unprivileged(self):
         test_user = common.new_test_user(
-            self.env, "mis_you", groups="base.group_user,account.group_account_user"
+            self.env, "mis_you", groups="base.group_user,account.group_account_readonly"
         )
         self.report_instance.with_user(test_user).compute()

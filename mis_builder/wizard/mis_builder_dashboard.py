@@ -38,7 +38,6 @@ class AddMisReportInstanceDashboard(models.TransientModel):
         assert active_model == "mis.report.instance"
         active_id = self.env.context.get("active_id")
         assert active_id
-        mis_report_instance = self.env[active_model].browse(active_id)
         # create the act_window corresponding to this report
         self.env.ref("mis_builder.mis_report_instance_result_view_form")
         view = self.env.ref("mis_builder.mis_report_instance_result_view_form")
@@ -54,7 +53,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
                     "target": "current",
                     "view_mode": "form",
                     "view_id": view.id,
-                    "context": mis_report_instance._context_with_filters(),
+                    "context": self.env.context,
                 }
             )
         )
@@ -71,11 +70,14 @@ class AddMisReportInstanceDashboard(models.TransientModel):
             arch = self.env["ir.ui.view.custom"].browse(last_customization[0].id).arch
         new_arch = etree.fromstring(arch)
         column = new_arch.xpath("//column")[0]
+        # Due to native dashboard doesn't support form view
+        # add "from_dashboard" to context to get correct views in "get_views"
+        context = dict(self.env.context, from_dashboard=True)
         column.append(
             etree.Element(
                 "action",
                 {
-                    "context": str(self.env.context),
+                    "context": str(context),
                     "name": str(report_result.id),
                     "string": self.name,
                     "view_mode": "form",

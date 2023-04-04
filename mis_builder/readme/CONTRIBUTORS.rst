@@ -21,7 +21,7 @@
 * Arnaud Pineux <arnaud.pineux@acsone.eu>
 * Ernesto Tejeda <ernesto.tejeda@tecnativa.com>
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
-* `CorporateHub <https://corporatehub.eu/>`__
-
-  * Alexey Pelykh <alexey.pelykh@corphub.eu>
+* Alexey Pelykh <alexey.pelykh@corphub.eu>
 * Jairo Llopis (https://www.moduon.team/)
+* Dzung Tran <dungtd@trobz.com>
+* Hoang Diep <hoang@trobz.com>

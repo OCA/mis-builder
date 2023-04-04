@@ -1,3 +1,20 @@
+16.0.5.0.0 (2023-04-01)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Migration to 16.0.
+
+  - removal of analytic fetures because the upstream ``analytic_distribution`` mechanism
+    is not compatible; support may be introduced in separate module, depending on use
+    cases (`#472 <https://github.com/OCA/mis-builder/issues/472>`_)
+
+
+**Bugfixes**
+
+- Fix display of budgets in presence of sub KPIs. (`#428 <https://github.com/OCA/mis-builder/issues/428>`_)
+
+
 14.0.4.0.0 (2022-01-08)
 ~~~~~~~~~~~~~~~~~~~~~~~
 

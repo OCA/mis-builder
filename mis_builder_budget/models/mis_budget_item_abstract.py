@@ -31,12 +31,6 @@ class MisBudgetItemAbstract(models.AbstractModel):
     )
     date_from = fields.Date(required=True, string="From")
     date_to = fields.Date(required=True, string="To")
-    analytic_account_id = fields.Many2one(
-        comodel_name="account.analytic.account", string="Analytic account"
-    )
-    analytic_tag_ids = fields.Many2many(
-        comodel_name="account.analytic.tag", string="Analytic Tags"
-    )
 
     @api.onchange("date_range_id")
     def _onchange_date_range(self):
@@ -63,10 +57,7 @@ class MisBudgetItemAbstract(models.AbstractModel):
             ("budget_id", "=", self.budget_id.id),
             ("date_from", "<=", self.date_to),
             ("date_to", ">=", self.date_from),
-            ("analytic_account_id", "=", self.analytic_account_id.id),
         ]
-        for tag in self.analytic_tag_ids:
-            domain.append(("analytic_tag_ids", "in", [tag.id]))
         return domain
 
     def _check_dates(self):

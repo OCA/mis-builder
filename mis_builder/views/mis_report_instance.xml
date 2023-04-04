@@ -5,10 +5,20 @@
         <field name="model">mis.report.instance</field>
         <field name="priority" eval="20 " />
         <field name="arch" type="xml">
-            <form string="MIS Report Result" edit="false" create="false" delete="false">
-                <group colspan="4">
-                    <field name="id" widget="mis_report_widget" nolabel="1" />
-                </group>
+            <form
+                string="MIS Report Preview"
+                edit="false"
+                create="false"
+                delete="false"
+            >
+                <sheet>
+                    <field
+                        name="id"
+                        widget="mis_report_widget"
+                        nolabel="1"
+                        style="width:100%"
+                    />
+                </sheet>
             </form>
         </field>
     </record>
@@ -48,7 +58,7 @@
             <form string="MIS Report Instance">
                 <sheet>
                     <field name="temporary" invisible="1" />
-                    <div class="oe_read_only oe_right oe_button_box" name="buttons">
+                    <div class="oe_right oe_button_box" name="buttons">
                         <button
                             type="object"
                             name="preview"
@@ -141,6 +151,7 @@
                                         <field name="sequence" widget="handle" />
                                         <field name="name" />
                                         <field name="source" />
+                                        <field name="source_aml_model_id" />
                                         <field name="date_from" />
                                         <field name="date_to" />
                                         <field name="valid" invisible="1" />
@@ -171,18 +182,11 @@
                                     groups="base.group_multi_company"
                                     widget="many2many_tags"
                                 />
+                                <field name="source_aml_model_name" invisible="1" />
                                 <field
-                                    name="analytic_account_id"
-                                    groups="analytic.group_analytic_accounting"
-                                />
-                                <field
-                                    name="analytic_group_id"
-                                    groups="analytic.group_analytic_accounting"
-                                />
-                                <field
-                                    name="analytic_tag_ids"
-                                    groups="analytic.group_analytic_tags"
-                                    widget="many2many_tags"
+                                    name="analytic_domain"
+                                    widget="domain"
+                                    options="{'model': 'source_aml_model_name'}"
                                 />
                             </group>
                         </page>
@@ -191,7 +195,16 @@
                                 <field name="landscape_pdf" />
                                 <field name="no_auto_expand_accounts" />
                                 <field name="display_columns_description" />
-                                <field name="hide_analytic_filters" />
+                            </group>
+                        </page>
+                        <page string="Widget">
+                            <group name="widget">
+                                <field name="widget_show_filters" />
+                                <field
+                                    name="widget_search_view_id"
+                                    attrs="{'invisible': [('widget_show_filters', '=', False)]}"
+                                />
+                                <field name="widget_show_settings_button" />
                             </group>
                         </page>
                     </notebook>
@@ -211,7 +224,7 @@
         parent="account.menu_finance_reports"
         name="MIS Reporting"
         sequence="101"
-        groups="account.group_account_user"
+        groups="account.group_account_manager"
     />
     <menuitem
         id="mis_report_instance_view_menu"
@@ -261,9 +274,7 @@
                         name="export_xls"
                         string="Export"
                         icon="fa-download"
-                    />
-                    or
-                    <button string="Cancel" class="oe_link" special="cancel" />
+                    /> or <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </sheet>
         </field>
@@ -396,9 +407,12 @@
                     </group>
                 </group>
                 <group string="Filters">
-                    <field name="analytic_account_id" />
-                    <field name="analytic_group_id" />
-                    <field name="analytic_tag_ids" widget="many2many_tags" />
+                    <field
+                        name="analytic_domain"
+                        widget="domain"
+                        options="{'model': 'source_aml_model_name'}"
+                        attrs="{'invisible': [('source_aml_model_name', '=', False)]}"
+                    />
                 </group>
             </form>
         </field>

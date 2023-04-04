@@ -18,7 +18,7 @@ class TestMisBudgetByAccount(TransactionCase):
             dict(
                 name="test account",
                 code="1",
-                user_type_id=cls.env.ref("account.data_account_type_revenue").id,
+                account_type="income",
             )
         )
         # create report

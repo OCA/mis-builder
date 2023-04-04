@@ -24,7 +24,6 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 pol.company_id AS company_id,
         pol.name AS name,
         po.date_planned::date as date,
-        pol.account_analytic_id as analytic_account_id,
         pol.id AS res_id,
         'purchase.order.line' AS res_model,
         CASE
@@ -63,7 +62,6 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 ail.company_id AS company_id,
         ail.name AS name,
         ail.create_date::date as date,
-        ail.analytic_account_id as analytic_account_id,
         ail.id AS res_id,
         'account.move.line' AS res_model,
         ail.account_id as account_id,
@@ -83,7 +81,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 (cur.date_end is null or cur.date_end > coalesce(ai.invoice_date, now())))
         WHERE ai.state = 'draft'
           AND ai.move_type IN ('in_invoice', 'out_refund')
-          AND NOT ail.exclude_from_invoice_tab
+          AND ail.display_type = 'product'
 
     UNION ALL
 
@@ -93,7 +91,6 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 ail.company_id AS company_id,
         ail.name AS name,
         ail.create_date::date as date,
-        ail.analytic_account_id as analytic_account_id,
         ail.id AS res_id,
         'account.move.line' AS res_model,
         ail.account_id as account_id,
@@ -113,7 +110,7 @@ CREATE OR REPLACE VIEW mis_committed_purchase AS (
                 (cur.date_end is null or cur.date_end > coalesce(ai.invoice_date, now())))
         WHERE ai.state = 'draft'
           AND ai.move_type IN ('out_invoice', 'in_refund')
-          AND NOT ail.exclude_from_invoice_tab
+          AND ail.display_type = 'product'
 
     ) AS mis_committed_purchase
 )
