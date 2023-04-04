@@ -14,13 +14,13 @@ MIS Builder
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github
-    :target: https://github.com/OCA/mis-builder/tree/15.0/mis_builder
+    :target: https://github.com/OCA/mis-builder/tree/16.0/mis_builder
     :alt: OCA/mis-builder
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/mis-builder-15-0/mis-builder-15-0-mis_builder
+    :target: https://translation.odoo-community.org/projects/mis-builder-16-0/mis-builder-16-0-mis_builder
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/248/15.0
+    :target: https://runbot.odoo-community.org/runbot/248/16.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -96,6 +96,42 @@ be found on GitHub.
 
 Changelog
 =========
+
+16.0.5.0.0 (2023-04-01)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Migration to 16.0
+
+  - Addition of a generic filter domain on reports and columns.
+  - Addition of a search bar to the widget. The corresponding search view is configurable
+    per report.
+  - Huge improvement of the widget style. This was long overdue.
+  - Make the MIS Report menu accessible to the Billing Administrator group
+    (instead of the hidden Show Full Accounting Features), to align with the access rules
+    and avoid giving a false sense of security. This also makes the menu discoverable to
+    new users.
+  - Removal of analytic fetures because the upstream ``analytic_distribution`` mechanism
+    is not compatible; support may be introduced in separate module, depending on use
+    cases.
+  - Abandon the ``mis_report_filters`` context key which had security implication.
+    It is replaced by a ``mis_analytic_domain`` context key which is ANDed with other
+    report-defined filters. (`#472 <https://github.com/OCA/mis-builder/issues/472>`_)
+  - Rename the ``get_filter_descriptions_from_context`` method to
+    ``get_filter_descriptions``. This method may be overridden to provide additional
+    subtitles on the PDF or XLS report, representing user-selected filters.
+  - The ``hide_analytic_filters`` has been replaced by ``widget_show_filters``.
+  - The visibility of the settings button on the widget is now controlled by a
+    ``show_settings_button``. Before it was visible only for the ``account_user`` group
+    but this was not flexible enough.
+  - The widget configuration settings are now grouped in a dedicated ``Widget`` tab in
+    the report configuration form.
+
+**Bugfixes**
+
+- Fix access error when previewing or printing report. (`#415 <https://github.com/OCA/mis-builder/issues/415>`_)
+
 
 15.0.4.0.5 (2022-07-19)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -584,7 +620,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/mis-builder/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -622,9 +658,10 @@ Contributors
 * Arnaud Pineux <arnaud.pineux@acsone.eu>
 * Ernesto Tejeda <ernesto.tejeda@tecnativa.com>
 * Pedro M. Baeza <pedro.baeza@tecnativa.com>
-* `CorporateHub <https://corporatehub.eu/>`__
-
-  * Alexey Pelykh <alexey.pelykh@corphub.eu>
+* Alexey Pelykh <alexey.pelykh@corphub.eu>
+* Jairo Llopis (https://www.moduon.team/)
+* Dzung Tran <dungtd@trobz.com>
+* Hoang Diep <hoang@trobz.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -647,6 +684,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-sbidoul| 
 
-This module is part of the `OCA/mis-builder <https://github.com/OCA/mis-builder/tree/15.0/mis_builder>`_ project on GitHub.
+This module is part of the `OCA/mis-builder <https://github.com/OCA/mis-builder/tree/16.0/mis_builder>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

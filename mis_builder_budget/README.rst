@@ -14,13 +14,13 @@ MIS Builder Budget
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github
-    :target: https://github.com/OCA/mis-builder/tree/15.0/mis_builder_budget
+    :target: https://github.com/OCA/mis-builder/tree/16.0/mis_builder_budget
     :alt: OCA/mis-builder
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/mis-builder-15-0/mis-builder-15-0-mis_builder_budget
+    :target: https://translation.odoo-community.org/projects/mis-builder-16-0/mis-builder-16-0-mis_builder_budget
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/248/15.0
+    :target: https://runbot.odoo-community.org/runbot/248/16.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -84,6 +84,23 @@ be found on GitHub.
 
 Changelog
 =========
+
+16.0.5.0.0 (2023-04-01)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Migration to 16.0.
+
+  - removal of analytic fetures because the upstream ``analytic_distribution`` mechanism
+    is not compatible; support may be introduced in separate module, depending on use
+    cases (`#472 <https://github.com/OCA/mis-builder/issues/472>`_)
+
+
+**Bugfixes**
+
+- Fix display of budgets in presence of sub KPIs. (`#428 <https://github.com/OCA/mis-builder/issues/428>`_)
+
 
 14.0.4.0.0 (2022-01-08)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -179,7 +196,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/mis-builder/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder_budget%0Aversion:%2015.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder_budget%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -198,6 +215,7 @@ Contributors
 * Adrien Peiffer <adrien.peiffer@acsone.eu>
 * Benjamin Willig <benjamin.willig@acsone.eu>
 * Artem Kostyuk <a.kostyuk@mobilunity.com>
+* Dzung Tran <dungtd@trobz.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -220,6 +238,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-sbidoul| 
 
-This module is part of the `OCA/mis-builder <https://github.com/OCA/mis-builder/tree/15.0/mis_builder_budget>`_ project on GitHub.
+This module is part of the `OCA/mis-builder <https://github.com/OCA/mis-builder/tree/16.0/mis_builder_budget>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
