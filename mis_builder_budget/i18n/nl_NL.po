@@ -21,24 +21,28 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: mis_builder_budget
+#. odoo-python
+#: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:0
+#, python-format
+msgid "%(rec_name)s is not within budget %(budget_name)s date range."
+msgstr ""
+
+#. module: mis_builder_budget
+#. odoo-python
+#: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:0
+#, python-format
+msgid "%(rec_name)s overlaps %(res_name)s in budget %(budget_name)s"
+msgstr ""
+
+#. module: mis_builder_budget
+#. odoo-python
 #: code:addons/mis_builder_budget/models/mis_budget_abstract.py:0
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (kopie)"
 
 #. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:0
-#, python-format
-msgid "%s is not within budget %s date range."
-msgstr "%s valt niet binnen het datumbereik van begroting %s."
-
-#. module: mis_builder_budget
-#: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:0
-#, python-format
-msgid "%s overlaps %s in budget %s"
-msgstr "%s overlapt %s in begroting %s"
-
-#. module: mis_builder_budget
+#. odoo-python
 #: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:0
 #, python-format
 msgid "%s start date must not be after end date"
@@ -76,21 +80,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__amount
 msgid "Amount"
 msgstr ""
-
-#. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__analytic_tag_ids
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__analytic_tag_ids
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract__analytic_tag_ids
-#, fuzzy
-msgid "Analytic Tags"
-msgstr "Analytische rekening"
-
-#. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__analytic_account_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__analytic_account_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract__analytic_account_id
-msgid "Analytic account"
-msgstr "Analytische rekening"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_attachment_count
@@ -240,15 +229,9 @@ msgstr "Omschrijving"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__display_name
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__display_name
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__display_name
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract__display_name
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance__display_name
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__display_name
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi__display_name
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi_expression__display_name
 msgid "Display Name"
 msgstr "Weergavenaam"
 
@@ -273,13 +256,6 @@ msgid "Followers"
 msgstr ""
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_channel_ids
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_channel_ids
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_channel_ids
-msgid "Followers (Channels)"
-msgstr ""
-
-#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_partner_ids
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_partner_ids
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_partner_ids
@@ -297,26 +273,24 @@ msgid "From"
 msgstr "Van"
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__has_message
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__has_message
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract__id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance__id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period__id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi__id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi_expression__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_needaction
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_unread
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_needaction
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_unread
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_needaction
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_unread
 msgid "If checked, new messages require your attention."
 msgstr ""
 
@@ -365,15 +339,9 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item____last_update
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item_abstract____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_instance_period____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_report_kpi_expression____last_update
 msgid "Last Modified on"
 msgstr "Voor het laatst aangepast op"
 
@@ -543,13 +511,6 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_unread_counter
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_unread_counter
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_unread_counter
-msgid "Number of unread messages"
-msgstr ""
-
-#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_sms_error
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
@@ -590,20 +551,6 @@ msgid "To"
 msgstr "Tot"
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_unread
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_unread
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_unread
-msgid "Unread Messages"
-msgstr ""
-
-#. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_unread_counter
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_unread_counter
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr ""
-
-#. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account_item__company_currency_id
 msgid "Utility field to express amount currency"
 msgstr ""
@@ -634,6 +581,21 @@ msgstr ""
 msgid ""
 "Wrong credit or debit value in budget item! Credit or debit should be zero."
 msgstr ""
+
+#, python-format
+#~ msgid "%s is not within budget %s date range."
+#~ msgstr "%s valt niet binnen het datumbereik van begroting %s."
+
+#, python-format
+#~ msgid "%s overlaps %s in budget %s"
+#~ msgstr "%s overlapt %s in begroting %s"
+
+#, fuzzy
+#~ msgid "Analytic Tags"
+#~ msgstr "Analytische rekening"
+
+#~ msgid "Analytic account"
+#~ msgstr "Analytische rekening"
 
 #~ msgid "MIS Budget"
 #~ msgstr "MIS Budgetten"
