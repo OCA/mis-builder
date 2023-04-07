@@ -97,6 +97,13 @@ be found on GitHub.
 Changelog
 =========
 
+16.0.5.1.0 (2023-04-04)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Improve UX by adding the option to edit the pivot date directly on the view.
+
 16.0.5.0.0 (2023-04-01)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
