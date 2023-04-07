@@ -205,6 +205,7 @@
                                     attrs="{'invisible': [('widget_show_filters', '=', False)]}"
                                 />
                                 <field name="widget_show_settings_button" />
+                                <field name="widget_show_pivot_date" />
                             </group>
                         </page>
                     </notebook>

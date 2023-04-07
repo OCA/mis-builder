@@ -14,6 +14,12 @@
                         <div class="oe_mis_builder_cp_right_bottom">
                             <div class="oe_mis_builder_filter_buttons">
                                 <FilterMenu t-if="showSearchBar" />
+                                <DatePicker
+                                    date="state.pivot_date"
+                                    onDateTimeChanged="onDateTimeChanged.bind(this)"
+                                    placeholder="'Base date...'"
+                                    t-if="showPivotDate"
+                                />
                             </div>
                             <div class="oe_mis_builder_action_buttons">
                                 <button t-on-click="refresh" class="btn">
