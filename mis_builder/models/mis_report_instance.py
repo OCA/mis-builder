@@ -305,7 +305,7 @@ class MisReportInstancePeriod(models.Model):
     def _compute_source_aml_model_id(self):
         for record in self:
             if record.source == SRC_ACTUALS:
-                if not self.report_instance_id.report_id:
+                if not record.report_instance_id.report_id:
                     raise UserError(
                         _(
                             "Please select a report template and/or "
@@ -314,7 +314,7 @@ class MisReportInstancePeriod(models.Model):
                     )
                 # use the default model defined on the report template
                 record.source_aml_model_id = (
-                    self.report_instance_id.report_id.move_lines_source
+                    record.report_instance_id.report_id.move_lines_source
                 )
             elif record.source in (SRC_SUMCOL, SRC_CMPCOL):
                 record.source_aml_model_id = False
