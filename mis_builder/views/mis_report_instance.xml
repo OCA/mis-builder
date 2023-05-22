@@ -180,6 +180,12 @@
                                     groups="base.group_multi_company"
                                     widget="many2many_tags"
                                 />
+                                 <field name="source_aml_model_name" invisible="1" />
+                                <field
+                                    name="analytic_domain"
+                                    widget="domain"
+                                    options="{'model': 'source_aml_model_name'}"
+                                />
                                 <field
                                     name="analytic_account_id"
                                     groups="analytic.group_analytic_accounting"
@@ -405,6 +411,12 @@
                     </group>
                 </group>
                 <group string="Filters">
+                    <field
+                        name="analytic_domain"
+                        widget="domain"
+                        options="{'model': 'source_aml_model_name'}"
+                        attrs="{'invisible': [('source_aml_model_name', '=', False)]}"
+                    />
                     <field name="analytic_account_id" />
                     <field name="analytic_group_id" />
                     <field name="analytic_tag_ids" widget="many2many_tags" />
