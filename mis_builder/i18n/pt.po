@@ -42,8 +42,8 @@ msgstr ""
 "<b>\n"
 "                                                balp[('user_type_id', '=',\n"
 "                                                ref('account.\n"
-"                                                "
-"data_account_type_receivable').id)][]\n"
+"                                                data_account_type_receivable')."
+"id)][]\n"
 "                                            </b>\n"
 "                                            : variação do saldo de todos as "
 "contas \n"
@@ -63,8 +63,8 @@ msgid ""
 "                                            56."
 msgstr ""
 "<b>\n"
-"                                                balp[][("
-"'tax_line_id.tag_ids', '=',\n"
+"                                                balp[][('tax_line_id."
+"tag_ids', '=',\n"
 "                                                ref('l10n_be.tax_tag_56')."
 "id)]\n"
 "                                            </b>\n"
@@ -85,8 +85,8 @@ msgid ""
 "                                            journal BNK1 during the period."
 msgstr ""
 "<b>\n"
-"                                                debp[55%][("
-"'journal_id.code', '=',\n"
+"                                                debp[55%][('journal_id."
+"code', '=',\n"
 "                                                'BNK1')]\n"
 "                                            </b>\n"
 "                                            : soma de todos os débitos nas "
@@ -261,6 +261,7 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance__source_aml_model_id
 msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
@@ -274,6 +275,20 @@ msgstr ""
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr "Um filtro de data é obrigatório para esta origem na coluna %s."
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_domain
+msgid "A domain to additionally filter move lines considered in this column."
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields,help:mis_builder.field_mis_report_instance__analytic_domain
+msgid ""
+"A domain to additionally filter move lines considered in this report. "
+"Caution: when using different move line sources in different columns, such "
+"as budgets by account, make sure to use only fields that are available in "
+"all move line sources."
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
@@ -314,8 +329,8 @@ msgid ""
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
 msgstr ""
-"Reais: dados correntes da contabilidade e outras fontes através de consultas."
-"\n"
+"Reais: dados correntes da contabilidade e outras fontes através de "
+"consultas.\n"
 "Reais (alternativos): dados correntes de uma fonte alternativa (p. ex. uma "
 "view da BD que forneça valores do tipo itens do diário).\n"
 "Soma de colunas: somatório (+/-) de outras colunas.\n"
@@ -424,6 +439,12 @@ msgstr "Grupo Contas Analíticas: %s"
 #, python-format
 msgid "Analytic Account: %s"
 msgstr "Conta Analítica: %s"
+
+#. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_domain
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_domain
+msgid "Analytic Domain"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_tag_ids
@@ -682,10 +703,10 @@ msgid ""
 "weight."
 msgstr ""
 "Determina de que forma os valores deste kpi ocorridos ao longo de certo "
-"período são transformados de forma a corresponder ao período do report. Soma:"
-" os valores do período mais curto são adicionados; valores do período mais "
-"longo ou períodos com sobreposição parcial são ajustados 'pro-rata temporis'."
-"\n"
+"período são transformados de forma a corresponder ao período do report. "
+"Soma: os valores do período mais curto são adicionados; valores do período "
+"mais longo ou períodos com sobreposição parcial são ajustados 'pro-rata "
+"temporis'.\n"
 "Média: valores do período incluído contribuem para uma média ponderada tendo "
 "em conta um 'pro-rata temporis'."
 
@@ -817,8 +838,8 @@ msgid ""
 "                                        kpi2.subkpi1, query1.field1)."
 msgstr ""
 "Expressões podem envolver outros KPI, sub-KPI e\n"
-"                                        resultados da consulta pelo nome ("
-"por exemplo, kpi1 + kpi2,\n"
+"                                        resultados da consulta pelo nome "
+"(por exemplo, kpi1 + kpi2,\n"
 "                                        kpi2.subkpi1, consulta1.campo1)."
 
 #. module: mis_builder
@@ -1298,6 +1319,7 @@ msgid "Mode"
 msgstr "Modo"
 
 #. module: mis_builder
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__source_aml_model_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query__model_id
 msgid "Model"
 msgstr "Modelo"
@@ -1311,6 +1333,7 @@ msgstr "Mês"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
+#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__source_aml_model_id
 msgid "Move Lines Source"
 msgstr "Origem das Linhas de Movimentos"
 
@@ -1438,6 +1461,13 @@ msgstr "Data Pivot"
 #, python-format
 msgid "Please provide both columns to compare in %s."
 msgstr "Por favor, indique ambas as colunas a comparar em %s."
+
+#. module: mis_builder
+#: code:addons/mis_builder/models/mis_report_instance.py:0
+#, python-format
+msgid ""
+"Please select a report template and/or save the report before adding columns."
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__prefix
@@ -1671,7 +1701,8 @@ msgstr "Loop de sub-relatório detectado"
 #: code:addons/mis_builder/models/mis_report_subreport.py:0
 #, python-format
 msgid "Subreport name ({}) must be a valid python identifier"
-msgstr "O nome do sub-relatório ({}) tem que ser um identificador Python válido"
+msgstr ""
+"O nome do sub-relatório ({}) tem que ser um identificador Python válido"
 
 #. module: mis_builder
 #: model:ir.model.constraint,message:mis_builder.constraint_mis_report_subreport_name_unique
@@ -1766,8 +1797,8 @@ msgid ""
 "journal items."
 msgstr ""
 "O\n"
-"                                            <b>domínio de itens de diário</b>"
-"\n"
+"                                            <b>domínio de itens de diário</"
+"b>\n"
 "                                            é um filtro de domínio Odoo em "
 "itens de diário."
 
@@ -1788,8 +1819,8 @@ msgstr ""
 "                                        expressões para computar dados "
 "contabilísticos:\n"
 "                                        <code>\n"
-"                                            {bal|crd|deb|pbal|nbal}{pieu}["
-"account\n"
+"                                            {bal|crd|deb|pbal|nbal}{pieu}"
+"[account\n"
 "                                            selector][journal items domain]\n"
 "                                        </code>\n"
 "                                        ."
