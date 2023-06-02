@@ -579,6 +579,21 @@ class TestMisReportInstance(common.HttpCase):
             elif row.kpi.name == "k4":
                 self.assertEqual(vals, [AccountingNone, AccountingNone, 1.0])
 
+    def test_mis_report_analytic_domain(self):
+        # Check that matrix has no values when using putting a non
+        # existing account into the analytic domain
+        matrix = self.report_instance.with_context(
+            mis_analytic_domain=[("analytic_account_id", "=", 999)]
+        )._compute_matrix()
+        for row in matrix.iter_rows():
+            vals = [c.val for c in row.iter_cells()]
+            if row.kpi.name == "k1":
+                self.assertEqual(vals, [AccountingNone, AccountingNone, AccountingNone])
+            elif row.kpi.name == "k2":
+                self.assertEqual(vals, [AccountingNone, AccountingNone, None])
+            elif row.kpi.name == "k4":
+                self.assertEqual(vals, [AccountingNone, AccountingNone, 1.0])
+
     def test_raise_when_unknown_kpi_value_type(self):
         with self.assertRaises(SubKPIUnknownTypeError):
             self.report_instance_2.compute()

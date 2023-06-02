@@ -2,6 +2,7 @@
 # Copyright 2020 CorporateHub (https://corporatehub.eu)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+import ast
 import datetime
 import logging
 
@@ -255,6 +256,9 @@ class MisReportInstancePeriod(models.Model):
             ("field_id.name", "=", "company_id"),
             ("field_id.model_id.model", "!=", "account.move.line"),
         ],
+        compute="_compute_source_aml_model_id",
+        store=True,
+        readonly=False,
         help="A 'move line like' model, ie having at least debit, credit, "
         "date, account_id and company_id fields.",
     )
@@ -304,6 +308,10 @@ class MisReportInstancePeriod(models.Model):
             "and cannot be modified in the preview."
         ),
     )
+    analytic_domain = fields.Text(
+        default="[]",
+        help="A domain to additionally filter move lines considered in this column.",
+    )
 
     _order = "sequence, id"
 
@@ -320,6 +328,26 @@ class MisReportInstancePeriod(models.Model):
             "Period name should be unique by report",
         ),
     ]
+
+    @api.depends("source", "report_instance_id.report_id.move_lines_source")
+    def _compute_source_aml_model_id(self):
+        for record in self:
+            if record.source == SRC_ACTUALS:
+                if not record.report_instance_id.report_id:
+                    raise UserError(
+                        _(
+                            "Please select a report template and/or "
+                            "save the report before adding columns."
+                        )
+                    )
+                # use the default model defined on the report template
+                record.source_aml_model_id = (
+                    record.report_instance_id.report_id.move_lines_source
+                )
+            elif record.source in (SRC_SUMCOL, SRC_CMPCOL):
+                record.source_aml_model_id = False
+            elif record.source == SRC_ACTUALS_ALT:
+                pass  # let the user choose
 
     @api.depends("report_instance_id")
     def _compute_allowed_cmpcol_ids(self):
@@ -393,6 +421,11 @@ class MisReportInstancePeriod(models.Model):
                         filters.append((filter_name, "in", [m]))
                 else:
                     filters.append((filter_name, operator, value))
+        # report-level analytic domain filter
+        if self.analytic_domain:
+            filters.extend(ast.literal_eval(self.analytic_domain))
+        # contextual analytic domain filter
+        filters.extend(self.env.context.get("mis_analytic_domain", []))
         return filters
 
     def _get_additional_move_line_filter(self):
@@ -428,6 +461,9 @@ class MisReportInstancePeriod(models.Model):
             )
         for tag in self.analytic_tag_ids:
             domain.append(("analytic_tag_ids", "=", tag.id))
+        if self.analytic_domain:
+            # Extend the domain with the column-level analytic domain
+            domain.extend(ast.literal_eval(self.analytic_domain))
         return domain
 
     def _get_additional_query_filter(self, query):
@@ -581,6 +617,25 @@ class MisReportInstance(models.Model):
         comodel_name="account.analytic.tag", string="Analytic Tags"
     )
     hide_analytic_filters = fields.Boolean(default=True)
+    source_aml_model_id = fields.Many2one(
+        related="report_id.move_lines_source",
+        readonly=True,
+    )
+    source_aml_model_name = fields.Char(
+        related="source_aml_model_id.model",
+        related_sudo=True,
+        readonly=True,
+    )
+    analytic_domain = fields.Text(
+        default="[]",
+        help=(
+            "A domain to additionally filter move lines considered in this report. "
+            "Caution: when using different move line sources in different columns, "
+            "such as budgets by account, "
+            "make sure to use only fields that are available in "
+            "all move line sources."
+        ),
+    )
 
     @api.onchange("multi_company")
     def _onchange_company(self):
@@ -726,6 +781,7 @@ class MisReportInstance(models.Model):
                 "value": self.analytic_tag_ids.ids,
                 "operator": "all",
             }
+        context["mis_analytic_domain"] = ast.literal_eval(self.analytic_domain)
 
     def _context_with_filters(self):
         self.ensure_one()
