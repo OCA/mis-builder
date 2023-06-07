@@ -6,13 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-06-07 18:09+0000\n"
+"Last-Translator: \"Sandrine (ACSONE)\" <sandrine.ravet@acsone.eu>\n"
 "Language-Team: none\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: mis_builder
 #. odoo-python
@@ -20,7 +22,7 @@ msgstr ""
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (copie)"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -33,6 +35,15 @@ msgid ""
 "                                        : variation of the balance of all receivable accounts over\n"
 "                                        the period."
 msgstr ""
+"<code>\n"
+"                                            balp[('user_type_id', '=',\n"
+"                                            ref('account.\n"
+"                                            data_account_type_receivable')."
+"id)][]\n"
+"                                        </code>\n"
+"                                        : variation de la balance de tous "
+"les comptes de créances sur\n"
+"                                        la période."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -42,6 +53,12 @@ msgid ""
 "                                        </code>\n"
 "                                        : balance of move lines related to tax grid 56."
 msgstr ""
+"<code>\n"
+"                                            balp[][('tax_line_id.tag_ids', "
+"'=', ref('l10n_be.tax_tag_56').id)]\n"
+"                                        </code>\n"
+"                                        : balance des lignes d'écritures "
+"liées à la grille de taxe 56."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -53,6 +70,14 @@ msgid ""
 "                                        : sum of all debits on accounts 55 and journal BNK1 during\n"
 "                                        the period."
 msgstr ""
+"<code>\n"
+"                                            debp[55%][('journal_id.code', "
+"'=',\n"
+"                                            'BNK1')]\n"
+"                                        </code>\n"
+"                                        : somme de tous les débits sur les "
+"comptes 55 ayant le journal BNK1 pour\n"
+"                                        la période."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -60,6 +85,9 @@ msgid ""
 "<code>AccountingNone</code> : a null value that behaves as 0 in\n"
 "                                        arithmetic operations."
 msgstr ""
+"<code>AccountingNone</code> : une valeur nulle qui se comporte comme un 0 "
+"dans\n"
+"                                        les opérations arithmétiques."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -68,6 +96,10 @@ msgid ""
 "                                        pbal</code>, <code>nbal</code> : balance, debit, credit,\n"
 "                                        positive balance, negative balance."
 msgstr ""
+"<code>bal</code>, <code>crd</code>, <code>deb</code>, <code>\n"
+"                                        pbal</code>, <code>nbal</code> : "
+"balance, débit, crédit,\n"
+"                                        positive balance, négative balance."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -75,6 +107,9 @@ msgid ""
 "<code>bal[70]</code> : variation of the balance of account 70 over\n"
 "                                        the period (it is the same as <code>balp[70]</code>."
 msgstr ""
+"<code>bal[70]</code> : variation de la balance des comptes 70 pour\n"
+"                                        la période (c'est la même chose que "
+"<code>balp[70]</code>."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -82,11 +117,13 @@ msgid ""
 "<code>bale[1%]</code> : balance of accounts starting with 1 at\n"
 "                                        end of period."
 msgstr ""
+"<code>bale[1%]</code> : balance des comptes commençant par 1 à\n"
+"                                        la fin de la période."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<code>bali[70,60]</code> : initial balance of accounts 70 and 60."
-msgstr ""
+msgstr "<code>bali[70,60]</code> : Balance initiale des comptes 70 et 60."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -95,6 +132,11 @@ msgid ""
 "                                        that shows the unallocated profit/loss of previous fiscal\n"
 "                                        years."
 msgstr ""
+"<code>balu[]</code> : (<code>u</code> for non alloué) est une expression "
+"spéciale\n"
+"                                        qui montre le profit/perte non "
+"alloué de la précédente\n"
+"                                        année fiscale."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -102,6 +144,8 @@ msgid ""
 "<code>crdp[40%]</code> : sum of all credits on accounts starting\n"
 "                                        with 40 during the period."
 msgstr ""
+"<code>crdp[40%]</code> : somme de tous les crédits des comptes commençant\n"
+"                                        par 40 pendant la période."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -109,6 +153,9 @@ msgid ""
 "<code>date_from</code>, <code>date_to</code> : beginning and end date of the\n"
 "                                        period."
 msgstr ""
+"<code>date_from</code>, <code>date_to</code> : date de début et de fin de "
+"la\n"
+"                                        période."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -116,6 +163,8 @@ msgid ""
 "<code>datetime</code>, <code>datetime</code>, <code>dateutil</code> : the "
 "python modules."
 msgstr ""
+"<code>datetime</code>, <code>datetime</code>, <code>dateutil</code> : les "
+"modules python."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -123,6 +172,9 @@ msgid ""
 "<code>p</code>, <code>i</code>, <code>e</code> : respectively variation over the period,\n"
 "                                        initial balance, ending balance"
 msgstr ""
+"<code>p</code>, <code>i</code>, <code>e</code> : respectivement variation de "
+"la période,\n"
+"                                        balance initiale, balance finale"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -130,6 +182,9 @@ msgid ""
 "<code>pbale[55%]</code> : sum of all ending balances of accounts\n"
 "                                        starting with 55 whose ending balance is positive."
 msgstr ""
+"<code>pbale[55%]</code> : somme de toutes les balances finales des comptes\n"
+"                                        commençant par 55 et pour lesquels "
+"la balance finale est positive."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -139,11 +194,16 @@ msgid ""
 "                                        <code>avg</code> : behave as expected, very\n"
 "                                        similar to the python builtins."
 msgstr ""
+"<code>sum</code>, <code>min</code>,\n"
+"                                        <code>max</code>, <code>len</code>,\n"
+"                                        <code>avg</code> : se comporte comme "
+"attendu, très\n"
+"                                        similaire aux builtins python."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.report_mis_report_instance
 msgid "<span>-</span>"
-msgstr ""
+msgstr "<span>-</span>"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
@@ -151,6 +211,8 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id"
 " and company_id fields."
 msgstr ""
+"Un modèle 'move line like', ie ayant au moins les champs débit, crédit, "
+"date, account_id et company_id."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
@@ -159,6 +221,9 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id"
 " and company_id fields. This model is the data source for column Actuals."
 msgstr ""
+"Un modèle 'move line like', ie ayant au moins les champs débit, crédit, "
+"date, account_id et company_id. Ce modèle est la source de données pour la "
+"colonne Réel."
 
 #. module: mis_builder
 #. odoo-python
@@ -166,11 +231,12 @@ msgstr ""
 #, python-format
 msgid "A date filter is mandatory for this source in column %s."
 msgstr ""
+"Un filtre sur les dates est obligatoire pour cette source dans la colonne %s."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_domain
 msgid "A domain to additionally filter move lines considered in this column."
-msgstr ""
+msgstr "Un domaine pour filtrer les lignes d'écriture de cette colonne."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__analytic_domain
@@ -180,6 +246,11 @@ msgid ""
 "as budgets by account, make sure to use only fields that are available in "
 "all move line sources."
 msgstr ""
+"Un domaine pour filtrer les lignes d'écriture de ce rapport. Attention : "
+"lorsque vous utilisez différentes sources de données dans différentes "
+"colonnes, tel que les budgets par compte, veuillez vérifier que vous "
+"utilisez uniquement des champs qui sont disponibles dans toutes les sources "
+"de données."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
