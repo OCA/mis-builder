@@ -570,6 +570,8 @@ class MisReportInstance(models.Model):
         string="Allowed company",
         default=lambda self: self.env.company,
         required=False,
+        help="If empty, all companies may use - and edit - the report instance. "
+        "The report will be made for the active company.",
     )
     multi_company = fields.Boolean(
         string="Multiple companies",
