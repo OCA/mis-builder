@@ -564,6 +564,17 @@ class TestMisReportInstance(common.HttpCase):
         )
         self.assertFalse(self.report_instance.company_ids)
 
+    def test_use_active_company_when_company_is_not_set(self):
+        self.assertFalse(self.report_instance.multi_company)
+        self.report_instance.company_id = None
+        # test with company
+        company = self.env.ref("base.main_company")
+        self.assertEqual(self.report_instance.query_company_ids[0], company)
+        # test with new company
+        new_company = self.env["res.company"].create({'name': "new company"})
+        self.env.company = new_company
+        self.assertEqual(self.report_instance.query_company_ids[0], new_company)
+
     def test_mis_report_analytic_filters(self):
         # Check that matrix has no values when using a filter with a non
         # existing account

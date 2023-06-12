@@ -167,7 +167,7 @@
                                 <field
                                     name="company_id"
                                     groups="base.group_multi_company"
-                                    attrs="{'required': [('multi_company', '=', False)], 'invisible': [('multi_company', '=', True)]}"
+                                    attrs="{'invisible': [('multi_company', '=', True)]}"
                                 />
                                 <field
                                     name="company_ids"
