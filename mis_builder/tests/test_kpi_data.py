@@ -1,24 +1,23 @@
 # Copyright 2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import models
+from odoo_test_helper import FakeModelLoader
+
 from odoo.tests.common import TransactionCase
 
 from ..models.mis_kpi_data import ACC_AVG, ACC_SUM
-from .common import setup_test_model, teardown_test_model
 
 
 class TestKpiData(TransactionCase):
-    class MisKpiDataTestItem(models.Model):
-
-        _name = "mis.kpi.data.test.item"
-        _inherit = "mis.kpi.data"
-        _description = "MIS Kpi Data test item"
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        setup_test_model(cls.env, cls.MisKpiDataTestItem)
+
+        cls.loader = FakeModelLoader(cls.env, cls.__module__)
+        cls.loader.backup_registry()
+        from .fake_models import MisKpiDataTestItem
+
+        cls.loader.update_registry((MisKpiDataTestItem,))
 
         report = cls.env["mis.report"].create(dict(name="test report"))
         cls.kpi1 = cls.env["mis.report.kpi"].create(
@@ -74,7 +73,7 @@ class TestKpiData(TransactionCase):
 
     @classmethod
     def tearDownClass(cls):
-        teardown_test_model(cls.env, cls.MisKpiDataTestItem)
+        cls.loader.restore_registry()
         return super().tearDownClass()
 
     def test_kpi_data_name(self):
