@@ -10,7 +10,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-13 15:37+0000\n"
 "PO-Revision-Date: 2023-07-10 11:10+0000\n"
-"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Last-Translator: gerard-vacas <gerard.vacas@gmail.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -268,7 +268,7 @@ msgstr "Un filtro de fecha es obligatorio para este origen en la columna %s."
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_domain
 msgid "A domain to additionally filter move lines considered in this column."
-msgstr ""
+msgstr "Un dominio para filtrar los apuntes contables en la columna."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__analytic_domain
@@ -278,6 +278,10 @@ msgid ""
 "as budgets by account, make sure to use only fields that are available in "
 "all move line sources."
 msgstr ""
+"Un dominio para filtrar los apuntes considerados en el informe. Precaución: "
+"cuando se usan distintos orígenes de apuntes en varias columnas, tales como "
+"presupuestos por cuenta, asegúrese de usar solamente campos disponibles en "
+"todos los orígenes de apuntes."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
@@ -379,12 +383,12 @@ msgstr "Cmpcol permitido"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
 msgid "Allowed companies"
-msgstr ""
+msgstr "Compañías permitidas"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_id
 msgid "Allowed company"
-msgstr ""
+msgstr "Compañía permitida"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__amount
@@ -404,7 +408,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__analytic_domain
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__analytic_domain
 msgid "Analytic Domain"
-msgstr ""
+msgstr "Dominio analítico"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -462,6 +466,7 @@ msgstr "Cancelar"
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__multi_company
 msgid "Check if you wish to specify several companies to be searched for data."
 msgstr ""
+"Compruebe si desea especificar varias compañías para la búsqueda de datos."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_form
@@ -832,7 +837,7 @@ msgstr "Campos a obtener"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__widget_search_view_id
 msgid "Filter box search view"
-msgstr ""
+msgstr "Vista de búsqueda para los filtros"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_period_view_form
@@ -1166,7 +1171,7 @@ msgstr "Informe MIS - KPI Expresión"
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_result_view_form
 msgid "MIS Report Preview"
-msgstr ""
+msgstr "Previsualizar Informe MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_query
@@ -1262,7 +1267,7 @@ msgstr "Mes"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__source_aml_model_id
 msgid "Move Lines Source"
-msgstr ""
+msgstr "Origen de los apuntes"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_id
@@ -1385,7 +1390,7 @@ msgstr "Periodos"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__pivot_date
 msgid "Pivot Date"
-msgstr ""
+msgstr "Fecha pivote"
 
 #. module: mis_builder
 #. odoo-python
@@ -1401,6 +1406,8 @@ msgstr "Por favor introduzca ambas columnas a comparar en %s."
 msgid ""
 "Please select a report template and/or save the report before adding columns."
 msgstr ""
+"Por favor seleccione una plantilla de informe y/o guarde el informe antes de "
+"añadir columnas."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__prefix
@@ -1499,7 +1506,7 @@ msgstr "Guardar"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__widget_search_view_id
 msgid "Search view to customize the filter box in the report widget."
-msgstr ""
+msgstr "Vista de búsqueda para personalizar los filtros en el informe."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__company_ids
@@ -1542,32 +1549,32 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__widget_show_pivot_date
 msgid "Show Pivot Date"
-msgstr ""
+msgstr "Mostrar fecha pivote"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__widget_show_filters
 msgid "Show filters box"
-msgstr ""
+msgstr "Mostrar filtros"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__widget_show_settings_button
 msgid "Show settings button"
-msgstr ""
+msgstr "Mostrar botón de configuraciones"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__widget_show_pivot_date
 msgid "Show the Pivot Date in the report widget filter bar."
-msgstr ""
+msgstr "Mostrar la fecha pivote en la barra de filtros del informe."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__widget_show_filters
 msgid "Show the filter bar in the report widget."
-msgstr ""
+msgstr "Mostrar la barra de filtros en el informe."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__widget_show_settings_button
 msgid "Show the settings button in the report widget."
-msgstr ""
+msgstr "Mostrar el botón de configuración en el informe."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum__sign
@@ -1598,7 +1605,7 @@ msgstr "Estilo"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__style_expression
 msgid "Style Expression"
-msgstr ""
+msgstr "Expresión de estilo"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__auto_expand_accounts_style_id
@@ -1810,7 +1817,7 @@ msgstr "Método de acumulación %(method)s inesperado para %(name)s."
 #: code:addons/mis_builder/models/mis_report.py:0
 #, python-format
 msgid "Unexpected value %s for target_move."
-msgstr ""
+msgstr "Valor inesperado: %s para el target_move."
 
 #. module: mis_builder
 #. odoo-python
@@ -1851,7 +1858,7 @@ msgstr "Semana"
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 msgid "Widget"
-msgstr ""
+msgstr "Dispositivo"
 
 #. module: mis_builder
 #: model:ir.model.constraint,message:mis_builder.constraint_mis_report_instance_period_duration
@@ -1888,7 +1895,7 @@ msgstr "No puede sumar el periodo %s consigo mismo."
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "from %(date_from)s to %(date_to)s"
-msgstr ""
+msgstr "Desde %(date_from)s hasta %(date_to)s"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
