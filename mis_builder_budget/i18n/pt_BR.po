@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-09-23 00:07+0000\n"
-"Last-Translator: Douglas Custódio <douglascstd@yahoo.com>\n"
+"PO-Revision-Date: 2023-07-27 20:09+0000\n"
+"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: mis_builder_budget
 #. odoo-python
@@ -22,13 +22,15 @@ msgstr ""
 #, python-format
 msgid "%(rec_name)s is not within budget %(budget_name)s date range."
 msgstr ""
+"%(rec_name)s não está dentro do intervalo de datas do orçamento "
+"%(budget_name)s."
 
 #. module: mis_builder_budget
 #. odoo-python
 #: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:0
 #, python-format
 msgid "%(rec_name)s overlaps %(res_name)s in budget %(budget_name)s"
-msgstr ""
+msgstr "%(rec_name)s se sobrepõe a %(res_name)s no orçamento %(budget_name)s"
 
 #. module: mis_builder_budget
 #. odoo-python
@@ -46,9 +48,8 @@ msgstr "%s data inicial não deve ser após a data final"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__account_id
-#, fuzzy
 msgid "Account"
-msgstr "Montante"
+msgstr "Conta"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_needaction
@@ -200,7 +201,7 @@ msgstr "Crédito"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__date
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__date_range_id
@@ -244,6 +245,7 @@ msgstr "Rascunho"
 msgid ""
 "Dummy field that adapts searches on date to searches on date_from/date_to."
 msgstr ""
+"Campo fictício que adapta as buscas por data às buscas por date_from/date_to."
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_follower_ids
@@ -274,7 +276,7 @@ msgstr "De"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__has_message
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Tem Mensagem"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__id
@@ -332,7 +334,7 @@ msgstr "Sequência KPI"
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__name
 msgid "Label"
-msgstr ""
+msgstr "Rótulo"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget____last_update
@@ -361,37 +363,32 @@ msgstr "Última Atualização em"
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_abstract
 msgid "MIS Budget (Abstract Base Class)"
-msgstr ""
+msgstr "Orçamento SIG (Classe Base Abstrata)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item_abstract
-#, fuzzy
 msgid "MIS Budget Item (Abstract Base Class)"
-msgstr "Itens do Orçamento SIG"
+msgstr "Item de Orçamento SIG (Classe Base Abstrata)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account_item
-#, fuzzy
 msgid "MIS Budget Item (by Account)"
-msgstr "Item do Orçamento SIG"
+msgstr "Item de orçamento SIG (por conta)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_item
-#, fuzzy
 msgid "MIS Budget Item (by KPI)"
-msgstr "Item do Orçamento SIG"
+msgstr "Item de orçamento SIG (por KPI)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_item_act_window
-#, fuzzy
 msgid "MIS Budget Items (by KPIs)"
-msgstr "Itens do Orçamento SIG"
+msgstr "Itens de orçamento SIG (por KPIs)"
 
 #. module: mis_builder_budget
 #: model:ir.actions.act_window,name:mis_builder_budget.mis_budget_by_account_item_act_window
-#, fuzzy
 msgid "MIS Budget Items (by accounts)"
-msgstr "Itens do Orçamento SIG"
+msgstr "Itens de orçamento SIG (por contas)"
 
 #. module: mis_builder_budget
 #: model:ir.model,name:mis_builder_budget.model_mis_budget_by_account
