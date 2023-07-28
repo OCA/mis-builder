@@ -182,7 +182,7 @@ class MisReportKpi(models.Model):
     def _inverse_expression(self):
         for kpi in self:
             if kpi.multi:
-                raise UserError(_("Can not update a multi kpi from " "the kpi line"))
+                continue
             if kpi.expression_ids:
                 kpi.expression_ids[0].write({"name": kpi.expression, "subkpi_id": None})
                 for expression in kpi.expression_ids[1:]:
