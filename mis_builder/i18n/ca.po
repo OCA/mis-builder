@@ -367,13 +367,6 @@ msgid "Bold"
 msgstr "Negreta"
 
 #. module: mis_builder
-#. odoo-python
-#: code:addons/mis_builder/models/mis_report.py:0
-#, python-format
-msgid "Can not update a multi kpi from the kpi line"
-msgstr "No es pot actualitzar un kpi múltiple des d'una línia de kpi"
-
-#. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_add_to_dashboard_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
 msgid "Cancel"
@@ -1841,6 +1834,10 @@ msgstr "extra-súper-gran"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "extra-súper-petita"
+
+#, python-format
+#~ msgid "Can not update a multi kpi from the kpi line"
+#~ msgstr "No es pot actualitzar un kpi múltiple des d'una línia de kpi"
 
 #~ msgid ""
 #~ "<b>\n"

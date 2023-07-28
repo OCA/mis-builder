@@ -431,13 +431,6 @@ msgid "Bold"
 msgstr "Gras"
 
 #. module: mis_builder
-#. odoo-python
-#: code:addons/mis_builder/models/mis_report.py:0
-#, python-format
-msgid "Can not update a multi kpi from the kpi line"
-msgstr "Vous ne pouvez pas mettre à  jour un kpi multi depuis la ligne de kpi"
-
-#. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_add_to_dashboard_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
 msgid "Cancel"
@@ -1749,8 +1742,8 @@ msgstr ""
 "Le  <b>sélecteur de comptes</b> est une expression sur le\n"
 "                                        code du compte (eg <code>70%</code>, "
 "etc), ou un domaine sur les comptes\n"
-"                                        (eg <code>[('code', 'like', "
-"'60%')]</code>)."
+"                                        (eg <code>[('code', 'like', '60%')]</"
+"code>)."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -1931,6 +1924,11 @@ msgstr "xx-grand"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "xx-petit"
+
+#, python-format
+#~ msgid "Can not update a multi kpi from the kpi line"
+#~ msgstr ""
+#~ "Vous ne pouvez pas mettre à  jour un kpi multi depuis la ligne de kpi"
 
 #~ msgid "Account model"
 #~ msgstr "Additionne le détail des comptes"

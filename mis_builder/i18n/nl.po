@@ -362,13 +362,6 @@ msgid "Bold"
 msgstr "Vet"
 
 #. module: mis_builder
-#. odoo-python
-#: code:addons/mis_builder/models/mis_report.py:0
-#, python-format
-msgid "Can not update a multi kpi from the kpi line"
-msgstr "Kan een multi-kpi niet bijwerken vanaf de kpi-regel"
-
-#. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_add_to_dashboard_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder.wizard_mis_report_instance_view_form
 msgid "Cancel"
@@ -1844,6 +1837,10 @@ msgstr "XXL"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "XXS"
+
+#, python-format
+#~ msgid "Can not update a multi kpi from the kpi line"
+#~ msgstr "Kan een multi-kpi niet bijwerken vanaf de kpi-regel"
 
 #, fuzzy
 #~ msgid "Account model"

@@ -41,18 +41,17 @@ msgid ""
 "                                        the period."
 msgstr ""
 "<code>\n"
-"                                                                             "
-"                     balp[('user_type_id', '=',\n"
-"                                                                             "
-"                      ref('account.\n"
-"                                                                             "
-"                       data_account_type_receivable').id)][]\n"
-"                                                                             "
-"               </code>\n"
-"                                                                             "
-"               : variación del saldo de todas las cuentas a cobrar durante\n"
-"                                                                             "
-"               el periodo."
+"                                                                                                  balp[('user_type_id', "
+"'=',\n"
+"                                                                                                   ref('account.\n"
+"                                                                                                    data_account_type_receivable')."
+"id)][]\n"
+"                                                                                            </"
+"code>\n"
+"                                                                                            : "
+"variación del saldo de todas las cuentas a cobrar durante\n"
+"                                                                                            el "
+"periodo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -65,8 +64,8 @@ msgid ""
 "tax grid 56."
 msgstr ""
 "<code>\n"
-"                                                                  balp[][("
-"'tax_line_id.tag_ids', '=',ref('l10n_be.tax_tag_56').id)]\n"
+"                                                                  balp[]"
+"[('tax_line_id.tag_ids', '=',ref('l10n_be.tax_tag_56').id)]\n"
 "                                                                 </code>\n"
 "                                                                 : Balance "
 "de las líneas de movimiento relacionadas con la cuadrícula fiscal 56."
@@ -84,17 +83,15 @@ msgid ""
 "                                        the period."
 msgstr ""
 "<code>\n"
-"                                                                             "
-"                     debp[55%][('journal_id.code', '=',\n"
-"                                                                             "
-"                     'BNK1')]\n"
-"                                                                             "
-"              </code>\n"
-"                                                                             "
-"              : suma de todos los cargos en las cuentas 55 y el diario BNK1 "
-"durante\n"
-"                                                                             "
-"              el periodo."
+"                                                                                                  debp[55%]"
+"[('journal_id.code', '=',\n"
+"                                                                                                  'BNK1')]\n"
+"                                                                                           </"
+"code>\n"
+"                                                                                           : "
+"suma de todos los cargos en las cuentas 55 y el diario BNK1 durante\n"
+"                                                                                           el "
+"periodo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -126,8 +123,8 @@ msgid ""
 "<code>balp[70]</code>."
 msgstr ""
 "<code>bal[70]</code> : variación del saldo de la cuenta 70 sobre\n"
-"                                                                             "
-"             el período (es lo mismo que <code>balp[70]</code>."
+"                                                                                          el "
+"período (es lo mismo que <code>balp[70]</code>."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -136,8 +133,8 @@ msgid ""
 "                                        end of period."
 msgstr ""
 "<code>bale[1%]</code> : saldo de cuentas que comienzan con 1 en\n"
-"                                                                             "
-"            fin del periodo."
+"                                                                                         fin "
+"del periodo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -155,11 +152,10 @@ msgid ""
 msgstr ""
 "<code>balu[]</code> : (<code>u</code> para no asignado) es una expresión "
 "especial\n"
-"                                                                             "
-"           que muestra la ganancia/pérdida no asignada de ejercicios "
-"fiscales en anteriores.\n"
-"                                                                             "
-"           años."
+"                                                                                        que "
+"muestra la ganancia/pérdida no asignada de ejercicios fiscales en "
+"anteriores.\n"
+"                                                                                        años."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -169,8 +165,8 @@ msgid ""
 msgstr ""
 "<code>crdp[40%]</code> : suma de todos los créditos en cuentas que "
 "comienzan\n"
-"                                                                             "
-"            con 40 durante el período."
+"                                                                                         con "
+"40 durante el período."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -181,8 +177,7 @@ msgid ""
 msgstr ""
 "<code>date_from</code>, <code>date_to</code> : fecha de inicio y "
 "finalización del\n"
-"                                                                             "
-"             período."
+"                                                                                          período."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -202,8 +197,8 @@ msgid ""
 msgstr ""
 "<code>p</code>, <code>i</code>, <code>e</code> : respectivamente variación "
 "durante el período,\n"
-"                                                                             "
-"             saldo inicial, saldo final"
+"                                                                                          saldo "
+"inicial, saldo final"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -213,8 +208,8 @@ msgid ""
 "balance is positive."
 msgstr ""
 "<code>pbale[55%]</code> : suma de todos los saldos finales de las cuentas\n"
-"                                                                             "
-"           a partir de 55 cuyo saldo final es positivo."
+"                                                                                        a "
+"partir de 55 cuyo saldo final es positivo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -226,12 +221,12 @@ msgid ""
 "                                        similar to the python builtins."
 msgstr ""
 "<code>sum</code>,<code>min</code>,\n"
-"                                                                             "
-"            <code>max</code>, <code>len</code>,\n"
-"                                                                             "
-"            <code>avg</code> : se comporta como se esperaba, muy\n"
-"                                                                             "
-"            similar a los componentes integrados de Python."
+"                                                                                         <code>max</"
+"code>, <code>len</code>,\n"
+"                                                                                         <code>avg</"
+"code> : se comporta como se esperaba, muy\n"
+"                                                                                         similar "
+"a los componentes integrados de Python."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.report_mis_report_instance
@@ -352,8 +347,8 @@ msgid ""
 "                                    in the evaluation context:"
 msgstr ""
 "Además, las siguientes variables están disponibles\n"
-"                                                                             "
-"    en el contexto de la evaluación:"
+"                                                                                 en "
+"el contexto de la evaluación:"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query__aggregate
@@ -448,13 +443,6 @@ msgstr "Fecha base"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_weight__bold
 msgid "Bold"
 msgstr "Negrita"
-
-#. module: mis_builder
-#. odoo-python
-#: code:addons/mis_builder/models/mis_report.py:0
-#, python-format
-msgid "Can not update a multi kpi from the kpi line"
-msgstr "No se puede actualizar un kpi múltiple desde una línea de kpi"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_add_to_dashboard_form_view
@@ -1788,9 +1776,8 @@ msgid ""
 "                                    selector][journal items domain]</code>."
 msgstr ""
 "En las expresiones se reconocen los siguientes elementos especiales\n"
-"                                                                             "
-"   para calcular los datos contables: <code>{bal|crd|deb|pbal|nbal}{pieu}["
-"account\n"
+"                                                                                para "
+"calcular los datos contables: <code>{bal|crd|deb|pbal|nbal}{pieu}[account\n"
 "                                    selector][journal items domain]</code>."
 
 #. module: mis_builder
@@ -1949,6 +1936,10 @@ msgstr "extra-súper-grande"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "extra-súper-pequeña"
+
+#, python-format
+#~ msgid "Can not update a multi kpi from the kpi line"
+#~ msgstr "No se puede actualizar un kpi múltiple desde una línea de kpi"
 
 #~ msgid "Account model"
 #~ msgstr "Modelo de cuenta"
