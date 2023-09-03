@@ -491,8 +491,8 @@ msgstr "Nombre d'erreurs"
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_needaction_counter
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_needaction_counter
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Nombre de messages qui demande une action"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error_counter
@@ -576,6 +576,9 @@ msgid ""
 msgstr ""
 "Mauvaise valeur au débit ou crédit sur la ligne de budget ! Crédit ou débit "
 "doit être égal à 0."
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Nombre de messages qui demande une action"
 
 #, python-format
 #~ msgid "%s is not within budget %s date range."
