@@ -75,7 +75,7 @@
                             </div>
                             <div class="mis_tbody">
                                 <t
-                                    t-foreach="matrix.iter_rows(o.inverse_detail)"
+                                    t-foreach="matrix.iter_rows(o.details_before_kpi)"
                                     t-as="row"
                                 >
                                     <div
