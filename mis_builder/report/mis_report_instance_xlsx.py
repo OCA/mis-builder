@@ -102,7 +102,7 @@ class MisBuilderXlsx(models.AbstractModel):
         row_pos += 1
 
         # rows
-        for row in matrix.iter_rows():
+        for row in matrix.iter_rows(objects.inverse_detail):
             if (
                 row.style_props.hide_empty and row.is_empty()
             ) or row.style_props.hide_always:

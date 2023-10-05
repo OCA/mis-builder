@@ -192,6 +192,7 @@
                                 <field name="no_auto_expand_accounts" />
                                 <field name="display_columns_description" />
                                 <field name="hide_analytic_filters" />
+                                <field name="inverse_detail" />
                             </group>
                         </page>
                     </notebook>
