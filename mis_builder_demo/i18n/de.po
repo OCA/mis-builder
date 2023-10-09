@@ -28,17 +28,6 @@ msgid "Account"
 msgstr "Konto"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_account_id
-msgid "Analytic Account"
-msgstr "Kostenstelle"
-
-#. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_tag_ids
-#, fuzzy
-msgid "Analytic Tags"
-msgstr "Kostenstelle"
-
-#. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
 msgid "Available"
 msgstr "Überschuss"
@@ -148,3 +137,10 @@ msgstr ""
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
 msgid "Total"
 msgstr "Gesamt"
+
+#~ msgid "Analytic Account"
+#~ msgstr "Kostenstelle"
+
+#, fuzzy
+#~ msgid "Analytic Tags"
+#~ msgstr "Kostenstelle"

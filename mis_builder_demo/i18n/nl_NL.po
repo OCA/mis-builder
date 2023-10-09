@@ -31,18 +31,6 @@ msgid "Account"
 msgstr "Rekening"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_account_id
-#, fuzzy
-msgid "Analytic Account"
-msgstr "Rekening"
-
-#. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_tag_ids
-#, fuzzy
-msgid "Analytic Tags"
-msgstr "Rekening"
-
-#. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
 msgid "Available"
 msgstr "Beschikbaar"
@@ -152,3 +140,11 @@ msgstr ""
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
 msgid "Total"
 msgstr "Total"
+
+#, fuzzy
+#~ msgid "Analytic Account"
+#~ msgstr "Rekening"
+
+#, fuzzy
+#~ msgid "Analytic Tags"
+#~ msgstr "Rekening"

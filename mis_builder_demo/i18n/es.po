@@ -30,16 +30,6 @@ msgid "Account"
 msgstr "Cuenta"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_account_id
-msgid "Analytic Account"
-msgstr "Cuenta Analítica"
-
-#. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__analytic_tag_ids
-msgid "Analytic Tags"
-msgstr "Etiquetas analíticas"
-
-#. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_avail
 msgid "Available"
 msgstr "Disponible"
@@ -148,3 +138,9 @@ msgstr "Nombre del modelo de recurso"
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
 msgid "Total"
 msgstr "Total"
+
+#~ msgid "Analytic Account"
+#~ msgstr "Cuenta Analítica"
+
+#~ msgid "Analytic Tags"
+#~ msgstr "Etiquetas analíticas"
