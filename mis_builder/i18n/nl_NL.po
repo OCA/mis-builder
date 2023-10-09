@@ -179,6 +179,11 @@ msgid ""
 msgstr ""
 
 #. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.report_mis_report_instance
+msgid "<span>-</span>"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
@@ -205,9 +210,8 @@ msgstr "Een datum filter is verplicht voor deze bron in kolom %s."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
-#, fuzzy
-msgid "Account model"
-msgstr "Rekening details optellen"
+msgid "Account Model"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
@@ -631,8 +635,6 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__display_name
-#: model:ir.model.fields,field_description:mis_builder.field_ir_actions_report__display_name
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__display_name
@@ -643,8 +645,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__display_name
-#: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__display_name
-#: model:ir.model.fields,field_description:mis_builder.field_report_mis_builder_mis_report_instance_xlsx__display_name
 msgid "Display Name"
 msgstr "Weergavenaam"
 
@@ -892,8 +892,6 @@ msgstr "Verberg Leeg Overerven"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__id
-#: model:ir.model.fields,field_description:mis_builder.field_ir_actions_report__id
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__id
@@ -904,8 +902,6 @@ msgstr "Verberg Leeg Overerven"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__id
-#: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__id
-#: model:ir.model.fields,field_description:mis_builder.field_report_mis_builder_mis_report_instance_xlsx__id
 msgid "ID"
 msgstr "ID"
 
@@ -1009,8 +1005,6 @@ msgstr "Landschap PDF"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_ir_actions_report____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period____last_update
@@ -1021,8 +1015,6 @@ msgstr "Landschap PDF"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_report_mis_builder_mis_report_instance_xlsx____last_update
 msgid "Last Modified on"
 msgstr "Voor het laatst aangepast op"
 
@@ -1114,11 +1106,6 @@ msgid "MIS Report Instance Period Sum"
 msgstr "MIS Rapport Instantie"
 
 #. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
-msgid "MIS Report Instances"
-msgstr "MIS Rapport Instanties"
-
-#. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "MIS Report KPI"
@@ -1150,7 +1137,6 @@ msgstr "MIS Rapport Stijl"
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_style_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_style_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_tree
 msgid "MIS Report Styles"
 msgstr "MIS Rapport Stijlen"
 
@@ -1181,7 +1167,6 @@ msgstr "MIS Rapportage"
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_instance_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_tree
 msgid "MIS Reports"
 msgstr "MIS Rapporten"
 
@@ -1228,6 +1213,10 @@ msgstr "Maand"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
+msgid "Move Lines Source"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid "Move lines source"
 msgstr "Bron boekingsregels"
@@ -1344,8 +1333,8 @@ msgstr "Periodes"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__pivot_date
-msgid "Pivot date"
-msgstr "Uitgangsdatum"
+msgid "Pivot Date"
+msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -1509,8 +1498,8 @@ msgstr "Stijl"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__style_expression
-msgid "Style expression"
-msgstr "Stijl uitdrukking"
+msgid "Style Expression"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__auto_expand_accounts_style_id
@@ -1707,8 +1696,8 @@ msgstr ""
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_kpi_data.py:0
 #, python-format
-msgid "Unexpected accumulation method %s for %s."
-msgstr "Onverwachte accumulatiemethode %s voor %s."
+msgid "Unexpected accumulation method %(method)s for %(name)s."
+msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
@@ -1782,8 +1771,8 @@ msgstr "Periode %s kan niet bij zichzelf worden opgeteld."
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
-msgid "from %s to %s"
-msgstr "van %s tot %s"
+msgid "from %(date_from)s to %(date_to)s"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
@@ -1836,6 +1825,27 @@ msgstr "XXL"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "XXS"
+
+#, fuzzy
+#~ msgid "Account model"
+#~ msgstr "Rekening details optellen"
+
+#~ msgid "MIS Report Instances"
+#~ msgstr "MIS Rapport Instanties"
+
+#~ msgid "Pivot date"
+#~ msgstr "Uitgangsdatum"
+
+#~ msgid "Style expression"
+#~ msgstr "Stijl uitdrukking"
+
+#, python-format
+#~ msgid "Unexpected accumulation method %s for %s."
+#~ msgstr "Onverwachte accumulatiemethode %s voor %s."
+
+#, python-format
+#~ msgid "from %s to %s"
+#~ msgstr "van %s tot %s"
 
 #~ msgid ""
 #~ "Check if you wish to specify children companies to be searched for data."

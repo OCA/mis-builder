@@ -174,6 +174,11 @@ msgid ""
 msgstr ""
 
 #. module: mis_builder
+#: model_terms:ir.ui.view,arch_db:mis_builder.report_mis_report_instance
+msgid "<span>-</span>"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
@@ -196,8 +201,8 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
-msgid "Account model"
-msgstr "Modello contabile"
+msgid "Account Model"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
@@ -610,8 +615,6 @@ msgstr "Mostra Descrizione Colonna"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__display_name
-#: model:ir.model.fields,field_description:mis_builder.field_ir_actions_report__display_name
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__display_name
@@ -622,8 +625,6 @@ msgstr "Mostra Descrizione Colonna"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__display_name
-#: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__display_name
-#: model:ir.model.fields,field_description:mis_builder.field_report_mis_builder_mis_report_instance_xlsx__display_name
 msgid "Display Name"
 msgstr "Nome visualizzato"
 
@@ -866,8 +867,6 @@ msgstr "Eredita Nascondi Vuoti"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__id
-#: model:ir.model.fields,field_description:mis_builder.field_ir_actions_report__id
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__id
@@ -878,8 +877,6 @@ msgstr "Eredita Nascondi Vuoti"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__id
-#: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__id
-#: model:ir.model.fields,field_description:mis_builder.field_report_mis_builder_mis_report_instance_xlsx__id
 msgid "ID"
 msgstr "ID"
 
@@ -983,8 +980,6 @@ msgstr "PDF orizzontale"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_ir_actions_report____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period____last_update
@@ -995,8 +990,6 @@ msgstr "PDF orizzontale"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi____last_update
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_report_mis_builder_mis_report_instance_xlsx____last_update
 msgid "Last Modified on"
 msgstr "Ultima modifica il"
 
@@ -1083,11 +1076,6 @@ msgid "MIS Report Instance Period Sum"
 msgstr "Istanza somma nel periodo MIS Report"
 
 #. module: mis_builder
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
-msgid "MIS Report Instances"
-msgstr "Istanze MIS Report"
-
-#. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "MIS Report KPI"
@@ -1117,7 +1105,6 @@ msgstr "Stile MIS Report"
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_style_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_style_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_style_view_tree
 msgid "MIS Report Styles"
 msgstr "Stili MIS Report"
 
@@ -1146,7 +1133,6 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_view_action
 #: model:ir.ui.menu,name:mis_builder.mis_report_instance_view_menu
-#: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_tree
 msgid "MIS Reports"
 msgstr "MIS Reports"
 
@@ -1193,6 +1179,10 @@ msgstr "Mese"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
+msgid "Move Lines Source"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid "Move lines source"
 msgstr ""
@@ -1308,8 +1298,8 @@ msgstr "Periodi"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__pivot_date
-msgid "Pivot date"
-msgstr "Data Pivot"
+msgid "Pivot Date"
+msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -1474,7 +1464,7 @@ msgstr "Stile"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__style_expression
-msgid "Style expression"
+msgid "Style Expression"
 msgstr ""
 
 #. module: mis_builder
@@ -1667,8 +1657,8 @@ msgstr "A (calcolato)"
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_kpi_data.py:0
 #, python-format
-msgid "Unexpected accumulation method %s for %s."
-msgstr "Metodo di accumulo imprevisto %s for %s."
+msgid "Unexpected accumulation method %(method)s for %(name)s."
+msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
@@ -1742,8 +1732,8 @@ msgstr "Non puoi sommare il periodo %s con se stesso."
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
-msgid "from %s to %s"
-msgstr "da %s a %s"
+msgid "from %(date_from)s to %(date_to)s"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
@@ -1796,6 +1786,23 @@ msgstr ""
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr ""
+
+#~ msgid "Account model"
+#~ msgstr "Modello contabile"
+
+#~ msgid "MIS Report Instances"
+#~ msgstr "Istanze MIS Report"
+
+#~ msgid "Pivot date"
+#~ msgstr "Data Pivot"
+
+#, python-format
+#~ msgid "Unexpected accumulation method %s for %s."
+#~ msgstr "Metodo di accumulo imprevisto %s for %s."
+
+#, python-format
+#~ msgid "from %s to %s"
+#~ msgstr "da %s a %s"
 
 #~ msgid ""
 #~ "Check if you wish to specify children companies to be searched for data."
