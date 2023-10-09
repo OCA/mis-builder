@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* mis_builder_budget
+# 	* mis_builder_budget
 #
 msgid ""
 msgstr ""
@@ -64,11 +64,12 @@ msgstr "Aktuelle (alternativ)"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_report_instance_period__source
-msgid "Actuals: current data, from accounting and other queries.\n"
-"Actuals (alternative): current data from an alternative source (eg a database view providing look-alike account move lines).\n"
+msgid ""
+"Actuals: current data, from accounting and other queries.\n"
+"Actuals (alternative): current data from an alternative source (eg a "
+"database view providing look-alike account move lines).\n"
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
-""
 msgstr ""
 "Aktuelle: Aktuelle data, fra regnskab og andre forespørgsler.\n"
 "Aktuelle (alternativ): Aktuelle data fra en alternativ kilde (eg et database "
@@ -156,8 +157,7 @@ msgid "Cancel"
 msgstr "Annuller"
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
-#: selection:mis.budget.abstract,state:0
+#: selection:mis.budget,state:0 selection:mis.budget.abstract,state:0
 #: selection:mis.budget.by.account,state:0
 msgid "Cancelled"
 msgstr "Annulleret"
@@ -187,8 +187,7 @@ msgid "Confirm"
 msgstr "Bekræft"
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
-#: selection:mis.budget.abstract,state:0
+#: selection:mis.budget,state:0 selection:mis.budget.abstract,state:0
 #: selection:mis.budget.by.account,state:0
 msgid "Confirmed"
 msgstr "Bekræftet"
@@ -252,15 +251,15 @@ msgid "Display Name"
 msgstr "Vist navn"
 
 #. module: mis_builder_budget
-#: selection:mis.budget,state:0
-#: selection:mis.budget.abstract,state:0
+#: selection:mis.budget,state:0 selection:mis.budget.abstract,state:0
 #: selection:mis.budget.by.account,state:0
 msgid "Draft"
 msgstr "Kladde"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account_item__date
-msgid "Dummy field that adapts searches on date to searches on date_from/date_to."
+msgid ""
+"Dummy field that adapts searches on date to searches on date_from/date_to."
 msgstr ""
 "Dummy-felt, der tilpasser søgninger på dato til søgninger på date_from / "
 "date_to."
@@ -593,14 +592,17 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: sql_constraint:mis.budget.by.account.item:0
-msgid "Wrong credit or debit value in budget item! Credit and debit should be positive."
+msgid ""
+"Wrong credit or debit value in budget item! Credit and debit should be "
+"positive."
 msgstr ""
 "Forkert kredit- eller debetværdi i budgetpost! Kredit og debitering skal "
 "være positiv."
 
 #. module: mis_builder_budget
 #: sql_constraint:mis.budget.by.account.item:0
-msgid "Wrong credit or debit value in budget item! Credit or debit should be zero."
+msgid ""
+"Wrong credit or debit value in budget item! Credit or debit should be zero."
 msgstr ""
 "Forkert kredit- eller debetværdi i budgetpost! Kredit eller debitering skal "
 "være nul."

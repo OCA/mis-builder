@@ -77,8 +77,8 @@ msgid ""
 msgstr ""
 "Réels : données réelles, de la comptabilité et autres requêtes.\n"
 "Réels (alternatif) : données réelles d'une autre source (eg une vue de la "
-"base de données fournissant des lignes similaires aux mouvements comptables)."
-"\n"
+"base de données fournissant des lignes similaires aux mouvements "
+"comptables).\n"
 "Colonnes de somme : somme (+/-) d'autres colonnes.\n"
 "Colonnes de comparaison : compare à une autre colonne.\n"
 
@@ -266,8 +266,8 @@ msgstr "Brouillon"
 msgid ""
 "Dummy field that adapts searches on date to searches on date_from/date_to."
 msgstr ""
-"Champ factice qui adapte les recherches sur dates aux recherches sur date dé"
-"but/fin."
+"Champ factice qui adapte les recherches sur dates aux recherches sur date "
+"début/fin."
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_follower_ids
