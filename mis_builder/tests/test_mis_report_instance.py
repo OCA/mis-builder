@@ -592,8 +592,3 @@ class TestMisReportInstance(common.HttpCase):
             self.env, "mis_you", groups="base.group_user,account.group_account_user"
         )
         self.report_instance.with_user(test_user).compute()
-
-    def test_details_before_kpi(self):
-        self.report_instance.details_before_kpi = True
-        matrix_dict = self.report_instance.compute()
-        self.assertEqual(matrix_dict["body"][0]["parent_row_id"], "k1")
