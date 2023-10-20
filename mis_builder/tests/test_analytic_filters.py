@@ -5,10 +5,21 @@ from odoo.tests.common import TransactionCase
 
 
 class TestAnalyticFilters(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.aag = self.env["account.analytic.group"].search([], limit=1)
-        self.aat = self.env["account.analytic.tag"].search([], limit=1)
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        cls.aag = cls.env["account.analytic.group"].search([], limit=1)
+        cls.aat = cls.env["account.analytic.tag"].search([], limit=1)
 
     def test_context_with_filters(self):
         aaa = self.env["account.analytic.account"].search([], limit=1)

@@ -15,15 +15,26 @@ class TestMisReportInstance(common.HttpCase):
     should be covered by lower level unit tests.
     """
 
-    def setUp(self):
-        super().setUp()
-        partner_model_id = self.env.ref("base.model_res_partner").id
-        partner_create_date_field_id = self.env.ref(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        partner_model_id = cls.env.ref("base.model_res_partner").id
+        partner_create_date_field_id = cls.env.ref(
             "base.field_res_partner__create_date"
         ).id
-        partner_debit_field_id = self.env.ref("account.field_res_partner__debit").id
+        partner_debit_field_id = cls.env.ref("account.field_res_partner__debit").id
         # create a report with 2 subkpis and one query
-        self.report = self.env["mis.report"].create(
+        cls.report = cls.env["mis.report"].create(
             dict(
                 name="test report",
                 subkpi_ids=[
@@ -46,7 +57,7 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
         # create another report with 2 subkpis, no query
-        self.report_2 = self.env["mis.report"].create(
+        cls.report_2 = cls.env["mis.report"].create(
             dict(
                 name="another test report",
                 subkpi_ids=[
@@ -72,7 +83,7 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
         # Third report, 2 subkpis, no query
-        self.report_3 = self.env["mis.report"].create(
+        cls.report_3 = cls.env["mis.report"].create(
             dict(
                 name="test report 3",
                 subkpi_ids=[
@@ -98,9 +109,9 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
         # kpi with accounting formulas
-        self.kpi1 = self.env["mis.report.kpi"].create(
+        cls.kpi1 = cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 description="kpi 1",
                 name="k1",
                 multi=True,
@@ -108,20 +119,20 @@ class TestMisReportInstance(common.HttpCase):
                     (
                         0,
                         0,
-                        dict(name="bale[200%]", subkpi_id=self.report.subkpi_ids[0].id),
+                        dict(name="bale[200%]", subkpi_id=cls.report.subkpi_ids[0].id),
                     ),
                     (
                         0,
                         0,
-                        dict(name="balp[200%]", subkpi_id=self.report.subkpi_ids[1].id),
+                        dict(name="balp[200%]", subkpi_id=cls.report.subkpi_ids[1].id),
                     ),
                 ],
             )
         )
         # kpi with accounting formula and query
-        self.kpi2 = self.env["mis.report.kpi"].create(
+        cls.kpi2 = cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 description="kpi 2",
                 name="k2",
                 multi=True,
@@ -129,22 +140,22 @@ class TestMisReportInstance(common.HttpCase):
                     (
                         0,
                         0,
-                        dict(name="balp[200%]", subkpi_id=self.report.subkpi_ids[0].id),
+                        dict(name="balp[200%]", subkpi_id=cls.report.subkpi_ids[0].id),
                     ),
                     (
                         0,
                         0,
                         dict(
-                            name="partner.debit", subkpi_id=self.report.subkpi_ids[1].id
+                            name="partner.debit", subkpi_id=cls.report.subkpi_ids[1].id
                         ),
                     ),
                 ],
             )
         )
         # kpi with a simple expression summing other multi-valued kpis
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 description="kpi 4",
                 name="k4",
                 multi=False,
@@ -152,9 +163,9 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
         # kpi with 2 constants
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 description="kpi 3",
                 name="k3",
                 multi=True,
@@ -164,70 +175,70 @@ class TestMisReportInstance(common.HttpCase):
                         0,
                         dict(
                             name="AccountingNone",
-                            subkpi_id=self.report.subkpi_ids[0].id,
+                            subkpi_id=cls.report.subkpi_ids[0].id,
                         ),
                     ),
-                    (0, 0, dict(name="1.0", subkpi_id=self.report.subkpi_ids[1].id)),
+                    (0, 0, dict(name="1.0", subkpi_id=cls.report.subkpi_ids[1].id)),
                 ],
             )
         )
         # kpi with a NameError (x not defined)
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 description="kpi 5",
                 name="k5",
                 multi=True,
                 expression_ids=[
-                    (0, 0, dict(name="x", subkpi_id=self.report.subkpi_ids[0].id)),
-                    (0, 0, dict(name="1.0", subkpi_id=self.report.subkpi_ids[1].id)),
+                    (0, 0, dict(name="x", subkpi_id=cls.report.subkpi_ids[0].id)),
+                    (0, 0, dict(name="1.0", subkpi_id=cls.report.subkpi_ids[1].id)),
                 ],
             )
         )
         # string-type kpi
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 description="kpi 6",
                 name="k6",
                 multi=True,
                 type=TYPE_STR,
                 expression_ids=[
-                    (0, 0, dict(name='"bla"', subkpi_id=self.report.subkpi_ids[0].id)),
+                    (0, 0, dict(name='"bla"', subkpi_id=cls.report.subkpi_ids[0].id)),
                     (
                         0,
                         0,
-                        dict(name='"blabla"', subkpi_id=self.report.subkpi_ids[1].id),
+                        dict(name='"blabla"', subkpi_id=cls.report.subkpi_ids[1].id),
                     ),
                 ],
             )
         )
         # kpi that references another subkpi by name
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 description="kpi 7",
                 name="k7",
                 multi=True,
                 expression_ids=[
-                    (0, 0, dict(name="k3.sk1", subkpi_id=self.report.subkpi_ids[0].id)),
-                    (0, 0, dict(name="k3.sk2", subkpi_id=self.report.subkpi_ids[1].id)),
+                    (0, 0, dict(name="k3.sk1", subkpi_id=cls.report.subkpi_ids[0].id)),
+                    (0, 0, dict(name="k3.sk2", subkpi_id=cls.report.subkpi_ids[1].id)),
                 ],
             )
         )
         # Report 2 : kpi with AccountingNone value
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report_2.id,
+                report_id=cls.report_2.id,
                 description="AccountingNone kpi",
                 name="AccountingNoneKPI",
                 multi=False,
             )
         )
         # Report 2 : 'classic' kpi with values for each sub-KPI
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report_2.id,
+                report_id=cls.report_2.id,
                 description="Classic kpi",
                 name="classic_kpi_r2",
                 multi=True,
@@ -236,23 +247,23 @@ class TestMisReportInstance(common.HttpCase):
                         0,
                         0,
                         dict(
-                            name="bale[200%]", subkpi_id=self.report_2.subkpi_ids[0].id
+                            name="bale[200%]", subkpi_id=cls.report_2.subkpi_ids[0].id
                         ),
                     ),
                     (
                         0,
                         0,
                         dict(
-                            name="balp[200%]", subkpi_id=self.report_2.subkpi_ids[1].id
+                            name="balp[200%]", subkpi_id=cls.report_2.subkpi_ids[1].id
                         ),
                     ),
                 ],
             )
         )
         # Report 3 : kpi with wrong tuple length
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report_3.id,
+                report_id=cls.report_3.id,
                 description="Wrong tuple length kpi",
                 name="wrongTupleLen",
                 multi=False,
@@ -260,9 +271,9 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
         # Report 3 : 'classic' kpi
-        self.env["mis.report.kpi"].create(
+        cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report_3.id,
+                report_id=cls.report_3.id,
                 description="Classic kpi",
                 name="classic_kpi_r2",
                 multi=True,
@@ -271,25 +282,25 @@ class TestMisReportInstance(common.HttpCase):
                         0,
                         0,
                         dict(
-                            name="bale[200%]", subkpi_id=self.report_3.subkpi_ids[0].id
+                            name="bale[200%]", subkpi_id=cls.report_3.subkpi_ids[0].id
                         ),
                     ),
                     (
                         0,
                         0,
                         dict(
-                            name="balp[200%]", subkpi_id=self.report_3.subkpi_ids[1].id
+                            name="balp[200%]", subkpi_id=cls.report_3.subkpi_ids[1].id
                         ),
                     ),
                 ],
             )
         )
         # create a report instance
-        self.report_instance = self.env["mis.report.instance"].create(
+        cls.report_instance = cls.env["mis.report.instance"].create(
             dict(
                 name="test instance",
-                report_id=self.report.id,
-                company_id=self.env.ref("base.main_company").id,
+                report_id=cls.report.id,
+                company_id=cls.env.ref("base.main_company").id,
                 period_ids=[
                     (
                         0,
@@ -298,7 +309,7 @@ class TestMisReportInstance(common.HttpCase):
                             name="p1",
                             mode="relative",
                             type="d",
-                            subkpi_ids=[(4, self.report.subkpi_ids[0].id, None)],
+                            subkpi_ids=[(4, cls.report.subkpi_ids[0].id, None)],
                         ),
                     ),
                     (
@@ -315,11 +326,11 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
         # same for report 2
-        self.report_instance_2 = self.env["mis.report.instance"].create(
+        cls.report_instance_2 = cls.env["mis.report.instance"].create(
             dict(
                 name="test instance 2",
-                report_id=self.report_2.id,
-                company_id=self.env.ref("base.main_company").id,
+                report_id=cls.report_2.id,
+                company_id=cls.env.ref("base.main_company").id,
                 period_ids=[
                     (
                         0,
@@ -335,11 +346,11 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
         # and for report 3
-        self.report_instance_3 = self.env["mis.report.instance"].create(
+        cls.report_instance_3 = cls.env["mis.report.instance"].create(
             dict(
                 name="test instance 3",
-                report_id=self.report_3.id,
-                company_id=self.env.ref("base.main_company").id,
+                report_id=cls.report_3.id,
+                company_id=cls.env.ref("base.main_company").id,
                 period_ids=[
                     (
                         0,

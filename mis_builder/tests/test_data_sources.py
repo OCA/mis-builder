@@ -17,10 +17,11 @@ from .common import assert_matrix
 class TestMisReportInstanceDataSources(common.TransactionCase):
     """Test sum and comparison data source."""
 
-    def _create_move(self, date, amount, debit_acc, credit_acc):
-        move = self.move_model.create(
+    @classmethod
+    def _create_move(cls, date, amount, debit_acc, credit_acc):
+        move = cls.move_model.create(
             {
-                "journal_id": self.journal.id,
+                "journal_id": cls.journal.id,
                 "date": date,
                 "line_ids": [
                     (0, 0, {"name": "/", "debit": amount, "account_id": debit_acc.id}),
@@ -35,16 +36,27 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
         move._post()
         return move
 
-    def setUp(self):
-        super().setUp()
-        self.account_model = self.env["account.account"]
-        self.move_model = self.env["account.move"]
-        self.journal_model = self.env["account.journal"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        cls.account_model = cls.env["account.account"]
+        cls.move_model = cls.env["account.move"]
+        cls.journal_model = cls.env["account.journal"]
         # create receivable bs account
-        type_ar = self.browse_ref("account.data_account_type_receivable")
-        self.account_ar = self.account_model.create(
+        type_ar = cls.env.ref("account.data_account_type_receivable")
+        cls.account_ar = cls.account_model.create(
             {
-                "company_id": self.env.user.company_id.id,
+                "company_id": cls.env.user.company_id.id,
                 "code": "400AR",
                 "name": "Receivable",
                 "user_type_id": type_ar.id,
@@ -52,67 +64,67 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
             }
         )
         # create income account
-        type_in = self.browse_ref("account.data_account_type_revenue")
-        self.account_in = self.account_model.create(
+        type_in = cls.env.ref("account.data_account_type_revenue")
+        cls.account_in = cls.account_model.create(
             {
-                "company_id": self.env.user.company_id.id,
+                "company_id": cls.env.user.company_id.id,
                 "code": "700IN",
                 "name": "Income",
                 "user_type_id": type_in.id,
             }
         )
-        self.account_in2 = self.account_model.create(
+        cls.account_in2 = cls.account_model.create(
             {
-                "company_id": self.env.user.company_id.id,
+                "company_id": cls.env.user.company_id.id,
                 "code": "700IN2",
                 "name": "Income",
                 "user_type_id": type_in.id,
             }
         )
         # create journal
-        self.journal = self.journal_model.create(
+        cls.journal = cls.journal_model.create(
             {
-                "company_id": self.env.user.company_id.id,
+                "company_id": cls.env.user.company_id.id,
                 "name": "Sale journal",
                 "code": "VEN",
                 "type": "sale",
             }
         )
         # create move
-        self._create_move(
+        cls._create_move(
             date="2017-01-01",
             amount=11,
-            debit_acc=self.account_ar,
-            credit_acc=self.account_in,
+            debit_acc=cls.account_ar,
+            credit_acc=cls.account_in,
         )
         # create move
-        self._create_move(
+        cls._create_move(
             date="2017-02-01",
             amount=13,
-            debit_acc=self.account_ar,
-            credit_acc=self.account_in,
+            debit_acc=cls.account_ar,
+            credit_acc=cls.account_in,
         )
-        self._create_move(
+        cls._create_move(
             date="2017-02-01",
             amount=17,
-            debit_acc=self.account_ar,
-            credit_acc=self.account_in2,
+            debit_acc=cls.account_ar,
+            credit_acc=cls.account_in2,
         )
         # create report
-        self.report = self.env["mis.report"].create(dict(name="test report"))
-        self.kpi1 = self.env["mis.report.kpi"].create(
+        cls.report = cls.env["mis.report"].create(dict(name="test report"))
+        cls.kpi1 = cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 name="k1",
                 description="kpi 1",
                 expression="-balp[700IN]",
                 compare_method=CMP_DIFF,
             )
         )
-        self.expr1 = self.kpi1.expression_ids[0]
-        self.kpi2 = self.env["mis.report.kpi"].create(
+        cls.expr1 = cls.kpi1.expression_ids[0]
+        cls.kpi2 = cls.env["mis.report.kpi"].create(
             dict(
-                report_id=self.report.id,
+                report_id=cls.report.id,
                 name="k2",
                 description="kpi 2",
                 expression="-balp[700%]",
@@ -120,21 +132,21 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
                 auto_expand_accounts=True,
             )
         )
-        self.instance = self.env["mis.report.instance"].create(
-            dict(name="test instance", report_id=self.report.id, comparison_mode=True)
+        cls.instance = cls.env["mis.report.instance"].create(
+            dict(name="test instance", report_id=cls.report.id, comparison_mode=True)
         )
-        self.p1 = self.env["mis.report.instance.period"].create(
+        cls.p1 = cls.env["mis.report.instance.period"].create(
             dict(
                 name="p1",
-                report_instance_id=self.instance.id,
+                report_instance_id=cls.instance.id,
                 manual_date_from="2017-01-01",
                 manual_date_to="2017-01-31",
             )
         )
-        self.p2 = self.env["mis.report.instance.period"].create(
+        cls.p2 = cls.env["mis.report.instance.period"].create(
             dict(
                 name="p2",
-                report_instance_id=self.instance.id,
+                report_instance_id=cls.instance.id,
                 manual_date_from="2017-02-01",
                 manual_date_to="2017-02-28",
             )

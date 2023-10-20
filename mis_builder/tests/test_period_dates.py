@@ -16,17 +16,30 @@ from .common import assert_matrix
 
 
 class TestPeriodDates(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.report_obj = self.env["mis.report"]
-        self.instance_obj = self.env["mis.report.instance"]
-        self.period_obj = self.env["mis.report.instance.period"]
-        self.report = self.report_obj.create(dict(name="test-report"))
-        self.instance = self.instance_obj.create(
-            dict(name="test-instance", report_id=self.report.id, comparison_mode=False)
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        cls.report_obj = cls.env["mis.report"]
+        cls.instance_obj = cls.env["mis.report.instance"]
+        cls.period_obj = cls.env["mis.report.instance.period"]
+        cls.report = cls.report_obj.create(dict(name="test-report"))
+        cls.instance = cls.instance_obj.create(
+            dict(name="test-instance", report_id=cls.report.id, comparison_mode=False)
         )
-        self.assertEqual(len(self.instance.period_ids), 1)
-        self.period = self.instance.period_ids[0]
+        # cls.assertEqual(len(cls.instance.period_ids), 1)
+        if len(cls.instance.period_ids) != 1:
+            raise Exception("cls.instance.period_ids lenght is not equal to 1")
+        cls.period = cls.instance.period_ids[0]
 
     def assertDateEqual(self, first, second, msg=None):
         self.assertEqual(first, fields.Date.from_string(second), msg)

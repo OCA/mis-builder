@@ -13,21 +13,32 @@ from ..models.aep import AccountingExpressionProcessor as AEP, _is_domain
 
 
 class TestAEP(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.res_company = self.env["res.company"]
-        self.account_model = self.env["account.account"]
-        self.move_model = self.env["account.move"]
-        self.journal_model = self.env["account.journal"]
-        self.curr_year = datetime.date.today().year
-        self.prev_year = self.curr_year - 1
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        cls.res_company = cls.env["res.company"]
+        cls.account_model = cls.env["account.account"]
+        cls.move_model = cls.env["account.move"]
+        cls.journal_model = cls.env["account.journal"]
+        cls.curr_year = datetime.date.today().year
+        cls.prev_year = cls.curr_year - 1
         # create company
-        self.company = self.res_company.create({"name": "AEP Company"})
+        cls.company = cls.res_company.create({"name": "AEP Company"})
         # create receivable bs account
-        type_ar = self.browse_ref("account.data_account_type_receivable")
-        self.account_ar = self.account_model.create(
+        type_ar = cls.env.ref("account.data_account_type_receivable")
+        cls.account_ar = cls.account_model.create(
             {
-                "company_id": self.company.id,
+                "company_id": cls.company.id,
                 "code": "400AR",
                 "name": "Receivable",
                 "user_type_id": type_ar.id,
@@ -35,45 +46,51 @@ class TestAEP(common.TransactionCase):
             }
         )
         # create income pl account
-        type_in = self.browse_ref("account.data_account_type_revenue")
-        self.account_in = self.account_model.create(
+        type_in = cls.env.ref("account.data_account_type_revenue")
+        cls.account_in = cls.account_model.create(
             {
-                "company_id": self.company.id,
+                "company_id": cls.company.id,
                 "code": "700IN",
                 "name": "Income",
                 "user_type_id": type_in.id,
             }
         )
         # create journal
-        self.journal = self.journal_model.create(
+        cls.journal = cls.journal_model.create(
             {
-                "company_id": self.company.id,
+                "company_id": cls.company.id,
                 "name": "Sale journal",
                 "code": "VEN",
                 "type": "sale",
             }
         )
         # create move in December last year
-        self._create_move(
-            date=datetime.date(self.prev_year, 12, 1),
+        cls._create_move(
+            date=datetime.date(cls.prev_year, 12, 1),
             amount=100,
-            debit_acc=self.account_ar,
-            credit_acc=self.account_in,
+            debit_acc=cls.account_ar,
+            credit_acc=cls.account_in,
         )
         # create move in January this year
-        self._create_move(
-            date=datetime.date(self.curr_year, 1, 1),
+        cls._create_move(
+            date=datetime.date(cls.curr_year, 1, 1),
             amount=300,
-            debit_acc=self.account_ar,
-            credit_acc=self.account_in,
+            debit_acc=cls.account_ar,
+            credit_acc=cls.account_in,
         )
         # create move in March this year
-        self._create_move(
-            date=datetime.date(self.curr_year, 3, 1),
+        cls._create_move(
+            date=datetime.date(cls.curr_year, 3, 1),
             amount=500,
-            debit_acc=self.account_ar,
-            credit_acc=self.account_in,
+            debit_acc=cls.account_ar,
+            credit_acc=cls.account_in,
         )
+
+    def setUp(self):
+        """The setUp() method is necessary because aep.parse_expr()
+        is not a classmethod. Also, there are some expressions that
+        use 'ref', which is not correct in a classmethod."""
+        super().setUp()
         # create the AEP, and prepare the expressions we'll need
         self.aep = AEP(self.company)
         self.aep.parse_expr("bali[]")
@@ -109,10 +126,11 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr("bal_700IN")  # deprecated
         self.aep.parse_expr("bals[700IN]")  # deprecated
 
-    def _create_move(self, date, amount, debit_acc, credit_acc, post=True):
-        move = self.move_model.create(
+    @classmethod
+    def _create_move(cls, date, amount, debit_acc, credit_acc, post=True):
+        move = cls.move_model.create(
             {
-                "journal_id": self.journal.id,
+                "journal_id": cls.journal.id,
                 "date": fields.Date.to_string(date),
                 "line_ids": [
                     (0, 0, {"name": "/", "debit": amount, "account_id": debit_acc.id}),
