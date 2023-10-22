@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-13 15:37+0000\n"
-"PO-Revision-Date: 2023-07-10 10:10+0000\n"
+"PO-Revision-Date: 2023-10-29 08:33+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -271,7 +271,7 @@ msgstr ""
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.report_mis_report_instance
 msgid "<span>-</span>"
-msgstr ""
+msgstr "<span>-</span>"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
@@ -301,7 +301,7 @@ msgstr "Un filtro de fecha es obligatorio para este origen en la columna %s."
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
 msgid "Account Model"
-msgstr ""
+msgstr "Modelo de Cuenta"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
@@ -1323,7 +1323,7 @@ msgstr "Mes"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
 msgid "Move Lines Source"
-msgstr ""
+msgstr "Mover Líneas de Origen"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_id
@@ -1442,7 +1442,7 @@ msgstr "Periodos"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__pivot_date
 msgid "Pivot Date"
-msgstr ""
+msgstr "Fecha Pivote"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
@@ -1609,7 +1609,7 @@ msgstr "Estilo"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__style_expression
 msgid "Style Expression"
-msgstr ""
+msgstr "Expresión de Estilo"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__auto_expand_accounts_style_id
@@ -1826,7 +1826,7 @@ msgstr "Para (calculado)"
 #: code:addons/mis_builder/models/mis_kpi_data.py:0
 #, python-format
 msgid "Unexpected accumulation method %(method)s for %(name)s."
-msgstr ""
+msgstr "Método de acumulación %(method)s inesperado para %(name)s."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
@@ -1901,7 +1901,7 @@ msgstr "No puede sumar el periodo %s consigo mismo."
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "from %(date_from)s to %(date_to)s"
-msgstr ""
+msgstr "Desde %(date_from)s hasta %(date_to)s"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
