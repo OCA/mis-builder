@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-13 15:37+0000\n"
-"PO-Revision-Date: 2023-07-10 10:10+0000\n"
+"PO-Revision-Date: 2023-10-29 08:33+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -24,12 +24,16 @@ msgstr ""
 #, python-format
 msgid "%(rec_name)s is not within budget %(budget_name)s date range."
 msgstr ""
+"%(rec_name)s no se encuentra dentro del intervalo de fechas del presupuesto "
+"%(budget_name)s."
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_item_abstract.py:0
 #, python-format
 msgid "%(rec_name)s overlaps %(res_name)s in budget %(budget_name)s"
 msgstr ""
+"%(rec_name)s no se encuentra%(res_name)s dentro del intervalo de fechas del "
+"presupuesto %(budget_name)s"
 
 #. module: mis_builder_budget
 #: code:addons/mis_builder_budget/models/mis_budget_abstract.py:0
@@ -64,11 +68,12 @@ msgid ""
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
 msgstr ""
-"Datos reales: datos actuales, de contabilidad y otras consultas.\n"
-"Datos reales (alternativa): datos actuales de una fuente alternativa (por "
-"ejemplo, una vista de base de datos que proporciona líneas de movimiento de "
-"cuenta similares).\n"
-"Columnas de suma: suma (+/-) de otras columnas.\n"
+"Actuales: datos actuales, procedentes de la contabilidad y de otras "
+"consultas.\n"
+"Reales (alternativos): datos actuales procedentes de una fuente alternativa ("
+"por ejemplo, una vista de base de datos que proporcione líneas de movimiento "
+"de cuentas similares).\n"
+"Suma de columnas: suma (+/-) de otras columnas.\n"
 "Comparar con columna: comparar con otra columna.\n"
 
 #. module: mis_builder_budget
@@ -288,7 +293,7 @@ msgstr "Desde"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__has_message
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Tiene Mensaje"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__id
