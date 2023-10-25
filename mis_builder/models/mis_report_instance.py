@@ -312,6 +312,7 @@ class MisReportInstancePeriod(models.Model):
         default="[]",
         help="A domain to additionally filter move lines considered in this column.",
     )
+    filter_company_ids = fields.Many2many("res.company")
 
     _order = "sequence, id"
 
@@ -424,6 +425,8 @@ class MisReportInstancePeriod(models.Model):
         # report-level analytic domain filter
         if self.analytic_domain:
             filters.extend(ast.literal_eval(self.analytic_domain))
+        if self.filter_company_ids:
+            filters.extend([("company_id", "in", self.filter_company_ids.ids)])
         # contextual analytic domain filter
         filters.extend(self.env.context.get("mis_analytic_domain", []))
         return filters
@@ -461,6 +464,8 @@ class MisReportInstancePeriod(models.Model):
             )
         for tag in self.analytic_tag_ids:
             domain.append(("analytic_tag_ids", "=", tag.id))
+        if self.filter_company_ids:
+            domain.extend([("company_id", "in", self.filter_company_ids.ids)])
         if self.analytic_domain:
             # Extend the domain with the column-level analytic domain
             domain.extend(ast.literal_eval(self.analytic_domain))
