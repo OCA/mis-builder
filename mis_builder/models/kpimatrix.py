@@ -234,7 +234,9 @@ class KpiMatrix:
         cell_tuple = []
         assert len(vals) == col.colspan
         assert len(drilldown_args) == col.colspan
-        for val, drilldown_arg, subcol in zip(vals, drilldown_args, col.iter_subcols()):
+        for val, drilldown_arg, subcol in zip(
+            vals, drilldown_args, col.iter_subcols(), strict=True
+        ):
             if isinstance(val, DataError):
                 val_rendered = val.name
                 val_comment = val.msg
@@ -346,7 +348,10 @@ class KpiMatrix:
                     ]
                 comparison_cell_tuple = []
                 for val, base_val, comparison_subcol in zip(
-                    vals, base_vals, comparison_col.iter_subcols()
+                    vals,
+                    base_vals,
+                    comparison_col.iter_subcols(),
+                    strict=True,
                 ):
                     # TODO FIXME average factors
                     comparison = self._style_model.compare_and_render(
@@ -442,8 +447,7 @@ class KpiMatrix:
             yield kpi_row
             detail_rows = self._detail_rows[kpi_row.kpi].values()
             detail_rows = sorted(detail_rows, key=lambda r: r.label)
-            for detail_row in detail_rows:
-                yield detail_row
+            yield from detail_rows
 
     def iter_cols(self):
         """Iterate columns in display order.
@@ -460,8 +464,7 @@ class KpiMatrix:
         and comparison.
         """
         for col in self.iter_cols():
-            for subcol in col.iter_subcols():
-                yield subcol
+            yield from col.iter_subcols()
 
     def _load_account_names(self):
         account_ids = set()

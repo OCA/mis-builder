@@ -306,6 +306,6 @@ class MisReportKpiStyle(models.Model):
         if props.indent_level is not None and not no_indent:
             css_attributes.append(("text-indent", f"{props.indent_level}em"))
         return (
-            "; ".join(["%s: %s" % a for a in css_attributes if a[1] is not None])
+            "; ".join(["{}: {}".format(*a) for a in css_attributes if a[1] is not None])
             or None
         )
