@@ -300,11 +300,8 @@ msgstr "Se marcado, a sobreposição entre itens do orçamento é permitida"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se selecionado, algumas mensagens terão um erro de entrega."
 
@@ -498,13 +495,6 @@ msgid "Number of messages with delivery error"
 msgstr "Número de mensagens com erro de entrega"
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Erro na Entrega de SMS"
-
-#. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Set draft"
@@ -572,6 +562,9 @@ msgid ""
 msgstr ""
 "Valor errado de crédito ou débito no item do orçamento! Crédito e débito "
 "devem ser zero."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Erro na Entrega de SMS"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Número de mensagens que exigem uma atenção"

@@ -295,11 +295,8 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -490,13 +487,6 @@ msgstr ""
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_error_counter
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
-
-#. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: mis_builder_budget

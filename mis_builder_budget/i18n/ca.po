@@ -300,11 +300,8 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si es marca, alguns missatges tenen un error de lliurament."
 
@@ -498,13 +495,6 @@ msgid "Number of messages with delivery error"
 msgstr "Nombre de missatges amb error de publicació"
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error de lliurament de SMS"
-
-#. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Set draft"
@@ -572,6 +562,9 @@ msgid ""
 msgstr ""
 "Valor de crèdit o de dèbit incorrecte a la partida pressupostària. El crèdit "
 "o el dèbit han de ser nuls."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error de lliurament de SMS"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Nombre de missatges que requereixen una acció"

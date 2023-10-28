@@ -304,11 +304,8 @@ msgstr "Si coché, chevauchement entre des lignes de budget est autorisé"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si coché, certains messages ont une erreur d'envoi."
 
@@ -502,13 +499,6 @@ msgid "Number of messages with delivery error"
 msgstr "Nombre de messages avec une erreur d'envoi"
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Erreur d'envoi du SMS"
-
-#. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Set draft"
@@ -576,6 +566,9 @@ msgid ""
 msgstr ""
 "Mauvaise valeur au débit ou crédit sur la ligne de budget ! Crédit ou débit "
 "doit être égal à 0."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Erreur d'envoi du SMS"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Nombre de messages qui demande une action"
