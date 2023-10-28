@@ -408,6 +408,13 @@ msgstr "Kolommen"
 
 #. module: mis_builder
 #. odoo-python
+#: code:addons/mis_builder/models/kpimatrix.py:0
+#, python-format
+msgid "Columns %(descr)s and %(base_descr) are not comparable"
+msgstr ""
+
+#. module: mis_builder
+#. odoo-python
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
@@ -417,13 +424,6 @@ msgstr "Te vergelijken kolommen moeten tot hetzelfde rapport in %s behoren"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_sumcol_ids
 msgid "Columns to sum"
 msgstr "Op te sommen kolommen"
-
-#. module: mis_builder
-#. odoo-python
-#: code:addons/mis_builder/models/kpimatrix.py:0
-#, python-format
-msgid "Columns {} and {} are not comparable"
-msgstr "Kolommen {} en {} zijn niet vergelijkbaar"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__query_company_ids
@@ -803,7 +803,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/mis_builder/report/mis_report_instance_xlsx.py:0
 #, python-format
-msgid "Generated on {} at {}"
+msgid "Generated on %(gen_date)s at %(gen_time)s"
 msgstr ""
 
 #. module: mis_builder
@@ -893,10 +893,10 @@ msgstr "KPI"
 #: code:addons/mis_builder/models/mis_report.py:0
 #, python-format
 msgid ""
-"KPI \"{}\" has type {} while a tuple was expected.\n"
+"KPI \"%(kpi)s\" has type %(type)s while a tuple was expected.\n"
 "\n"
 "This can be fixed by either:\n"
-"\t- Changing the KPI value to a tuple of length {}\n"
+"\t- Changing the KPI value to a tuple of length %(length)s\n"
 "or\n"
 "\t- Changing the KPI to `multi` mode and giving an explicit value for each "
 "sub-KPI."
@@ -907,8 +907,8 @@ msgstr ""
 #: code:addons/mis_builder/models/mis_report.py:0
 #, python-format
 msgid ""
-"KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
-"expected."
+"KPI \"%(kpi)s\" is valued as a tuple of length %(length)s while a tuple of "
+"length%(expected_length)s is expected."
 msgstr ""
 
 #. module: mis_builder
@@ -1837,6 +1837,10 @@ msgstr "XXL"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "XXS"
+
+#, python-format
+#~ msgid "Columns {} and {} are not comparable"
+#~ msgstr "Kolommen {} en {} zijn niet vergelijkbaar"
 
 #, python-format
 #~ msgid "Can not update a multi kpi from the kpi line"

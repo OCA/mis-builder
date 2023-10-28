@@ -415,6 +415,13 @@ msgstr "Columnes"
 
 #. module: mis_builder
 #. odoo-python
+#: code:addons/mis_builder/models/kpimatrix.py:0
+#, python-format
+msgid "Columns %(descr)s and %(base_descr) are not comparable"
+msgstr ""
+
+#. module: mis_builder
+#. odoo-python
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
@@ -424,13 +431,6 @@ msgstr "Les columnes a comparar han de pertànyer al mateix informe en %s"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_sumcol_ids
 msgid "Columns to sum"
 msgstr "Columnes a sumar"
-
-#. module: mis_builder
-#. odoo-python
-#: code:addons/mis_builder/models/kpimatrix.py:0
-#, python-format
-msgid "Columns {} and {} are not comparable"
-msgstr "Les columnes {} i {} no són comparables"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__query_company_ids
@@ -807,8 +807,8 @@ msgstr "Des de (computat)"
 #. odoo-python
 #: code:addons/mis_builder/report/mis_report_instance_xlsx.py:0
 #, python-format
-msgid "Generated on {} at {}"
-msgstr "Generat el dia {} a {}"
+msgid "Generated on %(gen_date)s at %(gen_time)s"
+msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -897,31 +897,23 @@ msgstr "KPI"
 #: code:addons/mis_builder/models/mis_report.py:0
 #, python-format
 msgid ""
-"KPI \"{}\" has type {} while a tuple was expected.\n"
+"KPI \"%(kpi)s\" has type %(type)s while a tuple was expected.\n"
 "\n"
 "This can be fixed by either:\n"
-"\t- Changing the KPI value to a tuple of length {}\n"
+"\t- Changing the KPI value to a tuple of length %(length)s\n"
 "or\n"
 "\t- Changing the KPI to `multi` mode and giving an explicit value for each "
 "sub-KPI."
 msgstr ""
-"El KPI \"{}\" té el tipus {} mentre s'esperava una tupla.\n"
-"\n"
-"Això es pot solucionar amb:\n"
-"- Canviant el valor del KPI per una tupla de longitud {}\n"
-"o\n"
-"- Canviar el KPI al mode `multi` i donar un valor explícit a cada sub-KPI."
 
 #. module: mis_builder
 #. odoo-python
 #: code:addons/mis_builder/models/mis_report.py:0
 #, python-format
 msgid ""
-"KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
-"expected."
+"KPI \"%(kpi)s\" is valued as a tuple of length %(length)s while a tuple of "
+"length%(expected_length)s is expected."
 msgstr ""
-"El KPI \"{}\" es valora com a tupla de longitud {} mentre que s'espera una "
-"tupla de longitud {}."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq1
@@ -1834,6 +1826,39 @@ msgstr "extra-súper-gran"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "extra-súper-petita"
+
+#, python-format
+#~ msgid "Columns {} and {} are not comparable"
+#~ msgstr "Les columnes {} i {} no són comparables"
+
+#, python-format
+#~ msgid "Generated on {} at {}"
+#~ msgstr "Generat el dia {} a {}"
+
+#, python-format
+#~ msgid ""
+#~ "KPI \"{}\" has type {} while a tuple was expected.\n"
+#~ "\n"
+#~ "This can be fixed by either:\n"
+#~ "\t- Changing the KPI value to a tuple of length {}\n"
+#~ "or\n"
+#~ "\t- Changing the KPI to `multi` mode and giving an explicit value for "
+#~ "each sub-KPI."
+#~ msgstr ""
+#~ "El KPI \"{}\" té el tipus {} mentre s'esperava una tupla.\n"
+#~ "\n"
+#~ "Això es pot solucionar amb:\n"
+#~ "- Canviant el valor del KPI per una tupla de longitud {}\n"
+#~ "o\n"
+#~ "- Canviar el KPI al mode `multi` i donar un valor explícit a cada sub-KPI."
+
+#, python-format
+#~ msgid ""
+#~ "KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} "
+#~ "is expected."
+#~ msgstr ""
+#~ "El KPI \"{}\" es valora com a tupla de longitud {} mentre que s'espera "
+#~ "una tupla de longitud {}."
 
 #, python-format
 #~ msgid "Can not update a multi kpi from the kpi line"
