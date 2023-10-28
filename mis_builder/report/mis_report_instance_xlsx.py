@@ -162,8 +162,10 @@ class MisBuilderXlsx(models.AbstractModel):
         now_tz = fields.Datetime.context_timestamp(
             self.env["res.users"], datetime.now()
         )
-        create_date = _("Generated on {} at {}").format(
-            now_tz.strftime(lang.date_format), now_tz.strftime(lang.time_format)
+        create_date = _(
+            "Generated on %(gen_date)s at %(gen_time)s",
+            gen_date=now_tz.strftime(lang.date_format),
+            gen_time=now_tz.strftime(lang.time_format),
         )
         sheet.write(row_pos, 0, create_date, footer_format)
 
