@@ -5,7 +5,7 @@
     "name": "MIS Builder Budget",
     "summary": """
         Create budgets for MIS reports""",
-    "version": "16.0.5.0.1",
+    "version": "16.0.5.0.2",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/mis-builder",
