@@ -16,7 +16,6 @@ _logger = logging.getLogger(__name__)
 
 
 class KpiMatrixRow(object):
-
     # TODO: ultimately, the kpi matrix will become ignorant of KPI's and
     #       accounts and know about rows, columns, sub columns and styles only.
     #       It is already ignorant of period and only knowns about columns.
@@ -308,8 +307,10 @@ class KpiMatrix(object):
             common_subkpis = self._common_subkpis([col, base_col])
             if (col.subkpis or base_col.subkpis) and not common_subkpis:
                 raise UserError(
-                    _("Columns {} and {} are not comparable").format(
-                        col.description, base_col.description
+                    _(
+                        "Columns %(descr)s and %(base_descr) are not comparable",
+                        descr=col.description,
+                        base_descr=base_col.description,
                     )
                 )
             if not label:

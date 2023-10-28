@@ -720,23 +720,29 @@ class MisReport(models.Model):
                         if len(vals) != col.colspan:
                             raise SubKPITupleLengthError(
                                 _(
-                                    'KPI "{}" is valued as a tuple of '
-                                    "length {} while a tuple of length {} "
-                                    "is expected."
-                                ).format(kpi.description, len(vals), col.colspan)
+                                    'KPI "%(kpi)s" is valued as a tuple of '
+                                    "length %(length)s while a tuple of length"
+                                    "%(expected_length)s is expected.",
+                                    kpi=kpi.description,
+                                    length=len(vals),
+                                    expected_length=col.colspan,
+                                )
                             )
                     elif isinstance(vals[0], DataError):
                         vals = (vals[0],) * col.colspan
                     else:
                         raise SubKPIUnknownTypeError(
                             _(
-                                'KPI "{}" has type {} while a tuple was '
+                                'KPI "%(kpi)s" has type %(type)s while a tuple was '
                                 "expected.\n\nThis can be fixed by either:\n\t- "
                                 "Changing the KPI value to a tuple of length "
-                                "{}\nor\n\t- Changing the "
+                                "%(length)s\nor\n\t- Changing the "
                                 "KPI to `multi` mode and giving an explicit "
-                                "value for each sub-KPI."
-                            ).format(kpi.description, type(vals[0]), col.colspan)
+                                "value for each sub-KPI.",
+                                kpi=kpi.description,
+                                type=type(vals[0]),
+                                length=col.colspan,
+                            )
                         )
                 if len(drilldown_args) != col.colspan:
                     drilldown_args = [None] * col.colspan
