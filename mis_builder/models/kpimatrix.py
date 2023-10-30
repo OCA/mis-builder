@@ -308,9 +308,14 @@ class KpiMatrix(object):
             common_subkpis = self._common_subkpis([col, base_col])
             if (col.subkpis or base_col.subkpis) and not common_subkpis:
                 raise UserError(
-                    _("Columns {} and {} are not comparable").format(
-                        col.description, base_col.description
+                    _(
+                        "Columns %(col_description)s and "
+                        "%(base_col_description)s are not comparable"
                     )
+                    % {
+                        "col_description": col.description,
+                        "base_col_description": base_col.description,
+                    }
                 )
             if not label:
                 label = "{} vs {}".format(col.label, base_col.label)

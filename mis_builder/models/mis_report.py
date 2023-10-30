@@ -720,23 +720,33 @@ class MisReport(models.Model):
                         if len(vals) != col.colspan:
                             raise SubKPITupleLengthError(
                                 _(
-                                    'KPI "{}" is valued as a tuple of '
-                                    "length {} while a tuple of length {} "
-                                    "is expected."
-                                ).format(kpi.description, len(vals), col.colspan)
+                                    'KPI "%(kpi_description)s" is valued as a tuple '
+                                    "of length %(values_length)s while a tuple "
+                                    "of length %(colspan)s is expected."
+                                )
+                                % {
+                                    "kpi_description": kpi.description,
+                                    "values_length": len(vals),
+                                    "colspan": col.colspan,
+                                }
                             )
                     elif isinstance(vals[0], DataError):
                         vals = (vals[0],) * col.colspan
                     else:
                         raise SubKPIUnknownTypeError(
                             _(
-                                'KPI "{}" has type {} while a tuple was '
-                                "expected.\n\nThis can be fixed by either:\n\t- "
-                                "Changing the KPI value to a tuple of length "
-                                "{}\nor\n\t- Changing the "
+                                'KPI "%(kpi_description)s" has type %(values_length)s '
+                                "while a tuple was expected.\n\nThis can be fixed by "
+                                "either:\n\t- Changing the KPI value to a tuple of "
+                                "length %(colspan)s\nor\n\t- Changing the "
                                 "KPI to `multi` mode and giving an explicit "
                                 "value for each sub-KPI."
-                            ).format(kpi.description, type(vals[0]), col.colspan)
+                            )
+                            % {
+                                "kpi_description": kpi.description,
+                                "values_length": type(vals[0]),
+                                "colspan": col.colspan,
+                            }
                         )
                 if len(drilldown_args) != col.colspan:
                     drilldown_args = [None] * col.colspan
