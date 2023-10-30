@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-07-27 20:09+0000\n"
+"PO-Revision-Date: 2023-10-30 17:51+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -233,9 +233,9 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
 msgstr ""
-"Um modelo 'mover linha como', ou seja, com ao menos os campos debit, credit, "
-"date, account_id e company_id. Este modelo é a fonte de dados da coluna "
-"Reais."
+"Um modelo 'linha movimento como', ou seja, com ao menos os campos debito, "
+"credito, data, account_id e company_id. Este modelo é a fonte de dados das "
+"coluna Reais."
 
 #. module: mis_builder
 #. odoo-python
@@ -1233,12 +1233,12 @@ msgstr "Mês"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__move_lines_source
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__source_aml_model_id
 msgid "Move Lines Source"
-msgstr "Mover Fonte de Linhas"
+msgstr "Fonte das Linhas de Movimento"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_id
 msgid "Move lines source"
-msgstr "Mover fonte de linhas"
+msgstr "Fonte das Linhas de Movimento"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_name
