@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-30 17:51+0000\n"
+"PO-Revision-Date: 2023-10-30 21:38+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -45,7 +45,7 @@ msgstr ""
 "                                        </code>\n"
 "                                        : variação do saldo de todas as "
 "contas a receber ao longo\n"
-"                                         o período."
+"                                         do período."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -92,7 +92,7 @@ msgid ""
 "                                        arithmetic operations."
 msgstr ""
 "<code>AccountingNone</code> : um valor nulo que se comporta como 0 em\n"
-"                                         operaçoes aritimeticas."
+"                                         operações aritméticas."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -115,7 +115,7 @@ msgid ""
 "<code>balp[70]</code>."
 msgstr ""
 "<code>bal[70]</code> : variação do saldo da conta 70 sobre\n"
-"                                         o ponto (é o mesmo que "
+"                                         o período (é o mesmo que "
 "<code>balp[70]</code>."
 
 #. module: mis_builder
@@ -124,7 +124,7 @@ msgid ""
 "<code>bale[1%]</code> : balance of accounts starting with 1 at\n"
 "                                        end of period."
 msgstr ""
-"<code>bale[1%]</code> : saldo de contas começando com 1 em\n"
+"<code>bale[1%]</code> : saldo de contas começando com 1 no\n"
 "                                         final de período."
 
 #. module: mis_builder
@@ -141,11 +141,11 @@ msgid ""
 "loss of previous fiscal\n"
 "                                        years."
 msgstr ""
-"<code>balu[]</code> : (<code>u</code> para não alocado) é uma expressão "
+"<code>balu[]</code> : (<code>u</code>  para não alocado) é uma expressão "
 "especial\n"
-"                                         que mostra o lucro/prejuízo não "
+"                                        que mostra o lucro/prejuízo não "
 "alocado do exercício fiscal dos\n"
-"\t\t\t\t\tanos anteriores."
+"                                        anos anteriores."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -153,8 +153,9 @@ msgid ""
 "<code>crdp[40%]</code> : sum of all credits on accounts starting\n"
 "                                        with 40 during the period."
 msgstr ""
-"<code>crdp[40%]</code> : soma de todos os créditos em contas começando\n"
-"                                         com 40 no período."
+"<code>crdp[40%]</code> : soma de todos os créditos no período das contas "
+"começando\n"
+"                                         com 40."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -223,8 +224,8 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields."
 msgstr ""
-"Um modelo 'mova a linha como', ou seja, com ao menos os campos debit, "
-"credit, date, account_id e company_id."
+"Um modelo 'como a linha do movimento', ou seja, com ao menos os campos "
+"debito, credito, data, account_id e company_id."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
@@ -233,9 +234,9 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
 msgstr ""
-"Um modelo 'linha movimento como', ou seja, com ao menos os campos debito, "
-"credito, data, account_id e company_id. Este modelo é a fonte de dados das "
-"coluna Reais."
+"Um modelo 'como a linha do movimento', ou seja, com ao menos os campos "
+"debito, credito, data, account_id e company_id. Este modelo é a fonte de "
+"dados das coluna Reais."
 
 #. module: mis_builder
 #. odoo-python
@@ -283,8 +284,8 @@ msgid ""
 "Actual (alternative) models used in columns must have the same account model "
 "in the Account field and must be the same defined in the report template: %s"
 msgstr ""
-"Real (alternativa) modelos usados em colunas devem possuir a mesma conta do "
-"modelo no campo Conta e devem ter a mesma definição no modelo do relatório: "
+"Real (alternativo) modelos usados nas colunas devem possuir o mesmo modelo "
+"de conta no campo Conta e devem ser o mesmo definido no modelo do relatório: "
 "%s"
 
 #. module: mis_builder
@@ -306,17 +307,18 @@ msgid ""
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
 msgstr ""
-"Atuais: dados atuais, de contabilidade e outras consultas.\n"
-"Atuais (alternativas): dados atuais de uma fonte alternativa (por exemplo, "
-"uma exibição de banco de dados que fornece linhas de movimentação de conta "
-"semelhantes).\n"
-"Soma de Colunas: Soma (+/-) de outras colunas.\n"
-"Comparar a Columa: Compare com outra coluna.\n"
+"Dados reais: dados atuais, provenientes de contabilidade e outras consultas."
+"\n"
+"Dados reais (alternativo): dados atuais de uma fonte alternativa (por "
+"exemplo, uma visualização de banco de dados que fornece linhas de "
+"movimentação de conta semelhantes).\n"
+"Colunas de soma: soma (+/-) de outras colunas.\n"
+"Compare com a coluna: compare com outra coluna.\n"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_prorata_read_group_mixin
 msgid "Adapt model with date_from/date_to for pro-rata temporis read_group"
-msgstr "Adaptar modelo com date_from/date_to para pro-rata temporis read_group"
+msgstr "Adapte o modelo com date_from/date_to para read_group pro-rata temporis"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_add_to_dashboard_action
@@ -337,7 +339,7 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query__aggregate
 msgid "Aggregate"
-msgstr "Agregado"
+msgstr "Agregar"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_instance__target_move__all
@@ -357,7 +359,7 @@ msgstr "Todas as Entradas Postadas"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__allowed_cmpcol_ids
 msgid "Allowed Cmpcol"
-msgstr "Cmpcol permitida"
+msgstr "Cmpcol Permitida"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__company_ids
@@ -468,7 +470,8 @@ msgstr "Coluna %s não pode ser comparada a itrec."
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "Column %s with move lines source must have from/to dates."
-msgstr "Coluna %s com fonte nas linhas de lançamento devem ter datas de/para."
+msgstr ""
+"Coluna %s com fonte nas linhas de lançamento devem ter datas inicial/final."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
@@ -480,7 +483,7 @@ msgstr "Colunas"
 #: code:addons/mis_builder/models/kpimatrix.py:0
 #, python-format
 msgid "Columns %(descr)s and %(base_descr) are not comparable"
-msgstr ""
+msgstr "As colunas %(descr)s e %(base_descr) não são comparáveis"
 
 #. module: mis_builder
 #. odoo-python
@@ -571,9 +574,8 @@ msgstr "Campo de Data"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date_from
-#, fuzzy
 msgid "Date From"
-msgstr "Campo de Data"
+msgstr "Data Inicial"
 
 #. module: mis_builder
 #. odoo-python
@@ -592,9 +594,8 @@ msgstr "Tipo de Intervalo de Data"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__date_to
-#, fuzzy
 msgid "Date To"
-msgstr "Datas"
+msgstr "Data Final"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_period_view_form
@@ -879,7 +880,7 @@ msgstr "De (computado)"
 #: code:addons/mis_builder/report/mis_report_instance_xlsx.py:0
 #, python-format
 msgid "Generated on %(gen_date)s at %(gen_time)s"
-msgstr ""
+msgstr "Gerado em %(gen_date)s às %(gen_time)s"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -976,6 +977,13 @@ msgid ""
 "\t- Changing the KPI to `multi` mode and giving an explicit value for each "
 "sub-KPI."
 msgstr ""
+"O KPI \"%(kpi)s\" tem o tipo %(type)s enquanto uma tupla era esperada.\n"
+"\n"
+"Isso pode ser corrigido por:\n"
+"- Alterando o valor do KPI para uma tupla de comprimento %(length)s\n"
+"ou\n"
+"- Alterar o KPI para o modo `multi` e fornecer um valor explícito para cada "
+"sub-KPI."
 
 #. module: mis_builder
 #. odoo-python
@@ -985,6 +993,8 @@ msgid ""
 "KPI \"%(kpi)s\" is valued as a tuple of length %(length)s while a tuple of "
 "length%(expected_length)s is expected."
 msgstr ""
+"O KPI \"%(kpi)s\" é avaliado como uma tupla de comprimento %(length)s "
+"enquanto uma tupla de comprimento%(expected_length)s é esperada."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq1
@@ -994,9 +1004,9 @@ msgstr "KPI sequencia"
 #. module: mis_builder
 #. odoo-python
 #: code:addons/mis_builder/models/mis_report.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "KPI name ({}) must be a valid python identifier"
-msgstr "O nome deve ser um identificador python válido"
+msgstr "O nome do KPI ({}) deve ser um identificador python válido"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__kpi_ids
@@ -1017,7 +1027,7 @@ msgstr "Kpi"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__name
 msgid "Label"
-msgstr "Campo (Rotulo)"
+msgstr "Rótulo"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__landscape_pdf
@@ -1082,14 +1092,13 @@ msgstr "Layout"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_report_mis_builder_mis_report_instance_xlsx
-#, fuzzy
 msgid "MIS Builder XLSX report"
-msgstr "Instância de Relatório XLS"
+msgstr "Construtor de Relatório SIG XLSX"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_kpi_data
 msgid "MIS Kpi Data Abtract class"
-msgstr "Classe dados Abstratos MIN Kpi"
+msgstr "Classe dados Abstratos SIG Kpi"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
@@ -1098,14 +1107,13 @@ msgstr "Relatório SIG"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subreport
-#, fuzzy
 msgid "MIS Report - Sub Reports Relation"
-msgstr "Resultado do Relatório SIG"
+msgstr "Relatório SIG - Relação de Sub-relatórios"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_add_mis_report_instance_dashboard_wizard
 msgid "MIS Report Add to Dashboard Wizard"
-msgstr "Relatório SIG Add ao Assistente de Dashboard"
+msgstr "Assistente para Adicionar Relatório SIG ao Painel"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance
@@ -1127,7 +1135,7 @@ msgstr "Soma do Período da Instância do Relatório SIG"
 #: model:ir.model,name:mis_builder.model_mis_report_kpi
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "MIS Report KPI"
-msgstr "Relatório KPI"
+msgstr "Relatório KPI SIG"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
@@ -1187,12 +1195,12 @@ msgstr "Relatórios SIG"
 #. module: mis_builder
 #: model:ir.actions.report,name:mis_builder.qweb_pdf_export
 msgid "MIS report instance QWEB PDF report"
-msgstr "Instância de Relatório QWEB PDF"
+msgstr "Instância de Relatório SIG QWEB PDF"
 
 #. module: mis_builder
 #: model:ir.actions.report,name:mis_builder.xls_export
 msgid "MIS report instance XLS report"
-msgstr "Instância de Relatório XLS"
+msgstr "Instância de Relatório SIG XLS"
 
 #. module: mis_builder
 #. odoo-python
@@ -1243,7 +1251,7 @@ msgstr "Fonte das Linhas de Movimento"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_aml_model_name
 msgid "Move lines source model name"
-msgstr "Mover nome do modelo da fonte das linhas"
+msgstr "Nome do modelo de origem das linhas de movimento"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__multi
@@ -1327,7 +1335,7 @@ msgstr "Deslocamento a partir do período atual"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum__period_id
 msgid "Parent column"
-msgstr "Coluna Pai"
+msgstr "Coluna Superior"
 
 #. module: mis_builder
 #. odoo-python
@@ -1411,9 +1419,9 @@ msgstr "Consultas"
 #. module: mis_builder
 #. odoo-python
 #: code:addons/mis_builder/models/mis_report.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Query name ({}) must be valid python identifier"
-msgstr "O nome deve ser um identificador python válido"
+msgstr "O nome da consulta ({}) deve ser um identificador python válido"
 
 #. module: mis_builder
 #. odoo-javascript
@@ -1472,7 +1480,7 @@ msgstr "Salvar"
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__widget_search_view_id
 msgid "Search view to customize the filter box in the report widget."
 msgstr ""
-"Exibição de pesquisa para personalizar a caixa de filtro no widget de "
+"Exibição de pesquisa para personalizar a caixa de filtro no assistente de "
 "relatório."
 
 #. module: mis_builder
@@ -1606,15 +1614,13 @@ msgstr "Sub KPI's"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
-#, fuzzy
 msgid "Sub Reports"
-msgstr "Relatórios SIG"
+msgstr "Sub-Relatórios"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__subreport_ids
-#, fuzzy
 msgid "Sub reports"
-msgstr "Relatórios SIG"
+msgstr "Sub relatórios"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq2
@@ -1624,9 +1630,9 @@ msgstr "Sequência do Sub-KPI"
 #. module: mis_builder
 #. odoo-python
 #: code:addons/mis_builder/models/mis_report.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Sub-KPI name ({}) must be a valid python identifier"
-msgstr "O nome deve ser um identificador python válido"
+msgstr "O nome do sub-KPI ({}) deve ser um identificador python válido"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression__subkpi_id
@@ -1635,9 +1641,8 @@ msgstr "Subkpi"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__subreport_id
-#, fuzzy
 msgid "Subreport"
-msgstr "Relatório"
+msgstr "Sub-relatório"
 
 #. module: mis_builder
 #. odoo-python
@@ -1649,15 +1654,14 @@ msgstr "Loop de sub-relatório detectado"
 #. module: mis_builder
 #. odoo-python
 #: code:addons/mis_builder/models/mis_report_subreport.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Subreport name ({}) must be a valid python identifier"
-msgstr "O nome deve ser um identificador python válido"
+msgstr "O nome do sub-relatório ({}) deve ser um identificador python válido"
 
 #. module: mis_builder
 #: model:ir.model.constraint,message:mis_builder.constraint_mis_report_subreport_name_unique
-#, fuzzy
 msgid "Subreport name should be unique by report"
-msgstr "Nome do período deve ser único por relatório"
+msgstr "O nome do sub-relatório deve ser exclusivo por relatório"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__suffix
@@ -1918,7 +1922,7 @@ msgstr "grandíssimo"
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
-msgstr "Pequeníssimo"
+msgstr "extra-pequeno"
 
 #, python-format
 #~ msgid "Columns {} and {} are not comparable"
