@@ -308,7 +308,7 @@ class KpiMatrix(object):
             if (col.subkpis or base_col.subkpis) and not common_subkpis:
                 raise UserError(
                     _(
-                        "Columns %(descr)s and %(base_descr) are not comparable",
+                        "Columns %(descr)s and %(base_descr)s are not comparable",
                         descr=col.description,
                         base_descr=base_col.description,
                     )
