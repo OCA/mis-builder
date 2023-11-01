@@ -461,6 +461,12 @@ msgid "Columns"
 msgstr "Colunas"
 
 #. module: mis_builder
+#: code:addons/mis_builder/models/kpimatrix.py:0
+#, python-format
+msgid "Columns %(descr)s and %(base_descr)s are not comparable"
+msgstr ""
+
+#. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:0
 #, python-format
 msgid "Columns to compare must belong to the same report in %s"
@@ -470,12 +476,6 @@ msgstr "Colunas para comparar devem pertencer ao mesmo relatório em %s"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__source_sumcol_ids
 msgid "Columns to sum"
 msgstr "Colunas para somar"
-
-#. module: mis_builder
-#: code:addons/mis_builder/models/kpimatrix.py:0
-#, python-format
-msgid "Columns {} and {} are not comparable"
-msgstr "Colunas {} e {} não são comparáveis"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__query_company_ids
@@ -850,8 +850,8 @@ msgstr "De (computado)"
 #. module: mis_builder
 #: code:addons/mis_builder/report/mis_report_instance_xlsx.py:0
 #, python-format
-msgid "Generated on {} at {}"
-msgstr "Gerado em {} às {}"
+msgid "Generated on %(gen_date)s at %(gen_time)s"
+msgstr ""
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -942,31 +942,22 @@ msgstr "KPI"
 #: code:addons/mis_builder/models/mis_report.py:0
 #, python-format
 msgid ""
-"KPI \"{}\" has type {} while a tuple was expected.\n"
+"KPI \"%(kpi)s\" has type %(type)s while a tuple was expected.\n"
 "\n"
 "This can be fixed by either:\n"
-"\t- Changing the KPI value to a tuple of length {}\n"
+"\t- Changing the KPI value to a tuple of length %(length)s\n"
 "or\n"
 "\t- Changing the KPI to `multi` mode and giving an explicit value for each "
 "sub-KPI."
 msgstr ""
-"KPI \"{}\" possui o tipo {} enquanto uma tupla era o esperado.\n"
-"\n"
-"Isso pode ser corrigido assim:\n"
-"\t- Alterando o valor do KPI para uma tupla de comprimento {}\n"
-"ou\n"
-"\t- Alterando o KPI para modo `multi` e dando um valor explícito para cada "
-"sub-KPI."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
 #, python-format
 msgid ""
-"KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} is "
-"expected."
+"KPI \"%(kpi)s\" is valued as a tuple of length %(length)s while a tuple of "
+"length%(expected_length)s is expected."
 msgstr ""
-"O KPI \"{}\" esta definido como uma tupla de comprimento {} enquanto uma "
-"tupla de comprimento {} era esperada."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq1
@@ -1817,6 +1808,40 @@ msgstr "grandíssimo"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "Pequeníssimo"
+
+#, python-format
+#~ msgid "Columns {} and {} are not comparable"
+#~ msgstr "Colunas {} e {} não são comparáveis"
+
+#, python-format
+#~ msgid "Generated on {} at {}"
+#~ msgstr "Gerado em {} às {}"
+
+#, python-format
+#~ msgid ""
+#~ "KPI \"{}\" has type {} while a tuple was expected.\n"
+#~ "\n"
+#~ "This can be fixed by either:\n"
+#~ "\t- Changing the KPI value to a tuple of length {}\n"
+#~ "or\n"
+#~ "\t- Changing the KPI to `multi` mode and giving an explicit value for "
+#~ "each sub-KPI."
+#~ msgstr ""
+#~ "KPI \"{}\" possui o tipo {} enquanto uma tupla era o esperado.\n"
+#~ "\n"
+#~ "Isso pode ser corrigido assim:\n"
+#~ "\t- Alterando o valor do KPI para uma tupla de comprimento {}\n"
+#~ "ou\n"
+#~ "\t- Alterando o KPI para modo `multi` e dando um valor explícito para "
+#~ "cada sub-KPI."
+
+#, python-format
+#~ msgid ""
+#~ "KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} "
+#~ "is expected."
+#~ msgstr ""
+#~ "O KPI \"{}\" esta definido como uma tupla de comprimento {} enquanto uma "
+#~ "tupla de comprimento {} era esperada."
 
 #~ msgid "Account model"
 #~ msgstr "Modelo de conta"
