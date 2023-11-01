@@ -307,8 +307,8 @@ msgid ""
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
 msgstr ""
-"Dados reais: dados atuais, provenientes de contabilidade e outras consultas."
-"\n"
+"Dados reais: dados atuais, provenientes de contabilidade e outras "
+"consultas.\n"
 "Dados reais (alternativo): dados atuais de uma fonte alternativa (por "
 "exemplo, uma visualização de banco de dados que fornece linhas de "
 "movimentação de conta semelhantes).\n"
@@ -318,7 +318,8 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_prorata_read_group_mixin
 msgid "Adapt model with date_from/date_to for pro-rata temporis read_group"
-msgstr "Adapte o modelo com date_from/date_to para read_group pro-rata temporis"
+msgstr ""
+"Adapte o modelo com date_from/date_to para read_group pro-rata temporis"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.mis_report_instance_add_to_dashboard_action
@@ -482,8 +483,8 @@ msgstr "Colunas"
 #. odoo-python
 #: code:addons/mis_builder/models/kpimatrix.py:0
 #, python-format
-msgid "Columns %(descr)s and %(base_descr) are not comparable"
-msgstr "As colunas %(descr)s e %(base_descr) não são comparáveis"
+msgid "Columns %(descr)s and %(base_descr)s are not comparable"
+msgstr ""
 
 #. module: mis_builder
 #. odoo-python
@@ -1923,6 +1924,10 @@ msgstr "grandíssimo"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "extra-pequeno"
+
+#, python-format
+#~ msgid "Columns %(descr)s and %(base_descr) are not comparable"
+#~ msgstr "As colunas %(descr)s e %(base_descr) não são comparáveis"
 
 #, python-format
 #~ msgid "Columns {} and {} are not comparable"

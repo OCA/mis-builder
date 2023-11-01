@@ -410,7 +410,7 @@ msgstr "Kolommen"
 #. odoo-python
 #: code:addons/mis_builder/models/kpimatrix.py:0
 #, python-format
-msgid "Columns %(descr)s and %(base_descr) are not comparable"
+msgid "Columns %(descr)s and %(base_descr)s are not comparable"
 msgstr ""
 
 #. module: mis_builder
