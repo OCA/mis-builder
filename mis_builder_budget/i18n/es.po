@@ -70,9 +70,9 @@ msgid ""
 msgstr ""
 "Actuales: datos actuales, procedentes de la contabilidad y de otras "
 "consultas.\n"
-"Reales (alternativos): datos actuales procedentes de una fuente alternativa ("
-"por ejemplo, una vista de base de datos que proporcione líneas de movimiento "
-"de cuentas similares).\n"
+"Reales (alternativos): datos actuales procedentes de una fuente alternativa "
+"(por ejemplo, una vista de base de datos que proporcione líneas de "
+"movimiento de cuentas similares).\n"
 "Suma de columnas: suma (+/-) de otras columnas.\n"
 "Comparar con columna: comparar con otra columna.\n"
 
@@ -321,11 +321,8 @@ msgstr ""
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
 #: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_error
-#: model:ir.model.fields,help:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensajes tienen un error en la entrega."
 
@@ -526,13 +523,6 @@ msgid "Number of unread messages"
 msgstr "Número de mensajes no leídos"
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_has_sms_error
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "SMS de error en la entrega"
-
-#. module: mis_builder_budget
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_by_account_form_view
 #: model_terms:ir.ui.view,arch_db:mis_builder_budget.mis_budget_form_view
 msgid "Set draft"
@@ -614,6 +604,9 @@ msgid ""
 msgstr ""
 "¡Valor de crédito o débito incorrecto en la partida presupuestaria! El "
 "crédito o débito debe ser cero."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "SMS de error en la entrega"
 
 #, python-format
 #~ msgid "%s is not within budget %s date range."
