@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-13 15:37+0000\n"
-"PO-Revision-Date: 2023-11-03 18:39+0000\n"
+"PO-Revision-Date: 2023-11-03 21:38+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -895,7 +895,7 @@ msgstr "De (calculado)"
 #: code:addons/mis_builder/report/mis_report_instance_xlsx.py:0
 #, python-format
 msgid "Generated on %(gen_date)s at %(gen_time)s"
-msgstr ""
+msgstr "Generado el %(gen_date)s a las %(gen_time)s"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -992,6 +992,13 @@ msgid ""
 "\t- Changing the KPI to `multi` mode and giving an explicit value for each "
 "sub-KPI."
 msgstr ""
+"KPI \"%(kpi)s\" tiene tipo %(type)s mientras que se esperaba una tupla.\n"
+"\n"
+"Esto puede solucionarse\n"
+"\t- Cambiando el valor del KPI a una tupla de longitud %(length)s\n"
+"o\n"
+"\t- Cambiando el KPI al modo `multi` y dando un valor explícito para cada "
+"sub-KPI."
 
 #. module: mis_builder
 #. odoo-python
@@ -1001,6 +1008,8 @@ msgid ""
 "KPI \"%(kpi)s\" is valued as a tuple of length %(length)s while a tuple of "
 "length%(expected_length)s is expected."
 msgstr ""
+"El KPI \"%(kpi)s\" se valora como una tupla de longitud %(length)s mientras "
+"que se espera una tupla de longitud%(expected_length)s."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq1
