@@ -18,7 +18,7 @@
         "data/mis_budget.xml",
         "data/mis_report_instance.xml",
     ],
-    "installable": True,
+    "installable": False,
     "maintainers": ["sbidoul"],
     "development_status": "Alpha",
 }
