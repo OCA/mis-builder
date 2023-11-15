@@ -127,7 +127,7 @@ class TestPeriodDates(common.TransactionCase):
                     name="%d" % year,
                     date_start="%d-01-01" % year,
                     date_end="%d-12-31" % year,
-                    company_id=False,
+                    company_id=date_range_type.company_id.id,
                 )
             )
         self.instance.write(dict(comparison_mode=True, date="2017-06-15"))
