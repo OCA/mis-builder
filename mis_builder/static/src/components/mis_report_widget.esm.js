@@ -3,6 +3,7 @@
 import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {DatePicker} from "@web/core/datepicker/datepicker";
+import {Domain} from "@web/core/domain";
 import {FilterMenu} from "@web/search/filter_menu/filter_menu";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
@@ -104,11 +105,16 @@ export class MisReportWidget extends Component {
     }
 
     get context() {
-        var ctx = super.context;
-        if (this.showSearchBar) {
+        let ctx = this.props.record.context;
+        if (this.showSearchBar && this.searchModel.searchDomain) {
             ctx = {
                 ...ctx,
-                mis_analytic_domain: this.searchModel.searchDomain,
+                mis_analytic_domain: Domain.and([
+                    new Domain(
+                        this.props.record.context.mis_analytic_domain || Domain.TRUE
+                    ),
+                    new Domain(this.searchModel.searchDomain),
+                ]).toList(),
             };
         }
         if (this.showPivotDate && this.state.pivot_date) {
