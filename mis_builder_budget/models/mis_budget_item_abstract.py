@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class MisBudgetItemAbstract(models.AbstractModel):
-
     _name = "mis.budget.item.abstract"
     _description = "MIS Budget Item (Abstract Base Class)"
 

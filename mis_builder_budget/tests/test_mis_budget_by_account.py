@@ -28,7 +28,7 @@ class TestMisBudgetByAccount(TransactionCase):
                 report_id=cls.report.id,
                 name="k1",
                 description="kpi 1",
-                expression="balp[('id', '=', {})]".format(account.id),
+                expression=f"balp[('id', '=', {account.id})]",
             )
         )
         # budget

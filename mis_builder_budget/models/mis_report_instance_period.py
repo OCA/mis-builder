@@ -8,7 +8,6 @@ SRC_MIS_BUDGET_BY_ACCOUNT = "mis_budget_by_account"
 
 
 class MisReportInstancePeriod(models.Model):
-
     _inherit = "mis.report.instance.period"
 
     source = fields.Selection(

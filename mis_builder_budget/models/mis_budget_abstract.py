@@ -5,7 +5,6 @@ from odoo import _, api, fields, models
 
 
 class MisBudgetAbstract(models.AbstractModel):
-
     _name = "mis.budget.abstract"
     _description = "MIS Budget (Abstract Base Class)"
     _inherit = ["mail.thread"]

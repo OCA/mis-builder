@@ -48,7 +48,6 @@ CMP_NONE = "none"
 
 
 class MisReportKpiStyle(models.Model):
-
     _name = "mis.report.style"
     _description = "MIS Report Style"
 
@@ -280,9 +279,9 @@ class MisReportKpiStyle(models.Model):
                 num_format += "."
                 num_format += "0" * props.dp
             if props.prefix:
-                num_format = '"{} "{}'.format(props.prefix, num_format)
+                num_format = f'"{props.prefix} "{num_format}'
             if props.suffix:
-                num_format = '{}" {}"'.format(num_format, props.suffix)
+                num_format = f'{num_format}" {props.suffix}"'
             xlsx_attributes.append(("num_format", num_format))
         elif var_type == TYPE_PCT:
             num_format = "0"
@@ -305,8 +304,8 @@ class MisReportKpiStyle(models.Model):
             ("background-color", props.background_color),
         ]
         if props.indent_level is not None and not no_indent:
-            css_attributes.append(("text-indent", "{}em".format(props.indent_level)))
+            css_attributes.append(("text-indent", f"{props.indent_level}em"))
         return (
-            "; ".join(["%s: %s" % a for a in css_attributes if a[1] is not None])
+            "; ".join(["{}: {}".format(*a) for a in css_attributes if a[1] is not None])
             or None
         )

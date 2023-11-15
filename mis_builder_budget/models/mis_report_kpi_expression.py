@@ -5,7 +5,6 @@ from odoo import api, models
 
 
 class MisReportKpiExpression(models.Model):
-
     _inherit = "mis.report.kpi.expression"
 
     @api.model
