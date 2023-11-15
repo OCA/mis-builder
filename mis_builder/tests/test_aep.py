@@ -10,7 +10,8 @@ from odoo.exceptions import UserError
 from odoo.tools.safe_eval import safe_eval
 
 from ..models.accounting_none import AccountingNone
-from ..models.aep import AccountingExpressionProcessor as AEP, _is_domain
+from ..models.aep import AccountingExpressionProcessor as AEP
+from ..models.aep import _is_domain
 
 
 class TestAEP(common.TransactionCase):

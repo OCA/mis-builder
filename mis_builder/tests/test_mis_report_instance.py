@@ -391,7 +391,7 @@ class TestMisReportInstance(common.HttpCase):
         for row in matrix.iter_rows():
             if row.account_id:
                 account = self.env["account.account"].browse(row.account_id)
-                self.assertEqual(row.label, "{} {}".format(account.code, account.name))
+                self.assertEqual(row.label, f"{account.code} {account.name}")
 
     def test_evaluate(self):
         company = self.env.ref("base.main_company")
@@ -444,10 +444,7 @@ class TestMisReportInstance(common.HttpCase):
             "kpi_id": self.kpi1.id,
         }
         action_name = self.report_instance._get_drilldown_action_name(args)
-        expected_name = "{kpi} - {period}".format(
-            kpi=self.kpi1.description,
-            period=period.display_name,
-        )
+        expected_name = f"{self.kpi1.description} - {period.display_name}"
         assert action_name == expected_name
 
     def test_qweb(self):

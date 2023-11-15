@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class MisBudgetItem(models.Model):
-
     _inherit = ["mis.budget.item.abstract", "mis.kpi.data"]
     _name = "mis.budget.item"
     _description = "MIS Budget Item (by KPI)"

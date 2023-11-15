@@ -27,7 +27,6 @@ class MisBuilderXlsx(models.AbstractModel):
     _inherit = "report.report_xlsx.abstract"
 
     def generate_xlsx_report(self, workbook, data, objects):
-
         # get the computed result of the report
         matrix = objects._compute_matrix()
         style_obj = self.env["mis.report.style"]

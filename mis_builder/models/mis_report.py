@@ -16,8 +16,14 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.models import expression as osv_expression
 from odoo.tools.safe_eval import (
     datetime as safe_datetime,
+)
+from odoo.tools.safe_eval import (
     dateutil as safe_dateutil,
+)
+from odoo.tools.safe_eval import (
     safe_eval,
+)
+from odoo.tools.safe_eval import (
     time as safe_time,
 )
 
@@ -42,7 +48,7 @@ class SubKPIUnknownTypeError(UserError):
     pass
 
 
-class AutoStruct(object):
+class AutoStruct:
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -144,7 +150,7 @@ class MisReportKpi(models.Model):
     def name_get(self):
         res = []
         for rec in self:
-            name = "{} ({})".format(rec.description, rec.name)
+            name = f"{rec.description} ({rec.name})"
             res.append((rec.id, name))
         return res
 
@@ -171,9 +177,7 @@ class MisReportKpi(models.Model):
             for expression in kpi.expression_ids:
                 if expression.subkpi_id:
                     exprs.append(
-                        "{}\xa0=\xa0{}".format(
-                            expression.subkpi_id.name, expression.name
-                        )
+                        f"{expression.subkpi_id.name}\xa0=\xa0{expression.name}"
                     )
                 else:
                     exprs.append(expression.name or "AccountingNone")
@@ -671,7 +675,7 @@ class MisReport(models.Model):
             subkpis = self.subkpi_ids
 
         SimpleArray_cls = named_simple_array(
-            "SimpleArray_{}".format(col_key), [subkpi.name for subkpi in subkpis]
+            f"SimpleArray_{col_key}", [subkpi.name for subkpi in subkpis]
         )
         locals_dict["SimpleArray"] = SimpleArray_cls
 
