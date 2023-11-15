@@ -101,7 +101,7 @@ True
 __all__ = ["AccountingNone"]
 
 
-class AccountingNoneType(object):
+class AccountingNoneType:
     def __add__(self, other):
         if other is None:
             return AccountingNone

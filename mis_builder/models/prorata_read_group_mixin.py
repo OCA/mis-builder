@@ -51,7 +51,7 @@ class ProRataReadGroupMixin(models.AbstractModel):
         date_to = None
         assert isinstance(domain, list)
         for domain_item in domain:
-            if isinstance(domain_item, (list, tuple)):
+            if isinstance(domain_item, list | tuple):
                 field, op, value = domain_item
                 if field == "date" and op == ">=":
                     date_from = value

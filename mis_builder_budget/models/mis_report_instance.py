@@ -48,11 +48,9 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
 
 
 class MisReportInstance(models.Model):
-
     _inherit = "mis.report.instance"
 
     def _add_column_mis_budget(self, aep, kpi_matrix, period, label, description):
-
         # fetch budget data for the period
         base_domain = AND(
             [

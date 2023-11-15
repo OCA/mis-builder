@@ -15,7 +15,7 @@ from .simple_array import SimpleArray
 _logger = logging.getLogger(__name__)
 
 
-class KpiMatrixRow(object):
+class KpiMatrixRow:
     # TODO: ultimately, the kpi matrix will become ignorant of KPI's and
     #       accounts and know about rows, columns, sub columns and styles only.
     #       It is already ignorant of period and only knowns about columns.
@@ -48,7 +48,7 @@ class KpiMatrixRow(object):
         if not self.account_id:
             return self.kpi.name
         else:
-            return "{}:{}".format(self.kpi.name, self.account_id)
+            return f"{self.kpi.name}:{self.account_id}"
 
     def iter_cell_tuples(self, cols=None):
         if cols is None:
@@ -69,7 +69,7 @@ class KpiMatrixRow(object):
         return True
 
 
-class KpiMatrixCol(object):
+class KpiMatrixCol:
     def __init__(self, key, label, description, locals_dict, subkpis):
         self.key = key
         self.label = label
@@ -100,7 +100,7 @@ class KpiMatrixCol(object):
         return self._cell_tuples_by_row.get(row)
 
 
-class KpiMatrixSubCol(object):
+class KpiMatrixSubCol:
     def __init__(self, col, label, description, index=0):
         self.col = col
         self.label = label
@@ -123,7 +123,7 @@ class KpiMatrixSubCol(object):
         return cell_tuple[self.index]
 
 
-class KpiMatrixCell(object):  # noqa: B903 (immutable data class)
+class KpiMatrixCell:  # noqa: B903 (immutable data class)
     def __init__(
         self,
         row,
@@ -145,7 +145,7 @@ class KpiMatrixCell(object):  # noqa: B903 (immutable data class)
         self.val_type = val_type
 
 
-class KpiMatrix(object):
+class KpiMatrix:
     def __init__(self, env, multi_company=False, account_model="account.account"):
         # cache language id for faster rendering
         lang_model = env["res.lang"]
@@ -234,7 +234,9 @@ class KpiMatrix(object):
         cell_tuple = []
         assert len(vals) == col.colspan
         assert len(drilldown_args) == col.colspan
-        for val, drilldown_arg, subcol in zip(vals, drilldown_args, col.iter_subcols()):
+        for val, drilldown_arg, subcol in zip(
+            vals, drilldown_args, col.iter_subcols(), strict=True
+        ):
             if isinstance(val, DataError):
                 val_rendered = val.name
                 val_comment = val.msg
@@ -249,7 +251,7 @@ class KpiMatrix(object):
                         row.kpi._get_expression_str_for_subkpi(subcol.subkpi),
                     )
                 else:
-                    val_comment = "{} = {}".format(row.kpi.name, row.kpi.expression)
+                    val_comment = f"{row.kpi.name} = {row.kpi.expression}"
             cell_style_props = row.style_props
             if row.kpi.style_expression:
                 # evaluate style expression
@@ -314,7 +316,7 @@ class KpiMatrix(object):
                     )
                 )
             if not label:
-                label = "{} vs {}".format(col.label, base_col.label)
+                label = f"{col.label} vs {base_col.label}"
             comparison_col = KpiMatrixCol(
                 cmpcol_key,
                 label,
@@ -346,7 +348,10 @@ class KpiMatrix(object):
                     ]
                 comparison_cell_tuple = []
                 for val, base_val, comparison_subcol in zip(
-                    vals, base_vals, comparison_col.iter_subcols()
+                    vals,
+                    base_vals,
+                    comparison_col.iter_subcols(),
+                    strict=True,
                 ):
                     # TODO FIXME average factors
                     comparison = self._style_model.compare_and_render(
@@ -442,8 +447,7 @@ class KpiMatrix(object):
             yield kpi_row
             detail_rows = self._detail_rows[kpi_row.kpi].values()
             detail_rows = sorted(detail_rows, key=lambda r: r.label)
-            for detail_row in detail_rows:
-                yield detail_row
+            yield from detail_rows
 
     def iter_cols(self):
         """Iterate columns in display order.
@@ -460,8 +464,7 @@ class KpiMatrix(object):
         and comparison.
         """
         for col in self.iter_cols():
-            for subcol in col.iter_subcols():
-                yield subcol
+            yield from col.iter_subcols()
 
     def _load_account_names(self):
         account_ids = set()
@@ -471,9 +474,9 @@ class KpiMatrix(object):
         self._account_names = {a.id: self._get_account_name(a) for a in accounts}
 
     def _get_account_name(self, account):
-        result = "{} {}".format(account.code, account.name)
+        result = f"{account.code} {account.name}"
         if self._multi_company:
-            result = "{} [{}]".format(result, account.company_id.name)
+            result = f"{result} [{account.company_id.name}]"
         return result
 
     def get_account_name(self, account_id):

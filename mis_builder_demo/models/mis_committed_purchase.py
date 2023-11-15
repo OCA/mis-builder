@@ -1,13 +1,13 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from os.path import dirname, join as opj
+from os.path import dirname
+from os.path import join as opj
 
 from odoo import fields, models, tools
 
 
 class MisCommittedPurchase(models.Model):
-
     _name = "mis.committed.purchase"
     _description = "MIS Commitment"
     _auto = False

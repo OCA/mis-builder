@@ -23,7 +23,7 @@ def _is_domain(s):
     return _DOMAIN_START_RE.match(s)
 
 
-class AccountingExpressionProcessor(object):
+class AccountingExpressionProcessor:
     """Processor for accounting expressions.
 
     Expressions of the form <field><mode>[accounts][optional move line domain]
@@ -480,7 +480,7 @@ class AccountingExpressionProcessor(object):
 
     @classmethod
     def _get_balances(cls, mode, companies, date_from, date_to):
-        expr = "deb{mode}[], crd{mode}[]".format(mode=mode)
+        expr = f"deb{mode}[], crd{mode}[]"
         aep = AccountingExpressionProcessor(companies)
         # disable smart_end to have the data at once, instead
         # of initial + variation
@@ -543,4 +543,4 @@ class AccountingExpressionProcessor(object):
         # TODO shoud we include here the accounts of type "unaffected"
         # or leave that to the caller?
         bals = cls._get_balances(cls.MODE_UNALLOCATED, companies, date, date)
-        return tuple(map(sum, zip(*bals.values())))
+        return tuple(map(sum, zip(*bals.values(), strict=True)))

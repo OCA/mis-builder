@@ -36,7 +36,6 @@ class DateFilterForbidden(ValidationError):
 
 
 class MisReportInstancePeriodSum(models.Model):
-
     _name = "mis.report.instance.period.sum"
     _description = "MIS Report Instance Period Sum"
 
@@ -918,13 +917,6 @@ class MisReportInstance(models.Model):
 
         if account_id:
             account = self.env[self.report_id.account_model].browse(account_id)
-            return "{kpi} - {account} - {period}".format(
-                kpi=kpi.description,
-                account=account.display_name,
-                period=period.display_name,
-            )
+            return f"{kpi.description} - {account.display_name} - {period.display_name}"
         else:
-            return "{kpi} - {period}".format(
-                kpi=kpi.description,
-                period=period.display_name,
-            )
+            return f"{kpi.description} - {period.display_name}"

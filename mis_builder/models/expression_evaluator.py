@@ -4,7 +4,7 @@
 from .mis_safe_eval import NameDataError, mis_safe_eval
 
 
-class ExpressionEvaluator(object):
+class ExpressionEvaluator:
     def __init__(
         self,
         aep,
@@ -58,7 +58,7 @@ class ExpressionEvaluator(object):
             vals = []
             drilldown_args = []
             name_error = False
-            for expr, replaced_expr in zip(exprs, replaced_exprs):
+            for expr, replaced_expr in zip(exprs, replaced_exprs, strict=True):
                 val = mis_safe_eval(replaced_expr, locals_dict)
                 vals.append(val)
                 if replaced_expr != expr:

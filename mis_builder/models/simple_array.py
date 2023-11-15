@@ -159,7 +159,7 @@ class SimpleArray(tuple):
         return self._cast(other)._op(operator.truediv, self)
 
     def __repr__(self):
-        return "{}({})".format(self.__class__.__name__, tuple.__repr__(self))
+        return f"{self.__class__.__name__}({tuple.__repr__(self)})"
 
 
 def named_simple_array(typename, field_names):
