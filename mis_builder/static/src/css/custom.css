@@ -27,3 +27,8 @@
 .oe_mis_builder_analytic_filter_box {
     padding-bottom: 10px;
 }
+
+.o_web_client .mis_builder thead {
+    position: sticky;
+    top: 0px;
+}
