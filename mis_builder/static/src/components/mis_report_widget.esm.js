@@ -9,6 +9,7 @@ import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
 import {parseDate} from "@web/core/l10n/dates";
 import {registry} from "@web/core/registry";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class MisReportWidget extends Component {
     setup() {
@@ -69,6 +70,10 @@ export class MisReportWidget extends Component {
         this.refresh();
     }
 
+    get misAnalyticDomainContextKey() {
+        return "mis_analytic_domain";
+    }
+
     get showSearchBar() {
         return (
             this.source_aml_model_name &&
@@ -106,16 +111,12 @@ export class MisReportWidget extends Component {
 
     get context() {
         let ctx = this.props.record.context;
+        this.setMisAnalyticDomainContextKey(ctx);
         if (this.showSearchBar && this.searchModel.searchDomain) {
-            ctx = {
-                ...ctx,
-                mis_analytic_domain: Domain.and([
-                    new Domain(
-                        this.props.record.context.mis_analytic_domain || Domain.TRUE
-                    ),
-                    new Domain(this.searchModel.searchDomain),
-                ]).toList(),
-            };
+            ctx[this.misAnalyticDomainContextKey] = Domain.and([
+                ctx[this.misAnalyticDomainContextKey],
+                new Domain(this.searchModel.searchDomain),
+            ]).toList();
         }
         if (this.showPivotDate && this.state.pivot_date) {
             ctx = {
@@ -144,6 +145,36 @@ export class MisReportWidget extends Component {
             [this._instanceId()],
             {context: this.context}
         );
+    }
+
+    setMisAnalyticDomainContextKey(context) {
+        if (
+            this.props.analytic_account_id_field &&
+            !(this.misAnalyticDomainContextKey in context)
+        ) {
+            let analyticAccountId = false;
+            const analyticAccountIdFieldType =
+                this.props.record.fields[this.props.analytic_account_id_field].type;
+            switch (analyticAccountIdFieldType) {
+                case "many2one":
+                    analyticAccountId =
+                        this.props.record.data[this.props.analytic_account_id_field][0];
+                    break;
+                case "integer":
+                    analyticAccountId =
+                        this.props.record.data[this.props.analytic_account_id_field];
+                    break;
+                default:
+                    throw new Error(
+                        ```Unsupported field type for analytic_account_id: ${analyticAccountIdFieldType}```
+                    );
+            }
+            if (analyticAccountId) {
+                context[this.misAnalyticDomainContextKey] = [
+                    ["analytic_account_id", "=", analyticAccountId],
+                ];
+            }
+        }
     }
 
     async printPdf() {
@@ -184,5 +215,15 @@ export class MisReportWidget extends Component {
 
 MisReportWidget.components = {FilterMenu, SearchBar, DatePicker};
 MisReportWidget.template = "mis_builder.MisReportWidget";
+MisReportWidget.props = {
+    ...standardFieldProps,
+    analyticAccountIdField: {
+        type: String,
+        optional: true,
+    },
+};
+MisReportWidget.extractProps = ({attrs}) => ({
+    analyticAccountIdField: attrs.analytic_account_id_field,
+});
 
 registry.category("fields").add("mis_report_widget", MisReportWidget);
