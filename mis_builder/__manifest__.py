@@ -29,6 +29,7 @@
     ],
     "assets": {
         "web.assets_backend": [
+            "mis_builder/static/src/components/search_model.esm.js",
             "mis_builder/static/src/components/mis_report_widget.esm.js",
             "mis_builder/static/src/components/mis_report_widget.xml",
             "mis_builder/static/src/components/mis_report_widget.css",

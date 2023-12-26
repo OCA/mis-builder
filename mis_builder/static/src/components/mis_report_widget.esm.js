@@ -3,10 +3,9 @@
 import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {DatePicker} from "@web/core/datepicker/datepicker";
-import {Domain} from "@web/core/domain";
 import {FilterMenu} from "@web/search/filter_menu/filter_menu";
+import {MisReportSearchModel} from "@mis_builder/components/search_model.esm";
 import {SearchBar} from "@web/search/search_bar/search_bar";
-import {SearchModel} from "@web/search/search_model";
 import {parseDate} from "@web/core/l10n/dates";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
@@ -23,7 +22,7 @@ export class MisReportWidget extends Component {
             mis_report_data: {header: [], body: []},
             pivot_date: null,
         });
-        this.searchModel = new SearchModel(this.env, {
+        this.searchModel = new MisReportSearchModel(this.env, {
             user: this.user,
             orm: this.orm,
             view: this.view,
@@ -63,6 +62,7 @@ export class MisReportWidget extends Component {
             await this.searchModel.load({
                 resModel: this.source_aml_model_name,
                 searchViewId: this.widget_search_view_id,
+                analyticAccountId: this.analyticAccountId,
             });
         }
 
@@ -111,12 +111,10 @@ export class MisReportWidget extends Component {
 
     get context() {
         let ctx = this.props.record.context;
-        this.setMisAnalyticDomainContextKey(ctx);
         if (this.showSearchBar && this.searchModel.searchDomain) {
-            ctx[this.misAnalyticDomainContextKey] = Domain.and([
-                ctx[this.misAnalyticDomainContextKey],
-                new Domain(this.searchModel.searchDomain),
-            ]).toList();
+            ctx[this.misAnalyticDomainContextKey] = this.searchModel.searchDomain;
+        } else {
+            this._setMisAnalyticDomainContextKey(ctx);
         }
         if (this.showPivotDate && this.state.pivot_date) {
             ctx = {
@@ -147,34 +145,47 @@ export class MisReportWidget extends Component {
         );
     }
 
-    setMisAnalyticDomainContextKey(context) {
+    get analyticAccountId() {
+        let analyticAccountId = this._getAnalyticAccountIdFromData();
         if (
-            this.props.analytic_account_id_field &&
-            !(this.misAnalyticDomainContextKey in context)
+            !analyticAccountId &&
+            this.props.record.context &&
+            this.props.record.context.mis_analytic_domain
         ) {
-            let analyticAccountId = false;
-            const analyticAccountIdFieldType =
-                this.props.record.fields[this.props.analytic_account_id_field].type;
-            switch (analyticAccountIdFieldType) {
-                case "many2one":
-                    analyticAccountId =
-                        this.props.record.data[this.props.analytic_account_id_field][0];
-                    break;
-                case "integer":
-                    analyticAccountId =
-                        this.props.record.data[this.props.analytic_account_id_field];
-                    break;
-                default:
-                    throw new Error(
-                        ```Unsupported field type for analytic_account_id: ${analyticAccountIdFieldType}```
-                    );
-            }
-            if (analyticAccountId) {
-                context[this.misAnalyticDomainContextKey] = [
-                    ["analytic_account_id", "=", analyticAccountId],
-                ];
-            }
+            analyticAccountId = this.props.record.context.mis_analytic_domain[0][2];
         }
+        return analyticAccountId;
+    }
+
+    _getAnalyticAccountIdFromData() {
+        if (
+            !this.props.analyticAccountIdField ||
+            !(this.props.analyticAccountIdField in this.props.record.fields)
+        ) {
+            return false;
+        }
+        const analyticAccountIdFieldType =
+            this.props.record.fields[this.props.analyticAccountIdField].type;
+        switch (analyticAccountIdFieldType) {
+            case "many2one":
+                return this.props.record.data[this.props.analyticAccountIdField][0];
+            case "integer":
+                return this.props.record.data[this.props.analyticAccountIdField];
+            default:
+                throw new Error(
+                    ```Unsupported field type for analytic_account_id: ${analyticAccountIdFieldType}```
+                );
+        }
+    }
+
+    _setMisAnalyticDomainContextKey(context) {
+        const analyticAccountId = this._getAnalyticAccountIdFromData();
+        if (!analyticAccountId) {
+            return;
+        }
+        context[this.misAnalyticDomainContextKey] = [
+            ["analytic_account_id", "=", analyticAccountId],
+        ];
     }
 
     async printPdf() {
