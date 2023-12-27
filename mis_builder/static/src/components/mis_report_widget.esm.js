@@ -9,6 +9,7 @@ import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
 import {parseDate} from "@web/core/l10n/dates";
 import {registry} from "@web/core/registry";
+import {useSetupAction} from "@web/webclient/actions/action_hook";
 
 export class MisReportWidget extends Component {
     setup() {
@@ -33,6 +34,18 @@ export class MisReportWidget extends Component {
             this.refresh();
         });
         onWillStart(this.willStart);
+        useSetupAction({
+            getGlobalState: () => {
+                if (!this.showSearchBar) {
+                    return {};
+                }
+                return {
+                    misReportSearchModelState: JSON.stringify(
+                        this.searchModel.exportState()
+                    ),
+                };
+            },
+        });
     }
 
     // Lifecycle
@@ -59,10 +72,14 @@ export class MisReportWidget extends Component {
         this.widget_show_pivot_date = result.widget_show_pivot_date;
         if (this.showSearchBar) {
             // Initialize the search model
-            await this.searchModel.load({
+            const config = {
                 resModel: this.source_aml_model_name,
                 searchViewId: this.widget_search_view_id,
-            });
+            };
+            if (this.env.misReportSearchModelState) {
+                config.state = JSON.parse(this.env.misReportSearchModelState);
+            }
+            await this.searchModel.load(config);
         }
 
         // Compute the report
