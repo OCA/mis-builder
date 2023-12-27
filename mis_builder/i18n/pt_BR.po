@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-10-30 21:38+0000\n"
+"PO-Revision-Date: 2023-12-27 15:37+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -484,7 +484,7 @@ msgstr "Colunas"
 #: code:addons/mis_builder/models/kpimatrix.py:0
 #, python-format
 msgid "Columns %(descr)s and %(base_descr)s are not comparable"
-msgstr ""
+msgstr "As colunas %(descr)se %(base_descr)s não são comparáveis"
 
 #. module: mis_builder
 #. odoo-python
