@@ -7,9 +7,12 @@ import {Domain} from "@web/core/domain";
 import {FilterMenu} from "@web/search/filter_menu/filter_menu";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
+import {evaluateExpr} from "@web/core/py_js/py";
 import {parseDate} from "@web/core/l10n/dates";
 import {registry} from "@web/core/registry";
 import {useSetupAction} from "@web/webclient/actions/action_hook";
+
+const misAnalyticDomainKey = "mis_analytic_domain";
 
 export class MisReportWidget extends Component {
     setup() {
@@ -121,15 +124,73 @@ export class MisReportWidget extends Component {
         }
     }
 
+    /**
+     * Get the record data in a form that is usable for the domain eval. All the
+     * `many2one` values are returned as id instead of a list (id, value).
+     *
+     * @returns {Object}
+     * @private
+     */
+    _getRecordDataForDomainResolution() {
+        const recordData = {};
+        for (const [fieldName, value] of Object.entries(this.props.record.data)) {
+            if (this.props.record.fields[fieldName].type !== "one2many") {
+                if (this.props.record.fields[fieldName].type === "many2one") {
+                    recordData[fieldName] = value[0];
+                    continue;
+                }
+                recordData[fieldName] = value;
+            }
+        }
+        return recordData;
+    }
+
+    /**
+     * The domain built from both the context that is passed through the action
+     * and the one that is set on the field in the view. The last one being evaluated
+     * against the context populated with a self property populated with the record data.
+     *
+     * @returns {Domain}
+     */
+    get miscAnalyticDomain() {
+        let domain = Domain.TRUE;
+        // Get the domain that is set on the action
+        const recordContext = this.props.record.context;
+        if (misAnalyticDomainKey in recordContext) {
+            const recordDomain = new Domain(recordContext[misAnalyticDomainKey]);
+            domain = Domain.and([domain, recordDomain]);
+        }
+        // Get the domain that is set on the field and evaluate it with both the context
+        // and the record data mounted on a self property.
+        if ("context" in this.props.record.activeFields[this.props.name]) {
+            const contextAttr = this.props.record.activeFields[this.props.name].context;
+            const evaluation_context = {
+                ...recordContext,
+                self: this._getRecordDataForDomainResolution(),
+            };
+            const fieldContext = evaluateExpr(contextAttr, evaluation_context);
+            if (misAnalyticDomainKey in fieldContext) {
+                const fieldDomain = new Domain(fieldContext[misAnalyticDomainKey]);
+                domain = Domain.and([domain, fieldDomain]);
+            }
+        }
+        return domain;
+    }
+
     get context() {
         let ctx = this.props.record.context;
+        const misAnalyticDomain = this.miscAnalyticDomain;
+        if (misAnalyticDomain !== Domain.TRUE) {
+            ctx = {
+                ...ctx,
+                [misAnalyticDomainKey]: misAnalyticDomain.toList(),
+            };
+        }
         if (this.showSearchBar && this.searchModel.searchDomain) {
             ctx = {
                 ...ctx,
-                mis_analytic_domain: Domain.and([
-                    new Domain(
-                        this.props.record.context.mis_analytic_domain || Domain.TRUE
-                    ),
+                [misAnalyticDomainKey]: Domain.and([
+                    new Domain(ctx[misAnalyticDomainKey] || Domain.TRUE),
                     new Domain(this.searchModel.searchDomain),
                 ]).toList(),
             };
