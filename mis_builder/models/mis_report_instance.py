@@ -330,9 +330,11 @@ class MisReportInstancePeriod(models.Model):
     def _check_source_aml_model_id(self):
         for record in self:
             if record.source_aml_model_id:
-                record_model = record.source_aml_model_id.field_id.filtered(
-                    lambda r: r.name == "account_id"
-                ).relation
+                record_model = (
+                    record.source_aml_model_id.sudo()
+                    .field_id.filtered(lambda r: r.name == "account_id")
+                    .relation
+                )
                 report_account_model = record.report_id.account_model
                 if record_model != report_account_model:
                     raise ValidationError(
