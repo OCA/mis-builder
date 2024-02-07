@@ -6,7 +6,7 @@ guidelines.
 Before coding, it is recommended to create an issue to discuss the problem or feature
 you want to add. If you did not, don't worry, we can discuss on the PR too.
 
-If there is a pre-existing issue that your PR implements or fixes, add a pointer to it
+If there is a pre-existing issue that your PR implements or fixes, add a link to it
 in the PR description.
 
 If your PR is simple enough that it does not require a preliminary discussion, then make
@@ -20,13 +20,13 @@ PR.
 
 ## Target branch
 
-MIS Builder is actively maintained for Odoo versions 9, 10, 11 and 12.
+MIS Builder is actively maintained for Odoo versions 14+.
 
 If your feature is applicable with the same implementation to all these versions, please
-target branch 10.0. Maintainers will port it to 9, 11 and 12 soon after merging.
+condider targeting branch 14.0.
 
-In the rare cases your feature or implementation is specific to an Odoo version, then
-target the corresponding branch.
+If your feature or implementation is specific to an Odoo version, then target the
+corresponding branch.
 
 ## CLA
 
