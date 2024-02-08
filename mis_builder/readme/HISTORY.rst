@@ -1,3 +1,11 @@
+14.0.4.2.2 (2024-02-08)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Resolve a permission issue when creating report periods with a user without admin rights. (`#596 <https://github.com/OCA/mis-builder/issues/596>`_)
+
+
 14.0.4.1.2 (2023-01-27)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
