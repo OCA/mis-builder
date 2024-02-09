@@ -543,4 +543,4 @@ class AccountingExpressionProcessor:
         # TODO shoud we include here the accounts of type "unaffected"
         # or leave that to the caller?
         bals = cls._get_balances(cls.MODE_UNALLOCATED, companies, date, date)
-        return tuple(map(sum, zip(*bals.values(), strict=True)))
+        return tuple(map(sum, zip(*bals.values())))  # noqa: B905
