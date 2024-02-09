@@ -1,3 +1,11 @@
+16.0.5.1.9 (2024-02-09)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Bugfixes**
+
+- Restore compatibility with python 3.9 (`#590 <https://github.com/OCA/mis-builder/issues/590>`_)
+
+
 16.0.5.1.8 (2024-02-08)
 ~~~~~~~~~~~~~~~~~~~~~~~
 
