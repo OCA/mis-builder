@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-05-24 19:09+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2024-02-19 10:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -37,6 +37,15 @@ msgid ""
 "receivable accounts over\n"
 "                                        the period."
 msgstr ""
+"<code>\n"
+"                                            balp[('user_type_id', '=',\n"
+"                                            ref('account.\n"
+"                                            data_account_type_receivable')."
+"id)][]\n"
+"                                        </code>\n"
+"                                        : variazione del bilancio di tutti i "
+"crediti\n"
+"                                        nel periodo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -48,6 +57,12 @@ msgid ""
 "                                        : balance of move lines related to "
 "tax grid 56."
 msgstr ""
+"<code>\n"
+"                                            balp[][('tax_line_id.tag_ids', "
+"'=', ref('l10n_be.tax_tag_56').id)]\n"
+"                                        </code>\n"
+"                                        : bilancio righe movimento relative "
+"alla griglia imposta 56."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -61,6 +76,14 @@ msgid ""
 "and journal BNK1 during\n"
 "                                        the period."
 msgstr ""
+"<code>\n"
+"                                            debp[55%][('journal_id.code', "
+"'=',\n"
+"                                            'BNK1')]\n"
+"                                        </code>\n"
+"                                        : somma di tutti i debiti nei conti "
+"55 e registro BNK1\n"
+"                                        nel periodo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -68,6 +91,8 @@ msgid ""
 "<code>AccountingNone</code> : a null value that behaves as 0 in\n"
 "                                        arithmetic operations."
 msgstr ""
+"<code>AccountingNone</code> : un valore nullo vale come 0\n"
+"                                        nelle operazioni aritmetiche."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -77,6 +102,10 @@ msgid ""
 "balance, debit, credit,\n"
 "                                        positive balance, negative balance."
 msgstr ""
+"<code>bal</code>, <code>crd</code>, <code>deb</code>, <code>\n"
+"                                        pbal</code>, <code>nbal</code> : "
+"bilancio, debito, credito,\n"
+"                                        bilancio positivo, bilancio negativo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -85,6 +114,9 @@ msgid ""
 "                                        the period (it is the same as "
 "<code>balp[70]</code>."
 msgstr ""
+"<code>bal[70]</code> : variazioni de di bilancio del conto 70\n"
+"                                        nel periodo (è lo stesso di "
+"<code>balp[70]</code>."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -92,11 +124,13 @@ msgid ""
 "<code>bale[1%]</code> : balance of accounts starting with 1 at\n"
 "                                        end of period."
 msgstr ""
+"<code>bale[1%]</code> : bilancio dei conti che iniziano con 1\n"
+"                                        alla fine del periodo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid "<code>bali[70,60]</code> : initial balance of accounts 70 and 60."
-msgstr ""
+msgstr "<code>bali[70,60]</code> : bilancio iniziale dei conti tra 70 e 60."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -107,6 +141,11 @@ msgid ""
 "loss of previous fiscal\n"
 "                                        years."
 msgstr ""
+"<code>balu[]</code> : (<code>u</code> per non allocati) è una espressione "
+"speciale\n"
+"                                        che visualizza i ricavi/perdite non "
+"allocati dell'anno fiscale\n"
+"                                        precedente."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -114,6 +153,8 @@ msgid ""
 "<code>crdp[40%]</code> : sum of all credits on accounts starting\n"
 "                                        with 40 during the period."
 msgstr ""
+"<code>crdp[40%]</code> : comma di tutti i crediti nei conti che iniziano\n"
+"                                        con 40 nel periodo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -122,6 +163,8 @@ msgid ""
 "the\n"
 "                                        period."
 msgstr ""
+"<code>date_from</code>, <code>date_to</code> : date iniziale e finale del\n"
+"                                        periodo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -129,6 +172,8 @@ msgid ""
 "<code>datetime</code>, <code>datetime</code>, <code>dateutil</code> : the "
 "python modules."
 msgstr ""
+"<code>datetime</code>, <code>datetime</code>, <code>dateutil</code> : i "
+"moduli Python."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -137,6 +182,9 @@ msgid ""
 "the period,\n"
 "                                        initial balance, ending balance"
 msgstr ""
+"<code>p</code>, <code>i</code>, <code>e</code> : rispettivamente la "
+"variazione nel periodo,\n"
+"                                        bilancio iniziale, bilancio finale"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -145,6 +193,9 @@ msgid ""
 "                                        starting with 55 whose ending "
 "balance is positive."
 msgstr ""
+"<code>pbale[55%]</code> : somma di tutti i bilanci finalei dei conti\n"
+"                                        che iniziano con 55 e hanno bilancio "
+"finale positivo."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -155,11 +206,16 @@ msgid ""
 "expected, very\n"
 "                                        similar to the python builtins."
 msgstr ""
+"<code>sum</code>, <code>min</code>,\n"
+"                                        <code>max</code>, <code>len</code>,\n"
+"                                        <code>avg</code> : si comporta come "
+"atteso, molto\n"
+"                                        simile ai metodi integrati Python."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.report_mis_report_instance
 msgid "<span>-</span>"
-msgstr ""
+msgstr "<span>-</span>"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__source_aml_model_id
@@ -167,6 +223,8 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields."
 msgstr ""
+"Un modello 'simile alla riga movimento', cioè che ha almeno i campi debit, "
+"credit, date, account_id e company_id."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report__move_lines_source
@@ -175,6 +233,9 @@ msgid ""
 "A 'move line like' model, ie having at least debit, credit, date, account_id "
 "and company_id fields. This model is the data source for column Actuals."
 msgstr ""
+"Un modello 'simile alla riga movimento', cioè con almeno i campi debit, "
+"credit, date, account_id e company_id. Questo modello è l'origine dati per "
+"la colonna Corrente."
 
 #. module: mis_builder
 #. odoo-python
@@ -188,6 +249,8 @@ msgstr ""
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__analytic_domain
 msgid "A domain to additionally filter move lines considered in this column."
 msgstr ""
+"Un dominio per ulteriori filtri delle righe movimento considerato nella "
+"colonna."
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance__analytic_domain
@@ -197,11 +260,15 @@ msgid ""
 "as budgets by account, make sure to use only fields that are available in "
 "all move line sources."
 msgstr ""
+"Un dominio per un filtro addizionale considerato nel resoconto. Precuazione: "
+"quando si usano origini diverse di righe movimento in colonne diverse, come "
+"budget per conto, assicurarsi di utilizzare solo campi che sono disponibili "
+"in tutte le sorgenti di righe movimento."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
 msgid "Account Model"
-msgstr ""
+msgstr "Modello contabile"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__accumulation_method
@@ -216,6 +283,9 @@ msgid ""
 "Actual (alternative) models used in columns must have the same account model "
 "in the Account field and must be the same defined in the report template: %s"
 msgstr ""
+"Modelli correnti (alternativi) utilizzati nelle colonne devono avere lo "
+"stesso modello conto nel campo Conto e deve essere lo stesso definito nel "
+"modello resoconto: %s"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_instance_period__source__actuals
@@ -236,6 +306,11 @@ msgid ""
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
 msgstr ""
+"Correnti: dati correnti, dalla contabilità e altre estrazioni.\n"
+"Correnti (alternativo): dati correnti da origini alternative (es. una vista "
+"database che fornisce simile a righe movimento conto).\n"
+"Somma colonne: comma (+/-) delle colonne.\n"
+"Confronto con colonna: confronta con un altra colonna.\n"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_prorata_read_group_mixin
