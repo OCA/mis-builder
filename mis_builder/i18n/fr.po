@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-11 01:36+0000\n"
-"PO-Revision-Date: 2023-11-06 16:39+0000\n"
-"Last-Translator: Rémi <remi@le-filament.com>\n"
+"PO-Revision-Date: 2024-02-23 13:37+0000\n"
+"Last-Translator: Vincent Hatakeyama <vincent+github@hatakeyama.fr>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -239,12 +239,12 @@ msgid ""
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
 msgstr ""
-"Réels: données actuelles, de la comptabilité et autres requêtes.\n"
-"Réels (autre) : données actuelles d'une autre source (par exemple une vue "
+"Réels : données actuelles, de la comptabilité et autres requêtes.\n"
+"Réels (autre) : données actuelles d'une autre source (par exemple une vue "
 "d'une base de données fournissant des lignes de mouvements de comptes "
 "similaires).\n"
-"Somme colonnes: somme (+/-) d'autres colonnes.\n"
-"Comparer colonnes: compare à une autre colonne.\n"
+"Somme colonnes : somme (+/-) d'autres colonnes.\n"
+"Comparer colonnes : compare à une autre colonne.\n"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_prorata_read_group_mixin
@@ -310,9 +310,9 @@ msgstr "Compte analytique"
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:48
-#, fuzzy, python-format
+#, python-format
 msgid "Analytic Account Filter"
-msgstr "Compte analytique"
+msgstr "Filtre de compte analytique"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:585
@@ -323,22 +323,21 @@ msgstr "Compte analytique:%s"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_analytic_tag_ids
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_analytic_tag_ids
-#, fuzzy
 msgid "Analytic Tags"
-msgstr "Compte analytique"
+msgstr "Étiquettes analytiques"
 
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:52
-#, fuzzy, python-format
+#, python-format
 msgid "Analytic Tags Filter"
-msgstr "Cacher les filtres analytiques"
+msgstr "Filtre sur les étiquettes analytiques"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:593
-#, fuzzy, python-format
+#, python-format
 msgid "Analytic Tags: %s"
-msgstr "Compte analytique:%s"
+msgstr "Étiquette analytique : %s"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -416,9 +415,9 @@ msgstr "Colonne"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:451
-#, fuzzy, python-format
+#, python-format
 msgid "Column %s cannot be compared to itrec."
-msgstr "Colonne %s ne peut pas être comparée à elle-même."
+msgstr "La colonne %s ne peut pas être comparée à elle-même."
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:741
@@ -553,13 +552,13 @@ msgstr "Champ date"
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin_date_from
 #, fuzzy
 msgid "Date from"
-msgstr "Champ date"
+msgstr "De"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin_date_to
 #, fuzzy
 msgid "Date to"
-msgstr "Dates"
+msgstr "À"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_period_view_form
