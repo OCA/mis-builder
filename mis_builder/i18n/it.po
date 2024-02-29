@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-16 12:25+0000\n"
-"PO-Revision-Date: 2023-12-24 19:33+0000\n"
+"PO-Revision-Date: 2024-02-29 15:38+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -113,12 +113,12 @@ msgstr ""
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
 msgid "All Entries"
-msgstr "Tutte le Registrazioni"
+msgstr "Tutte le registrazioni"
 
 #. module: mis_builder
 #: selection:mis.report.instance,target_move:0
 msgid "All Posted Entries"
-msgstr "Tutte le registrazioni Pubblicate"
+msgstr "Tutte le registrazioni confermate"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_builder.py:240
