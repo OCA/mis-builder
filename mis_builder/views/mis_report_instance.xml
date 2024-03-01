@@ -190,6 +190,10 @@
                             <group name="layout">
                                 <field name="landscape_pdf" />
                                 <field name="no_auto_expand_accounts" />
+                                <field
+                                    name="details_before_kpi"
+                                    attrs="{'invisible': [('no_auto_expand_accounts', '=', True)]}"
+                                />
                                 <field name="display_columns_description" />
                                 <field name="hide_analytic_filters" />
                             </group>
