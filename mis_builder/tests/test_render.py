@@ -9,13 +9,24 @@ from ..models.mis_report_style import CMP_DIFF, CMP_PCT, TYPE_NUM, TYPE_PCT, TYP
 
 
 class TestRendering(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.style_obj = self.env["mis.report.style"]
-        self.kpi_obj = self.env["mis.report.kpi"]
-        self.style = self.style_obj.create(dict(name="teststyle"))
-        self.lang = (
-            self.env["res.lang"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        cls.style_obj = cls.env["mis.report.style"]
+        cls.kpi_obj = cls.env["mis.report.kpi"]
+        cls.style = cls.style_obj.create(dict(name="teststyle"))
+        cls.lang = (
+            cls.env["res.lang"]
             .with_context(active_test=False)
             .search([("code", "=", "en_US")])[0]
         )

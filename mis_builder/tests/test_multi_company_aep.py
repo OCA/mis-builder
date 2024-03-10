@@ -12,38 +12,49 @@ from ..models.aep import AccountingExpressionProcessor as AEP
 
 
 class TestMultiCompanyAEP(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.res_company = self.env["res.company"]
-        self.account_model = self.env["account.account"]
-        self.move_model = self.env["account.move"]
-        self.journal_model = self.env["account.journal"]
-        self.currency_model = self.env["res.currency"]
-        self.curr_year = datetime.date.today().year
-        self.prev_year = self.curr_year - 1
-        self.usd = self.currency_model.with_context(active_test=False).search(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Remove this variable in v16 and put instead:
+        # from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+        DISABLED_MAIL_CONTEXT = {
+            "tracking_disable": True,
+            "mail_create_nolog": True,
+            "mail_create_nosubscribe": True,
+            "mail_notrack": True,
+            "no_reset_password": True,
+        }
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
+        cls.res_company = cls.env["res.company"]
+        cls.account_model = cls.env["account.account"]
+        cls.move_model = cls.env["account.move"]
+        cls.journal_model = cls.env["account.journal"]
+        cls.currency_model = cls.env["res.currency"]
+        cls.curr_year = datetime.date.today().year
+        cls.prev_year = cls.curr_year - 1
+        cls.usd = cls.currency_model.with_context(active_test=False).search(
             [("name", "=", "USD")]
         )
-        self.eur = self.currency_model.with_context(active_test=False).search(
+        cls.eur = cls.currency_model.with_context(active_test=False).search(
             [("name", "=", "EUR")]
         )
         # create company A and B
-        self.company_eur = self.res_company.create(
-            {"name": "CYEUR", "currency_id": self.eur.id}
+        cls.company_eur = cls.res_company.create(
+            {"name": "CYEUR", "currency_id": cls.eur.id}
         )
-        self.company_usd = self.res_company.create(
-            {"name": "CYUSD", "currency_id": self.usd.id}
+        cls.company_usd = cls.res_company.create(
+            {"name": "CYUSD", "currency_id": cls.usd.id}
         )
-        self.env["res.currency.rate"].search([]).unlink()
-        type_ar = self.browse_ref("account.data_account_type_receivable")
-        type_in = self.browse_ref("account.data_account_type_revenue")
-        for company, divider in [(self.company_eur, 1.0), (self.company_usd, 2.0)]:
+        cls.env["res.currency.rate"].search([]).unlink()
+        type_ar = cls.env.ref("account.data_account_type_receivable")
+        type_in = cls.env.ref("account.data_account_type_revenue")
+        for company, divider in [(cls.company_eur, 1.0), (cls.company_usd, 2.0)]:
             # create receivable bs account
             company_key = company.name
             setattr(
-                self,
+                cls,
                 "account_ar_" + company_key,
-                self.account_model.create(
+                cls.account_model.create(
                     {
                         "company_id": company.id,
                         "code": "400AR",
@@ -55,9 +66,9 @@ class TestMultiCompanyAEP(common.TransactionCase):
             )
             # create income pl account
             setattr(
-                self,
+                cls,
                 "account_in_" + company_key,
-                self.account_model.create(
+                cls.account_model.create(
                     {
                         "company_id": company.id,
                         "code": "700IN",
@@ -68,9 +79,9 @@ class TestMultiCompanyAEP(common.TransactionCase):
             )
             # create journal
             setattr(
-                self,
+                cls,
                 "journal" + company_key,
-                self.journal_model.create(
+                cls.journal_model.create(
                     {
                         "company_id": company.id,
                         "name": "Sale journal",
@@ -80,32 +91,33 @@ class TestMultiCompanyAEP(common.TransactionCase):
                 ),
             )
             # create move in december last year
-            self._create_move(
-                journal=getattr(self, "journal" + company_key),
-                date=datetime.date(self.prev_year, 12, 1),
+            cls._create_move(
+                journal=getattr(cls, "journal" + company_key),
+                date=datetime.date(cls.prev_year, 12, 1),
                 amount=100 / divider,
-                debit_acc=getattr(self, "account_ar_" + company_key),
-                credit_acc=getattr(self, "account_in_" + company_key),
+                debit_acc=getattr(cls, "account_ar_" + company_key),
+                credit_acc=getattr(cls, "account_in_" + company_key),
             )
             # create move in january this year
-            self._create_move(
-                journal=getattr(self, "journal" + company_key),
-                date=datetime.date(self.curr_year, 1, 1),
+            cls._create_move(
+                journal=getattr(cls, "journal" + company_key),
+                date=datetime.date(cls.curr_year, 1, 1),
                 amount=300 / divider,
-                debit_acc=getattr(self, "account_ar_" + company_key),
-                credit_acc=getattr(self, "account_in_" + company_key),
+                debit_acc=getattr(cls, "account_ar_" + company_key),
+                credit_acc=getattr(cls, "account_in_" + company_key),
             )
             # create move in february this year
-            self._create_move(
-                journal=getattr(self, "journal" + company_key),
-                date=datetime.date(self.curr_year, 3, 1),
+            cls._create_move(
+                journal=getattr(cls, "journal" + company_key),
+                date=datetime.date(cls.curr_year, 3, 1),
                 amount=500 / divider,
-                debit_acc=getattr(self, "account_ar_" + company_key),
-                credit_acc=getattr(self, "account_in_" + company_key),
+                debit_acc=getattr(cls, "account_ar_" + company_key),
+                credit_acc=getattr(cls, "account_in_" + company_key),
             )
 
-    def _create_move(self, journal, date, amount, debit_acc, credit_acc):
-        move = self.move_model.create(
+    @classmethod
+    def _create_move(cls, journal, date, amount, debit_acc, credit_acc):
+        move = cls.move_model.create(
             {
                 "journal_id": journal.id,
                 "date": fields.Date.to_string(date),
