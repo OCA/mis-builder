@@ -3,11 +3,16 @@
 import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {DatePicker} from "@web/core/datepicker/datepicker";
+import {Domain} from "@web/core/domain";
 import {FilterMenu} from "@web/search/filter_menu/filter_menu";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
+import {evaluateExpr} from "@web/core/py_js/py";
 import {parseDate} from "@web/core/l10n/dates";
 import {registry} from "@web/core/registry";
+import {useSetupAction} from "@web/webclient/actions/action_hook";
+
+const misAnalyticDomainKey = "mis_analytic_domain";
 
 export class MisReportWidget extends Component {
     setup() {
@@ -32,6 +37,18 @@ export class MisReportWidget extends Component {
             this.refresh();
         });
         onWillStart(this.willStart);
+        useSetupAction({
+            getGlobalState: () => {
+                if (!this.showSearchBar) {
+                    return {};
+                }
+                return {
+                    misReportSearchModelState: JSON.stringify(
+                        this.searchModel.exportState()
+                    ),
+                };
+            },
+        });
     }
 
     // Lifecycle
@@ -58,10 +75,14 @@ export class MisReportWidget extends Component {
         this.widget_show_pivot_date = result.widget_show_pivot_date;
         if (this.showSearchBar) {
             // Initialize the search model
-            await this.searchModel.load({
+            const config = {
                 resModel: this.source_aml_model_name,
                 searchViewId: this.widget_search_view_id,
-            });
+            };
+            if (this.env.misReportSearchModelState) {
+                config.state = JSON.parse(this.env.misReportSearchModelState);
+            }
+            await this.searchModel.load(config);
         }
 
         // Compute the report
@@ -103,12 +124,75 @@ export class MisReportWidget extends Component {
         }
     }
 
+    /**
+     * Get the record data in a form that is usable for the domain eval. All the
+     * `many2one` values are returned as id instead of a list (id, value).
+     *
+     * @returns {Object}
+     * @private
+     */
+    _getRecordDataForDomainResolution() {
+        const recordData = {};
+        for (const [fieldName, value] of Object.entries(this.props.record.data)) {
+            if (this.props.record.fields[fieldName].type !== "one2many") {
+                if (this.props.record.fields[fieldName].type === "many2one") {
+                    recordData[fieldName] = value[0];
+                    continue;
+                }
+                recordData[fieldName] = value;
+            }
+        }
+        return recordData;
+    }
+
+    /**
+     * The domain built from both the context that is passed through the action
+     * and the one that is set on the field in the view. The last one being evaluated
+     * against the context populated with a self property populated with the record data.
+     *
+     * @returns {Domain}
+     */
+    get miscAnalyticDomain() {
+        let domain = Domain.TRUE;
+        // Get the domain that is set on the action
+        const recordContext = this.props.record.context;
+        if (misAnalyticDomainKey in recordContext) {
+            const recordDomain = new Domain(recordContext[misAnalyticDomainKey]);
+            domain = Domain.and([domain, recordDomain]);
+        }
+        // Get the domain that is set on the field and evaluate it with both the context
+        // and the record data mounted on a self property.
+        if ("context" in this.props.record.activeFields[this.props.name]) {
+            const contextAttr = this.props.record.activeFields[this.props.name].context;
+            const evaluation_context = {
+                ...recordContext,
+                self: this._getRecordDataForDomainResolution(),
+            };
+            const fieldContext = evaluateExpr(contextAttr, evaluation_context);
+            if (misAnalyticDomainKey in fieldContext) {
+                const fieldDomain = new Domain(fieldContext[misAnalyticDomainKey]);
+                domain = Domain.and([domain, fieldDomain]);
+            }
+        }
+        return domain;
+    }
+
     get context() {
-        var ctx = super.context;
-        if (this.showSearchBar) {
+        let ctx = this.props.record.context;
+        const misAnalyticDomain = this.miscAnalyticDomain;
+        if (misAnalyticDomain !== Domain.TRUE) {
             ctx = {
                 ...ctx,
-                mis_analytic_domain: this.searchModel.searchDomain,
+                [misAnalyticDomainKey]: misAnalyticDomain.toList(),
+            };
+        }
+        if (this.showSearchBar && this.searchModel.searchDomain) {
+            ctx = {
+                ...ctx,
+                [misAnalyticDomainKey]: Domain.and([
+                    new Domain(ctx[misAnalyticDomainKey] || Domain.TRUE),
+                    new Domain(this.searchModel.searchDomain),
+                ]).toList(),
             };
         }
         if (this.showPivotDate && this.state.pivot_date) {
