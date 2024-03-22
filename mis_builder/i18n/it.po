@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-14 10:35+0000\n"
+"PO-Revision-Date: 2024-03-22 10:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1112,7 +1112,7 @@ msgstr "KPI MIS Report"
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
 msgid "MIS Report KPI Expression"
-msgstr "Espressione MIS Report KPI"
+msgstr "Espressione KPI MIS Report"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_query
@@ -1547,7 +1547,7 @@ msgstr "Sotto reports"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__seq2
 msgid "Sub-KPI Sequence"
-msgstr "Sequenza Sotto-KPI"
+msgstr "Sequenza sotto-KPI"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:0
