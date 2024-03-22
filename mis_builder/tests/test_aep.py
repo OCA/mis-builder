@@ -9,7 +9,11 @@ from odoo import fields
 from odoo.tools.safe_eval import safe_eval
 
 from ..models.accounting_none import AccountingNone
-from ..models.aep import AccountingExpressionProcessor as AEP, _is_domain
+from ..models.aep import (
+    UNCLASSIFIED_ROW_DETAIL,
+    AccountingExpressionProcessor as AEP,
+    _is_domain,
+)
 
 
 class TestAEP(common.TransactionCase):
@@ -17,6 +21,7 @@ class TestAEP(common.TransactionCase):
         super().setUp()
         self.res_company = self.env["res.company"]
         self.account_model = self.env["account.account"]
+        self.partner_model = self.env["res.partner"]
         self.move_model = self.env["account.move"]
         self.journal_model = self.env["account.journal"]
         self.curr_year = datetime.date.today().year
@@ -53,6 +58,13 @@ class TestAEP(common.TransactionCase):
                 "type": "sale",
             }
         )
+        # create partner
+        self.partner_a = self.partner_model.create(
+            {"company_id": self.company.id, "name": "Partner A"}
+        )
+        self.partner_b = self.partner_model.create(
+            {"company_id": self.company.id, "name": "Partner B"}
+        )
         # create move in December last year
         self._create_move(
             date=datetime.date(self.prev_year, 12, 1),
@@ -73,6 +85,8 @@ class TestAEP(common.TransactionCase):
             amount=500,
             debit_acc=self.account_ar,
             credit_acc=self.account_in,
+            debit_partner=self.partner_a,
+            credit_partner=self.partner_b,
         )
         # create the AEP, and prepare the expressions we'll need
         self.aep = AEP(self.company)
@@ -109,17 +123,40 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr("bal_700IN")  # deprecated
         self.aep.parse_expr("bals[700IN]")  # deprecated
 
-    def _create_move(self, date, amount, debit_acc, credit_acc, post=True):
+    def _create_move(
+        self,
+        date,
+        amount,
+        debit_acc,
+        credit_acc,
+        debit_partner=None,
+        credit_partner=None,
+        post=True,
+    ):
         move = self.move_model.create(
             {
                 "journal_id": self.journal.id,
                 "date": fields.Date.to_string(date),
                 "line_ids": [
-                    (0, 0, {"name": "/", "debit": amount, "account_id": debit_acc.id}),
                     (
                         0,
                         0,
-                        {"name": "/", "credit": amount, "account_id": credit_acc.id},
+                        {
+                            "name": "/",
+                            "debit": amount,
+                            "account_id": debit_acc.id,
+                            "partner_id": debit_partner.id if debit_partner else None,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "/",
+                            "credit": amount,
+                            "account_id": credit_acc.id,
+                            "partner_id": credit_partner.id if credit_partner else None,
+                        },
                     ),
                 ],
             }
@@ -128,11 +165,18 @@ class TestAEP(common.TransactionCase):
             move._post()
         return move
 
-    def _do_queries(self, date_from, date_to):
-        self.aep.do_queries(
-            date_from=fields.Date.to_string(date_from),
-            date_to=fields.Date.to_string(date_to),
-        )
+    def _do_queries(self, date_from, date_to, auto_expand_col_name=None):
+        if auto_expand_col_name:
+            self.aep.do_queries(
+                date_from=fields.Date.to_string(date_from),
+                date_to=fields.Date.to_string(date_to),
+                auto_expand_col_name=auto_expand_col_name,
+            )
+        else:
+            self.aep.do_queries(
+                date_from=fields.Date.to_string(date_from),
+                date_to=fields.Date.to_string(date_to),
+            )
 
     def _eval(self, expr):
         eval_dict = {"AccountingNone": AccountingNone}
@@ -141,8 +185,17 @@ class TestAEP(common.TransactionCase):
     def _eval_by_account_id(self, expr):
         res = {}
         eval_dict = {"AccountingNone": AccountingNone}
+
         for account_id, replaced_exprs in self.aep.replace_exprs_by_account_id([expr]):
             res[account_id] = safe_eval(replaced_exprs[0], eval_dict)
+
+        return res
+
+    def _eval_by_rdi(self, expr):
+        res = {}
+        eval_dict = {"AccountingNone": AccountingNone}
+        for rdi, replaced_exprs in self.aep.replace_exprs_by_row_detail([expr]):
+            res[rdi] = safe_eval(replaced_exprs[0], eval_dict)
         return res
 
     def test_sanity_check(self):
@@ -239,6 +292,43 @@ class TestAEP(common.TransactionCase):
         self.assertEqual(self._eval("balu[]"), -100)
 
         # TODO allocate profits, and then...
+
+    def test_aep_with_row_details(self):
+        self.aep.done_parsing()
+        self._do_queries(
+            datetime.date(self.curr_year, 3, 1),
+            datetime.date(self.curr_year, 3, 31),
+            auto_expand_col_name="partner_id",
+        )
+        initial = self._eval_by_rdi("crdi[]")
+        self.assertEqual(
+            initial,
+            {
+                self.partner_a.id: AccountingNone,
+                self.partner_b.id: AccountingNone,
+                UNCLASSIFIED_ROW_DETAIL: 300.0,
+            },
+        )
+
+        variation = self._eval_by_rdi("balp[]")
+        self.assertEqual(
+            variation,
+            {
+                self.partner_a.id: 500,
+                self.partner_b.id: -500,
+                UNCLASSIFIED_ROW_DETAIL: AccountingNone,
+            },
+        )
+
+        initial = self._eval_by_rdi("bale[400AR]")
+        self.assertEqual(
+            initial,
+            {
+                self.partner_a.id: 500,
+                self.partner_b.id: AccountingNone,
+                UNCLASSIFIED_ROW_DETAIL: 400.0,
+            },
+        )
 
     def test_aep_by_account(self):
         self.aep.done_parsing()
