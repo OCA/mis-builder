@@ -477,7 +477,7 @@ class MisReportInstance(models.Model):
     _description = "MIS Report Instance"
 
     name = fields.Char(required=True, translate=True)
-    description = fields.Char(related="report_id.description", readonly=True)
+    description = fields.Char(related="report_id.description")
     date = fields.Date(
         string="Base date", help="Report base date " "(leave empty to use current date)"
     )
@@ -539,12 +539,10 @@ class MisReportInstance(models.Model):
     temporary = fields.Boolean(default=False)
     source_aml_model_id = fields.Many2one(
         related="report_id.move_lines_source",
-        readonly=True,
     )
     source_aml_model_name = fields.Char(
         related="source_aml_model_id.model",
         related_sudo=True,
-        readonly=True,
     )
     analytic_domain = fields.Text(
         default="[]",
@@ -885,11 +883,10 @@ class MisReportInstance(models.Model):
     @api.model
     def _get_drilldown_model_views(self, model_name):
         self.ensure_one()
-        types = self.env["ir.ui.view"]._read_group(
-            [("model", "=", model_name)], ["type"], ["type"]
-        )
+        views_records = self.env["ir.ui.view"].search([("model", "=", model_name)])
+        views_records = set(views_records.mapped("type"))
         views_order = self._get_drilldown_views_and_orders()
-        views = {type["type"] for type in types if type["type"] in views_order}
+        views = {view_type for view_type in views_records if view_type in views_order}
         return sorted(list(views), key=lambda x: views_order[x])
 
     def drilldown(self, arg):
