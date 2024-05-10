@@ -878,6 +878,20 @@ class MisReportInstance(models.Model):
         kpi_matrix = self._compute_matrix()
         return kpi_matrix.as_dict()
 
+    @api.model
+    def _get_drilldown_views_and_orders(self):
+        return {"tree": 1, "form": 2, "pivot": 3, "graph": 4}
+
+    @api.model
+    def _get_drilldown_model_views(self, model_name):
+        self.ensure_one()
+        types = self.env["ir.ui.view"]._read_group(
+            [("model", "=", model_name)], ["type"], ["type"]
+        )
+        views_order = self._get_drilldown_views_and_orders()
+        views = {type["type"] for type in types if type["type"] in views_order}
+        return sorted(list(views), key=lambda x: views_order[x])
+
     def drilldown(self, arg):
         self.ensure_one()
         period_id = arg.get("period_id")
@@ -897,13 +911,14 @@ class MisReportInstance(models.Model):
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())
+            views = self._get_drilldown_model_views(period.source_aml_model_name)
             return {
                 "name": self._get_drilldown_action_name(arg),
                 "domain": domain,
                 "type": "ir.actions.act_window",
                 "res_model": period.source_aml_model_name,
-                "views": [[False, "list"], [False, "form"]],
-                "view_mode": "list",
+                "views": [[False, view] for view in views],
+                "view_mode": ",".join(view for view in views),
                 "target": "current",
                 "context": {"active_test": False},
             }
