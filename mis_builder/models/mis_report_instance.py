@@ -885,8 +885,10 @@ class MisReportInstance(models.Model):
     @api.model
     def _get_drilldown_model_views(self, model_name):
         self.ensure_one()
-        types = self.env["ir.ui.view"]._read_group(
-            [("model", "=", model_name)], ["type"], ["type"]
+        types = (
+            self.env["ir.ui.view"]
+            .sudo()
+            ._read_group([("model", "=", model_name)], ["type"], ["type"])
         )
         views_order = self._get_drilldown_views_and_orders()
         views = {type["type"] for type in types if type["type"] in views_order}
