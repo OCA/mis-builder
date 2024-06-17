@@ -118,4 +118,9 @@ class MisReportInstance(models.Model):
                     "view_mode": "list",
                     "target": "current",
                 }
+            elif period.source == SRC_MIS_BUDGET_BY_ACCOUNT:
+                self = self.with_context(
+                    default_budget_id=period.source_mis_budget_by_account_id.id,
+                    default_account_id=arg.get("account_id"),
+                )
         return super().drilldown(arg)
