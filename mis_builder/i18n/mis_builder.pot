@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -896,21 +896,6 @@ msgid "Landscape PDF"
 msgstr ""
 
 #. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_query____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.last_mis_report_instance_view_action
 #: model:ir.ui.menu,name:mis_builder.last_wizard_mis_report_instance_view_menu
 msgid "Last Reports Generated"
@@ -1642,7 +1627,6 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.actions.server,name:mis_builder.ir_cron_vacuum_temp_reports_ir_actions_server
-#: model:ir.cron,cron_name:mis_builder.ir_cron_vacuum_temp_reports
 msgid "Vacuum temporary reports"
 msgstr ""
 
