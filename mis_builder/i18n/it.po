@@ -725,9 +725,9 @@ msgid ""
 "\n"
 "The technical error message is: %(exception)s. "
 msgstr ""
-"Errore nella richiedere l'origine della riga movimento da \"%(model_name)s\""
-". Questo è dovuto probabilmante ad un filtro o una espressione che si "
-"riferisce ad un campo che non esiste nel modello. \n"
+"Errore nella richiedere l'origine della riga movimento da "
+"\"%(model_name)s\". Questo è dovuto probabilmante ad un filtro o una "
+"espressione che si riferisce ad un campo che non esiste nel modello. \n"
 "\n"
 "Il messaggio di errore tecnico è: %(exception)s. "
 
@@ -1033,21 +1033,6 @@ msgstr "Etichetta"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__landscape_pdf
 msgid "Landscape PDF"
 msgstr "PDF orizzontale"
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_query____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport____last_update
-msgid "Last Modified on"
-msgstr "Ultima modifica il"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.last_mis_report_instance_view_action
@@ -1762,8 +1747,8 @@ msgstr ""
 "I seguenti elementi speciali sono riconosciuti nelle espressioni\n"
 "                                    per calcolare dati di contabilità: "
 "<code>{bal|crd|deb|pbal|nbal}{pieu}[selettore\n"
-"                                    conto][dominio registrazioni "
-"contabili]</code>."
+"                                    conto][dominio registrazioni contabili]</"
+"code>."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__date_to
@@ -1800,7 +1785,6 @@ msgstr "Operatore non supportato %s per la ricerca in data"
 
 #. module: mis_builder
 #: model:ir.actions.server,name:mis_builder.ir_cron_vacuum_temp_reports_ir_actions_server
-#: model:ir.cron,cron_name:mis_builder.ir_cron_vacuum_temp_reports
 msgid "Vacuum temporary reports"
 msgstr "Reports temporaneamente vuoti"
 
@@ -1921,6 +1905,9 @@ msgstr "xx-large"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "xx-small"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Ultima modifica il"
 
 #, python-format
 #~ msgid "Columns {} and {} are not comparable"

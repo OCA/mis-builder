@@ -246,8 +246,8 @@ msgstr ""
 "Dades reals: dades actuals provinents de la comptabilitat i altres "
 "consultes.\n"
 "Dades reals (alternativa): dades actuals provinents d'un origen alternatiu "
-"(per exemple, vista de la base de dades proveint registres de \"tipus apunt"
-"\").\n"
+"(per exemple, vista de la base de dades proveint registres de \"tipus "
+"apunt\").\n"
 "Suma de columnes: sumarització (+/-) d'altres columnes.\n"
 "Comparar columnes: comparació amb una altra columna.\n"
 
@@ -952,21 +952,6 @@ msgstr "Etiqueta"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__landscape_pdf
 msgid "Landscape PDF"
 msgstr "PDF apaïsat"
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_query____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport____last_update
-msgid "Last Modified on"
-msgstr "Última modificació el"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.last_mis_report_instance_view_action
@@ -1705,7 +1690,6 @@ msgstr "Operador %s no compatible per cercar la data"
 
 #. module: mis_builder
 #: model:ir.actions.server,name:mis_builder.ir_cron_vacuum_temp_reports_ir_actions_server
-#: model:ir.cron,cron_name:mis_builder.ir_cron_vacuum_temp_reports
 msgid "Vacuum temporary reports"
 msgstr "Buit d'informes temporals"
 
@@ -1826,6 +1810,9 @@ msgstr "extra-súper-gran"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "extra-súper-petita"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificació el"
 
 #, python-format
 #~ msgid "Columns {} and {} are not comparable"

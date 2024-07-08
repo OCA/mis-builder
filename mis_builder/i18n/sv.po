@@ -257,9 +257,9 @@ msgid ""
 "all move line sources."
 msgstr ""
 "En domän för att ytterligare filtrera flyttlinjer som beaktas i denna "
-"rapport. Varning: när du använder olika flyttgränskällor i olika kolumner, "
-"t.ex. budgetar per konto, se till att endast använda fält som är "
-"tillgängliga i alla flyttgränskällor."
+"rapport. Varning: när du använder olika flyttgränskällor i olika kolumner, t."
+"ex. budgetar per konto, se till att endast använda fält som är tillgängliga "
+"i alla flyttgränskällor."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__account_model
@@ -785,7 +785,8 @@ msgstr "Faktor arv"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__normalize_factor
 msgid "Factor to use to normalize the period (used in comparison"
-msgstr "Faktor att använda för att normalisera perioden (används vid jämförelse"
+msgstr ""
+"Faktor att använda för att normalisera perioden (används vid jämförelse"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_query__field_names
@@ -1021,21 +1022,6 @@ msgstr "Etikett"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__landscape_pdf
 msgid "Landscape PDF"
 msgstr "Landskap PDF"
-
-#. module: mis_builder
-#: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_sum____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_query____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_style____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi____last_update
-#: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport____last_update
-msgid "Last Modified on"
-msgstr "Senast ändrad den"
 
 #. module: mis_builder
 #: model:ir.actions.act_window,name:mis_builder.last_mis_report_instance_view_action
@@ -1784,7 +1770,6 @@ msgstr "Operatorn %s stöds inte för sökning på datum"
 
 #. module: mis_builder
 #: model:ir.actions.server,name:mis_builder.ir_cron_vacuum_temp_reports_ir_actions_server
-#: model:ir.cron,cron_name:mis_builder.ir_cron_vacuum_temp_reports
 msgid "Vacuum temporary reports"
 msgstr "Vakuum tillfälliga rapporter"
 
@@ -1905,6 +1890,9 @@ msgstr "xx-large"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "xx-small"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Senast ändrad den"
 
 #~ msgid "Analytic Account"
 #~ msgstr "Objektkonto"
