@@ -26,7 +26,7 @@ class MisKpiData(models.AbstractModel):
     _name = "mis.kpi.data"
     _description = "MIS Kpi Data Abtract class"
 
-    name = fields.Char(compute="_compute_name", required=False, readonly=True)
+    name = fields.Char(compute="_compute_name", required=False)
     kpi_expression_id = fields.Many2one(
         comodel_name="mis.report.kpi.expression",
         required=True,
@@ -39,13 +39,11 @@ class MisKpiData(models.AbstractModel):
     seq1 = fields.Integer(
         related="kpi_expression_id.kpi_id.sequence",
         store=True,
-        readonly=True,
         string="KPI Sequence",
     )
     seq2 = fields.Integer(
         related="kpi_expression_id.subkpi_id.sequence",
         store=True,
-        readonly=True,
         string="Sub-KPI Sequence",
     )
 

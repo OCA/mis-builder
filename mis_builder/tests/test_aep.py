@@ -24,7 +24,14 @@ class TestAEP(common.TransactionCase):
         self.curr_year = datetime.date.today().year
         self.prev_year = self.curr_year - 1
         # create company
-        self.company = self.res_company.create({"name": "AEP Company"})
+        self.company = self.res_company.create(
+            {
+                "name": "AEP Company",
+                "country_id": (
+                    self.env["res.country"].search([("code", "=", "US")], limit=1).id
+                ),
+            }
+        )
         # create receivable bs account
         self.account_ar = self.account_model.create(
             {
@@ -363,8 +370,16 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr(expr)
         self.aep.done_parsing()
 
+        tax_group = self.env["account.tax.group"].create(dict(name="test tax group"))
+
         tax = self.env["account.tax"].create(
-            dict(name="test tax", active=True, amount=0, company_id=self.company.id)
+            dict(
+                name="test tax",
+                active=True,
+                amount=0,
+                company_id=self.company.id,
+                tax_group_id=tax_group.id,
+            )
         )
         move = self._create_move(
             date=datetime.date(self.prev_year, 12, 1),

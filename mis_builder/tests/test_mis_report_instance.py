@@ -446,6 +446,52 @@ class TestMisReportInstance(common.HttpCase):
         expected_name = f"{self.kpi1.description} - {period.display_name}"
         assert action_name == expected_name
 
+    def test_drilldown_views(self):
+        IrUiView = self.env["ir.ui.view"]
+        model_name = "account.move.line"
+        IrUiView.search([("model", "=", model_name)]).unlink()
+        IrUiView.create(
+            [
+                {
+                    "name": "mis_report_test_drilldown_views_chart",
+                    "model": model_name,
+                    "arch": "<graph><field name='name'/></graph>",
+                },
+                {
+                    "name": "mis_report_test_drilldown_views_tree",
+                    "model": model_name,
+                    "arch": "<pivot><field name='name'/></pivot>",
+                },
+            ]
+        )
+        action = self.report_instance.drilldown(
+            dict(expr="balp[200%]", period_id=self.report_instance.period_ids[0].id)
+        )
+        self.assertEqual(action["view_mode"], "pivot,graph")
+        self.assertEqual(action["views"], [[False, "pivot"], [False, "graph"]])
+        IrUiView.create(
+            [
+                {
+                    "name": "mis_report_test_drilldown_views_form",
+                    "model": model_name,
+                    "arch": "<form><field name='name'/></form>",
+                },
+                {
+                    "name": "mis_report_test_drilldown_views_tree",
+                    "model": model_name,
+                    "arch": "<tree><field name='name'/></tree>",
+                },
+            ]
+        )
+        action = self.report_instance.drilldown(
+            dict(expr="balp[200%]", period_id=self.report_instance.period_ids[0].id)
+        )
+        self.assertEqual(action["view_mode"], "tree,form,pivot,graph")
+        self.assertEqual(
+            action["views"],
+            [[False, "tree"], [False, "form"], [False, "pivot"], [False, "graph"]],
+        )
+
     def test_qweb(self):
         self.report_instance.print_pdf()  # get action
         test_reports.try_report(

@@ -58,38 +58,43 @@
             <form string="MIS Report Instance">
                 <sheet>
                     <field name="temporary" invisible="1" />
-                    <div class="oe_right oe_button_box" name="buttons">
+                    <div class="d-flex justify-content-end" name="buttons">
                         <button
                             type="object"
                             name="preview"
                             string="Preview"
                             icon="fa-search"
+                            class="btn"
                         />
                         <button
                             type="object"
                             name="print_pdf"
                             string="Print"
                             icon="fa-print"
+                            class="btn"
                         />
                         <button
                             type="object"
                             name="export_xls"
                             string="Export"
                             icon="fa-download"
+                            class="btn"
                         />
                         <button
                             type="action"
                             name="%(mis_report_instance_add_to_dashboard_action)d"
                             string="Add to dashboard"
                             icon="fa-plus"
-                            attrs="{'invisible': [('temporary', '=', True)]}"
+                            invisible="temporary"
+                            class="btn"
                         />
                         <button
                             type="object"
                             name="save_report"
                             string="Save"
                             icon="fa-save"
-                            attrs="{'invisible': [('temporary', '=', False)]}"
+                            invisible="not temporary"
+                            class="btn"
                         />
                     </div>
                     <div class="oe_title">
@@ -113,26 +118,20 @@
                         <group>
                             <group
                                 name="simple_mode"
-                                attrs="{'invisible': [('comparison_mode', '=', True)]}"
+                                invisible="comparison_mode"
                                 colspan="4"
                             >
                                 <field name="date_range_id" />
                                 <field
                                     name="date_from"
-                                    attrs="{'required': [('comparison_mode', '=', False)]}"
+                                    required="not comparison_mode"
                                 />
-                                <field
-                                    name="date_to"
-                                    attrs="{'required': [('comparison_mode', '=', False)]}"
-                                />
+                                <field name="date_to" required="not comparison_mode" />
                             </group>
                         </group>
                     </group>
                     <notebook>
-                        <page
-                            string="Columns"
-                            attrs="{'invisible': [('comparison_mode', '=', False)]}"
-                        >
+                        <page string="Columns" invisible="not comparison_mode">
                             <group>
                                 <group>
                                     <field name="date" />
@@ -144,7 +143,7 @@
                                     name="period_ids"
                                     nolabel="1"
                                     colspan="4"
-                                    attrs="{'required': [('comparison_mode', '=', True)]}"
+                                    required="comparison_mode"
                                     context="{'default_report_instance_id': id}"
                                 >
                                     <tree decoration-danger="not valid">
@@ -169,13 +168,14 @@
                                 <field
                                     name="company_id"
                                     groups="base.group_multi_company"
-                                    attrs="{'required': [('multi_company', '=', False)], 'invisible': [('multi_company', '=', True)]}"
+                                    required="not multi_company"
+                                    invisible="multi_company"
                                 />
                                 <field
                                     name="company_ids"
                                     groups="base.group_multi_company"
                                     widget="many2many_tags"
-                                    attrs="{'invisible': [('multi_company', '=', False)]}"
+                                    invisible="not multi_company"
                                 />
                                 <field
                                     name="query_company_ids"
@@ -202,7 +202,7 @@
                                 <field name="widget_show_filters" />
                                 <field
                                     name="widget_search_view_id"
-                                    attrs="{'invisible': [('widget_show_filters', '=', False)]}"
+                                    invisible="not widget_show_filters"
                                 />
                                 <field name="widget_show_settings_button" />
                                 <field name="widget_show_pivot_date" />
@@ -257,24 +257,28 @@
                         name="save_report"
                         string="Save"
                         icon="fa-save"
+                        class="btn"
                     />
                     <button
                         type="object"
                         name="preview"
                         string="Preview"
                         icon="fa-search"
+                        class="btn"
                     />
                     <button
                         type="object"
                         name="print_pdf"
                         string="Print"
                         icon="fa-print"
+                        class="btn"
                     />
                     <button
                         type="object"
                         name="export_xls"
                         string="Export"
                         icon="fa-download"
+                        class="btn"
                     /> or <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </sheet>
@@ -311,7 +315,7 @@
                     <field
                         name="report_instance_id"
                         invisible="1"
-                        attrs="{'required': [('id', '!=', False)]}"
+                        required="id != False"
                     />
                     <field name="report_id" invisible="1" />
                     <field name="id" invisible="1" />
@@ -323,12 +327,13 @@
                     <group col="2" colspan="2" name="source_data">
                         <field
                             name="source_aml_model_id"
-                            attrs="{'invisible': [('source', '!=', 'actuals_alt')], 'required': [('source', '==', 'actuals_alt')]}"
+                            invisible="source != 'actuals_alt'"
+                            required="source == 'actuals_alt'"
                         />
                         <field name="source_aml_model_name" invisible="1" />
                         <field
                             name="source_sumcol_ids"
-                            attrs="{'invisible': [('source', '!=', 'sumcol')]}"
+                            invisible="source != 'sumcol'"
                             nolabel="1"
                             colspan="2"
                         >
@@ -343,18 +348,20 @@
                         </field>
                         <field
                             name="source_sumcol_accdet"
-                            attrs="{'invisible': [('source', '!=', 'sumcol')]}"
+                            invisible="source != 'sumcol'"
                         />
                         <field name="allowed_cmpcol_ids" invisible="1" />
                         <field
                             name="source_cmpcol_to_id"
-                            attrs="{'invisible': [('source', '!=', 'cmpcol')], 'required': [('source', '=', 'cmpcol')]}"
+                            invisible="source != 'cmpcol'"
+                            required="source == 'cmpcol'"
                             domain="[('id', 'in', allowed_cmpcol_ids)]"
                             options="{'no_create': True, 'no_open': True}"
                         />
                         <field
                             name="source_cmpcol_from_id"
-                            attrs="{'invisible': [('source', '!=', 'cmpcol')], 'required': [('source', '=', 'cmpcol')]}"
+                            invisible="source != 'cmpcol'"
+                            required="source == 'cmpcol'"
                             domain="[('id', 'in', allowed_cmpcol_ids)]"
                             options="{'no_create': True, 'no_open': True}"
                         />
@@ -364,20 +371,14 @@
                     <group colspan="4">
                         <field name="mode" widget="radio" />
                     </group>
-                    <group
-                        name="relative"
-                        attrs="{'invisible': [('mode', '!=', 'relative')]}"
-                        colspan="4"
-                    >
+                    <group name="relative" invisible="mode != 'relative'" colspan="4">
                         <group>
-                            <field
-                                name="type"
-                                attrs="{'required': [('mode', '=', 'relative')]}"
-                            />
+                            <field name="type" required="mode == 'relative'" />
                             <field name="is_ytd" />
                             <field
                                 name="date_range_type_id"
-                                attrs="{'invisible': [('type', '!=', 'date_range')], 'required': [('type', '=', 'date_range'), ('mode', '=', 'relative')]}"
+                                invisible="type != 'date_range'"
+                                required="type == 'date_range' and mode == 'relative'"
                             />
                             <field name="offset" />
                             <field name="duration" />
@@ -387,23 +388,13 @@
                             <field name="date_to" />
                         </group>
                     </group>
-                    <group
-                        name="fix"
-                        attrs="{'invisible': [('mode', '!=', 'fix')]}"
-                        colspan="4"
-                    >
+                    <group name="fix" invisible="mode != 'fix'" colspan="4">
                         <group>
                             <field name="date_range_id" />
                         </group>
                         <group>
-                            <field
-                                name="manual_date_from"
-                                attrs="{'required': [('mode', '=', 'fix')]}"
-                            />
-                            <field
-                                name="manual_date_to"
-                                attrs="{'required': [('mode', '=', 'fix')]}"
-                            />
+                            <field name="manual_date_from" required="mode == 'fix'" />
+                            <field name="manual_date_to" required="mode == 'fix'" />
                         </group>
                     </group>
                 </group>
@@ -412,7 +403,7 @@
                         name="analytic_domain"
                         widget="domain"
                         options="{'model': 'source_aml_model_name'}"
-                        attrs="{'invisible': [('source_aml_model_name', '=', False)]}"
+                        invisible="not source_aml_model_name"
                     />
                 </group>
             </form>

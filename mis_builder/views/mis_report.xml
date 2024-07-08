@@ -38,11 +38,11 @@
                                     <field name="type" />
                                     <field
                                         name="compare_method"
-                                        attrs="{'invisible': [('type', '=', 'str')]}"
+                                        invisible="type == 'str'"
                                     />
                                     <field
                                         name="accumulation_method"
-                                        attrs="{'invisible': [('type', '=', 'str')]}"
+                                        invisible="type == 'str'"
                                     />
                                     <field name="expression" />
                                 </tree>
@@ -119,11 +119,7 @@
                     <field name="style_id" />
                     <field name="style_expression" />
                     <field name='id' invisible='1' />
-                    <field
-                        name="report_id"
-                        invisible="1"
-                        attrs="{'required': [('id', '!=', False)]}"
-                    />
+                    <field name="report_id" invisible="1" required="id != False" />
                 </group>
                 <notebook>
                     <page string="Expressions">
@@ -134,7 +130,7 @@
                                 name="expression_ids"
                                 colspan="2"
                                 nolabel="1"
-                                attrs="{'invisible': [('multi', '=', False)]}"
+                                invisible="not multi"
                             >
                                 <tree editable="bottom">
                                     <field
@@ -148,8 +144,8 @@
                                 name="expression"
                                 colspan="2"
                                 nolabel="1"
-                                attrs="{'invisible': [('multi', '=', True)],
-                                           'readonly': [('multi', '=', True)]}"
+                                invisible="multi"
+                                readonly="multi"
                                 placeholder="Enter expression here, for example balp[70%]. See also help tab."
                             />
                         </group>
@@ -157,7 +153,7 @@
                             <field name="auto_expand_accounts" />
                             <field
                                 name="auto_expand_accounts_style_id"
-                                attrs="{'invisible': [('auto_expand_accounts', '!=', True)]}"
+                                invisible="auto_expand_accounts != True"
                             />
                         </group>
                     </page>

@@ -330,9 +330,11 @@ class MisReportInstancePeriod(models.Model):
     def _check_source_aml_model_id(self):
         for record in self:
             if record.source_aml_model_id:
-                record_model = record.source_aml_model_id.field_id.filtered(
-                    lambda r: r.name == "account_id"
-                ).relation
+                record_model = (
+                    record.source_aml_model_id.sudo()
+                    .field_id.filtered(lambda r: r.name == "account_id")
+                    .relation
+                )
                 report_account_model = record.report_id.account_model
                 if record_model != report_account_model:
                     raise ValidationError(
@@ -475,7 +477,7 @@ class MisReportInstance(models.Model):
     _description = "MIS Report Instance"
 
     name = fields.Char(required=True, translate=True)
-    description = fields.Char(related="report_id.description", readonly=True)
+    description = fields.Char(related="report_id.description")
     date = fields.Date(
         string="Base date", help="Report base date " "(leave empty to use current date)"
     )
@@ -537,12 +539,10 @@ class MisReportInstance(models.Model):
     temporary = fields.Boolean(default=False)
     source_aml_model_id = fields.Many2one(
         related="report_id.move_lines_source",
-        readonly=True,
     )
     source_aml_model_name = fields.Char(
         related="source_aml_model_id.model",
         related_sudo=True,
-        readonly=True,
     )
     analytic_domain = fields.Text(
         default="[]",
@@ -876,6 +876,19 @@ class MisReportInstance(models.Model):
         kpi_matrix = self._compute_matrix()
         return kpi_matrix.as_dict()
 
+    @api.model
+    def _get_drilldown_views_and_orders(self):
+        return {"tree": 1, "form": 2, "pivot": 3, "graph": 4}
+
+    @api.model
+    def _get_drilldown_model_views(self, model_name):
+        self.ensure_one()
+        views_records = self.env["ir.ui.view"].search([("model", "=", model_name)])
+        views_records = set(views_records.mapped("type"))
+        views_order = self._get_drilldown_views_and_orders()
+        views = {view_type for view_type in views_records if view_type in views_order}
+        return sorted(list(views), key=lambda x: views_order[x])
+
     def drilldown(self, arg):
         self.ensure_one()
         period_id = arg.get("period_id")
@@ -895,13 +908,14 @@ class MisReportInstance(models.Model):
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())
+            views = self._get_drilldown_model_views(period.source_aml_model_name)
             return {
                 "name": self._get_drilldown_action_name(arg),
                 "domain": domain,
                 "type": "ir.actions.act_window",
                 "res_model": period.source_aml_model_name,
-                "views": [[False, "list"], [False, "form"]],
-                "view_mode": "list",
+                "views": [[False, view] for view in views],
+                "view_mode": ",".join(view for view in views),
                 "target": "current",
                 "context": {"active_test": False},
             }

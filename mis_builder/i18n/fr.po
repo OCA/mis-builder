@@ -1917,15 +1917,12 @@ msgstr "xx-grand"
 msgid "xx-small"
 msgstr "xx-petit"
 
-#, python-format
 #~ msgid "Columns {} and {} are not comparable"
 #~ msgstr "Les colonnes {} et {} ne sont pas comparables"
 
-#, python-format
 #~ msgid "Generated on {} at {}"
 #~ msgstr "Généré le {} à {}"
 
-#, python-format
 #~ msgid ""
 #~ "KPI \"{}\" has type {} while a tuple was expected.\n"
 #~ "\n"
@@ -1943,7 +1940,6 @@ msgstr "xx-petit"
 #~ "\t- Changer le KPI en mode 'multi' et donner une valeur pour chaque sous-"
 #~ "KPI."
 
-#, python-format
 #~ msgid ""
 #~ "KPI \"{}\" is valued as a tuple of length {} while a tuple of length {} "
 #~ "is expected."
@@ -1951,7 +1947,6 @@ msgstr "xx-petit"
 #~ "Le KPI \"{}\" est une liste de valeurs de longueur {} alors qu'une liste "
 #~ "de valeurs de longueur {} est attendue."
 
-#, python-format
 #~ msgid "Can not update a multi kpi from the kpi line"
 #~ msgstr ""
 #~ "Vous ne pouvez pas mettre à  jour un kpi multi depuis la ligne de kpi"
@@ -1977,11 +1972,9 @@ msgstr "xx-petit"
 #~ msgid "Style expression"
 #~ msgstr "Expression du style"
 
-#, python-format
 #~ msgid "Unexpected accumulation method %s for %s."
 #~ msgstr "Méthode d'accumulation inattendue %s pour %s."
 
-#, python-format
 #~ msgid "from %s to %s"
 #~ msgstr "de %s à  %s"
 
