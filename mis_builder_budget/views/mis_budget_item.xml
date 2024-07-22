@@ -18,10 +18,10 @@
         <field name="model">mis.budget.item</field>
         <field name="arch" type="xml">
             <tree editable="bottom">
-                <field name="budget_id" invisible="1" />
-                <field name="report_id" invisible="1" />
-                <field name="budget_date_from" invisible="1" />
-                <field name="budget_date_to" invisible="1" />
+                <field name="budget_id" column_invisible="1" />
+                <field name="report_id" column_invisible="1" />
+                <field name="budget_date_from" column_invisible="1" />
+                <field name="budget_date_to" column_invisible="1" />
                 <field name="kpi_expression_id" />
                 <field name="date_range_id" />
                 <field name="date_from" />

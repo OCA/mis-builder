@@ -17,11 +17,9 @@ class MisBudgetItemAbstract(models.AbstractModel):
         index=True,
     )
     budget_date_from = fields.Date(
-        related="budget_id.date_from", readonly=True, string="Budget Date From"
+        related="budget_id.date_from", string="Budget Date From"
     )
-    budget_date_to = fields.Date(
-        related="budget_id.date_to", readonly=True, string="Budget Date To"
-    )
+    budget_date_to = fields.Date(related="budget_id.date_to", string="Budget Date To")
     date_range_id = fields.Many2one(
         comodel_name="date.range",
         domain="[('date_start', '>=', budget_date_from),"
