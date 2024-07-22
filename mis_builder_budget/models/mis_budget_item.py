@@ -11,7 +11,7 @@ class MisBudgetItem(models.Model):
     _order = "budget_id, date_from, seq1, seq2"
 
     budget_id = fields.Many2one(comodel_name="mis.budget")
-    report_id = fields.Many2one(related="budget_id.report_id", readonly=True)
+    report_id = fields.Many2one(related="budget_id.report_id")
     kpi_expression_id = fields.Many2one(
         domain=(
             "[('kpi_id.report_id', '=', report_id),"

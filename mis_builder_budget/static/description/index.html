@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -275,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -301,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -369,13 +369,14 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:ae54cfc3d390dd5240d9a2931e6e444756b9d061f64d9e4a9f4e7bc33dac6015
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/mis-builder/tree/16.0/mis_builder_budget"><img alt="OCA/mis-builder" src="https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/mis-builder-16-0/mis-builder-16-0-mis_builder_budget"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Production/Stable" src="https://img.shields.io/badge/maturity-Production%2FStable-green.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/mis-builder/tree/17.0/mis_builder_budget"><img alt="OCA/mis-builder" src="https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/mis-builder-17-0/mis-builder-17-0-mis_builder_budget"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>Create budgets for MIS reports.</p>
-<p>This module lets you create budgets for any MIS report. Several budgets can be
-created for a given report template (ie one budget per year). Budget figures
-are provided by KPI or by GL account, with different time periods. A budget can
-then be selected as a data source for a MIS report column, and the report will
-show the budgeted values for each KPI, adjusted for the period of the column.</p>
+<p>This module lets you create budgets for any MIS report. Several budgets
+can be created for a given report template (ie one budget per year).
+Budget figures are provided by KPI or by GL account, with different time
+periods. A budget can then be selected as a data source for a MIS report
+column, and the report will show the budgeted values for each KPI,
+adjusted for the period of the column.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -407,38 +408,43 @@ show the budgeted values for each KPI, adjusted for the period of the column.</p
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
-<p>There are two ways to use this module: create budgets by KPI or budgets by
-GL accounts. Currently, the two methods cannot be combined in the same budget.</p>
+<p>There are two ways to use this module: create budgets by KPI or budgets
+by GL accounts. Currently, the two methods cannot be combined in the
+same budget.</p>
 <p><strong>Budget by KPIs</strong></p>
-<p>To use this this mode, you first need to flag at least some KPI in a MIS report
-to be budgetable. You also need to configure the accumulation method on the KPI
-according to their type.</p>
+<p>To use this this mode, you first need to flag at least some KPI in a MIS
+report to be budgetable. You also need to configure the accumulation
+method on the KPI according to their type.</p>
 <p>The accumulation method determines how budgeted values spanning over a
 time period are transformed to match the reporting period.</p>
 <ul class="simple">
-<li>Sum: values of shorter period are added, values of longest or partially overlapping
-periods are adjusted pro-rata temporis (eg monetary amount such as revenue).</li>
-<li>Average: values of included period are averaged with a pro-rata temporis weight.
-Typically used for values that do not accumulate over time (eg a number of employees).</li>
+<li>Sum: values of shorter period are added, values of longest or
+partially overlapping periods are adjusted pro-rata temporis (eg
+monetary amount such as revenue).</li>
+<li>Average: values of included period are averaged with a pro-rata
+temporis weight. Typically used for values that do not accumulate
+over time (eg a number of employees).</li>
 </ul>
-<p>When KPI are configured, you need to create a budget, using the MIS Budget (by
-KPIs) menu, then click on the budget items button to create or import the
-budgeted amounts for all your KPI and time periods.</p>
+<p>When KPI are configured, you need to create a budget, using the MIS
+Budget (by KPIs) menu, then click on the budget items button to create
+or import the budgeted amounts for all your KPI and time periods.</p>
 <p><strong>Budget by GL accounts</strong></p>
 <p>You can also create budgets by GL accounts. In this case, the budget is
-populated with one line per GL account (and optionally analytic account and/or
-tags) and time period.</p>
+populated with one line per GL account (and optionally analytic account
+and/or tags) and time period.</p>
 <p><strong>Add budget columns to report instances</strong></p>
 <p>Finally, a column (aka period) must be added to a MIS report instance,
-selecting your newly created budget as a data source. The data will be adjusted
-to the reporting period when displayed. Columns can be compared by adding a
-column of type “comparison” or “sum”.</p>
+selecting your newly created budget as a data source. The data will be
+adjusted to the reporting period when displayed. Columns can be compared
+by adding a column of type “comparison” or “sum”.</p>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#toc-entry-2">Known issues / Roadmap</a></h1>
-<p>The mis_builder <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">roadmap</a>
-and <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug">known issues</a> can
-be found on GitHub.</p>
+<p>The mis_builder
+<a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">roadmap</a>
+and <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug">known
+issues</a>
+can be found on GitHub.</p>
 </div>
 <div class="section" id="changelog">
 <h1><a class="toc-backref" href="#toc-entry-3">Changelog</a></h1>
@@ -447,45 +453,53 @@ be found on GitHub.</p>
 <p><strong>Features</strong></p>
 <ul class="simple">
 <li>Migration to 16.0.<ul>
-<li>removal of analytic fetures because the upstream <tt class="docutils literal">analytic_distribution</tt> mechanism
-is not compatible; support may be introduced in separate module, depending on use
-cases (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/472">#472</a>)</li>
+<li>removal of analytic fetures because the upstream
+<tt class="docutils literal">analytic_distribution</tt> mechanism is not compatible; support may
+be introduced in separate module, depending on use cases
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/472">#472</a>)</li>
 </ul>
 </li>
 </ul>
 <p><strong>Bugfixes</strong></p>
 <ul class="simple">
-<li>Fix display of budgets in presence of sub KPIs. (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/428">#428</a>)</li>
+<li>Fix display of budgets in presence of sub KPIs.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/428">#428</a>)</li>
 </ul>
 </div>
 <div class="section" id="section-2">
 <h2><a class="toc-backref" href="#toc-entry-5">14.0.4.0.0 (2022-01-08)</a></h2>
 <p><strong>Features</strong></p>
 <ul class="simple">
-<li>A label field has been added to MIS Budget by Account items. When overlap between budget
-items is allowed this allows creating a budget with several contributions for a given
-account. (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/382">#382</a>)</li>
-<li>The balance field on MIS Budget by Account items is now writeable. This allows for
-easier data entry and import. (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/383">#383</a>)</li>
-<li>MIS Budget by Account can now be configured to allow budget items with overlapping
-dates. Each overlapping item contributes to the budget of the corresponding period. (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/384">#384</a>)</li>
+<li>A label field has been added to MIS Budget by Account items. When
+overlap between budget items is allowed this allows creating a budget
+with several contributions for a given account.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/382">#382</a>)</li>
+<li>The balance field on MIS Budget by Account items is now writeable.
+This allows for easier data entry and import.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/383">#383</a>)</li>
+<li>MIS Budget by Account can now be configured to allow budget items
+with overlapping dates. Each overlapping item contributes to the
+budget of the corresponding period.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/384">#384</a>)</li>
 </ul>
 </div>
 <div class="section" id="section-3">
 <h2><a class="toc-backref" href="#toc-entry-6">14.0.3.5.1 (2021-04-06)</a></h2>
 <p><strong>Bugfixes</strong></p>
 <ul class="simple">
-<li>Fix incorrect budget by account multi company security rules. (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/347">#347</a>)</li>
+<li>Fix incorrect budget by account multi company security rules.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/347">#347</a>)</li>
 </ul>
 </div>
 <div class="section" id="section-4">
 <h2><a class="toc-backref" href="#toc-entry-7">13.0.3.5.0 (2020-03-28)</a></h2>
 <p><strong>Features</strong></p>
 <ul class="simple">
-<li>Budget by GL account: allow budgeting by GL account in addition to the
-existing mechanism to budget by KPI. Budget items have a begin and end
-date, and when reporting a pro-rata temporis adjustment is made to match
-the reporting period. (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/259">#259</a>)</li>
+<li>Budget by GL account: allow budgeting by GL account in addition to
+the existing mechanism to budget by KPI. Budget items have a begin
+and end date, and when reporting a pro-rata temporis adjustment is
+made to match the reporting period.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/259">#259</a>)</li>
 </ul>
 </div>
 <div class="section" id="section-5">
@@ -497,15 +511,18 @@ the reporting period. (<a class="reference external" href="https://github.com/OC
 <p><strong>Bugfixes</strong></p>
 <ul class="simple">
 <li>Consider analytic tags too when detecting overlapping budget items.
-Previously only analytic account was considered, and this overlap detection
-mechanism was overlooked when analytic tags were added to budget items. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/241">#241</a>)</li>
+Previously only analytic account was considered, and this overlap
+detection mechanism was overlooked when analytic tags were added to
+budget items.
+(<a class="reference external" href="https://github.com/oca/mis-builder/issues/241">#241</a>)</li>
 </ul>
 </div>
 <div class="section" id="section-7">
 <h2><a class="toc-backref" href="#toc-entry-10">11.0.3.3.0 (2019-01-13)</a></h2>
 <p><strong>Features</strong></p>
 <ul class="simple">
-<li>Support analytic filters. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/15">#15</a>)</li>
+<li>Support analytic filters.
+(<a class="reference external" href="https://github.com/oca/mis-builder/issues/15">#15</a>)</li>
 </ul>
 </div>
 <div class="section" id="section-8">
@@ -518,8 +535,8 @@ mechanism was overlooked when analytic tags were added to budget items. (<a clas
 <div class="section" id="section-9">
 <h2><a class="toc-backref" href="#toc-entry-12">11.0.3.2.0 (2018-05-02)</a></h2>
 <ul class="simple">
-<li>[FIX] #NAME error in out-of-order computation of non
-budgetable items in budget columns
+<li>[FIX] #NAME error in out-of-order computation of non budgetable items
+in budget columns
 (<a class="reference external" href="https://github.com/OCA/mis-builder/pull/69">#68</a>)</li>
 </ul>
 </div>
@@ -546,7 +563,7 @@ budgetable items in budget columns
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/mis-builder/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder_budget%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder_budget%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -570,13 +587,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-20">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/sbidoul"><img alt="sbidoul" src="https://github.com/sbidoul.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/mis-builder/tree/16.0/mis_builder_budget">OCA/mis-builder</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/mis-builder/tree/17.0/mis_builder_budget">OCA/mis-builder</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
