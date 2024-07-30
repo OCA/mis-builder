@@ -944,6 +944,8 @@ class MisReportInstance(models.Model):
                 account_id,
             )
             domain.extend(period._get_additional_move_line_filter())
+            context = dict(self.env.context)
+            context["active_test"] = False
             return {
                 "name": self._get_drilldown_action_name(arg),
                 "domain": domain,
@@ -952,7 +954,7 @@ class MisReportInstance(models.Model):
                 "views": [[False, "list"], [False, "form"]],
                 "view_mode": "list",
                 "target": "current",
-                "context": {"active_test": False},
+                "context": context,
             }
         else:
             return False
