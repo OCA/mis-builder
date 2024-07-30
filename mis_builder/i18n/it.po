@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-07-08 11:58+0000\n"
+"PO-Revision-Date: 2024-07-30 08:58+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -1103,7 +1103,7 @@ msgstr "Classe astratta dati KPI MIS"
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
 msgid "MIS Report"
-msgstr "MIS Report"
+msgstr "Resoconto MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subreport
