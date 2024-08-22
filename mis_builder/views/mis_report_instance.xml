@@ -208,6 +208,11 @@
                                 <field name="widget_show_pivot_date" />
                             </group>
                         </page>
+                        <page string="Drilldown">
+                            <group name="drilldown">
+                                <field name="drilldown_open_in_pop_up" />
+                            </group>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
