@@ -298,6 +298,11 @@ class MisReportKpiExpression(models.Model):
     # TODO FIXME set readonly=True when onchange('subkpi_ids') below works
     subkpi_id = fields.Many2one("mis.report.subkpi", readonly=False, ondelete="cascade")
 
+    style_expression = fields.Char(
+        help="An expression that returns a style depending on the KPI value. "
+        "Such style is applied on top of the row style.",
+    )
+
     _sql_constraints = [
         (
             "subkpi_kpi_unique",
