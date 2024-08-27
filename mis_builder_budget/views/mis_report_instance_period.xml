@@ -15,12 +15,14 @@
             <group name="source_data" position="inside">
                 <field
                     name="source_mis_budget_id"
-                    attrs="{'invisible': [('source', '!=', 'mis_budget')], 'required': [('source', '=', 'mis_budget')]}"
+                    invisible="source != 'mis_budget'"
+                    required="source == 'mis_budget'"
                     domain="[('report_id', '=', report_id)]"
                 />
                 <field
                     name="source_mis_budget_by_account_id"
-                    attrs="{'invisible': [('source', '!=', 'mis_budget_by_account')], 'required': [('source', '=', 'mis_budget_by_account')]}"
+                    invisible="source != 'mis_budget_by_account'"
+                    required="source == 'mis_budget_by_account'"
                 />
             </group>
         </field>
