@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -9,10 +8,11 @@
 
 /*
 :Author: David Goodger (goodger@python.org)
-:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Id: $Id: html4css1.css 9511 2024-01-13 09:50:07Z milde $
 :Copyright: This stylesheet has been placed in the public domain.
 
 Default cascading style sheet for the HTML output of Docutils.
+Despite the name, some widely supported CSS2 features are used.
 
 See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
 customize this style sheet.
@@ -275,7 +275,7 @@ pre.literal-block, pre.doctest-block, pre.math, pre.code {
   margin-left: 2em ;
   margin-right: 2em }
 
-pre.code .ln { color: grey; } /* line numbers */
+pre.code .ln { color: gray; } /* line numbers */
 pre.code, code { background-color: #eeeeee }
 pre.code .comment, code .comment { color: #5C6576 }
 pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
@@ -301,7 +301,7 @@ span.option {
 span.pre {
   white-space: pre }
 
-span.problematic {
+span.problematic, pre.problematic {
   color: red }
 
 span.section-subtitle {
@@ -369,7 +369,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:b01c4eb68c27939c99fc2380d0af3e58e047cef88ae51e3f2815f372f0aad160
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Alpha" src="https://img.shields.io/badge/maturity-Alpha-red.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/mis-builder/tree/16.0/mis_builder_demo"><img alt="OCA/mis-builder" src="https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/mis-builder-16-0/mis-builder-16-0-mis_builder_demo"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Alpha" src="https://img.shields.io/badge/maturity-Alpha-red.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/mis-builder/tree/17.0/mis_builder_demo"><img alt="OCA/mis-builder" src="https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/mis-builder-17-0/mis-builder-17-0-mis_builder_demo"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>Demo addon for MIS Builder.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
@@ -408,15 +408,17 @@ chart of accounts:</p>
 <li>A report template showing expenses by category</li>
 <li>A sample committed purchase view model, showing uninvoiced purchase
 order lines and draft invoice lines.</li>
-<li>A report instance showing budget, committed purchases, actuals
-and available.</li>
+<li>A report instance showing budget, committed purchases, actuals and
+available.</li>
 </ul>
 </div>
 <div class="section" id="known-issues-roadmap">
 <h1><a class="toc-backref" href="#toc-entry-2">Known issues / Roadmap</a></h1>
-<p>The mis_builder <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">roadmap</a>
-and <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug">known issues</a> can
-be found on github.</p>
+<p>The mis_builder
+<a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement">roadmap</a>
+and <a class="reference external" href="https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug">known
+issues</a>
+can be found on github.</p>
 </div>
 <div class="section" id="changelog">
 <h1><a class="toc-backref" href="#toc-entry-3">Changelog</a></h1>
@@ -425,9 +427,10 @@ be found on github.</p>
 <p><strong>Features</strong></p>
 <ul class="simple">
 <li>Migration to 16.0.<ul>
-<li>removal of analytic fetures because the upstream <tt class="docutils literal">analytic_distribution</tt> mechanism
-is not compatible; support may be introduced in separate module, depending on use
-cases (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/472">#472</a>)</li>
+<li>removal of analytic fetures because the upstream
+<tt class="docutils literal">analytic_distribution</tt> mechanism is not compatible; support may
+be introduced in separate module, depending on use cases
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/472">#472</a>)</li>
 </ul>
 </li>
 </ul>
@@ -436,7 +439,8 @@ cases (<a class="reference external" href="https://github.com/OCA/mis-builder/is
 <h2><a class="toc-backref" href="#toc-entry-5">13.0.3.1.2 (2020-04-22)</a></h2>
 <p><strong>Bugfixes</strong></p>
 <ul class="simple">
-<li>Fix currency rate in uninvoiced purchases. (<a class="reference external" href="https://github.com/OCA/mis-builder/issues/274">#274</a>)</li>
+<li>Fix currency rate in uninvoiced purchases.
+(<a class="reference external" href="https://github.com/OCA/mis-builder/issues/274">#274</a>)</li>
 </ul>
 </div>
 <div class="section" id="section-3">
@@ -448,24 +452,26 @@ cases (<a class="reference external" href="https://github.com/OCA/mis-builder/is
 <p><strong>Features</strong></p>
 <ul>
 <li><p class="first">Handle multi currency for commited purchase view. The amount in this
-view are now converted to the base currency (the one with rate 1),
-so summing them has some meaning. As a consequence, this view has
-less usefulness if the company currency is not the one with rate 1,
-Debit and credit being assumed to be in company currency.</p>
+view are now converted to the base currency (the one with rate 1), so
+summing them has some meaning. As a consequence, this view has less
+usefulness if the company currency is not the one with rate 1, Debit
+and credit being assumed to be in company currency.</p>
 <p>Add the M2M to account.analytic.tag in the commited purchase view.</p>
 <p>Fix sign issue in commited purchase view.</p>
-<p>Include customer invoice in commited purchase view. The view is therefore
-not only about purchases anymore. This should not be an issue because
-GL accounts are differents for purchases and income anyway and generally
-used in different KPI.</p>
-<p>These are breaking changes. Change the status of <tt class="docutils literal">mis_builder_demo</tt> to alpha,
-since it is a demo module and it’s content can change at any time without
-any compatibility guarantees. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/222">#222</a>)</p>
+<p>Include customer invoice in commited purchase view. The view is
+therefore not only about purchases anymore. This should not be an
+issue because GL accounts are differents for purchases and income
+anyway and generally used in different KPI.</p>
+<p>These are breaking changes. Change the status of <tt class="docutils literal">mis_builder_demo</tt>
+to alpha, since it is a demo module and it’s content can change at
+any time without any compatibility guarantees.
+(<a class="reference external" href="https://github.com/oca/mis-builder/issues/222">#222</a>)</p>
 </li>
 </ul>
 <p><strong>Bugfixes</strong></p>
 <ul class="simple">
-<li>Fix date casting error on committed expenses drilldown. (<a class="reference external" href="https://github.com/oca/mis-builder/issues/185">#185</a>)</li>
+<li>Fix date casting error on committed expenses drilldown.
+(<a class="reference external" href="https://github.com/oca/mis-builder/issues/185">#185</a>)</li>
 </ul>
 </div>
 </div>
@@ -474,7 +480,7 @@ any compatibility guarantees. (<a class="reference external" href="https://githu
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/mis-builder/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder_demo%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder_demo%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -496,13 +502,15 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-12">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
-<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<a class="reference external image-reference" href="https://odoo-community.org">
+<img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
+</a>
 <p>OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/sbidoul"><img alt="sbidoul" src="https://github.com/sbidoul.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/mis-builder/tree/16.0/mis_builder_demo">OCA/mis-builder</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/mis-builder/tree/17.0/mis_builder_demo">OCA/mis-builder</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
