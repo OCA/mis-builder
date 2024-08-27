@@ -5,7 +5,11 @@ from odoo import api, fields, models
 
 
 class MisBudgetByAccountItem(models.Model):
-    _inherit = ["mis.budget.item.abstract", "prorata.read_group.mixin"]
+    _inherit = [
+        "mis.budget.item.abstract",
+        "prorata.read_group.mixin",
+        "analytic.mixin",
+    ]
     _name = "mis.budget.by.account.item"
     _description = "MIS Budget Item (by Account)"
     _order = "budget_id, date_from, account_id"
