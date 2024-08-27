@@ -10,6 +10,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.osv.expression import AND
 
 from .aep import AccountingExpressionProcessor as AEP
 from .expression_evaluator import ExpressionEvaluator
@@ -406,7 +407,12 @@ class MisReportInstancePeriod(models.Model):
         Returns an Odoo domain expression (a python list)
         compatible with the model of the query."""
         self.ensure_one()
-        return []
+        domain = []
+        if (company_field := query.company_field) and (
+            instance_companies := self.report_instance_id.query_company_ids
+        ):
+            domain = AND([domain, [(company_field.name, "in", instance_companies.ids)]])
+        return domain
 
     @api.constrains("mode", "source")
     def _check_mode_source(self):

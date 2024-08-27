@@ -633,3 +633,22 @@ class TestMisReportInstance(common.HttpCase):
             self.env, "mis_you", groups="base.group_user,account.group_account_readonly"
         )
         self.report_instance.with_user(test_user).compute()
+
+    def test_query_company(self):
+        c1 = self.report_instance.company_id
+
+        query = self.report.query_ids
+        self.assertEqual(len(query), 1)
+
+        period = self.report_instance.period_ids[0]
+        domain = period.with_company(c1)._get_additional_query_filter(query)
+
+        self.assertEqual(domain, [])
+
+        query.company_field = self.env["ir.model.fields"].search(
+            [("name", "=", "company_id"), ("model", "=", "res.partner")]
+        )
+
+        domain = period.with_company(c1)._get_additional_query_filter(query)
+
+        self.assertEqual(domain, [("company_id", "in", c1.ids)])

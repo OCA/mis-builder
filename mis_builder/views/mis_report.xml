@@ -69,6 +69,7 @@
                                         name="date_field"
                                         domain="[('model_id', '=', model_id), ('ttype', 'in', ('date', 'datetime'))]"
                                     />
+                                    <field name="company_field" />
                                     <field name="domain" />
                                 </tree>
                             </field>
