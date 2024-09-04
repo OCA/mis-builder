@@ -219,3 +219,13 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
         self.p1.source_aml_model_id = aml_model.id
         matrix = self.instance._compute_matrix()
         assert_matrix(matrix, [[11, 13], [11, 30]])
+
+    def test_details_after_kpi(self):
+        self.instance.details_before_kpi = False
+        matrix_dict = self.instance.compute()
+        self.assertEqual(matrix_dict["body"][1]["row_id"], "k2")
+
+    def test_details_before_kpi(self):
+        self.instance.details_before_kpi = True
+        matrix_dict = self.instance.compute()
+        self.assertEqual(matrix_dict["body"][1]["parent_row_id"], "k2")

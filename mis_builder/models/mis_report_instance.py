@@ -565,6 +565,9 @@ class MisReportInstance(models.Model):
     display_columns_description = fields.Boolean(
         help="Display the date range details in the column headers."
     )
+    details_before_kpi = fields.Boolean(
+        help="Show account details before KPI.",
+    )
     comparison_mode = fields.Boolean(
         compute="_compute_comparison_mode", inverse="_inverse_comparison_mode"
     )
@@ -871,7 +874,7 @@ class MisReportInstance(models.Model):
     def compute(self):
         self.ensure_one()
         kpi_matrix = self._compute_matrix()
-        return kpi_matrix.as_dict()
+        return kpi_matrix.as_dict(details_before_kpi=self.details_before_kpi)
 
     def drilldown(self, arg):
         self.ensure_one()
