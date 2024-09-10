@@ -67,8 +67,8 @@ msgid ""
 "Sum columns: summation (+/-) of other columns.\n"
 "Compare to column: compare to other column.\n"
 msgstr ""
-"Dados reais: dados atuais, provenientes de contabilidade e outras consultas."
-"\n"
+"Dados reais: dados atuais, provenientes de contabilidade e outras "
+"consultas.\n"
 "Dados reais (alternativo): dados atuais de uma fonte alternativa (por "
 "exemplo, uma visualização de banco de dados que fornece linhas de "
 "movimentação de conta semelhantes).\n"
@@ -335,14 +335,6 @@ msgid "Label"
 msgstr "Rótulo"
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item____last_update
-msgid "Last Modified on"
-msgstr "Última Modificação em"
-
-#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__write_uid
@@ -437,13 +429,6 @@ msgstr "Expressão de KPI do relatório SIG"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__report_id
 msgid "MIS Report Template"
 msgstr "Modelo do Relatório SIG"
-
-#. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_main_attachment_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_main_attachment_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Anexo Principal"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_error
@@ -563,6 +548,12 @@ msgid ""
 msgstr ""
 "Valor errado de crédito ou débito no item do orçamento! Crédito e débito "
 "devem ser zero."
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificação em"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Anexo Principal"
 
 #~ msgid "SMS Delivery error"
 #~ msgstr "Erro na Entrega de SMS"

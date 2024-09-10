@@ -341,14 +341,6 @@ msgid "Label"
 msgstr "etiqueta"
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item____last_update
-msgid "Last Modified on"
-msgstr "Última modificación en"
-
-#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__write_uid
@@ -443,13 +435,6 @@ msgstr "Informe MIS - KPI Expresión"
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__report_id
 msgid "MIS Report Template"
 msgstr "Plantilla de presupuesto MIS"
-
-#. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_main_attachment_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_main_attachment_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Adjunto principal"
 
 #. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_has_error
@@ -569,6 +554,12 @@ msgid ""
 msgstr ""
 "¡Valor de crédito o débito incorrecto en la partida presupuestaria! El "
 "crédito o débito debe ser cero."
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación en"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Adjunto principal"
 
 #~ msgid "SMS Delivery error"
 #~ msgstr "SMS de error en la entrega"

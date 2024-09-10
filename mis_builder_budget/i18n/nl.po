@@ -329,14 +329,6 @@ msgid "Label"
 msgstr ""
 
 #. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item____last_update
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item____last_update
-msgid "Last Modified on"
-msgstr "Voor het laatst aangepast op"
-
-#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__write_uid
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__write_uid
@@ -435,13 +427,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__report_id
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_item__report_id
 msgid "MIS Report Template"
-msgstr ""
-
-#. module: mis_builder_budget
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_main_attachment_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_main_attachment_id
-#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_main_attachment_id
-msgid "Main Attachment"
 msgstr ""
 
 #. module: mis_builder_budget
@@ -558,6 +543,9 @@ msgstr ""
 msgid ""
 "Wrong credit or debit value in budget item! Credit or debit should be zero."
 msgstr ""
+
+#~ msgid "Last Modified on"
+#~ msgstr "Voor het laatst aangepast op"
 
 #~ msgid "mis.report.kpi"
 #~ msgstr "mis.report.kpi"
