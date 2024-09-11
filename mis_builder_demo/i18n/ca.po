@@ -87,11 +87,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase____last_update
-msgid "Last Modified on"
-msgstr "Última modificació el"
-
-#. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__line_type
 msgid "Line Type"
 msgstr "Tipus de línia"
@@ -135,6 +130,9 @@ msgstr "Nom del model de recurs"
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
 msgid "Total"
 msgstr "Total"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificació el"
 
 #~ msgid "Analytic Account"
 #~ msgstr "Compte analític"

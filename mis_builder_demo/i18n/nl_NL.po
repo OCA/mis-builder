@@ -91,11 +91,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: mis_builder_demo
-#: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase____last_update
-msgid "Last Modified on"
-msgstr "Voor het laatst aangepast op"
-
-#. module: mis_builder_demo
 #: model:ir.model.fields,field_description:mis_builder_demo.field_mis_committed_purchase__line_type
 msgid "Line Type"
 msgstr "Regel Type"
@@ -140,6 +135,9 @@ msgstr ""
 #: model:mis.report.kpi,description:mis_builder_demo.mis_report_expenses_kpi_total
 msgid "Total"
 msgstr "Total"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Voor het laatst aangepast op"
 
 #, fuzzy
 #~ msgid "Analytic Account"
