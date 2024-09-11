@@ -17,13 +17,13 @@ MIS Builder Demo
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github
-    :target: https://github.com/OCA/mis-builder/tree/16.0/mis_builder_demo
+    :target: https://github.com/OCA/mis-builder/tree/17.0/mis_builder_demo
     :alt: OCA/mis-builder
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/mis-builder-16-0/mis-builder-16-0-mis_builder_demo
+    :target: https://translation.odoo-community.org/projects/mis-builder-17-0/mis-builder-17-0-mis_builder_demo
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -46,77 +46,80 @@ Usage
 This module provide the following demo data based on the Odoo generic
 chart of accounts:
 
-* A few styles.
-* A budget.
-* A report template showing expenses by category
-* A sample committed purchase view model, showing uninvoiced purchase
-  order lines and draft invoice lines.
-* A report instance showing budget, committed purchases, actuals
-  and available.
+-  A few styles.
+-  A budget.
+-  A report template showing expenses by category
+-  A sample committed purchase view model, showing uninvoiced purchase
+   order lines and draft invoice lines.
+-  A report instance showing budget, committed purchases, actuals and
+   available.
 
 Known issues / Roadmap
 ======================
 
-The mis_builder `roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`_
-and `known issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`_ can
-be found on github.
+The mis_builder
+`roadmap <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement>`__
+and `known
+issues <https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug>`__
+can be found on github.
 
 Changelog
 =========
 
 16.0.1.0.0 (2023-04-01)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 **Features**
 
-- Migration to 16.0.
+-  Migration to 16.0.
 
-  - removal of analytic fetures because the upstream ``analytic_distribution`` mechanism
-    is not compatible; support may be introduced in separate module, depending on use
-    cases (`#472 <https://github.com/OCA/mis-builder/issues/472>`_)
-
+   -  removal of analytic fetures because the upstream
+      ``analytic_distribution`` mechanism is not compatible; support may
+      be introduced in separate module, depending on use cases
+      (`#472 <https://github.com/OCA/mis-builder/issues/472>`__)
 
 13.0.3.1.2 (2020-04-22)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 **Bugfixes**
 
-- Fix currency rate in uninvoiced purchases. (`#274 <https://github.com/OCA/mis-builder/issues/274>`_)
-
+-  Fix currency rate in uninvoiced purchases.
+   (`#274 <https://github.com/OCA/mis-builder/issues/274>`__)
 
 13.0.3.1.0 (2020-01-??)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 Migration to odoo 13.0.
 
 12.0.3.1.0 (2019-10-26)
-~~~~~~~~~~~~~~~~~~~~~~~
+-----------------------
 
 **Features**
 
-- Handle multi currency for commited purchase view. The amount in this
-  view are now converted to the base currency (the one with rate 1),
-  so summing them has some meaning. As a consequence, this view has
-  less usefulness if the company currency is not the one with rate 1,
-  Debit and credit being assumed to be in company currency.
+-  Handle multi currency for commited purchase view. The amount in this
+   view are now converted to the base currency (the one with rate 1), so
+   summing them has some meaning. As a consequence, this view has less
+   usefulness if the company currency is not the one with rate 1, Debit
+   and credit being assumed to be in company currency.
 
-  Add the M2M to account.analytic.tag in the commited purchase view.
+   Add the M2M to account.analytic.tag in the commited purchase view.
 
-  Fix sign issue in commited purchase view.
+   Fix sign issue in commited purchase view.
 
-  Include customer invoice in commited purchase view. The view is therefore
-  not only about purchases anymore. This should not be an issue because
-  GL accounts are differents for purchases and income anyway and generally
-  used in different KPI.
+   Include customer invoice in commited purchase view. The view is
+   therefore not only about purchases anymore. This should not be an
+   issue because GL accounts are differents for purchases and income
+   anyway and generally used in different KPI.
 
-  These are breaking changes. Change the status of ``mis_builder_demo`` to alpha,
-  since it is a demo module and it's content can change at any time without
-  any compatibility guarantees. (`#222 <https://github.com/oca/mis-builder/issues/222>`_)
-
+   These are breaking changes. Change the status of ``mis_builder_demo``
+   to alpha, since it is a demo module and it's content can change at
+   any time without any compatibility guarantees.
+   (`#222 <https://github.com/oca/mis-builder/issues/222>`__)
 
 **Bugfixes**
 
-- Fix date casting error on committed expenses drilldown. (`#185 <https://github.com/oca/mis-builder/issues/185>`_)
+-  Fix date casting error on committed expenses drilldown.
+   (`#185 <https://github.com/oca/mis-builder/issues/185>`__)
 
 Bug Tracker
 ===========
@@ -124,7 +127,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/mis-builder/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder_demo%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/mis-builder/issues/new?body=module:%20mis_builder_demo%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -132,19 +135,19 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ACSONE SA/NV
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Stéphane Bidoul <stephane.bidoul@acsone.eu>
-* Arnaud Pineux <arnaud.pineux@acsone.eu>
-* Dzung Tran <dungtd@trobz.com>
+-  Stéphane Bidoul <stephane.bidoul@acsone.eu>
+-  Arnaud Pineux <arnaud.pineux@acsone.eu>
+-  Dzung Tran <dungtd@trobz.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -164,6 +167,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-sbidoul| 
 
-This module is part of the `OCA/mis-builder <https://github.com/OCA/mis-builder/tree/16.0/mis_builder_demo>`_ project on GitHub.
+This module is part of the `OCA/mis-builder <https://github.com/OCA/mis-builder/tree/17.0/mis_builder_demo>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
