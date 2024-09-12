@@ -917,6 +917,10 @@ class MisReportInstance(models.Model):
             )
             domain.extend(period._get_additional_move_line_filter())
             views = self._get_drilldown_model_views(period.source_aml_model_name)
+            # Keep all context for hook
+            context = dict(self.env.context)
+            context.update({"active_test": False})
+
             return {
                 "name": self._get_drilldown_action_name(arg),
                 "domain": domain,
@@ -925,7 +929,7 @@ class MisReportInstance(models.Model):
                 "views": [[False, view] for view in views],
                 "view_mode": ",".join(view for view in views),
                 "target": "new" if self.drilldown_open_in_pop_up else "current",
-                "context": {"active_test": False},
+                "context": context,
             }
         else:
             return False
