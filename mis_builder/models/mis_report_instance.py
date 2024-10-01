@@ -721,7 +721,8 @@ class MisReportInstance(models.Model):
             )
         )
         # report-level analytic domain filter
-        domain.extend(ast.literal_eval(self.analytic_domain))
+        if self.analytic_domain:
+            domain.extend(ast.literal_eval(self.analytic_domain))
         # contextual analytic domain filter
         domain.extend(self.env.context.get("mis_analytic_domain", []))
         return domain
