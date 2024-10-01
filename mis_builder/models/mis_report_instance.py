@@ -580,6 +580,9 @@ class MisReportInstance(models.Model):
         string="Filter box search view",
         help="Search view to customize the filter box in the report widget.",
     )
+    drilldown_open_in_pop_up = fields.Boolean(
+        string="Drilldown in a pop up window",
+    )
 
     @api.depends("report_id.move_lines_source")
     def _compute_widget_search_view_id(self):
@@ -915,6 +918,10 @@ class MisReportInstance(models.Model):
             )
             domain.extend(period._get_additional_move_line_filter())
             views = self._get_drilldown_model_views(period.source_aml_model_name)
+            # Keep all context for hook
+            context = dict(self.env.context)
+            context.update({"active_test": False})
+
             return {
                 "name": self._get_drilldown_action_name(arg),
                 "domain": domain,
@@ -922,8 +929,8 @@ class MisReportInstance(models.Model):
                 "res_model": period.source_aml_model_name,
                 "views": [[False, view] for view in views],
                 "view_mode": ",".join(view for view in views),
-                "target": "current",
-                "context": {"active_test": False},
+                "target": "new" if self.drilldown_open_in_pop_up else "current",
+                "context": context,
             }
         else:
             return False
