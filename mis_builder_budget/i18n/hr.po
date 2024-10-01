@@ -76,6 +76,21 @@ msgid "Amount"
 msgstr ""
 
 #. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__analytic_distribution
+msgid "Analytic Distribution"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__analytic_distribution_search
+msgid "Analytic Distribution Search"
+msgstr ""
+
+#. module: mis_builder_budget
+#: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account_item__analytic_precision
+msgid "Analytic Precision"
+msgstr ""
+
+#. module: mis_builder_budget
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget__message_attachment_count
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_abstract__message_attachment_count
 #: model:ir.model.fields,field_description:mis_builder_budget.field_mis_budget_by_account__message_attachment_count
