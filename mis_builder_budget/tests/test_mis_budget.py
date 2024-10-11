@@ -132,6 +132,9 @@ class TestMisBudget(TransactionCase):
                 ("date_to", ">=", datetime.date(2017, 1, 1)),
                 ("kpi_expression_id", "=", self.expr1.id),
                 ("budget_id", "=", self.budget.id),
+                "|",
+                ("company_id", "in", [self.env.company.id]),
+                ("company_id", "=", False),
             ],
         )
 

@@ -22,11 +22,16 @@
                 <field name="report_id" invisible="1" />
                 <field name="budget_date_from" invisible="1" />
                 <field name="budget_date_to" invisible="1" />
+                <field name="budget_company_id" invisible="1" />
                 <field name="kpi_expression_id" />
                 <field name="date_range_id" />
                 <field name="date_from" />
                 <field name="date_to" />
                 <field name="amount" />
+                <field
+                    name="company_id"
+                    attrs="{'readonly':[('budget_company_id','!=',False)]}"
+                />
             </tree>
         </field>
     </record>
