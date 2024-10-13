@@ -10,13 +10,14 @@
                 edit="false"
                 create="false"
                 delete="false"
+                js_class="mis_report_form_view"
             >
                 <sheet>
                     <field
                         name="id"
                         widget="mis_report_widget"
                         nolabel="1"
-                        style="width:100%"
+                        class="w-100"
                     />
                 </sheet>
             </form>

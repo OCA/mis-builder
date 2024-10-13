@@ -3,11 +3,13 @@
 import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {DatePicker} from "@web/core/datepicker/datepicker";
+import {Domain} from "@web/core/domain";
 import {FilterMenu} from "@web/search/filter_menu/filter_menu";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
 import {parseDate} from "@web/core/l10n/dates";
 import {registry} from "@web/core/registry";
+import {useSetupAction} from "@web/webclient/actions/action_hook";
 
 export class MisReportWidget extends Component {
     setup() {
@@ -32,6 +34,18 @@ export class MisReportWidget extends Component {
             this.refresh();
         });
         onWillStart(this.willStart);
+        useSetupAction({
+            getGlobalState: () => {
+                if (!this.showSearchBar) {
+                    return {};
+                }
+                return {
+                    misReportSearchModelState: JSON.stringify(
+                        this.searchModel.exportState()
+                    ),
+                };
+            },
+        });
     }
 
     // Lifecycle
@@ -58,10 +72,14 @@ export class MisReportWidget extends Component {
         this.widget_show_pivot_date = result.widget_show_pivot_date;
         if (this.showSearchBar) {
             // Initialize the search model
-            await this.searchModel.load({
+            const config = {
                 resModel: this.source_aml_model_name,
                 searchViewId: this.widget_search_view_id,
-            });
+            };
+            if (this.env.misReportSearchModelState) {
+                config.state = JSON.parse(this.env.misReportSearchModelState);
+            }
+            await this.searchModel.load(config);
         }
 
         // Compute the report
@@ -104,11 +122,16 @@ export class MisReportWidget extends Component {
     }
 
     get context() {
-        var ctx = super.context;
-        if (this.showSearchBar) {
+        let ctx = this.props.record.context;
+        if (this.showSearchBar && this.searchModel.searchDomain) {
             ctx = {
                 ...ctx,
-                mis_analytic_domain: this.searchModel.searchDomain,
+                mis_analytic_domain: Domain.and([
+                    new Domain(
+                        this.props.record.context.mis_analytic_domain || Domain.TRUE
+                    ),
+                    new Domain(this.searchModel.searchDomain),
+                ]).toList(),
             };
         }
         if (this.showPivotDate && this.state.pivot_date) {
