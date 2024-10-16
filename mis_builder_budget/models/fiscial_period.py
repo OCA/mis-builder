@@ -1,22 +1,23 @@
-from odoo import models, fields, api
+from odoo import api, fields, models
+
 
 class AccountFiscalPeriod(models.Model):
-    _inherit = 'account.fiscal.year'  # Adjust based on your needs
+    _inherit = "account.fiscal.year"  # Adjust based on your needs
 
     # Selection field to include 'Quarter'
     period_type = fields.Selection(
-        [('monthly', 'Monthly'), ('quarterly', 'Quarterly'), ('yearly', 'Yearly')],
+        [("monthly", "Monthly"), ("quarterly", "Quarterly"), ("yearly", "Yearly")],
         string="Period Type",
-        default='monthly',
-        required=True
+        default="monthly",
+        required=True,
     )
 
     quarter_start_date = fields.Date(string="Quarter Start Date")
     quarter_end_date = fields.Date(string="Quarter End Date")
 
-    @api.onchange('period_type')
+    @api.onchange("period_type")
     def _onchange_period_type(self):
-        if self.period_type == 'quarterly':
+        if self.period_type == "quarterly":
             # Auto set the quarter dates (Example: Adjust to your needs)
             today = fields.Date.today()
             current_month = today.month

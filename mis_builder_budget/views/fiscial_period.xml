@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
     <record id="view_fiscal_period_form" model="ir.ui.view">
@@ -10,9 +9,15 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="period_type"/>
-                    <field name="quarter_start_date" attrs="{'invisible': [('period_type', '!=', 'quarterly')]}"/>
-                    <field name="quarter_end_date" attrs="{'invisible': [('period_type', '!=', 'quarterly')]}"/>
+                    <field name="period_type" />
+                    <field
+                        name="quarter_start_date"
+                        attrs="{'invisible': [('period_type', '!=', 'quarterly')]}"
+                    />
+                    <field
+                        name="quarter_end_date"
+                        attrs="{'invisible': [('period_type', '!=', 'quarterly')]}"
+                    />
                 </group>
             </form>
         </field>
