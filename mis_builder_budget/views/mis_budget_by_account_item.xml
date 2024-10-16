@@ -26,6 +26,12 @@
                 <field name="budget_date_to" invisible="1" />
                 <field name="name" />
                 <field name="account_id" />
+                <field
+                    name="analytic_distribution"
+                    widget="analytic_distribution"
+                    optional="show"
+                    groups="analytic.group_analytic_accounting"
+                />
                 <field name="date_range_id" />
                 <field name="date_from" />
                 <field name="date_to" />
