@@ -284,6 +284,11 @@ class MisReportInstancePeriod(models.Model):
         help="A domain to additionally filter move lines considered in this column.",
     )
 
+    hide_period_based_on_instance_date = fields.Boolean(
+        string="Dynamically Hide Period",
+        help="Hide this period if the pivot date is before the end date",
+    )
+
     _order = "sequence, id"
 
     _sql_constraints = [
@@ -457,6 +462,44 @@ class MisReportInstancePeriod(models.Model):
                 False,
             ]
         return super().copy_data(default=default)
+
+    def _period_should_be_displayed(self, pivot_date):
+        """
+        Returns true if period should be displayed
+
+         - If the field to dynamically hide period is not set to true,
+           the col is always displayed
+         - If the mode is fix, the period is displayed if the pivot date
+           is before the end
+         - A period with a source 'Acutals' or 'Actuals (alternative)'
+           will always be displayed if the mode is not 'fix'
+         - A period that sums columnns will be displayed if its 'source
+           columns' should be displayed
+         - A period that compares columns will be displayed if its
+           'source columns' should be displayed
+        """
+        self.ensure_one()
+        if not self.hide_period_based_on_instance_date:
+            return True
+
+        if self.mode == "fix":
+            return not (self.date_to and pivot_date < self.date_to)
+
+        if self.source == SRC_ACTUALS or self.source == SRC_ACTUALS_ALT:
+            return True
+        elif self.source == SRC_SUMCOL:
+            return all(
+                sumcol.period_id._display_period() for sumcol in self.source_sumcol_ids
+            )
+        elif self.source == SRC_CMPCOL:
+            return (
+                bool(self.source_cmpcol_from_id)
+                and bool(self.source_cmpcol_to_id)
+                and self.source_cmpcol_from_id._display_period()
+                and self.source_cmpcol_to_id._display_period()
+            )
+        else:
+            return False
 
 
 class MisReportInstance(models.Model):
@@ -844,6 +887,11 @@ class MisReportInstance(models.Model):
         elif period.source == SRC_CMPCOL:
             return self._add_column_cmpcol(aep, kpi_matrix, period, label, description)
 
+    def _get_periods(self):
+        return self.period_ids.filtered(
+            lambda rec: rec._period_should_be_displayed(self.pivot_date)
+        )
+
     def _compute_matrix(self):
         """Compute a report and return a KpiMatrix.
 
@@ -853,7 +901,8 @@ class MisReportInstance(models.Model):
         self.ensure_one()
         aep = self.report_id._prepare_aep(self.query_company_ids, self.currency_id)
         kpi_matrix = self.report_id.prepare_kpi_matrix(self.multi_company)
-        for period in self.period_ids:
+
+        for period in self._get_periods():
             description = None
             if period.mode == MODE_NONE:
                 pass

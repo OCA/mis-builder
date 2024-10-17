@@ -620,6 +620,48 @@ class TestMisReportInstance(common.HttpCase):
             elif row.kpi.name == "k4":
                 self.assertEqual(vals, [AccountingNone, AccountingNone, 1.0])
 
+    def test_hide_period(self):
+        instance = self.report_instance
+        _, p2 = instance.period_ids
+        p2.hide_period_based_on_instance_date = True
+
+        self.assertTrue(p2.date_to <= instance.pivot_date)
+
+        matrix = instance.compute()
+        periods_header = matrix["header"][0]["cols"]
+        self.assertEqual(len(periods_header), 2)
+
+        # set date to exactly the end of period should keep period
+        instance.write({"date": "2014-12-31"})
+
+        self.assertTrue(p2.date_to <= instance.pivot_date)
+
+        matrix = instance.compute()
+        periods_header = matrix["header"][0]["cols"]
+        self.assertEqual(len(periods_header), 2)
+
+        # set date to a date in period should remove the period
+
+        instance.write({"date": "2014-12-30"})
+
+        self.assertFalse(p2.date_to <= instance.pivot_date)
+
+        matrix = instance.compute()
+        periods_header = matrix["header"][0]["cols"]
+        self.assertEqual(len(periods_header), 1)
+        self.assertEqual(periods_header[0]["label"], "p1")
+
+        # set date before period should also remove the period
+
+        instance.write({"date": "2013-12-30"})
+
+        self.assertFalse(p2.date_to <= instance.pivot_date)
+
+        matrix = instance.compute()
+        periods_header = matrix["header"][0]["cols"]
+        self.assertEqual(len(periods_header), 1)
+        self.assertEqual(periods_header[0]["label"], "p1")
+
     def test_raise_when_unknown_kpi_value_type(self):
         with self.assertRaises(SubKPIUnknownTypeError):
             self.report_instance_2.compute()
