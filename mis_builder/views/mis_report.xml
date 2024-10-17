@@ -142,6 +142,7 @@
                                         domain="[('report_id', '=', parent.report_id)]"
                                     />
                                     <field name="name" />
+                                    <field name="style_expression" />
                                 </tree>
                             </field>
                             <field
