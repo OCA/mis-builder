@@ -20,6 +20,7 @@
         "views/mis_budget_by_account_item.xml",
         "security/mis_budget_by_account.xml",
         "views/mis_budget_by_account.xml",
+        "views/fiscial_period.xml",
     ],
     "installable": True,
     "development_status": "Production/Stable",
