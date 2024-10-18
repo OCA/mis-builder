@@ -20,3 +20,5 @@ access_mis_report_subreport,access_mis_report_subreport,model_mis_report_subrepo
 manage_mis_report_style,access_mis_report_style,model_mis_report_style,account.group_account_manager,1,1,1,1
 access_mis_report_style,access_mis_report_style,model_mis_report_style,base.group_user,1,0,0,0
 access_add_to_dashboard_wizard,access_add_to_dashboard_wizard,model_add_mis_report_instance_dashboard_wizard,base.group_user,1,1,1,0
+access_read_ir_model_fields,access_read_ir_model_fields,base.model_ir_model_fields,account.group_account_manager,1,0,0,0
+access_read_ir_model,access_read_ir_model,base.model_ir_model,account.group_account_manager,1,0,0,0
