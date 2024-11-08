@@ -364,7 +364,18 @@ class AccountingExpressionProcessor:
                 ):
                     # in initial mode, ignore accounts with 0 balance
                     continue
-                self._data[key][acc["account_id"][0]] = (debit * rate, credit * rate)
+                # due to branches, it's possible to have multiple acc
+                # with the same account_id
+                if acc["account_id"][0] in self._data[key]:
+                    existing_debit, existing_credit = self._data[key][
+                        acc["account_id"][0]
+                    ]
+                else:
+                    existing_debit, existing_credit = (0.0, 0.0)
+                self._data[key][acc["account_id"][0]] = (
+                    existing_debit + debit * rate,
+                    existing_credit + credit * rate,
+                )
         # compute ending balances by summing initial and variation
         for key in ends:
             domain, mode = key
