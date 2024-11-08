@@ -410,3 +410,28 @@ class TestAEP(common.TransactionCase):
                 datetime.date(self.prev_year, 12, 1),
             )
         assert "Error while querying move line source" in str(cm.exception)
+
+    def test_aep_branch(self):
+        # create branch
+        self.branch = self.res_company.create(
+            {
+                "name": "AEP Branch",
+                "parent_id": self.company.id,
+            }
+        )
+        # create branch move in March this year
+        branch_move = self._create_move(
+            date=datetime.date(self.curr_year, 3, 1),
+            amount=50,
+            debit_acc=self.account_ar,
+            credit_acc=self.account_in,
+        )
+        branch_move.company_id = self.branch
+        self.aep = AEP(self.company | self.branch)
+        self.aep.parse_expr("balp[]")
+        self.aep.done_parsing()
+        self._do_queries(
+            datetime.date(self.curr_year, 3, 1), datetime.date(self.curr_year, 3, 31)
+        )
+        variation = self._eval_by_account_id("balp[]")
+        self.assertEqual(variation, {self.account_ar.id: 550, self.account_in.id: -550})
