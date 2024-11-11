@@ -12,6 +12,7 @@ from odoo.tools.float_utils import float_is_zero
 from odoo.tools.safe_eval import datetime, dateutil, safe_eval, time
 
 from .accounting_none import AccountingNone
+from .simple_array import SimpleArray
 
 _logger = logging.getLogger(__name__)
 
@@ -316,7 +317,7 @@ class AccountingExpressionProcessor:
         aml_model = aml_model.with_context(active_test=False)
         company_rates = self._get_company_rates(date_to)
         # {(domain, mode): {account_id: (debit, credit)}}
-        self._data = defaultdict(dict)
+        self._data = defaultdict(lambda: defaultdict(lambda: SimpleArray((0.0, 0.0))))
         domain_by_mode = {}
         ends = []
         for key in self._map_account_ids:
@@ -366,16 +367,7 @@ class AccountingExpressionProcessor:
                     continue
                 # due to branches, it's possible to have multiple acc
                 # with the same account_id
-                if acc["account_id"][0] in self._data[key]:
-                    existing_debit, existing_credit = self._data[key][
-                        acc["account_id"][0]
-                    ]
-                else:
-                    existing_debit, existing_credit = (0.0, 0.0)
-                self._data[key][acc["account_id"][0]] = (
-                    existing_debit + debit * rate,
-                    existing_credit + credit * rate,
-                )
+                self._data[key][acc["account_id"][0]] += (debit * rate, credit * rate)
         # compute ending balances by summing initial and variation
         for key in ends:
             domain, mode = key
