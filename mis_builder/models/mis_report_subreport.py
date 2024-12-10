@@ -1,7 +1,7 @@
 # Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 from .mis_report import _is_valid_python_var
@@ -50,7 +50,7 @@ class MisReportSubReport(models.Model):
         for rec in self:
             if not _is_valid_python_var(rec.name):
                 raise InvalidNameError(
-                    _(
+                    self.env._(
                         "Subreport name (%s) must be a valid python identifier",
                         rec.name,
                     )
@@ -70,6 +70,6 @@ class MisReportSubReport(models.Model):
 
         for rec in self:
             if _has_subreport(rec.subreport_id, rec.report_id):
-                raise ParentLoopError(_("Subreport loop detected"))
+                raise ParentLoopError(self.env._("Subreport loop detected"))
 
     # TODO check subkpi compatibility in subreports

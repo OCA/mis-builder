@@ -6,7 +6,7 @@ import numbers
 from collections import defaultdict
 from datetime import datetime
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 from ..models.accounting_none import AccountingNone
 from ..models.data_error import DataError
@@ -161,7 +161,7 @@ class MisBuilderXlsx(models.AbstractModel):
         now_tz = fields.Datetime.context_timestamp(
             self.env["res.users"], datetime.now()
         )
-        create_date = _(
+        create_date = self.env._(
             "Generated on %(gen_date)s at %(gen_time)s",
             gen_date=now_tz.strftime(lang.date_format),
             gen_time=now_tz.strftime(lang.time_format),

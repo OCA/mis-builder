@@ -11,7 +11,7 @@ from collections import defaultdict
 import dateutil
 import pytz
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import (
     datetime as safe_datetime,
@@ -158,7 +158,7 @@ class MisReportKpi(models.Model):
         for record in self:
             if not _is_valid_python_var(record.name):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "KPI name (%s) must be a valid python identifier", record.name
                     )
                 )
@@ -264,7 +264,7 @@ class MisReportSubkpi(models.Model):
         for record in self:
             if not _is_valid_python_var(record.name):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Sub-KPI name (%s) must be a valid python identifier",
                         record.name,
                     )
@@ -393,7 +393,7 @@ class MisReportQuery(models.Model):
         for record in self:
             if not _is_valid_python_var(record.name):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Query name (%s) must be valid python identifier", record.name
                     )
                 )
@@ -515,7 +515,7 @@ class MisReport(models.Model):
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or [])
-        default["name"] = _("%s (copy)", self.name)
+        default["name"] = self.env._("%s (copy)", self.name)
         new = super().copy(default)
         # after a copy, we have new subkpis, but the expressions
         # subkpi_id fields still point to the original one, so
@@ -709,7 +709,7 @@ class MisReport(models.Model):
                         vals = vals[0]
                         if len(vals) != col.colspan:
                             raise SubKPITupleLengthError(
-                                _(
+                                self.env._(
                                     'KPI "%(kpi)s" is valued as a tuple of '
                                     "length %(length)s while a tuple of length"
                                     "%(expected_length)s is expected.",
@@ -722,7 +722,7 @@ class MisReport(models.Model):
                         vals = (vals[0],) * col.colspan
                     else:
                         raise SubKPIUnknownTypeError(
-                            _(
+                            self.env._(
                                 'KPI "%(kpi)s" has type %(type)s while a tuple was '
                                 "expected.\n\nThis can be fixed by either:\n\t- "
                                 "Changing the KPI value to a tuple of length "
@@ -928,7 +928,7 @@ class MisReport(models.Model):
             return [("parent_state", "in", ("posted", "draft"))]
         else:
             raise UserError(
-                _("Unexpected value %s for target_move.", target_move)
+                self.env._("Unexpected value %s for target_move.", target_move)
             )
 
     def evaluate(

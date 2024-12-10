@@ -5,7 +5,7 @@ import logging
 import re
 from collections import defaultdict
 
-from odoo import _, fields
+from odoo import fields
 from odoo.exceptions import UserError
 from odoo.models import expression
 from odoo.tools.float_utils import float_is_zero
@@ -92,7 +92,7 @@ class AccountingExpressionProcessor:
             self.currency = companies.mapped("currency_id")
             if len(self.currency) > 1:
                 raise UserError(
-                    _(
+                    self.env._(
                         "If currency_id is not provided, "
                         "all companies must have the same currency."
                     )
@@ -359,7 +359,7 @@ class AccountingExpressionProcessor:
                 )
             except ValueError as e:
                 raise UserError(
-                    _(
+                    self.env._(
                         'Error while querying move line source "%(model_name)s". '
                         "This is likely due to a filter or expression referencing "
                         "a field that does not exist in the model.\n\n"

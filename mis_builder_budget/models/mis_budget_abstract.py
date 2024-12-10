@@ -1,7 +1,7 @@
 # Copyright 2017-2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class MisBudgetAbstract(models.AbstractModel):
@@ -31,7 +31,7 @@ class MisBudgetAbstract(models.AbstractModel):
         if default is None:
             default = {}
         if "name" not in default:
-            default["name"] = _("%s (copy)", self.name)
+            default["name"] = self.env._("%s (copy)", self.name)
         return super().copy(default=default)
 
     @api.onchange("date_range_id")

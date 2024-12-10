@@ -1,7 +1,7 @@
 # Copyright 2017-2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -62,12 +62,12 @@ class MisBudgetItemAbstract(models.AbstractModel):
             # date_from <= date_to
             if rec.date_from > rec.date_to:
                 raise ValidationError(
-                    _("%s start date must not be after end date", rec.display_name,)
+                    self.env._("%s start date must not be after end date", rec.display_name,)
                 )
             # within budget dates
             if rec.date_from < rec.budget_date_from or rec.date_to > rec.budget_date_to:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "%(rec_name)s is not within budget %(budget_name)s date range.",
                         rec_name=rec.display_name,
                         budget_name=rec.budget_id.display_name,
@@ -78,7 +78,7 @@ class MisBudgetItemAbstract(models.AbstractModel):
             res = self.search(domain, limit=1)
             if res:
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "%(rec_name)s overlaps %(res_name)s in budget %(budget_name)s",
                         rec_name=rec.display_name,
                         res_name=res.display_name,
