@@ -8,8 +8,9 @@ class MisReportKpiExpression(models.Model):
     _inherit = "mis.report.kpi.expression"
 
     @api.model
-    def name_search(self, name="", args=None, operator="ilike", limit=100):
-        args = args or []
+    def _search_display_name(self, operator, value):
+        domain = super()._search_display_name(operator, value)
+
         if "default_budget_id" in self.env.context:
             report_id = (
                 self.env["mis.budget"]
@@ -17,7 +18,7 @@ class MisReportKpiExpression(models.Model):
                 .report_id.id
             )
             if report_id:
-                args += [("kpi_id.report_id", "=", report_id)]
-                if "." in name:
-                    args += [("subkpi_id.report_id", "=", report_id)]
-        return super().name_search(name, args, operator, limit)
+                domain += [("kpi_id.report_id", "=", report_id)]
+                if "." in value:
+                    domain += [("subkpi_id.report_id", "=", report_id)]
+        return domain

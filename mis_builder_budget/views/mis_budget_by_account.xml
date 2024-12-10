@@ -55,10 +55,8 @@
                         <field name="allow_items_overlap" />
                     </group>
                 </sheet>
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_followers" />
-                    <field name="message_ids" widget="mail_thread" />
-                </div>
+                <!-- Chatter -->
+                <chatter />
             </form>
         </field>
     </record>
@@ -72,22 +70,22 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="mis_budget_by_account_tree_view">
-        <field name="name">mis.budget.by.account.tree (in mis_builder_budget)</field>
+    <record model="ir.ui.view" id="mis_budget_by_account_list_view">
+        <field name="name">mis.budget.by.account.list (in mis_builder_budget)</field>
         <field name="model">mis.budget.by.account</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="date_from" />
                 <field name="date_to" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.actions.act_window" id="mis_budget_by_account_act_window">
         <field name="name">MIS Budgets (by accounts)</field>
         <field name="res_model">mis.budget.by.account</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
     </record>
