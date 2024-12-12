@@ -13,13 +13,13 @@ class TestAnalyticFilters(TransactionCase):
     def test_context_with_filters(self):
         aaa = self.env["account.analytic.account"].search([], limit=1)
         mri = self.env["mis.report.instance"].new()
-        mri.analytic_account_id = False
+        mri.analytic_account_ids = False
         mri.analytic_group_id = False
         assert mri._context_with_filters().get("mis_report_filters") == {}
-        mri.analytic_account_id = aaa
+        mri.analytic_account_ids = aaa
         mri.analytic_group_id = self.aag
         assert mri._context_with_filters().get("mis_report_filters") == {
-            "analytic_account_id": {"value": aaa.id, "operator": "="},
+            "analytic_account_id": {"value": [aaa.id], "operator": "in"},
             "analytic_account_id.group_id": {"value": self.aag.id, "operator": "="},
         }
         # test _context_with_filters does nothing is a filter is already

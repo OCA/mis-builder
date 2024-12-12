@@ -172,8 +172,9 @@
                                     widget="many2many_tags"
                                 />
                                 <field
-                                    name="analytic_account_id"
+                                    name="analytic_account_ids"
                                     groups="analytic.group_analytic_accounting"
+                                    widget="many2many_tags"
                                 />
                                 <field
                                     name="analytic_group_id"
@@ -396,7 +397,7 @@
                     </group>
                 </group>
                 <group string="Filters">
-                    <field name="analytic_account_id" />
+                    <field name="analytic_account_ids" widget="many2many_tags" />
                     <field name="analytic_group_id" />
                     <field name="analytic_tag_ids" widget="many2many_tags" />
                 </group>

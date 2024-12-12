@@ -31,9 +31,9 @@ odoo.define("mis_builder.widget", function (require) {
             self._super.apply(self, arguments);
             StandaloneFieldManagerMixin.init.call(self);
             self.model = new BasicModel(self); // For FieldManagerMixin
-            self.analytic_account_id_domain = []; // TODO unused for now
-            self.analytic_account_id_label = _t("Analytic Account Filter");
-            self.analytic_account_id_m2o = undefined; // Field widget
+            self.analytic_account_ids_domain = []; // TODO unused for now
+            self.analytic_account_ids_label = _t("Analytic Accounts Filter");
+            self.analytic_account_ids_m2m = undefined; // Field widget
             self.analytic_group_id_domain = []; // TODO unused for now
             self.analytic_group_filter_name = "analytic_account_id.group_id";
             self.analytic_group_id_label = _t("Analytic Account Group");
@@ -174,8 +174,8 @@ odoo.define("mis_builder.widget", function (require) {
             if (self.has_group_analytic_accounting) {
                 fields.push({
                     relation: "account.analytic.account",
-                    type: "many2one",
-                    name: "filter_analytic_account_id",
+                    type: "many2many",
+                    name: "filter_analytic_account_ids",
                     value: self._getFilterValue("analytic_account_id"),
                 });
                 fields.push({
@@ -215,27 +215,28 @@ odoo.define("mis_builder.widget", function (require) {
             var self = this;
 
             if (self.has_group_analytic_accounting) {
-                self.analytic_account_id_m2o = new relational_fields.FieldMany2One(
-                    self,
-                    "filter_analytic_account_id",
-                    record,
-                    {
-                        mode: "edit",
-                        attrs: {
-                            placeholder: self.analytic_account_id_label,
-                            options: {
-                                no_create: "True",
-                                no_open: "True",
+                self.analytic_account_ids_m2m =
+                    new relational_fields.FieldMany2ManyTags(
+                        self,
+                        "filter_analytic_account_ids",
+                        record,
+                        {
+                            mode: "edit",
+                            attrs: {
+                                placeholder: self.analytic_account_ids_label,
+                                options: {
+                                    no_create: "True",
+                                    no_open: "True",
+                                },
                             },
-                        },
-                    }
-                );
+                        }
+                    );
                 self._registerWidget(
                     record.id,
-                    self.analytic_account_id_m2o.name,
-                    self.analytic_account_id_m2o
+                    self.analytic_account_ids_m2m.name,
+                    self.analytic_account_ids_m2m
                 );
-                self.analytic_account_id_m2o.appendTo(self.getMisBuilderFilterBox());
+                self.analytic_account_ids_m2m.appendTo(self.getMisBuilderFilterBox());
 
                 self.analytic_group_id_m2o = new relational_fields.FieldMany2One(
                     self,
@@ -298,6 +299,12 @@ odoo.define("mis_builder.widget", function (require) {
             var self = this;
             var defs = [];
 
+            if (self.has_group_analytic_accounting) {
+                var dataPointAnalytic = record.data.filter_analytic_account_ids;
+                dataPointAnalytic.fieldsInfo.default.display_name = {};
+                defs.push(self.model.reload(dataPointAnalytic.id));
+            }
+
             if (self.has_group_analytic_tags) {
                 var dataPoint = record.data.filter_analytic_tag_ids;
                 dataPoint.fieldsInfo.default.display_name = {};
@@ -339,12 +346,15 @@ odoo.define("mis_builder.widget", function (require) {
                 arguments
             );
 
-            if (self.analytic_account_id_m2o !== undefined) {
-                if (self.analytic_account_id_m2o.value) {
+            if (self.analytic_account_ids_m2m !== undefined) {
+                if (
+                    self.analytic_account_ids_m2m.value &&
+                    self.analytic_account_ids_m2m.value.res_ids.length > 0
+                ) {
                     self._setFilterValue(
                         "analytic_account_id",
-                        self.analytic_account_id_m2o.value.res_id,
-                        "="
+                        self.analytic_account_ids_m2m.value.res_ids,
+                        "in"
                     );
                 } else {
                     self._setFilterValue("analytic_account_id", undefined);
