@@ -355,6 +355,27 @@ class TestMisReportInstance(common.HttpCase):
             )
         )
 
+        # create a duplicate of first instance with different period
+        self.report_instance_4 = self.env["mis.report.instance"].create(
+            dict(
+                name="test instance",
+                report_id=self.report.id,
+                company_id=self.env.ref("base.main_company").id,
+                period_ids=[
+                    (
+                        0,
+                        0,
+                        dict(
+                            name="p2",
+                            mode="fix",
+                            manual_date_from="2015-01-01",
+                            manual_date_to="2015-12-31",
+                        ),
+                    ),
+                ],
+            )
+        )
+
     def test_compute(self):
         matrix = self.report_instance._compute_matrix()
         for row in matrix.iter_rows():
@@ -509,6 +530,16 @@ class TestMisReportInstance(common.HttpCase):
             self.env.uid,
             "mis_builder.mis_report_instance_xlsx",
             [self.report_instance.id],
+            report_type="xlsx",
+        )
+
+    def test_xlsx_multiple_instances(self):
+        self.report_instance.export_xls()  # get action
+        test_reports.try_report(
+            self.env.cr,
+            self.env.uid,
+            "mis_builder.mis_report_instance_xlsx",
+            [self.report_instance.id, self.report_instance_4.id],
             report_type="xlsx",
         )
 

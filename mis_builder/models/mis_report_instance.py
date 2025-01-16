@@ -780,7 +780,6 @@ class MisReportInstance(models.Model):
         )
 
     def export_xls(self):
-        self.ensure_one()
         return self.env.ref("mis_builder.xls_export").report_action(
             self, data=dict(dummy=True)
         )  # required to propagate context
@@ -1007,4 +1006,11 @@ class MisReportInstance(models.Model):
     def _compute_user_can_edit_annotation(self):
         self.user_can_edit_annotation = self.env.user.has_group(
             "mis_builder.group_edit_annotation"
+        )
+
+    def _get_xlsx_report_name(self):
+        self.ensure_one()
+        return "{} - {}".format(
+            self.name,
+            ", ".join([a.name for a in self.query_company_ids]),
         )
