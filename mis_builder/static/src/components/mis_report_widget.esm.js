@@ -111,7 +111,7 @@ export class MisReportWidget extends Component {
     }
 
     async drilldown(event) {
-        const drilldown = $(event.target).data("drilldown");
+        const drilldown = JSON.parse(event.target.dataset.drilldown);
         const action = await this.orm.call(
             "mis.report.instance",
             "drilldown",
