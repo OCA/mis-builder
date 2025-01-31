@@ -1,11 +1,15 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
+from itertools import chain
+
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Date
 
 from .mis_kpi_data import intersect_days
+from .simple_array import SimpleArray
 
 
 class ProRataReadGroupMixin(models.AbstractModel):
@@ -18,8 +22,7 @@ class ProRataReadGroupMixin(models.AbstractModel):
         compute=lambda self: None,
         search="_search_date",
         help=(
-            "Dummy field that adapts searches on date "
-            "to searches on date_from/date_to."
+            "Dummy field that adapts searches on date to searches on date_from/date_to."
         ),
     )
 
@@ -37,15 +40,36 @@ class ProRataReadGroupMixin(models.AbstractModel):
         return intersect_days(item_dt_from, item_dt_to, dt_from, dt_to)
 
     @api.model
-    def read_group(
-        self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True
-    ):
-        """Override read_group to perform pro-rata temporis adjustments.
+    def _prorata(self, item, dt_from, dt_to, sum_field):
+        if sum_field == "__count":
+            return 1
+        item_dt_from = Date.from_string(item["date_from"])
+        item_dt_to = Date.from_string(item["date_to"])
+        i_days, item_days = self._intersect_days(
+            item_dt_from, item_dt_to, dt_from, dt_to
+        )
+        return item[sum_field] * i_days / item_days
 
-        When read_group is invoked with a domain that filters on
+    @api.model
+    def _read_group(
+        self,
+        domain,
+        groupby=(),
+        aggregates=(),
+        having=(),
+        offset=0,
+        limit=None,
+        order=None,
+    ):
+        """Override _read_group to perform pro-rata temporis adjustments.
+
+        When _read_group is invoked with a domain that filters on
         a time period (date >= from and date <= to, or
         date_from <= to and date_to >= from), adjust the accumulated
         values pro-rata temporis.
+
+        This mechanism works in specific cases and is primarily designed to
+        make AEP work with budget tables.
         """
         date_from = None
         date_to = None
@@ -64,33 +88,29 @@ class ProRataReadGroupMixin(models.AbstractModel):
         if (
             date_from is not None
             and date_to is not None
-            and not any(":" in f for f in fields)
+            and all(a.endswith(":sum") or a == "__count" for a in aggregates)
+            and not any(":" in g for g in groupby)
         ):
             dt_from = Date.from_string(date_from)
             dt_to = Date.from_string(date_to)
-            res = {}
-            sum_fields = set(fields) - set(groupby)
-            read_fields = set(fields + ["date_from", "date_to"])
-            for item in self.search_read(domain, read_fields):
+            stripped_aggregates = [a.rstrip(":sum") for a in aggregates]
+            sum_fields = filter(lambda a: a != "__count", stripped_aggregates)
+            read_fields = [*groupby, *sum_fields, "date_from", "date_to"]
+            # res is a dictionary with a tuple of groupby field names as keys,
+            # and sums of aggregate fields as values.
+            res = defaultdict(lambda: SimpleArray((0.0,) * len(aggregates)))
+            for item in self.search_fetch(domain, read_fields):
                 key = tuple(item[k] for k in groupby)
-                if key not in res:
-                    res[key] = {k: item[k] for k in groupby}
-                    res[key].update({k: 0.0 for k in sum_fields})
-                res_item = res[key]
-                for sum_field in sum_fields:
-                    item_dt_from = Date.from_string(item["date_from"])
-                    item_dt_to = Date.from_string(item["date_to"])
-                    i_days, item_days = self._intersect_days(
-                        item_dt_from, item_dt_to, dt_from, dt_to
-                    )
-                    res_item[sum_field] += item[sum_field] * i_days / item_days
-            return res.values()
-        return super().read_group(
+                res[key] += SimpleArray(
+                    self._prorata(item, dt_from, dt_to, f) for f in stripped_aggregates
+                )
+            return [tuple(chain(k, v)) for k, v in res.items()]
+        return super()._read_group(
             domain,
-            fields,
             groupby,
-            offset=offset,
-            limit=limit,
-            orderby=orderby,
-            lazy=lazy,
+            aggregates,
+            having,
+            offset,
+            limit,
+            order,
         )
