@@ -10,6 +10,7 @@ from . import test_kpi_data
 from . import test_mis_report_instance
 from . import test_mis_safe_eval
 from . import test_period_dates
+from . import test_pro_rata_read_group
 from . import test_render
 from . import test_simple_array
 from . import test_target_move
