@@ -351,11 +351,10 @@ class AccountingExpressionProcessor:
             try:
                 accs = aml_model.with_context(
                     allowed_company_ids=self.companies.ids
-                ).read_group(
+                )._read_group(
                     domain,
-                    ["debit", "credit", "account_id", "company_id"],
-                    ["account_id", "company_id"],
-                    lazy=False,
+                    groupby=("account_id", "company_id"),
+                    aggregates=("debit:sum", "credit:sum"),
                 )
             except ValueError as e:
                 raise UserError(
@@ -368,10 +367,10 @@ class AccountingExpressionProcessor:
                         exception=e,
                     )
                 ) from e
-            for acc in accs:
-                rate, dp = company_rates[acc["company_id"][0]]
-                debit = acc["debit"] or 0.0
-                credit = acc["credit"] or 0.0
+            for account_id, company_id, debit, credit in accs:
+                rate, dp = company_rates[company_id.id]
+                debit = debit or 0.0
+                credit = credit or 0.0
                 if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and float_is_zero(
                     debit - credit, precision_digits=self.dp
                 ):
@@ -379,7 +378,7 @@ class AccountingExpressionProcessor:
                     continue
                 # due to branches, it's possible to have multiple acc
                 # with the same account_id
-                self._data[key][acc["account_id"][0]] += (debit * rate, credit * rate)
+                self._data[key][account_id.id] += (debit * rate, credit * rate)
         # compute ending balances by summing initial and variation
         for key in ends:
             domain, mode = key
