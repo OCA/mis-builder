@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2025 - TODAY, Wesley Oliveira <wesley.oliveira@escodoo.com.br>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="mis_report_view_form">
+        <field name="name">mis.report.view.form (in mis_builder_bi_sql_editor)</field>
+        <field name="model">mis.report</field>
+        <field name="inherit_id" ref="mis_builder.mis_report_view_form" />
+        <field name="arch" type="xml">
+            <field name="move_lines_source" position="after">
+                <field name="bi_sql_view_required" invisible="1" />
+                <field
+                    name="bi_sql_view"
+                    attrs="{'required': [('bi_sql_view_required', '=', True)], 'invisible': [('bi_sql_view_required', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>

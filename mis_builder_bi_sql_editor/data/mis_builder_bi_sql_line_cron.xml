@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 - TODAY, Wesley Oliveira <wesley.oliveira@escodoo.com.br>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.cron" id="mis_builder_bi_sql_line_cron">
+        <field name="name">Refresh MIS Builder BI SQL Lines</field>
+        <field name="model_id" ref="model_mis_builder_bi_sql_line" />
+        <field name="state">code</field>
+        <field name="code">model._create_mis_builder_bi_sql_lines()</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall" />
+    </record>
+
+</odoo>

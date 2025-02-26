@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 - TODAY, Wesley Oliveira <wesley.oliveira@escodoo.com.br>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="view_bi_sql_view_form" model="ir.ui.view">
+        <field name="name">bi.sql.view.form (in mis_builder_bi_sql_editor)</field>
+        <field name="model">bi.sql.view</field>
+        <field name="inherit_id" ref="bi_sql_editor.view_bi_sql_view_form" />
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    name="activate_mis_builder"
+                    type="object"
+                    string="Activate MIS Builder"
+                    class="oe_highlight"
+                    attrs="{'invisible': ['|','|',('mis_builder_compatible', '=', False),('mis_builder_activated', '=', True),('state', 'not in', ['model_valid','ui_valid'])]}"
+                />
+                <button
+                    name="remove_mis_builder"
+                    type="object"
+                    string="Remove MIS Builder"
+                    attrs="{'invisible': ['|',('mis_builder_activated', '=', False),('state', 'not in', ['model_valid','ui_valid'])]}"
+                />
+            </header>
+            <field name="model_id" position="after">
+                <field name="mis_builder_compatible" readonly="1" />
+                <field name="mis_builder_activated" readonly="1" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
