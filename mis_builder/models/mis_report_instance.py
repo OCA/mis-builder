@@ -949,7 +949,7 @@ class MisReportInstance(models.Model):
                 "domain": domain,
                 "type": "ir.actions.act_window",
                 "res_model": period._get_aml_model_name(),
-                "views": [[False, "list"], [False, "form"]],
+                "views": [[False, "list"], [False, "form"], [False, "pivot"]],
                 "view_mode": "list",
                 "target": "current",
                 "context": {"active_test": False},
