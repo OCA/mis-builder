@@ -44,7 +44,11 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
                 vals.append(self.kpi_data.get(expression, AccountingNone))
                 drilldown_args.append({"expr_id": expression.id})
             return vals, drilldown_args, False
-        return super().eval_expressions(expressions, locals_dict)
+        else:
+            vals = []
+            for expression in expressions:
+                vals.append(self.kpi_data.get(expression, AccountingNone))
+        return super().eval_expressions(vals, locals_dict)
 
 
 class MisReportInstance(models.Model):
