@@ -11,7 +11,7 @@ from .mis_report_instance_period import SRC_MIS_BUDGET, SRC_MIS_BUDGET_BY_ACCOUN
 
 
 class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
-    def __init__(self, date_from, date_to, kpi_data, additional_move_line_filter):
+    def __init__(self, aep, date_from, date_to, kpi_data, additional_move_line_filter):
         super().__init__(
             aep=None,
             date_from=date_from,
@@ -20,6 +20,7 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
             aml_model=None,
         )
         self.kpi_data = kpi_data
+        self._origin_aep = aep
 
     @api.model
     def _get_kpi_for_expressions(self, expressions):
@@ -44,6 +45,10 @@ class MisBudgetAwareExpressionEvaluator(ExpressionEvaluator):
                 vals.append(self.kpi_data.get(expression, AccountingNone))
                 drilldown_args.append({"expr_id": expression.id})
             return vals, drilldown_args, False
+        elif kpi and not kpi.budgetable:
+            self.aep = self._origin_aep
+            self._aep_queries_done = False
+            self.aep_do_queries()
         return super().eval_expressions(expressions, locals_dict)
 
 
@@ -63,6 +68,7 @@ class MisReportInstance(models.Model):
         )
 
         expression_evaluator = MisBudgetAwareExpressionEvaluator(
+            aep,
             period.date_from,
             period.date_to,
             kpi_data,

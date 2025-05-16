@@ -11,6 +11,7 @@ from odoo.addons.mis_builder_budget.models.mis_report_instance import (
 class TestBudgetAwareExpressionEvaluator(TransactionCase):
     def _make_evaluator(self, kpi_data=None):
         return MisBudgetAwareExpressionEvaluator(
+            aep=None,
             date_from="2017-01-01",
             date_to="2017-01-16",
             kpi_data=kpi_data or {},
