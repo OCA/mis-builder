@@ -899,7 +899,9 @@ class MisReportInstance(models.Model):
     @api.model
     def _get_drilldown_model_views(self, model_name):
         self.ensure_one()
-        views_records = self.env["ir.ui.view"].search([("model", "=", model_name)])
+        views_records = (
+            self.env["ir.ui.view"].sudo().search([("model", "=", model_name)])
+        )
         views_records = set(views_records.mapped("type"))
         views_order = self._get_drilldown_views_and_orders()
         views = {view_type for view_type in views_records if view_type in views_order}
