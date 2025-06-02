@@ -323,7 +323,7 @@ class MisReportKpiExpression(models.Model):
     @api.model
     def _search_display_name(self, operator, value):
         if "." in value:
-            kpi_name, subkpi_name = value.split(".", 2)
+            kpi_name, subkpi_name = value.split(".", 1)
             name_search_domain = [
                 "|",
                 "|",
