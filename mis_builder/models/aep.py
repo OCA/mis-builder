@@ -191,13 +191,15 @@ class AccountingExpressionProcessor:
         for key, acc_domains in self._map_account_ids.items():
             all_account_ids = set()
             for acc_domain in acc_domains:
-                acc_domain_with_company = expression.AND(
-                    [acc_domain, [("company_ids", "in", self.companies.ids)]]
-                )
-                # TODO we only search account by code with only one company
-                # we need to optimize it
+                # XXX It is apparently not possible to search accounts by code
+                # across multiple companies at once (due to how _search_code is
+                # implemented for instance), so we have to search each company
+                # separately.
                 account_ids = []
                 for company in self.companies:
+                    acc_domain_with_company = expression.AND(
+                        [acc_domain, [("company_ids", "=", company.id)]]
+                    )
                     account_ids += (
                         self._account_model.with_company(company)
                         .search(acc_domain_with_company)
