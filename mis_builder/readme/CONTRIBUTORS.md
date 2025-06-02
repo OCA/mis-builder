@@ -27,3 +27,4 @@
 - Hoang Diep \<<hoang@trobz.com>\>
 - Miquel Pascual  \<<mpascual@apsl.net>\>
 - Antoni Marroig  \<<amarroig@apsl.net>\>
+- Chau Le \<<chaulb@trobz.com>\>

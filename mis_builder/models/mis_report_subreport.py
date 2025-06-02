@@ -50,8 +50,9 @@ class MisReportSubReport(models.Model):
         for rec in self:
             if not _is_valid_python_var(rec.name):
                 raise InvalidNameError(
-                    _("Subreport name ({}) must be a valid python identifier").format(
-                        rec.name
+                    _(
+                        "Subreport name (%s) must be a valid python identifier",
+                        rec.name,
                     )
                 )
 

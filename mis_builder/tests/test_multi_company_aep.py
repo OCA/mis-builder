@@ -4,7 +4,7 @@
 import datetime
 
 import odoo.tests.common as common
-from odoo import fields
+from odoo import Command, fields
 from odoo.tools.safe_eval import safe_eval
 
 from ..models.accounting_none import AccountingNone
@@ -43,7 +43,7 @@ class TestMultiCompanyAEP(common.TransactionCase):
                 "account_ar_" + company_key,
                 self.account_model.create(
                     {
-                        "company_id": company.id,
+                        "company_ids": [Command.link(company.id)],
                         "code": "400AR",
                         "name": "Receivable",
                         "account_type": "asset_receivable",
@@ -57,7 +57,7 @@ class TestMultiCompanyAEP(common.TransactionCase):
                 "account_in_" + company_key,
                 self.account_model.create(
                     {
-                        "company_id": company.id,
+                        "company_ids": [Command.link(company.id)],
                         "code": "700IN",
                         "name": "Income",
                         "account_type": "income",

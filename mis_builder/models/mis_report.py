@@ -13,7 +13,6 @@ import pytz
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
-from odoo.models import expression as osv_expression
 from odoo.tools.safe_eval import (
     datetime as safe_datetime,
 )
@@ -112,9 +111,9 @@ class MisReportKpi(models.Model):
     )
     type = fields.Selection(
         [
-            (TYPE_NUM, _("Numeric")),
-            (TYPE_PCT, _("Percentage")),
-            (TYPE_STR, _("String")),
+            (TYPE_NUM, "Numeric"),
+            (TYPE_PCT, "Percentage"),
+            (TYPE_STR, "String"),
         ],
         required=True,
         string="Value type",
@@ -122,16 +121,16 @@ class MisReportKpi(models.Model):
     )
     compare_method = fields.Selection(
         [
-            (CMP_DIFF, _("Difference")),
-            (CMP_PCT, _("Percentage")),
-            (CMP_NONE, _("None")),
+            (CMP_DIFF, "Difference"),
+            (CMP_PCT, "Percentage"),
+            (CMP_NONE, "None"),
         ],
         required=True,
         string="Comparison Method",
         default=CMP_PCT,
     )
     accumulation_method = fields.Selection(
-        [(ACC_SUM, _("Sum")), (ACC_AVG, _("Average")), (ACC_NONE, _("None"))],
+        [(ACC_SUM, "Sum"), (ACC_AVG, "Average"), (ACC_NONE, "None")],
         required=True,
         default=ACC_SUM,
         help="Determines how values of this kpi spanning over a "
@@ -159,8 +158,8 @@ class MisReportKpi(models.Model):
         for record in self:
             if not _is_valid_python_var(record.name):
                 raise ValidationError(
-                    _("KPI name ({}) must be a valid python identifier").format(
-                        record.name
+                    _(
+                        "KPI name (%s) must be a valid python identifier", record.name
                     )
                 )
 
@@ -265,8 +264,9 @@ class MisReportSubkpi(models.Model):
         for record in self:
             if not _is_valid_python_var(record.name):
                 raise ValidationError(
-                    _("Sub-KPI name ({}) must be a valid python identifier").format(
-                        record.name
+                    _(
+                        "Sub-KPI name (%s) must be a valid python identifier",
+                        record.name,
                     )
                 )
 
@@ -312,48 +312,35 @@ class MisReportKpiExpression(models.Model):
             kpi = rec.kpi_id
             subkpi = rec.subkpi_id
             if subkpi:
-                name = "{} / {} ({}.{})".format(
-                    kpi.description, subkpi.description, kpi.name, subkpi.name
+                name = (
+                    f"{kpi.description} / {subkpi.description} "
+                    f"({kpi.name}.{subkpi.name})"
                 )
             else:
                 name = rec.kpi_id.display_name
             rec.display_name = name
 
     @api.model
-    def _name_search(self, name, domain=None, operator="ilike", limit=None, order=None):
-        # TODO maybe implement negative search operators, although
-        #      there is not really a use case for that
-        domain = domain or []
-        splitted_name = name.split(".", 2)
-        name_search_domain = []
-        if "." in name:
-            kpi_name, subkpi_name = splitted_name[0], splitted_name[1]
-            name_search_domain = osv_expression.AND(
-                [
-                    name_search_domain,
-                    [
-                        "|",
-                        "|",
-                        "&",
-                        ("kpi_id.name", "=", kpi_name),
-                        ("subkpi_id.name", operator, subkpi_name),
-                        ("kpi_id.description", operator, name),
-                        ("subkpi_id.description", operator, name),
-                    ],
-                ]
-            )
-        name_search_domain = osv_expression.OR(
-            [
-                name_search_domain,
-                [
-                    "|",
-                    ("kpi_id.name", operator, name),
-                    ("kpi_id.description", operator, name),
-                ],
+    def _search_display_name(self, operator, value):
+        if "." in value:
+            kpi_name, subkpi_name = value.split(".", 2)
+            name_search_domain = [
+                "|",
+                "|",
+                "&",
+                ("kpi_id.name", "=", kpi_name),
+                ("subkpi_id.name", operator, subkpi_name),
+                ("kpi_id.description", operator, value),
+                ("subkpi_id.description", operator, value),
             ]
-        )
-        domain = osv_expression.AND([domain, name_search_domain])
-        return self._search(domain, limit=limit, order=order)
+        else:
+            name_search_domain = [
+                "|",
+                ("kpi_id.name", operator, value),
+                ("kpi_id.description", operator, value),
+            ]
+
+        return name_search_domain
 
 
 class MisReportQuery(models.Model):
@@ -382,10 +369,10 @@ class MisReportQuery(models.Model):
     )
     aggregate = fields.Selection(
         [
-            ("sum", _("Sum")),
-            ("avg", _("Average")),
-            ("min", _("Min")),
-            ("max", _("Max")),
+            ("sum", "Sum"),
+            ("avg", "Average"),
+            ("min", "Min"),
+            ("max", "Max"),
         ],
     )
     date_field = fields.Many2one(
@@ -406,8 +393,8 @@ class MisReportQuery(models.Model):
         for record in self:
             if not _is_valid_python_var(record.name):
                 raise ValidationError(
-                    _("Query name ({}) must be valid python identifier").format(
-                        record.name
+                    _(
+                        "Query name (%s) must be valid python identifier", record.name
                     )
                 )
 
@@ -528,7 +515,7 @@ class MisReport(models.Model):
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or [])
-        default["name"] = _("%s (copy)") % self.name
+        default["name"] = _("%s (copy)", self.name)
         new = super().copy(default)
         # after a copy, we have new subkpis, but the expressions
         # subkpi_id fields still point to the original one, so
@@ -940,7 +927,9 @@ class MisReport(models.Model):
             # all (in Odoo 13+, there is also the cancel state that we must ignore)
             return [("parent_state", "in", ("posted", "draft"))]
         else:
-            raise UserError(_("Unexpected value %s for target_move.") % (target_move,))
+            raise UserError(
+                _("Unexpected value %s for target_move.", target_move)
+            )
 
     def evaluate(
         self,

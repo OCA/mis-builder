@@ -22,11 +22,11 @@
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="mis_report_instance_view_tree">
-        <field name="name">mis.report.instance.view.tree</field>
+    <record model="ir.ui.view" id="mis_report_instance_view_list">
+        <field name="name">mis.report.instance.view.list</field>
         <field name="model">mis.report.instance</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <button
                     type="object"
                     name="preview"
@@ -47,7 +47,7 @@
                 <field name="currency_id" groups="base.group_multi_currency" />
                 <field name="target_move" />
                 <field name="pivot_date" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="mis_report_instance_view_form">
@@ -136,9 +136,7 @@
                                 <group>
                                     <field name="date" />
                                 </group>
-                                <group>
-
-                                </group>
+                                <group />
                                 <field
                                     name="period_ids"
                                     nolabel="1"
@@ -146,15 +144,14 @@
                                     required="comparison_mode"
                                     context="{'default_report_instance_id': id}"
                                 >
-                                    <tree decoration-danger="not valid">
+                                    <list decoration-danger="not valid">
                                         <field name="sequence" widget="handle" />
                                         <field name="name" />
                                         <field name="source" />
                                         <field name="source_aml_model_id" />
                                         <field name="date_from" />
                                         <field name="date_to" />
-                                        <field name="valid" invisible="1" />
-                                    </tree>
+                                    </list>
                                 </field>
                             </group>
                         </page>
@@ -215,9 +212,9 @@
     </record>
     <record model="ir.actions.act_window" id="mis_report_instance_view_action">
         <field name="name">MIS Reports</field>
-        <field name="view_id" ref="mis_report_instance_view_tree" />
+        <field name="view_id" ref="mis_report_instance_view_list" />
         <field name="res_model">mis.report.instance</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('temporary', '=', False)]</field>
     </record>
     <menuitem
@@ -253,42 +250,42 @@
             <sheet position="after">
                 <footer>
                     <button
-                        type="object"
-                        name="save_report"
-                        string="Save"
-                        icon="fa-save"
-                        class="btn"
-                    />
+                    type="object"
+                    name="save_report"
+                    string="Save"
+                    icon="fa-save"
+                    class="btn"
+                />
                     <button
-                        type="object"
-                        name="preview"
-                        string="Preview"
-                        icon="fa-search"
-                        class="btn"
-                    />
+                    type="object"
+                    name="preview"
+                    string="Preview"
+                    icon="fa-search"
+                    class="btn"
+                />
                     <button
-                        type="object"
-                        name="print_pdf"
-                        string="Print"
-                        icon="fa-print"
-                        class="btn"
-                    />
+                    type="object"
+                    name="print_pdf"
+                    string="Print"
+                    icon="fa-print"
+                    class="btn"
+                />
                     <button
-                        type="object"
-                        name="export_xls"
-                        string="Export"
-                        icon="fa-download"
-                        class="btn"
-                    /> or <button string="Cancel" class="oe_link" special="cancel" />
+                    type="object"
+                    name="export_xls"
+                    string="Export"
+                    icon="fa-download"
+                    class="btn"
+                /> or <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </sheet>
         </field>
     </record>
     <record model="ir.actions.act_window" id="last_mis_report_instance_view_action">
         <field name="name">Last Reports Generated</field>
-        <field name="view_id" ref="mis_report_instance_view_tree" />
+        <field name="view_id" ref="mis_report_instance_view_list" />
         <field name="res_model">mis.report.instance</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="domain">[('temporary', '=', True)]</field>
     </record>
     <menuitem
@@ -337,14 +334,14 @@
                             nolabel="1"
                             colspan="2"
                         >
-                            <tree editable="bottom">
+                            <list editable="bottom">
                                 <field name="sign" />
                                 <field
                                     name="period_to_sum_id"
                                     domain="[('report_instance_id', '=', parent.report_instance_id), ('id', '!=', parent.id)]"
                                     options="{'no_create': True, 'no_open': True}"
                                 />
-                            </tree>
+                            </list>
                         </field>
                         <field
                             name="source_sumcol_accdet"

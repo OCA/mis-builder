@@ -192,9 +192,17 @@ class AccountingExpressionProcessor:
             all_account_ids = set()
             for acc_domain in acc_domains:
                 acc_domain_with_company = expression.AND(
-                    [acc_domain, [("company_id", "in", self.companies.ids)]]
+                    [acc_domain, [("company_ids", "in", self.companies.ids)]]
                 )
-                account_ids = self._account_model.search(acc_domain_with_company).ids
+                # TODO we only search account by code with only one company
+                # we need to optimize it
+                account_ids = []
+                for company in self.companies:
+                    account_ids += (
+                        self._account_model.with_company(company)
+                        .search(acc_domain_with_company)
+                        .ids
+                    )
                 self._account_ids_by_acc_domain[acc_domain].update(account_ids)
                 all_account_ids.update(account_ids)
             self._map_account_ids[key] = list(all_account_ids)
@@ -341,7 +349,9 @@ class AccountingExpressionProcessor:
             # fetch sum of debit/credit, grouped by account_id
             _logger.debug("read_group domain: %s", domain)
             try:
-                accs = aml_model.read_group(
+                accs = aml_model.with_context(
+                    allowed_company_ids=self.companies.ids
+                ).read_group(
                     domain,
                     ["debit", "credit", "account_id", "company_id"],
                     ["account_id", "company_id"],
@@ -353,9 +363,7 @@ class AccountingExpressionProcessor:
                         'Error while querying move line source "%(model_name)s". '
                         "This is likely due to a filter or expression referencing "
                         "a field that does not exist in the model.\n\n"
-                        "The technical error message is: %(exception)s. "
-                    )
-                    % dict(
+                        "The technical error message is: %(exception)s. ",
                         model_name=aml_model._description,
                         exception=e,
                     )

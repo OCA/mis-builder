@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {DateTimeInput} from "@web/core/datetime/datetime_input";
@@ -12,7 +10,6 @@ export class MisReportWidget extends Component {
     setup() {
         super.setup();
         this.orm = useService("orm");
-        this.user = useService("user");
         this.action = useService("action");
         this.view = useService("view");
         this.JSON = JSON;
@@ -21,7 +18,6 @@ export class MisReportWidget extends Component {
             pivot_date: null,
         });
         this.searchModel = new SearchModel(this.env, {
-            user: this.user,
             orm: this.orm,
             view: this.view,
         });
@@ -48,13 +44,14 @@ export class MisReportWidget extends Component {
             ],
             {context: this.context}
         );
+
         this.source_aml_model_name = result.source_aml_model_name;
         this.widget_show_filters = result.widget_show_filters;
         this.widget_show_settings_button = result.widget_show_settings_button;
-        this.widget_search_view_id =
-            result.widget_search_view_id && result.widget_search_view_id[0];
+        this.widget_search_view_id = result.widget_search_view_id?.[0];
         this.state.pivot_date = parseDate(result.pivot_date);
         this.widget_show_pivot_date = result.widget_show_pivot_date;
+
         if (this.showSearchBar) {
             // Initialize the search model
             await this.searchModel.load({
@@ -96,27 +93,21 @@ export class MisReportWidget extends Component {
          * of Odoo dashboards that are not designed to contain forms but
          * rather tree views or charts.
          */
-        var context = this.props.record.context;
+        const context = this.props.record.context;
         if (context.active_model === "mis.report.instance") {
             return context.active_id;
         }
     }
 
     get context() {
-        var ctx = super.context;
-        if (this.showSearchBar) {
-            ctx = {
-                ...ctx,
+        return {
+            ...super.context,
+            ...(this.showSearchBar && {
                 mis_analytic_domain: this.searchModel.searchDomain,
-            };
-        }
-        if (this.showPivotDate && this.state.pivot_date) {
-            ctx = {
-                ...ctx,
-                mis_pivot_date: this.state.pivot_date,
-            };
-        }
-        return ctx;
+            }),
+            ...(this.showPivotDate &&
+                this.state.pivot_date && {mis_pivot_date: this.state.pivot_date}),
+        };
     }
 
     async drilldown(event) {

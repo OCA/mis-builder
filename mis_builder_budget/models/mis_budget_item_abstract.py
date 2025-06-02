@@ -62,7 +62,7 @@ class MisBudgetItemAbstract(models.AbstractModel):
             # date_from <= date_to
             if rec.date_from > rec.date_to:
                 raise ValidationError(
-                    _("%s start date must not be after end date") % (rec.display_name,)
+                    _("%s start date must not be after end date", rec.display_name,)
                 )
             # within budget dates
             if rec.date_from < rec.budget_date_from or rec.date_to > rec.budget_date_to:

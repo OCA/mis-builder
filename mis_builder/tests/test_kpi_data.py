@@ -18,6 +18,7 @@ class TestKpiData(TransactionCase):
         from .fake_models import MisKpiDataTestItem
 
         cls.loader.update_registry((MisKpiDataTestItem,))
+        cls.addClassCleanup(cls.loader.restore_registry)
 
         report = cls.env["mis.report"].create(dict(name="test report"))
         cls.kpi1 = cls.env["mis.report.kpi"].create(
@@ -70,11 +71,6 @@ class TestKpiData(TransactionCase):
                 amount=3,
             )
         )
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        return super().tearDownClass()
 
     def test_kpi_data_name(self):
         self.assertEqual(self.kd11.name, "k1: 2017-05-01 - 2017-05-10")

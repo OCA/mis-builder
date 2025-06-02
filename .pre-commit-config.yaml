@@ -1,7 +1,6 @@
 exclude: |
   (?x)
   # NOT INSTALLABLE ADDONS
-  ^mis_builder/|
   ^mis_builder_budget/|
   ^mis_builder_demo/|
   # END NOT INSTALLABLE ADDONS

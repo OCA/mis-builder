@@ -56,7 +56,7 @@ class MisReportKpiStyle(models.Model):
         for record in self:
             if record.indent_level < 0:
                 raise ValidationError(
-                    _("Indent level must be greater than " "or equal to 0")
+                    _("Indent level must be greater than or equal to 0")
                 )
 
     _font_style_selection = [("normal", "Normal"), ("italic", "Italic")]
@@ -119,11 +119,11 @@ class MisReportKpiStyle(models.Model):
     divider_inherit = fields.Boolean(default=True)
     divider = fields.Selection(
         [
-            ("1e-6", _("µ")),
-            ("1e-3", _("m")),
-            ("1", _("1")),
-            ("1e3", _("k")),
-            ("1e6", _("M")),
+            ("1e-6", "µ"),
+            ("1e-3", "m"),
+            ("1", "1"),
+            ("1e3", "k"),
+            ("1e6", "M"),
         ],
         string="Factor",
         default="1",

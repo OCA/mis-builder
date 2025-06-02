@@ -58,7 +58,9 @@ class MisReportInstancePeriodSum(models.Model):
         for rec in self:
             if rec.period_id == rec.period_to_sum_id:
                 raise ValidationError(
-                    _("You cannot sum period %s with itself.") % rec.period_id.name
+                    _(
+                        "You cannot sum period %s with itself.", rec.period_id.name
+                    )
                 )
 
 
@@ -187,11 +189,11 @@ class MisReportInstancePeriod(models.Model):
     )
     type = fields.Selection(
         [
-            ("d", _("Day")),
-            ("w", _("Week")),
-            ("m", _("Month")),
-            ("y", _("Year")),
-            ("date_range", _("Date Range")),
+            ("d", "Day"),
+            ("w", "Week"),
+            ("m", "Month"),
+            ("y", "Year"),
+            ("date_range", "Date Range"),
         ],
         string="Period type",
     )
@@ -342,9 +344,9 @@ class MisReportInstancePeriod(models.Model):
                             "Actual (alternative) models used in columns must "
                             "have the same account model in the Account field and must "
                             "be the same defined in the "
-                            "report template: %s"
+                            "report template: %s",
+                            report_account_model,
                         )
-                        % report_account_model
                     )
 
     @api.onchange("date_range_id")
@@ -414,14 +416,20 @@ class MisReportInstancePeriod(models.Model):
             if rec.source in (SRC_ACTUALS, SRC_ACTUALS_ALT):
                 if rec.mode == MODE_NONE:
                     raise DateFilterRequired(
-                        _("A date filter is mandatory for this source " "in column %s.")
-                        % rec.name
+                        _(
+                            "A date filter is mandatory for this source "
+                            "in column %s.",
+                            rec.name,
+                        )
                     )
             elif rec.source in (SRC_SUMCOL, SRC_CMPCOL):
                 if rec.mode != MODE_NONE:
                     raise DateFilterForbidden(
-                        _("No date filter is allowed for this source " "in column %s.")
-                        % rec.name
+                        _(
+                            "No date filter is allowed for this source "
+                            "in column %s.",
+                            rec.name,
+                        )
                     )
 
     @api.constrains("source", "source_cmpcol_from_id", "source_cmpcol_to_id")
@@ -430,11 +438,13 @@ class MisReportInstancePeriod(models.Model):
             if rec.source == SRC_CMPCOL:
                 if not rec.source_cmpcol_from_id or not rec.source_cmpcol_to_id:
                     raise ValidationError(
-                        _("Please provide both columns to compare in %s.") % rec.name
+                        _(
+                            "Please provide both columns to compare in %s.", rec.name
+                        )
                     )
                 if rec.source_cmpcol_from_id == rec or rec.source_cmpcol_to_id == rec:
                     raise ValidationError(
-                        _("Column %s cannot be compared to itrec.") % rec.name
+                        _("Column %s cannot be compared to itrec.", rec.name)
                     )
                 if (
                     rec.source_cmpcol_from_id.report_instance_id
@@ -443,8 +453,11 @@ class MisReportInstancePeriod(models.Model):
                     != rec.report_instance_id
                 ):
                     raise ValidationError(
-                        _("Columns to compare must belong to the same report " "in %s")
-                        % rec.name
+                        _(
+                            "Columns to compare must belong to the same report "
+                            "in %s",
+                            rec.name,
+                        )
                     )
 
     def copy_data(self, default=None):
@@ -652,7 +665,7 @@ class MisReportInstance(models.Model):
     def copy(self, default=None):
         self.ensure_one()
         default = dict(default or {})
-        default["name"] = _("%s (copy)") % self.name
+        default["name"] = _("%s (copy)", self.name)
         return super().copy(default)
 
     def _format_date(self, date):
@@ -789,8 +802,10 @@ class MisReportInstance(models.Model):
     def _add_column_move_lines(self, aep, kpi_matrix, period, label, description):
         if not period.date_from or not period.date_to:
             raise UserError(
-                _("Column %s with move lines source must have from/to dates.")
-                % (period.name,)
+                _(
+                    "Column %s with move lines source must have from/to dates.",
+                    period.name,
+                )
             )
         expression_evaluator = ExpressionEvaluator(
             aep,
@@ -879,7 +894,7 @@ class MisReportInstance(models.Model):
 
     @api.model
     def _get_drilldown_views_and_orders(self):
-        return {"tree": 1, "form": 2, "pivot": 3, "graph": 4}
+        return {"list": 1, "form": 2, "pivot": 3, "graph": 4}
 
     @api.model
     def _get_drilldown_model_views(self, model_name):

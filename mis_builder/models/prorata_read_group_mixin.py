@@ -29,7 +29,7 @@ class ProRataReadGroupMixin(models.AbstractModel):
         elif operator in ("<=", "<"):
             return [("date_from", operator, value)]
         raise UserError(
-            _("Unsupported operator %s for searching on date") % (operator,)
+            _("Unsupported operator %s for searching on date", operator)
         )
 
     @api.model
@@ -71,7 +71,7 @@ class ProRataReadGroupMixin(models.AbstractModel):
             res = {}
             sum_fields = set(fields) - set(groupby)
             read_fields = set(fields + ["date_from", "date_to"])
-            for item in self.search(domain).read(read_fields):
+            for item in self.search_read(domain, read_fields):
                 key = tuple(item[k] for k in groupby)
                 if key not in res:
                     res[key] = {k: item[k] for k in groupby}

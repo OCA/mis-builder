@@ -245,10 +245,9 @@ class KpiMatrix:
                     self.lang, row.style_props, kpi.type, val
                 )
                 if row.kpi.multi and subcol.subkpi:
-                    val_comment = "{}.{} = {}".format(
-                        row.kpi.name,
-                        subcol.subkpi.name,
-                        row.kpi._get_expression_str_for_subkpi(subcol.subkpi),
+                    val_comment = (
+                        f"{row.kpi.name}.{subcol.subkpi.name} = "
+                        f"{row.kpi._get_expression_str_for_subkpi(subcol.subkpi)}"
                     )
                 else:
                     val_comment = f"{row.kpi.name} = {row.kpi.expression}"
@@ -396,10 +395,11 @@ class KpiMatrix:
             if any(c.subkpis for c in sumcols) and not common_subkpis:
                 raise UserError(
                     _(
-                        "Sum cannot be computed in column {} "
+                        "Sum cannot be computed in column %s "
                         "because the columns to sum have no "
-                        "common subkpis"
-                    ).format(label)
+                        "common subkpis",
+                        label,
+                    )
                 )
             sum_col = KpiMatrixCol(
                 sumcol_key,

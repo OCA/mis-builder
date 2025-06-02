@@ -35,7 +35,7 @@ class TestAEP(common.TransactionCase):
         # create receivable bs account
         self.account_ar = self.account_model.create(
             {
-                "company_id": self.company.id,
+                "company_ids": self.company.ids,
                 "code": "400AR",
                 "name": "Receivable",
                 "account_type": "asset_receivable",
@@ -45,7 +45,7 @@ class TestAEP(common.TransactionCase):
         # create income pl account
         self.account_in = self.account_model.create(
             {
-                "company_id": self.company.id,
+                "company_ids": self.company.ids,
                 "code": "700IN",
                 "name": "Income",
                 "account_type": "income",

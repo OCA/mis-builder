@@ -412,7 +412,7 @@ class TestMisReportInstance(common.HttpCase):
             .search(
                 [
                     ("code", "=like", "200%"),
-                    ("company_id", "=", self.env.ref("base.main_company").id),
+                    ("company_ids", "in", [self.env.ref("base.main_company").id]),
                 ]
             )
             .ids
@@ -429,10 +429,8 @@ class TestMisReportInstance(common.HttpCase):
             "account_id": account.id,
         }
         action_name = self.report_instance._get_drilldown_action_name(args)
-        expected_name = "{kpi} - {account} - {period}".format(
-            kpi=self.kpi1.description,
-            account=account.display_name,
-            period=period.display_name,
+        expected_name = (
+            f"{self.kpi1.description} - {account.display_name} - {period.display_name}"
         )
         assert action_name == expected_name
 
@@ -458,7 +456,7 @@ class TestMisReportInstance(common.HttpCase):
                     "arch": "<graph><field name='name'/></graph>",
                 },
                 {
-                    "name": "mis_report_test_drilldown_views_tree",
+                    "name": "mis_report_test_drilldown_views_list",
                     "model": model_name,
                     "arch": "<pivot><field name='name'/></pivot>",
                 },
@@ -477,19 +475,19 @@ class TestMisReportInstance(common.HttpCase):
                     "arch": "<form><field name='name'/></form>",
                 },
                 {
-                    "name": "mis_report_test_drilldown_views_tree",
+                    "name": "mis_report_test_drilldown_views_list",
                     "model": model_name,
-                    "arch": "<tree><field name='name'/></tree>",
+                    "arch": "<list><field name='name'/></list>",
                 },
             ]
         )
         action = self.report_instance.drilldown(
             dict(expr="balp[200%]", period_id=self.report_instance.period_ids[0].id)
         )
-        self.assertEqual(action["view_mode"], "tree,form,pivot,graph")
+        self.assertEqual(action["view_mode"], "list,form,pivot,graph")
         self.assertEqual(
             action["views"],
-            [[False, "tree"], [False, "form"], [False, "pivot"], [False, "graph"]],
+            [[False, "list"], [False, "form"], [False, "pivot"], [False, "graph"]],
         )
 
     def test_qweb(self):
@@ -504,12 +502,18 @@ class TestMisReportInstance(common.HttpCase):
 
     def test_xlsx(self):
         self.report_instance.export_xls()  # get action
-        test_reports.try_report(
-            self.env.cr,
-            self.env.uid,
-            "mis_builder.mis_report_instance_xlsx",
-            [self.report_instance.id],
-            report_type="xlsx",
+        with self.assertLogs("odoo.tools.test_reports", level="WARNING") as log_catcher:
+            test_reports.try_report(
+                self.env.cr,
+                self.env.uid,
+                "mis_builder.mis_report_instance_xlsx",
+                [self.report_instance.id],
+                report_type="xlsx",
+            )
+        self.assertIn(
+            'Report mis_builder.mis_report_instance_xlsx produced a "xlsx" chunk, '
+            "cannot examine it",
+            log_catcher.output[0],
         )
 
     def test_get_kpis_by_account_id(self):
@@ -518,7 +522,7 @@ class TestMisReportInstance(common.HttpCase):
             .search(
                 [
                     ("code", "=like", "200%"),
-                    ("company_id", "=", self.env.ref("base.main_company").id),
+                    ("company_ids", "in", [self.env.ref("base.main_company").id]),
                 ]
             )
             .ids

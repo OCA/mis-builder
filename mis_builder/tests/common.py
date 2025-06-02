@@ -27,10 +27,8 @@ def assert_matrix(matrix, expected):
             raise AssertionError("too many rows")
         for j, cell, expected_val in _zip(row.iter_cells(), expected_row):
             assert (
-                cell and cell.val
-            ) == expected_val, "{} != {} in row {} col {}".format(
-                cell and cell.val, expected_val, i, j
-            )
+                (cell and cell.val) == expected_val
+            ), f"{cell and cell.val} != {expected_val} in row {i} col {j}"
 
 
 @tagged("doctest")

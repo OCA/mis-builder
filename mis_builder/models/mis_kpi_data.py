@@ -60,11 +60,9 @@ class MisKpiData(models.AbstractModel):
                 subkpi_name = "." + subkpi_name
             else:
                 subkpi_name = ""
-            rec.name = "{}{}: {} - {}".format(
-                rec.kpi_expression_id.kpi_id.name,
-                subkpi_name,
-                rec.date_from,
-                rec.date_to,
+            rec.name = (
+                f"{rec.kpi_expression_id.kpi_id.name}{subkpi_name}: "
+                f"{rec.date_from} - {rec.date_to}"
             )
 
     @api.model

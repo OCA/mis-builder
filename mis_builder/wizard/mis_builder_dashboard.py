@@ -46,8 +46,8 @@ class AddMisReportInstanceDashboard(models.TransientModel):
             .sudo()
             .create(
                 {
-                    "name": "mis.report.instance.result.view.action.%d"
-                    % self.env.context["active_id"],
+                    "name": f"mis.report.instance.result.view.action."
+                    f"{self.env.context['active_id']}",
                     "res_model": active_model,
                     "res_id": active_id,
                     "target": "current",
@@ -67,7 +67,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
         )
         arch = self.dashboard_id.view_id.arch
         if last_customization:
-            arch = self.env["ir.ui.view.custom"].browse(last_customization[0].id).arch
+            arch = last_customization[0].arch
         new_arch = etree.fromstring(arch)
         column = new_arch.xpath("//column")[0]
         # Due to native dashboard doesn't support form view
