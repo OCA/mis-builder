@@ -475,7 +475,16 @@ class KpiMatrix:
     def _get_account_name(self, account):
         result = f"{account.code} {account.name}"
         if self._multi_company:
-            result = f"{result} [{account.company_id.name}]"
+            # Handle both single company_id and multi-company company_ids fields
+            if hasattr(account, "company_id") and account.company_id:
+                result = f"{result} [{account.company_id.name}]"
+            elif hasattr(account, "company_ids") and account.company_ids:
+                company_names = ", ".join(
+                    [c.name for c in account.company_ids[:3]]
+                )  # Limit to first 3 companies
+                if len(account.company_ids) > 3:
+                    company_names += ", ..."
+                result = f"{result} [{company_names}]"
         return result
 
     def get_account_name(self, account_id):

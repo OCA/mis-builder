@@ -326,6 +326,9 @@ class AccountingExpressionProcessor:
             aml_model = self.env[aml_model]
         aml_model = aml_model.with_context(active_test=False)
         company_rates = self._get_company_rates(date_to)
+        target_rate = self.currency.with_context(
+            date=date_to
+        ).rate  # Store target_rate for missing companies
         # {(domain, mode): {account_id: (debit, credit)}}
         self._data = defaultdict(
             lambda: defaultdict(
@@ -370,6 +373,20 @@ class AccountingExpressionProcessor:
                     )
                 ) from e
             for account_id, company_id, debit, credit in accs:
+                # Handle missing company rates by adding them on demand
+                if company_id.id not in company_rates:
+                    if company_id.currency_id != self.currency:
+                        rate = (
+                            target_rate
+                            / company_id.currency_id.with_context(date=date_to).rate
+                        )
+                    else:
+                        rate = 1.0
+                    company_rates[company_id.id] = (
+                        rate,
+                        company_id.currency_id.decimal_places,
+                    )
+
                 rate, dp = company_rates[company_id.id]
                 debit = debit or 0.0
                 credit = credit or 0.0
