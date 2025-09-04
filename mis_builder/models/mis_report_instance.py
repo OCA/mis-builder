@@ -488,8 +488,10 @@ class MisReportInstance(models.Model):
 
     _name = "mis.report.instance"
     _description = "MIS Report Instance"
+    _order = "sequence, id"
 
     name = fields.Char(required=True, translate=True)
+    sequence = fields.Integer()
     description = fields.Char(related="report_id.description")
     date = fields.Date(
         string="Base date", help="Report base date " "(leave empty to use current date)"
@@ -504,7 +506,7 @@ class MisReportInstance(models.Model):
         copy=True,
     )
     target_move = fields.Selection(
-        [("posted", "All Posted Entries"), ("all", "All Entries")],
+        [("posted", "Posted Entries"), ("all", "Draft and Posted Entries")],
         string="Target Moves",
         required=True,
         default="posted",

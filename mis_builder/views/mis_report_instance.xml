@@ -27,6 +27,7 @@
         <field name="model">mis.report.instance</field>
         <field name="arch" type="xml">
             <list>
+                <field name="sequence" widget="handle" />
                 <button
                     type="object"
                     name="preview"
@@ -40,7 +41,7 @@
                     string="Export"
                     icon="fa-download"
                 />
-                <field name="name" />
+                <field name="name" decoration-bf="1" />
                 <field name="report_id" string="Template" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="multi_company" groups="base.group_multi_company" />
@@ -209,6 +210,48 @@
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="mis_report_instance_view_search">
+        <field name="name">mis.report.instance.view.search</field>
+        <field name="model">mis.report.instance</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <filter
+                    name="multi_company"
+                    string="Multiple Companies"
+                    domain="[('multi_company', '=', True)]"
+                />
+                <filter
+                    name="single_company"
+                    string="Single Company"
+                    domain="[('multi_company', '=', False)]"
+                />
+                <separator />
+                <filter
+                    name="target_move_posted"
+                    string="Posted Entries"
+                    domain="[('target_move', '=', 'posted')]"
+                />
+                <filter
+                    name="target_move_all"
+                    string="Draft and Posted Entries"
+                    domain="[('target_move', '=', 'all')]"
+                />
+                <group name="groupby">
+                    <filter
+                        name="currency_groupby"
+                        string="Currency"
+                        context="{'group_by': 'currency_id'}"
+                    />
+                    <filter
+                        name="report_groupby"
+                        string="Template"
+                        context="{'group_by': 'report_id'}"
+                    />
+                </group>
+            </search>
         </field>
     </record>
     <record model="ir.actions.act_window" id="mis_report_instance_view_action">
