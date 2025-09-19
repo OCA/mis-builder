@@ -500,22 +500,6 @@ class TestMisReportInstance(common.HttpCase):
             report_type="qweb-pdf",
         )
 
-    def test_xlsx(self):
-        self.report_instance.export_xls()  # get action
-        with self.assertLogs("odoo.tools.test_reports", level="WARNING") as log_catcher:
-            test_reports.try_report(
-                self.env.cr,
-                self.env.uid,
-                "mis_builder.mis_report_instance_xlsx",
-                [self.report_instance.id],
-                report_type="xlsx",
-            )
-        self.assertIn(
-            'Report mis_builder.mis_report_instance_xlsx produced a "xlsx" chunk, '
-            "cannot examine it",
-            log_catcher.output[0],
-        )
-
     def test_get_kpis_by_account_id(self):
         account_ids = (
             self.env["account.account"]

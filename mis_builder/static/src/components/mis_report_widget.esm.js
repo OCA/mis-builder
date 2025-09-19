@@ -168,16 +168,6 @@ export class MisReportWidget extends Component {
         this.action.doAction(action);
     }
 
-    async exportXls() {
-        const action = await this.orm.call(
-            "mis.report.instance",
-            "export_xls",
-            [this._instanceId()],
-            {context: this.context}
-        );
-        this.action.doAction(action);
-    }
-
     async displaySettings() {
         const action = await this.orm.call(
             "mis.report.instance",

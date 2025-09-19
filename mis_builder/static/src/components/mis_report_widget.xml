@@ -32,8 +32,6 @@
                                     <span class="fa fa-refresh" /> Refresh </button>
                                 <button t-on-click="printPdf" class="btn">
                                     <span class="fa fa-print" /> Print </button>
-                                <button t-on-click="exportXls" class="btn">
-                                    <span class="fa fa-download" /> Export </button>
                                 <button
                                     t-on-click="displaySettings"
                                     t-if="widget_show_settings_button"

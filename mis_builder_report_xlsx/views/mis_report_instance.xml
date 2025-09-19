@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="mis_report_instance_view_list">
+        <field name="model">mis.report.instance</field>
+        <field name="inherit_id" ref="mis_builder.mis_report_instance_view_list" />
+        <field name="arch" type="xml">
+            <button name="print_pdf" position="after">
+                <button
+                    type="object"
+                    name="export_xls"
+                    string="Export"
+                    icon="fa-download"
+                />
+            </button>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mis_report_instance_view_form">
+        <field name="model">mis.report.instance</field>
+        <field name="inherit_id" ref="mis_builder.mis_report_instance_view_form" />
+        <field name="arch" type="xml">
+            <button name="print_pdf" position="after">
+                <button
+                    type="object"
+                    name="export_xls"
+                    string="Export"
+                    icon="fa-download"
+                    class="btn"
+                />
+            </button>
+        </field>
+    </record>
+
+    <record id="wizard_mis_report_instance_view_form" model="ir.ui.view">
+        <field name="model">mis.report.instance</field>
+        <field
+            name="inherit_id"
+            ref="mis_builder.wizard_mis_report_instance_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//footer/button[@name='print_pdf']" position="after">
+                <button
+                    type="object"
+                    name="export_xls"
+                    string="Export"
+                    icon="fa-download"
+                    class="btn"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,2 @@
+- Stéphane Bidoul \<<stephane.bidoul@acsone.eu>\>
+- Sylvain LE GAL

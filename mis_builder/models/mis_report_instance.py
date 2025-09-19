@@ -792,12 +792,6 @@ class MisReportInstance(models.Model):
             .report_action(self, data=dict(dummy=True))  # required to propagate context
         )
 
-    def export_xls(self):
-        self.ensure_one()
-        return self.env.ref("mis_builder.xls_export").report_action(
-            self, data=dict(dummy=True)
-        )  # required to propagate context
-
     def display_settings(self):
         assert len(self.ids) <= 1
         view_id = self.env.ref("mis_builder.mis_report_instance_view_form")

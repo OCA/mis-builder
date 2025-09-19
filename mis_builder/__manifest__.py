@@ -3,7 +3,7 @@
 
 {
     "name": "MIS Builder",
-    "version": "18.0.1.7.3",
+    "version": "18.0.2.0.0",
     "category": "Reporting",
     "summary": """
         Build 'Management Information System' Reports and Dashboards
@@ -13,7 +13,6 @@
     "depends": [
         "account",
         "board",
-        "report_xlsx",  # OCA/reporting-engine
         "date_range",  # OCA/server-ux
     ],
     "data": [
@@ -26,7 +25,6 @@
         "security/ir.model.access.csv",
         "security/mis_builder_security.xml",
         "report/mis_report_instance_qweb.xml",
-        "report/mis_report_instance_xlsx.xml",
     ],
     "assets": {
         "web.assets_backend": [

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t
+        t-name="mis_builder_report_xlsx.MisReportWidget"
+        t-inherit="mis_builder.MisReportWidget"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//button[@t-on-click='printPdf']" position="after">
+            <button t-on-click="exportXls" class="btn">
+                <span class="fa fa-download" /> Export </button>
+        </xpath>
+    </t>
+</templates>

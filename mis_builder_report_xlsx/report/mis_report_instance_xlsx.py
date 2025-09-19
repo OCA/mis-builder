@@ -8,9 +8,9 @@ from datetime import datetime
 
 from odoo import api, fields, models
 
-from ..models.accounting_none import AccountingNone
-from ..models.data_error import DataError
-from ..models.mis_report_style import TYPE_STR
+from odoo.addons.mis_builder.models.accounting_none import AccountingNone
+from odoo.addons.mis_builder.models.data_error import DataError
+from odoo.addons.mis_builder.models.mis_report_style import TYPE_STR
 
 _logger = logging.getLogger(__name__)
 
