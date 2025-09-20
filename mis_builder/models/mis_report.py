@@ -1008,3 +1008,28 @@ class MisReport(models.Model):
             no_auto_expand_accounts=True,
         )
         return locals_dict
+
+    @api.model
+    def _profit_and_loss_consistency_check(self, company):
+        """Validate consistency of expressions for a P&L report.
+
+        - only balp is used in accounting expressions
+        - each P&L account of the company is used exactly once
+        """
+        aep = self._prepare_aep(company)
+        used_account_ids = set()
+        for kpi in self.kpi_ids:
+            for expression in kpi.expression_ids:
+                expr = expression.name
+                accounting_variables = aep.get_accounting_variables_for_expr(expr)
+                field, mode = accounting_variables.pop()
+                if field != "bal" or mode != aep.MODE_VARIATION:
+                    ... # only balp may be used in P&L reports
+                expression_account_ids = aep.get_account_ids_for_expr(expr)
+                if used_account_ids & expression_account_ids:
+                    ... # accounts used more than once
+                used_account_ids.update(expression_account_ids)
+        all_account_ids = set(self.env["account.account"].search([...]).ids)
+        if used_account_ids != all_account_ids:
+            ... # some accounts not used
+        return errors

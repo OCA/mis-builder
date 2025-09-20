@@ -313,6 +313,19 @@ class AccountingExpressionProcessor:
             account_ids.update(self._account_ids_by_acc_domain[acc_domain])
         return account_ids
 
+    def get_accounting_variables_for_expr(self, expr):
+        """Iterate accounting variables in an expression.
+
+        Prerequisite: done_parsing() must have been invoked.
+
+        Returns a set of (field, mode) used in the expression.
+        """
+        vars = set()
+        for mo in self._ACC_RE.finditer(expr):
+            field, mode, _, _ = self._parse_match_object(mo)
+            vars.add((field, mode))
+        return vars
+
     def get_aml_domain_for_expr(self, expr, date_from, date_to, account_id=None):
         """Get a domain on account.move.line for an expression.
 
