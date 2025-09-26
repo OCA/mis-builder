@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem
+        name="MIS Reports"
+        id="menu_main_mis_builder"
+        sequence="20"
+        web_icon="mis_builder,static/description/icon.png"
+    />
+
+    <menuitem
+        id="mis_report_finance_menu"
+        parent="menu_main_mis_builder"
+        name="Reporting"
+        sequence="10"
+        groups="account.group_account_manager"
+    />
+
+    <menuitem
+        id="mis_report_conf_menu"
+        parent="menu_main_mis_builder"
+        name="Configuration"
+        sequence="100"
+    />
+</odoo>

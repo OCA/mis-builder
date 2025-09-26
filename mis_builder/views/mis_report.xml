@@ -299,12 +299,7 @@
         <field name="view_mode">list,form</field>
         <field name="path">mis-report-templates</field>
     </record>
-    <menuitem
-        id="mis_report_conf_menu"
-        parent="account.menu_finance_configuration"
-        name="MIS Reporting"
-        sequence="90"
-    />
+
     <menuitem
         id="mis_report_view_menu"
         parent="mis_report_conf_menu"
