@@ -3,3 +3,5 @@ The mis_builder
 and [known
 issues](https://github.com/OCA/mis-builder/issues?q=is%3Aopen+is%3Aissue+label%3Abug)
 can be found on GitHub.
+
+The date ranges can't be changed from the Dashboard.

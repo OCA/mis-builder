@@ -17,14 +17,22 @@
                             <SearchBar t-if="showSearchBar" />
                         </div>
                         <div class="oe_mis_builder_cp_right_bottom">
-                            <div class="oe_mis_builder_filter_buttons">
-                                <DateTimeInput
-                                    value="state.pivot_date"
-                                    placeholder="'Base date...'"
-                                    type="'date'"
-                                    t-if="showPivotDate"
-                                    onChange.bind="onDateTimeChanged"
-                                />
+                            <div class="oe_mis_builder_filter_buttons o_row">
+                                <div class="oe_inline">
+                                    <DateTimeInput
+                                        value="state.pivot_date"
+                                        placeholder="'Base date...'"
+                                        type="'date'"
+                                        t-if="showPivotDate"
+                                        onChange.bind="onDateTimeChanged"
+                                    />
+                                </div>
+                                <div class="oe_inline" t-if="showDateRange">
+                                    <Many2OneField
+                                        t-props="dateRanges"
+                                        update.bind="updateDateRange"
+                                    />
+                                </div>
                             </div>
                             <div class="oe_mis_builder_action_buttons">
                                 <button t-on-click="refresh" class="btn">

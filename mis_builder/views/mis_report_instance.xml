@@ -11,6 +11,9 @@
                 create="false"
                 delete="false"
             >
+                <field name="date_range_id" class="d-none" />
+                <field name="date_from" class="d-none" />
+                <field name="date_to" class="d-none" />
                 <sheet>
                     <field
                         name="id"

@@ -1,6 +1,7 @@
 import {Component, onMounted, onWillStart, useState, useSubEnv} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {DateTimeInput} from "@web/core/datetime/datetime_input";
+import {Many2OneField} from "@web/views/fields/many2one/many2one_field";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
 import {parseDate} from "@web/core/l10n/dates";
@@ -68,6 +69,24 @@ export class MisReportWidget extends Component {
         this.wide_display = result.wide_display_by_default;
 
         // Compute the report
+        this.refresh();
+    }
+
+    get showDateRange() {
+        return this.props.record.data.id && this.showPivotDate;
+    }
+
+    get dateRanges() {
+        return {
+            relation: "date.range",
+            readonly: false,
+            name: "date_range_id",
+            record: this.props.record,
+        };
+    }
+    async updateDateRange(ev) {
+        await this.props.record.update(ev);
+        await this.props.record.save();
         this.refresh();
     }
 
@@ -193,7 +212,7 @@ export class MisReportWidget extends Component {
     }
 }
 
-MisReportWidget.components = {SearchBar, DateTimeInput};
+MisReportWidget.components = {SearchBar, DateTimeInput, Many2OneField};
 MisReportWidget.template = "mis_builder.MisReportWidget";
 
 export const misReportWidget = {
