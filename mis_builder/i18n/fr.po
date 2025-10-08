@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-01-11 01:36+0000\n"
-"PO-Revision-Date: 2025-09-30 21:42+0000\n"
+"PO-Revision-Date: 2025-10-08 11:42+0000\n"
 "Last-Translator: Vincèn PUJOL <vincen@domedia.net>\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "Language: fr\n"
@@ -180,6 +180,10 @@ msgid ""
 "starting\n"
 "                                            with 40 during the period."
 msgstr ""
+"<b>crdp[40%]</b>\n"
+"                                            : somme de tous les crédits des "
+"comptes commençant\n"
+"                                            par 40 sur la période."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -188,6 +192,9 @@ msgid ""
 "                                            : beginning and end date of the "
 "period."
 msgstr ""
+"<b>début, fin</b>\n"
+"                                            : date de début et fin de la "
+"période."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -195,6 +202,8 @@ msgid ""
 "<b>datetime, datetime, dateutil</b>\n"
 "                                            : the python modules."
 msgstr ""
+"<b>datetime, datetime, dateutil</b>\n"
+"                                            : les modules python."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -204,6 +213,10 @@ msgid ""
 "the period,\n"
 "                                            initial balance, ending balance"
 msgstr ""
+"<b>p, i, e</b>\n"
+"                                            : variation respectivement sur "
+"la période,\n"
+"                                            balance initiale, balance finale"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -214,6 +227,12 @@ msgid ""
 "                                            starting with 55 whose\n"
 "                                          ending balance is positive."
 msgstr ""
+"<b>pbale[55%]</b>\n"
+"                                            : somme des balances finales des "
+"comptes\n"
+"                                            commençant par 55 dont la "
+"balance\n"
+"                                         finale est positive."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -366,7 +385,7 @@ msgstr "Filtre de compte analytique"
 #: code:addons/mis_builder/models/mis_report_instance.py:585
 #, python-format
 msgid "Analytic Account: %s"
-msgstr "Compte analytique:%s"
+msgstr "Compte analytique :%s"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_analytic_tag_ids
@@ -1015,7 +1034,7 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_kpi_id
 msgid "Kpi id"
-msgstr "Kpi id"
+msgstr "ID du KPI"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_name
@@ -1105,7 +1124,7 @@ msgstr "Classe abstraite de données MIS KPI"
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_form
 msgid "MIS Report"
-msgstr "MIS Report"
+msgstr "Rapport MIS"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subreport
