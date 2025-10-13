@@ -47,7 +47,7 @@ class KpiMatrixRow:
 
     @property
     def row_id(self):
-        self._matrix._make_row_id(self.kpi.id, self.account_id)
+        return self._matrix._make_row_id(self.kpi.id, self.account_id)
 
     def iter_cell_tuples(self, cols=None):
         if cols is None:
