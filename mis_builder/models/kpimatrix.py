@@ -236,21 +236,6 @@ class KpiMatrix(object):
         assert len(vals) == col.colspan
         assert len(drilldown_args) == col.colspan
         for val, drilldown_arg, subcol in zip(vals, drilldown_args, col.iter_subcols()):
-            if isinstance(val, DataError):
-                val_rendered = val.name
-                val_comment = val.msg
-            else:
-                val_rendered = self._style_model.render(
-                    self.lang, row.style_props, kpi.type, val
-                )
-                if row.kpi.multi and subcol.subkpi:
-                    val_comment = "{}.{} = {}".format(
-                        row.kpi.name,
-                        subcol.subkpi.name,
-                        row.kpi._get_expression_str_for_subkpi(subcol.subkpi),
-                    )
-                else:
-                    val_comment = "{} = {}".format(row.kpi.name, row.kpi.expression)
             cell_style_props = row.style_props
             if row.kpi.style_expression:
                 # evaluate style expression
@@ -272,6 +257,21 @@ class KpiMatrix(object):
                         )
                     else:
                         _logger.error("Style '%s' not found.", style_name)
+            if isinstance(val, DataError):
+                val_rendered = val.name
+                val_comment = val.msg
+            else:
+                val_rendered = self._style_model.render(
+                    self.lang, cell_style_props, kpi.type, val
+                )
+                if row.kpi.multi and subcol.subkpi:
+                    val_comment = "{}.{} = {}".format(
+                        row.kpi.name,
+                        subcol.subkpi.name,
+                        row.kpi._get_expression_str_for_subkpi(subcol.subkpi),
+                    )
+                else:
+                    val_comment = "{} = {}".format(row.kpi.name, row.kpi.expression)
             cell = KpiMatrixCell(
                 row,
                 subcol,
