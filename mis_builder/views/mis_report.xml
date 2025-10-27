@@ -20,6 +20,7 @@
                         <field name="name" />
                         <field name="description" />
                         <field name="style_id" />
+                        <field name="auto_expand_col_name" />
                         <field name="move_lines_source" options="{'no_open': true}" />
                     </group>
                     <notebook>
