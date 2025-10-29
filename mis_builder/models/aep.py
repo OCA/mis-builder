@@ -299,10 +299,14 @@ class AccountingExpressionProcessor:
     def _get_company_rates(self, date):
         # get exchange rates for each company with its rouding
         company_rates = {}
-        target_rate = self.currency.with_context(date=date).rate
         for company in self.companies:
             if company.currency_id != self.currency:
-                rate = target_rate / company.currency_id.with_context(date=date).rate
+                rate = self.env["res.currency"]._get_conversion_rate(
+                    from_currency=company.currency_id,
+                    to_currency=self.currency,
+                    company=self.env.company,
+                    date=date,
+                )
             else:
                 rate = 1.0
             company_rates[company.id] = (rate, company.currency_id.decimal_places)
