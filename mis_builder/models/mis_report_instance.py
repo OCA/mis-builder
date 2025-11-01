@@ -748,6 +748,9 @@ class MisReportInstance(models.Model):
             domain.extend(ast.literal_eval(self.analytic_domain))
         # contextual analytic domain filter
         domain.extend(self.env.context.get("mis_analytic_domain", []))
+        # company filter
+        if self.query_company_ids:
+            domain.append(("company_id", "in", self.query_company_ids.ids))
         return domain
 
     @api.model
