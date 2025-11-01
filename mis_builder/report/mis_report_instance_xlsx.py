@@ -46,29 +46,57 @@ class MisBuilderXlsx(models.AbstractModel):
         )
         sheet = workbook.add_worksheet(report_name[:31])
         row_pos = 0
-        col_pos = 0
         # width of the labels column
         label_col_width = MIN_COL_WIDTH
         # {col_pos: max width in characters}
         col_width = defaultdict(lambda: MIN_COL_WIDTH)
 
-        # document title
-        bold = workbook.add_format({"bold": True})
-        header_format = workbook.add_format(
-            {"bold": True, "align": "center", "bg_color": "#F0EEEE"}
+        row_pos = self._write_report_title(workbook, sheet, row_pos, report_name)
+
+        row_pos = self._write_filters(sheet, row_pos, objects)
+
+        row_pos, col_width = self._write_col_headers(
+            workbook, sheet, row_pos, matrix, col_width
         )
+
+        row_pos, col_width = self._write_subcol_headers(
+            workbook, sheet, row_pos, matrix, col_width
+        )
+
+        row_pos, label_col_width, col_width = self._write_rows(
+            workbook,
+            sheet,
+            row_pos,
+            matrix,
+            notes,
+            style_obj,
+            label_col_width,
+            col_width,
+        )
+
+        self._write_footer(workbook, sheet, row_pos)
+
+        self._adjust_col_widths(sheet, label_col_width, col_width)
+
+    def _write_report_title(self, workbook, sheet, row_pos, report_name):
+        bold = workbook.add_format({"bold": True})
         sheet.write(row_pos, 0, report_name, bold)
         row_pos += 2
+        return row_pos
 
-        # filters
+    def _write_filters(self, sheet, row_pos, objects):
         filter_descriptions = objects.get_filter_descriptions()
         if filter_descriptions:
             for filter_description in objects.get_filter_descriptions():
                 sheet.write(row_pos, 0, filter_description)
                 row_pos += 1
             row_pos += 1
+        return row_pos
 
-        # column headers
+    def _write_col_headers(self, workbook, sheet, row_pos, matrix, col_width):
+        header_format = workbook.add_format(
+            {"bold": True, "align": "center", "bg_color": "#F0EEEE"}
+        )
         sheet.write(row_pos, 0, "", header_format)
         col_pos = 1
         for col in matrix.iter_cols():
@@ -91,9 +119,14 @@ class MisBuilderXlsx(models.AbstractModel):
                     col_width[col_pos], len(col.label or ""), len(col.description or "")
                 )
             col_pos += col.colspan
+        sheet.write(row_pos, col_pos, "Annotations", header_format)
         row_pos += 1
+        return row_pos, col_width
 
-        # sub column headers
+    def _write_subcol_headers(self, workbook, sheet, row_pos, matrix, col_width):
+        header_format = workbook.add_format(
+            {"bold": True, "align": "center", "bg_color": "#F0EEEE"}
+        )
         sheet.write(row_pos, 0, "", header_format)
         col_pos = 1
         for subcol in matrix.iter_subcols():
@@ -109,8 +142,19 @@ class MisBuilderXlsx(models.AbstractModel):
             )
             col_pos += 1
         row_pos += 1
+        return row_pos, col_width
 
-        # rows
+    def _write_rows(
+        self,
+        workbook,
+        sheet,
+        row_pos,
+        matrix,
+        notes,
+        style_obj,
+        label_col_width,
+        col_width,
+    ):
         for row in matrix.iter_rows():
             if (
                 row.style_props.hide_empty and row.is_empty()
@@ -158,9 +202,15 @@ class MisBuilderXlsx(models.AbstractModel):
                 col_width[col_pos] = max(
                     col_width[col_pos], len(cell.val_rendered or "")
                 )
+            first_cell = next(row.iter_cells(), None)
+            if first_cell:
+                annotation = notes.get(first_cell.cell_id, {}).get("text")
+                if annotation:
+                    sheet.write(row_pos, col_pos + 1, annotation, row_format)
             row_pos += 1
+        return row_pos, label_col_width, col_width
 
-        # Add date/time footer
+    def _write_footer(self, workbook, sheet, row_pos):
         row_pos += 1
         footer_format = workbook.add_format(
             {"italic": True, "font_color": "#202020", "font_size": 9}
@@ -178,7 +228,7 @@ class MisBuilderXlsx(models.AbstractModel):
         )
         sheet.write(row_pos, 0, create_date, footer_format)
 
-        # adjust col widths
+    def _adjust_col_widths(self, sheet, label_col_width, col_width):
         sheet.set_column(0, 0, min(label_col_width, MAX_COL_WIDTH) * COL_WIDTH)
         data_col_width = min(MAX_COL_WIDTH, max(col_width.values()))
         min_col_pos = min(col_width.keys())
