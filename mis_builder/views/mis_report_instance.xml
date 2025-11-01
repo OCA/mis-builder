@@ -175,6 +175,7 @@
                                     widget="many2many_tags"
                                     invisible="not multi_company"
                                 />
+                                <field name="journal_ids" widget="many2many_tags" />
                                 <field
                                     name="query_company_ids"
                                     groups="base.group_multi_company"

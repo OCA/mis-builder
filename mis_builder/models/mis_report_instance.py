@@ -527,6 +527,11 @@ class MisReportInstance(models.Model):
         string="Allowed companies",
         help="Select companies for which data will be searched.",
     )
+    journal_ids = fields.Many2many(
+        comodel_name="account.journal",
+        string="Journals",
+        help="Select journals to be included in the report.",
+    )
     query_company_ids = fields.Many2many(
         string="Effective companies",
         comodel_name="res.company",
@@ -751,6 +756,8 @@ class MisReportInstance(models.Model):
         # company filter
         if self.query_company_ids:
             domain.append(("company_id", "in", self.query_company_ids.ids))
+        if self.journal_ids:
+            domain.append(("journal_id", "in", self.journal_ids.ids))
         return domain
 
     @api.model

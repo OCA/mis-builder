@@ -118,7 +118,7 @@
                                                 t-if="first_cell and notes.get(first_cell.cell_id)"
                                             >
                                                 <t
-                                                    t-out="notes[first_cell.cell_id].text"
+                                                    t-out="notes[first_cell.cell_id]['text']"
                                                 />
                                             </t>
                                         </div>
