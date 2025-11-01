@@ -72,6 +72,7 @@
                                             </t>
                                         </div>
                                     </t>
+                                    <div class="mis_cell mis_collabel">Annotations</div>
                                 </div>
                             </div>
                             <div class="mis_tbody">
@@ -108,23 +109,22 @@
                                                 </span>
                                             </div>
                                         </t>
+                                        <div class="mis_cell">
+                                            <t
+                                                t-set="first_cell"
+                                                t-value="next(row.iter_cells(), None)"
+                                            />
+                                            <t
+                                                t-if="first_cell and notes.get(first_cell.cell_id)"
+                                            >
+                                                <t
+                                                    t-out="notes[first_cell.cell_id]['text']"
+                                                />
+                                            </t>
+                                        </div>
                                     </div>
                                 </t>
                             </div>
-                        </div>
-                        <!-- Foot notes -->
-                        <div class="oe_mis_builder_footnote_div">
-                            <table class="oe_mis_builder_footnote_table">
-                                <t
-                                    t-foreach="sorted(notes.values(),key=lambda r:r['sequence'])"
-                                    t-as="note"
-                                >
-                                    <tr>
-                                        <td><t t-out="note['sequence']" />. </td>
-                                        <td t-out="note['text']" />
-                                    </tr>
-                                </t>
-                            </table>
                         </div>
                     </div>
                 </t>
