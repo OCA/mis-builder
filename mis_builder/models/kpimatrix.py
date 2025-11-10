@@ -159,6 +159,7 @@ class KpiMatrix:
         # { account_id: account_name }
         self._account_names = {}
         self._multi_company = multi_company
+        self._env = env
 
     def declare_kpi(self, kpi):
         """Declare a new kpi (row) in the matrix.
@@ -468,8 +469,12 @@ class KpiMatrix:
 
     def _get_account_name(self, account):
         result = f"{account.code} {account.name}"
-        if self._multi_company:
-            result = f"{result} [{account.company_id.name}]"
+        if not account.code:
+            account = account.with_company(account.company_ids[0])
+            result = f"{account.code} {account.name}"
+        if self._multi_company and account.company_ids and len(self._env.companies) > 1:
+            company_names = ", ".join(account.company_ids.mapped("name"))
+            result = f"{result} [{company_names}]"
         return result
 
     def get_account_name(self, account_id):
