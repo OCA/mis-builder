@@ -11,6 +11,8 @@ from .mis_kpi_data import ACC_SUM
 from .mis_safe_eval import DataError, mis_safe_eval
 from .simple_array import SimpleArray
 
+COMPANY_NAMES_DISPLAY_LIMIT = 3
+
 _logger = logging.getLogger(__name__)
 
 
@@ -139,12 +141,15 @@ class KpiMatrixCell:  # noqa: B903 (immutable data class)
 
 
 class KpiMatrix:
-    def __init__(self, env, multi_company=False, account_model="account.account"):
+    def __init__(
+        self, env, multi_company, query_companies, account_model="account.account"
+    ):
         # cache language id for faster rendering
         lang_model = env["res.lang"]
         self.lang = lang_model._lang_get(env.user.lang)
         self._style_model = env["mis.report.style"]
         self._account_model = env[account_model]
+        self._ = env._
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
@@ -159,6 +164,7 @@ class KpiMatrix:
         # { account_id: account_name }
         self._account_names = {}
         self._multi_company = multi_company
+        self._query_companies = query_companies
 
     def declare_kpi(self, kpi):
         """Declare a new kpi (row) in the matrix.
@@ -467,10 +473,24 @@ class KpiMatrix:
         self._account_names = {a.id: self._get_account_name(a) for a in accounts}
 
     def _get_account_name(self, account):
-        result = f"{account.code} {account.name}"
-        if self._multi_company:
-            result = f"{result} [{account.company_id.name}]"
-        return result
+        account_code = account.code
+        result = f"{account_code} {account.name}"
+        if not self._multi_company:
+            return result
+        # Multi company report
+        account_companies = account.company_ids.filtered_domain(
+            [("id", "in", self._query_companies.ids)]
+        )
+        # Maybe account belongs to a company that is not the current env company
+        # and has no visible code, so choose the first one and get the code
+        if not account_code:
+            account_code = account.with_company(account_companies[:1]).code
+        company_names = account_companies.mapped("name")
+        if len(company_names) > COMPANY_NAMES_DISPLAY_LIMIT:
+            company_names = company_names[:COMPANY_NAMES_DISPLAY_LIMIT] + [
+                self._("and %s more", len(company_names) - COMPANY_NAMES_DISPLAY_LIMIT)
+            ]
+        return f"{account_code} {account.name} [{', '.join(company_names)}]"
 
     def get_account_name(self, account_id):
         if account_id not in self._account_names:

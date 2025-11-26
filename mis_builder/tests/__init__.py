@@ -7,6 +7,7 @@ from . import test_multi_company_aep
 from . import test_aggregate
 from . import test_data_sources
 from . import test_kpi_data
+from . import test_kpimatrix_account_names
 from . import test_mis_report_instance
 from . import test_mis_safe_eval
 from . import test_period_dates
