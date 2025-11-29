@@ -196,20 +196,20 @@ class TestRendering(common.TransactionCase):
         # Case 1: Cost increases (more negative) = negative growth
         # -100 to -114.6 should give -14.6%
         result = self._compare_and_render(-114.6, -100, TYPE_NUM, CMP_PCT_NEG)
-        self.assertEqual((-0.146, "\u201114.6\xa0%"), result)
+        self.assertEqual((-0.146, "\u201114.6%"), result)
 
         # Case 2: Cost decreases (less negative) = positive growth
         # -100 to -80 should give +20%
         result = self._compare_and_render(-80, -100, TYPE_NUM, CMP_PCT_NEG)
-        self.assertEqual((0.2, "+20.0xa0%"), result)
+        self.assertEqual((0.2, "+20.0%"), result)
 
         # Case 3: Positive values (should work same as CMP_PCT)
         result = self._compare_and_render(120, 100, TYPE_NUM, CMP_PCT_NEG)
-        self.assertEqual((0.2, "+20.0xa0%"), result)
+        self.assertEqual((0.2, "+20.0%"), result)
 
         # Case 4: From positive to negative
         result = self._compare_and_render(-50, 100, TYPE_NUM, CMP_PCT_NEG)
-        self.assertEqual((-1.5, "\u2011150.0\xa0%"), result)
+        self.assertEqual((-1.5, "\u2011150.0%"), result)
 
         # Case 5: Edge case - zero base value
         result = self._compare_and_render(50, 0, TYPE_NUM, CMP_PCT_NEG)
@@ -221,11 +221,11 @@ class TestRendering(common.TransactionCase):
 
         # Case 7: Small change detection
         result = self._compare_and_render(-100.01, -100, TYPE_NUM, CMP_PCT_NEG)
-        self.assertEqual((-0.0001, "\u20110.0\xa0%"), result)
+        self.assertEqual((-0.0001, "\u20110.0%"), result)
 
         # Case 8: Large negative growth
         result = self._compare_and_render(-200, -100, TYPE_NUM, CMP_PCT_NEG)
-        self.assertEqual((-1.0, "\u2011100.0\xa0%"), result)
+        self.assertEqual((-1.0, "\u2011100.0%"), result)
 
     def test_merge(self):
         self.style.color = "#FF0000"
