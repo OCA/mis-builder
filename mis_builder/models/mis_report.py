@@ -32,7 +32,15 @@ from .aggregate import _avg, _max, _min, _sum
 from .expression_evaluator import ExpressionEvaluator
 from .kpimatrix import KpiMatrix
 from .mis_kpi_data import ACC_AVG, ACC_NONE, ACC_SUM
-from .mis_report_style import CMP_DIFF, CMP_NONE, CMP_PCT, TYPE_NUM, TYPE_PCT, TYPE_STR
+from .mis_report_style import (
+    CMP_DIFF,
+    CMP_NONE,
+    CMP_PCT,
+    CMP_PCT_NEG,
+    TYPE_NUM,
+    TYPE_PCT,
+    TYPE_STR,
+)
 from .mis_safe_eval import DataError
 from .simple_array import SimpleArray, named_simple_array
 
@@ -123,6 +131,7 @@ class MisReportKpi(models.Model):
         [
             (CMP_DIFF, "Difference"),
             (CMP_PCT, "Percentage"),
+            (CMP_PCT_NEG, "Percentage (negative growth)"),
             (CMP_NONE, "None"),
         ],
         required=True,

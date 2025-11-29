@@ -19,6 +19,7 @@ exclude = ["setup/*"]
 [lint.per-file-ignores]
 "__init__.py" = ["F401", "I001"]  # ignore unused and unsorted imports in __init__.py
 "__manifest__.py" = ["B018"]  # useless expression
+"mis_builder/models/mis_report_style.py" = ["C901"]  # ignore complexity for compare_and_render method
 
 [lint.isort]
 section-order = ["future", "standard-library", "third-party", "odoo", "odoo-addons", "first-party", "local-folder"]

@@ -44,6 +44,7 @@ TYPE_STR = "str"
 
 CMP_DIFF = "diff"
 CMP_PCT = "pct"
+CMP_PCT_NEG = "pct_neg"  # Percentage (negative growth)
 CMP_NONE = "none"
 
 
@@ -241,7 +242,7 @@ class MisReportKpiStyle(models.Model):
         return unicode(value)
 
     @api.model
-    def compare_and_render(
+    def compare_and_render(  # pylint: disable=too-many-locals,too-complex
         self,
         lang,
         style_props,
@@ -300,6 +301,23 @@ class MisReportKpiStyle(models.Model):
                 if base_value and round(base_value, style_props.dp or 0) != 0:
                     delta = (value - base_value) / abs(base_value)
                     if delta and round(delta, 3) != 0:
+                        delta_style.update(dp=1)
+                        delta_type = TYPE_PCT
+                    else:
+                        delta = AccountingNone
+            elif compare_method == CMP_PCT_NEG:
+                if base_value and round(base_value, style_props.dp or 0) != 0:
+                    # Calculate the percentage change
+                    delta = (value - base_value) / abs(base_value)
+                    if delta and round(delta, 3) != 0:
+                        # For negative values, invert the growth logic
+                        if base_value < 0:
+                            # If the new value is more negative than base,
+                            # it's negative growth
+                            if value < base_value:
+                                delta = -abs(delta)  # Negative growth
+                            else:
+                                delta = abs(delta)  # Positive growth
                         delta_style.update(dp=1)
                         delta_type = TYPE_PCT
                     else:
