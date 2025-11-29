@@ -221,7 +221,7 @@ class TestRendering(common.TransactionCase):
 
         # Case 7: Small change detection
         result = self._compare_and_render(-100.01, -100, TYPE_NUM, CMP_PCT_NEG)
-        self.assertEqual((-0.0001, "\u20110.0\xa0%"), result)
+        self.assertEqual((AccountingNone, ""), result)
 
         # Case 8: Large negative growth
         result = self._compare_and_render(-200, -100, TYPE_NUM, CMP_PCT_NEG)
