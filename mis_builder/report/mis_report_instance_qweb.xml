@@ -17,7 +17,7 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.internal_layout">
                     <t t-set="matrix" t-value="o._compute_matrix()" />
-                    <t t-set="notes" t-value="dict(o.get_notes_by_cell_id() or {})" />
+                    <t t-set="notes" t-value="o.get_notes_by_cell_id() or {}" />
                     <t t-set="style_obj" t-value="o.env['mis.report.style']" />
                     <div class="page">
                         <h3>
@@ -115,11 +115,11 @@
                                                 t-value="next(row.iter_cells(), None)"
                                             />
                                             <t
-                                                t-set="first_cell_note"
-                                                t-value="notes.get(first_cell.cell_id) if first_cell and notes else None"
-                                            />
-                                            <t t-if="first_cell_note">
-                                                <t t-out="first_cell_note['text']" />
+                                                t-if="first_cell and notes and first_cell.cell_id in notes"
+                                            >
+                                                <t
+                                                    t-out="notes[first_cell.cell_id]['text']"
+                                                />
                                             </t>
                                         </div>
                                     </div>

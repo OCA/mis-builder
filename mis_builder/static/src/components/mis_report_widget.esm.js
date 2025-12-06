@@ -2,11 +2,11 @@ import {AnnotationDialog} from "../annotation_dialog/annotation_dialog.esm";
 import {Component, onMounted, onWillStart, useState, useSubEnv} from "@odoo/owl";
 import {DateTimeInput} from "@web/core/datetime/datetime_input";
 import {parseDate} from "@web/core/l10n/dates";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
+import {useBus, useService} from "@web/core/utils/hooks";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
-import {_t} from "@web/core/l10n/translation";
-import {useBus, useService} from "@web/core/utils/hooks";
 
 export class MisReportWidget extends Component {
     setup() {
