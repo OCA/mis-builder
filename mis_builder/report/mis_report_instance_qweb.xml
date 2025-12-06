@@ -115,10 +115,12 @@
                                                 t-value="next(row.iter_cells(), None)"
                                             />
                                             <t
-                                                t-if="first_cell and notes and first_cell.cell_id in notes"
-                                            >
+                                                t-set="first_cell_note"
+                                                t-value="notes and first_cell and notes.get(first_cell.cell_id)"
+                                            />
+                                            <t t-if="first_cell_note">
                                                 <t
-                                                    t-out="notes[first_cell.cell_id]['text']"
+                                                    t-out="first_cell_note['text']"
                                                 />
                                             </t>
                                         </div>
