@@ -105,7 +105,9 @@
                                                 <t t-esc="cell.val_r" />
                                             </t>
                                             <span class="oe_mis_builder_footnote">
-                                                <div t-if="(notes or {}).get(cell.cell_id)">
+                                                <div
+                                                    t-if="(notes or {}).get(cell.cell_id)"
+                                                >
                                                     <a
                                                         t-att-id="'note_'+((notes or {}).get(cell.cell_id, {})).get('sequence', '')"
                                                         t-out="((notes or {}).get(cell.cell_id, {})).get('sequence', '')"
@@ -151,7 +153,9 @@
                                 </t>
                                 <td>
                                     <t t-if="(notes or {}).get(row.cells[0].cell_id)">
-                                        <t t-out="((notes or {}).get(row.cells[0].cell_id, {})).get('text', '')" />
+                                        <t
+                                            t-out="((notes or {}).get(row.cells[0].cell_id, {})).get('text', '')"
+                                        />
                                     </t>
                                     <button
                                         t-if="state.can_edit_annotation and row.cells[0].can_be_annotated"
