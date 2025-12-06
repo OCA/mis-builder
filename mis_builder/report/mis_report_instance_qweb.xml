@@ -114,9 +114,7 @@
                                                 t-set="first_cell"
                                                 t-value="next(row.iter_cells(), None)"
                                             />
-                                            <t
-                                                t-if="first_cell"
-                                            >
+                                            <t t-if="first_cell">
                                                 <t
                                                     t-if="(notes or {}).get(first_cell.cell_id)"
                                                     t-out="(notes.get(first_cell.cell_id) or {}).get('text', '')"
