@@ -110,17 +110,14 @@
                                             </div>
                                         </t>
                                         <div class="mis_cell">
-                                            <t
-                                                t-set="first_cell"
-                                                t-value="next(row.iter_cells(), None)"
-                                            />
-                                            <t
-                                                t-if="first_cell and notes.get(first_cell.cell_id)"
-                                            >
-                                                <t
-                                                    t-out="notes[first_cell.cell_id]['text']"
-                                                />
-                                            </t>
+                                        <t
+                                            t-set="first_cell"
+                                            t-value="next(row.iter_cells(), None)"
+                                        />
+                                        <t t-if="first_cell and notes and first_cell.cell_id in notes">
+                                            <t t-out="notes[first_cell.cell_id]['text']" />
+                                        </t>
+
                                         </div>
                                     </div>
                                 </t>
