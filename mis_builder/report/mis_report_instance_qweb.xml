@@ -104,7 +104,7 @@
                                                     t-if="cell"
                                                 >
                                                     <t
-                                                        t-out="notes.get(cell.cell_id,{}).get('sequence','')"
+                                                        t-out="(notes and notes.get(cell.cell_id,{}) or {}).get('sequence', '')"
                                                     />
                                                 </span>
                                             </div>
