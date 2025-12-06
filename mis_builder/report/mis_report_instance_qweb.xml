@@ -114,9 +114,7 @@
                                                 t-set="first_cell"
                                                 t-value="next(row.iter_cells(), None)"
                                             />
-                                            <t
-                                                t-if="first_cell"
-                                            >
+                                            <t t-if="first_cell and hasattr(first_cell, 'cell_id')">
                                                 <t t-if="first_cell and first_cell.cell_id">
                                                     t-out="(notes or {}).get(first_cell.cell_id, {}).get('text', '')"
                                                 </t>
