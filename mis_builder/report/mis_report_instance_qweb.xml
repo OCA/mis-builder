@@ -119,9 +119,7 @@
                                                 t-value="notes and first_cell and notes.get(first_cell.cell_id)"
                                             />
                                             <t t-if="first_cell_note">
-                                                <t
-                                                    t-out="first_cell_note['text']"
-                                                />
+                                                <t t-out="first_cell_note['text']" />
                                             </t>
                                         </div>
                                     </div>
