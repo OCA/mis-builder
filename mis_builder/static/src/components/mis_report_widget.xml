@@ -110,7 +110,7 @@
                                                 >
                                                     <a
                                                         t-att-id="'note_'+((notes or {}).get(cell.cell_id, {})).get('sequence', '')"
-                                                        t-out="((notes or {}).get(cell.cell_id, {})).get('sequence', '')"
+                                                        t-out="(notes.get(cell.cell_id) or {}).get('sequence', '')"
                                                         t-att="{'title': ((notes or {}).get(cell.cell_id, {})).get('text', '')}"
                                                         href="#footnotes"
                                                     />
@@ -154,7 +154,7 @@
                                 <td>
                                     <t t-if="(notes or {}).get(row.cells[0].cell_id)">
                                         <t
-                                            t-out="((notes or {}).get(row.cells[0].cell_id, {})).get('text', '')"
+                                            t-out="(notes.get(row.cells[0].cell_id) or {}).get('text', '')"
                                         />
                                     </t>
                                     <button
