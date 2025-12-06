@@ -104,7 +104,7 @@
                                                     t-if="cell"
                                                 >
                                                     <t
-                                                        t-out="(notes and notes.get(cell.cell_id,{}) or {}).get('sequence', '')"
+                                                        t-out="(notes or {}).get(cell.cell_id, {}).get('sequence', '')"
                                                     />
                                                 </span>
                                             </div>
@@ -115,10 +115,10 @@
                                                 t-value="next(row.iter_cells(), None)"
                                             />
                                             <t
-                                                t-if="first_cell and notes and notes.get(first_cell.cell_id)"
+                                                t-if="first_cell and (notes or {}).get(first_cell.cell_id)"
                                             >
                                                 <t
-                                                    t-out="(notes and notes.get(first_cell.cell_id, {}) or {}).get('text', '')"
+                                                    t-out="(notes or {}).get(first_cell.cell_id, {}).get('text', '')"
                                                 />
                                             </t>
                                         </div>
