@@ -17,7 +17,7 @@
             <t t-foreach="docs" t-as="o">
                 <t t-call="web.internal_layout">
                     <t t-set="matrix" t-value="o._compute_matrix()" />
-                    <t t-set="notes" t-value="o.get_notes_by_cell_id() or {}" />
+                    <t t-set="cell_notes" t-value="o.get_notes_by_cell_id() or {}" />
                     <t t-set="style_obj" t-value="o.env['mis.report.style']" />
                     <div class="page">
                         <h3>
@@ -99,15 +99,16 @@
                                                 <t
                                                     t-out="cell and cell.val_rendered or ''"
                                                 />
-                                                <span
-                                                    class="oe_mis_builder_footnote"
-                                                    t-if="cell"
-                                                >
-                                                    <t
-                                                        t-out="(notes.get(cell.cell_id) or {}).get('sequence', '')"
-                                                    />
-                                                </span>
-                                            </div>
+                                                 <span
+                                                     class="oe_mis_builder_footnote"
+                                                     t-if="cell"
+                                                 >
+                                                     <t
+                                                         t-out="(cell_notes.get(cell.cell_id) or {}).get('sequence', '')"
+                                                     />
+                                                 </span>
+                                             </div>
+
                                         </t>
                                         <div class="mis_cell">
                                             <t
@@ -116,10 +117,14 @@
                                             />
                                             <t
                                                 t-set="first_cell_note"
-                                                t-value="notes and first_cell and notes.get(first_cell.cell_id)"
+                                                t-value="cell_notes and first_cell and cell_notes.get(first_cell.cell_id)"
                                             />
                                             <t t-if="first_cell_note">
-                                                <t t-out="first_cell_note['text']" />
+                                                <t
+                                                    t-set="first_cell_note_text"
+                                                    t-value="first_cell_note['text']"
+                                                />
+                                                <t t-out="first_cell_note_text" />
                                             </t>
                                         </div>
                                     </div>
