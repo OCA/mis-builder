@@ -14,11 +14,11 @@
     -->
     <template id="report_mis_report_instance">
         <t t-call="web.html_container">
-                <t t-foreach="docs" t-as="o">
-                    <t t-call="web.internal_layout">
-                        <t t-set="matrix" t-value="o._compute_matrix()" />
-                        <t t-set="notes" t-value="o.get_notes_by_cell_id() or {}" />
-                        <t t-set="style_obj" t-value="o.env['mis.report.style']" />
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.internal_layout">
+                    <t t-set="matrix" t-value="o._compute_matrix()" />
+                    <t t-set="notes" t-value="o.get_notes_by_cell_id() or {}" />
+                    <t t-set="style_obj" t-value="o.env['mis.report.style']" />
                     <div class="page">
                         <h3>
                             <span t-field="o.name" />
