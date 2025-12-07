@@ -114,12 +114,14 @@
                                                 t-set="first_cell"
                                                 t-value="next((c for c in row.iter_cells() if c), None)"
                                             />
-                                            <t
-                                                t-if="first_cell and (cell_notes or {}).get(first_cell.cell_id)"
-                                            >
+                                            <t t-if="first_cell">
                                                 <t
-                                                    t-out="(cell_notes.get(first_cell.cell_id) or {}).get('text', '')"
-                                                />
+                                                    t-if="(cell_notes or {}).get(first_cell.cell_id)"
+                                                >
+                                                    <t
+                                                        t-out="(cell_notes.get(first_cell.cell_id) or {}).get('text', '')"
+                                                    />
+                                                </t>
                                             </t>
                                         </div>
                                     </div>
