@@ -111,15 +111,26 @@
                                         </t>
                                         <div class="mis_cell">
                                             <t
-                                                t-set="first_cell"
-                                                t-value="next((c for c in row.iter_cells() if c), None)"
+                                                t-set="first_cell_found"
+                                                t-value="False"
                                             />
-                                            <t t-if="first_cell">
+                                            <t
+                                                t-foreach="row.iter_cells()"
+                                                t-as="potential_first_cell"
+                                            >
                                                 <t
-                                                    t-if="(cell_notes or {}).get(first_cell.cell_id)"
+                                                    t-if="not first_cell_found and potential_first_cell and potential_first_cell.cell_id"
                                                 >
                                                     <t
-                                                        t-out="(cell_notes.get(first_cell.cell_id) or {}).get('text', '')"
+                                                        t-if="(cell_notes or {}).get(potential_first_cell.cell_id)"
+                                                    >
+                                                        <t
+                                                            t-out="(cell_notes.get(potential_first_cell.cell_id) or {}).get('text', '')"
+                                                        />
+                                                    </t>
+                                                    <t
+                                                        t-set="first_cell_found"
+                                                        t-value="True"
                                                     />
                                                 </t>
                                             </t>
