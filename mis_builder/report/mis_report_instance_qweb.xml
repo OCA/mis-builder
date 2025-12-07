@@ -99,16 +99,15 @@
                                                 <t
                                                     t-out="cell and cell.val_rendered or ''"
                                                 />
-                                                 <span
-                                                     class="oe_mis_builder_footnote"
-                                                     t-if="cell"
-                                                 >
-                                                     <t
-                                                         t-out="(cell_notes.get(cell.cell_id) or {}).get('sequence', '')"
-                                                     />
-                                                 </span>
-                                             </div>
-
+                                                <span
+                                                    class="oe_mis_builder_footnote"
+                                                    t-if="cell"
+                                                >
+                                                    <t
+                                                        t-out="(cell_notes.get(cell.cell_id) or {}).get('sequence', '')"
+                                                    />
+                                                </span>
+                                            </div>
                                         </t>
                                         <div class="mis_cell">
                                             <t
