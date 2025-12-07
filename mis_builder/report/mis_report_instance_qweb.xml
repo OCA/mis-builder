@@ -111,19 +111,11 @@
                                         </t>
                                         <div class="mis_cell">
                                             <t
-                                                t-set="first_cell"
-                                                t-value="next(row.iter_cells(), None)"
-                                            />
-                                            <t
-                                                t-set="first_cell_note"
-                                                t-value="cell_notes and first_cell and cell_notes.get(first_cell.cell_id)"
-                                            />
-                                            <t t-if="first_cell_note">
+                                                t-if="row.cells and (cell_notes or {}).get(row.cells[0].cell_id)"
+                                            >
                                                 <t
-                                                    t-set="first_cell_note_text"
-                                                    t-value="first_cell_note['text']"
+                                                    t-out="(cell_notes.get(row.cells[0].cell_id) or {}).get('text', '')"
                                                 />
-                                                <t t-out="first_cell_note_text" />
                                             </t>
                                         </div>
                                     </div>
