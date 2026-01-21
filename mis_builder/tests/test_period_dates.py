@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import odoo.tests.common as common
-from odoo import fields
+from odoo import Command, fields
 
 from ..models.mis_report_instance import (
     MODE_FIX,
@@ -127,7 +127,7 @@ class TestPeriodDates(common.TransactionCase):
                     name="%d" % year,
                     date_start="%d-01-01" % year,
                     date_end="%d-12-31" % year,
-                    company_id=date_range_type.company_id.id,
+                    company_ids=[Command.set(date_range_type.company_id.ids)],
                 )
             )
         self.instance.write(dict(comparison_mode=True, date="2017-06-15"))
