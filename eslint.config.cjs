@@ -17,12 +17,8 @@ const config = [{
             openerp: "readonly",
             owl: "readonly",
             luxon: "readonly",
-<<<<<<< before updating
-            document: "readonly",
-=======
             QUnit: "readonly",
             ...globals.browser,
->>>>>>> after updating
         },
 
         ecmaVersion: 2024,
