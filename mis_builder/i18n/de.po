@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-01-16 08:18+0000\n"
-"PO-Revision-Date: 2023-09-06 09:37+0000\n"
-"Last-Translator: Alexander Bigga <alexander@bigga.de>\n"
+"PO-Revision-Date: 2026-02-24 01:10+0000\n"
+"Last-Translator: Simon Eder <simeder@web.de>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:532
@@ -198,9 +198,8 @@ msgstr "Ein Datumsfilter ist Pflicht für diese Quelle in Spalte %s."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_account_model
-#, fuzzy
 msgid "Account model"
-msgstr "Kontodetails summieren"
+msgstr "Kontenmodell"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_accumulation_method
@@ -276,9 +275,8 @@ msgstr "Alle gebuchten Positionen"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_all_kpi_ids
-#, fuzzy
 msgid "All kpi ids"
-msgstr "Unter-KPI-ID"
+msgstr "alle KPI-IDs"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_amount
@@ -324,9 +322,9 @@ msgstr ""
 #. module: mis_builder
 #. openerp-web
 #: code:addons/mis_builder/static/src/js/mis_report_widget.js:52
-#, fuzzy, python-format
+#, python-format
 msgid "Analytic Tags Filter"
-msgstr "Abgeleitet: leere verbergen"
+msgstr "Filter für Analyse-Tags"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:593
@@ -408,15 +406,15 @@ msgstr "Spalte"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:451
-#, fuzzy, python-format
+#, python-format
 msgid "Column %s cannot be compared to itrec."
-msgstr "Spalte %s kann nicht mit sich selber verglichen werden."
+msgstr "Spalte %s kann nicht mit itrec verglichen werden"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:741
-#, fuzzy, python-format
+#, python-format
 msgid "Column %s with move lines source must have from/to dates."
-msgstr "Spalte %s mit Ist-Werten muss von-/bis-Daten haben."
+msgstr "Die Spalte %s muss bei Buchungszeilen Von- und Bis-Daten enthalten."
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
@@ -518,9 +516,8 @@ msgstr "Dashboard"
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_by_account_item_date
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin_date
-#, fuzzy
 msgid "Date"
-msgstr "Daten"
+msgstr "Datum"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_instance.py:195
@@ -543,15 +540,13 @@ msgstr "Datumsfeld"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin_date_from
-#, fuzzy
 msgid "Date from"
-msgstr "Datumsfeld"
+msgstr "Datum von"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin_date_to
-#, fuzzy
 msgid "Date to"
-msgstr "Daten"
+msgstr "Datum bis"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_period_view_form
@@ -593,9 +588,8 @@ msgstr "Differenz"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_no_auto_expand_accounts
-#, fuzzy
 msgid "Disable account details expansion"
-msgstr "Kontodetails summieren"
+msgstr "Detailansicht für Konten deaktivieren (expansion)"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard_display_name
@@ -830,15 +824,13 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_hide_always_inherit
-#, fuzzy
 msgid "Hide always inherit"
-msgstr "Abgeleitet: leere verbergen"
+msgstr "Immer verbergen Vererbung"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_hide_analytic_filters
-#, fuzzy
 msgid "Hide analytic filters"
-msgstr "Abgeleitet: leere verbergen"
+msgstr "Kostenstellenfilter verbergen"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_hide_empty
@@ -929,15 +921,14 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq1
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq1
-#, fuzzy
 msgid "KPI Sequence"
-msgstr "Reihenfolge"
+msgstr "KPI Reihenfolge"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:163
-#, fuzzy, python-format
+#, python-format
 msgid "KPI name ({}) must be a valid python identifier"
-msgstr "Der Name muss ein gültiger Python-Identifikator sein"
+msgstr "KPI name ({}) muss ein gültiger Python-Identifikator sein"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_ids
@@ -1025,15 +1016,13 @@ msgstr ""
 
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
-#, fuzzy
 msgid "MIS Budget by Account"
-msgstr "MIS Budget"
+msgstr "MIS Budget pro Konto"
 
 #. module: mis_builder
 #: selection:mis.report.instance.period,source:0
-#, fuzzy
 msgid "MIS Budget by KPI"
-msgstr "MIS Budget"
+msgstr "MIS Budget por KPI"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_kpi_data
@@ -1047,15 +1036,13 @@ msgstr "MIS Bericht"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subreport
-#, fuzzy
 msgid "MIS Report - Sub Reports Relation"
-msgstr "MIS Berichtsresultat"
+msgstr "MIS-Bericht - Beziehung Unterberichte"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_add_mis_report_instance_dashboard_wizard
-#, fuzzy
 msgid "MIS Report Add to Dashboard Wizard"
-msgstr "Zum Dashboard hinzufügen"
+msgstr "MIS Report zu Dashboard Assistent hinzufügen"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance
@@ -1065,15 +1052,13 @@ msgstr "MIS Berichtsinstanz"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance_period
-#, fuzzy
 msgid "MIS Report Instance Period"
-msgstr "MIS Berichtsinstanz"
+msgstr "Periode der MIS-Berichtsinstanz"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_instance_period_sum
-#, fuzzy
 msgid "MIS Report Instance Period Sum"
-msgstr "MIS Berichtsinstanz"
+msgstr "Summe Periode der MIS-Berichtsinstanz"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_tree
@@ -1088,15 +1073,13 @@ msgstr "MIS Bericht KPI"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_kpi_expression
-#, fuzzy
 msgid "MIS Report KPI Expression"
-msgstr "MIS Bericht KPI"
+msgstr "MIS Report KPI Ausdruck"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_query
-#, fuzzy
 msgid "MIS Report Query"
-msgstr "MIS Bericht"
+msgstr "MIS Bericht Abfrage"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_instance_result_view_form
@@ -1118,13 +1101,11 @@ msgstr "MIS Berichtsstile"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report_subkpi
-#, fuzzy
 msgid "MIS Report Sub-KPI"
-msgstr "MIS Bericht KPI"
+msgstr "MIS Bericht Unter-KPI"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_mis_report
-#, fuzzy
 msgid "MIS Report Template"
 msgstr "MIS Berichtsvorlage"
 
@@ -1196,9 +1177,8 @@ msgstr "Quelle der Bewegungszeilen"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period_source_aml_model_name
-#, fuzzy
 msgid "Move lines source model name"
-msgstr "Quelle der Bewegungszeilen"
+msgstr "Quellmodellname der Buchungszeilen"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_multi
@@ -1357,9 +1337,9 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:410
-#, fuzzy, python-format
+#, python-format
 msgid "Query name ({}) must be valid python identifier"
-msgstr "Der Name muss ein gültiger Python-Identifikator sein"
+msgstr "Abfrage-Name ({}) muss ein gültiger Python-Identifikator sein"
 
 #. module: mis_builder
 #. openerp-web
@@ -1510,28 +1490,25 @@ msgstr "Unter-KPIs"
 
 #. module: mis_builder
 #: model:ir.ui.view,arch_db:mis_builder.mis_report_view_form
-#, fuzzy
 msgid "Sub Reports"
-msgstr "MIS Berichte"
+msgstr "Unterberichte"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport_ids
-#, fuzzy
 msgid "Sub reports"
-msgstr "MIS Berichte"
+msgstr "Unterberichte"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_budget_item_seq2
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data_seq2
-#, fuzzy
 msgid "Sub-KPI Sequence"
-msgstr "Reihenfolge"
+msgstr "Unter-KPI Reihenfolge"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report.py:271
-#, fuzzy, python-format
+#, python-format
 msgid "Sub-KPI name ({}) must be a valid python identifier"
-msgstr "Der Name muss ein gültiger Python-Identifikator sein"
+msgstr "Unter-KPI Name ({}) muss ein gültiger Python-Identifikator sein"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression_subkpi_id
@@ -1540,9 +1517,8 @@ msgstr "Unter-KPI-ID"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport_subreport_id
-#, fuzzy
 msgid "Subreport id"
-msgstr "Berichts-ID"
+msgstr "Unter-Berichts-ID"
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_subreport.py:65
@@ -1552,15 +1528,14 @@ msgstr ""
 
 #. module: mis_builder
 #: code:addons/mis_builder/models/mis_report_subreport.py:46
-#, fuzzy, python-format
+#, python-format
 msgid "Subreport name ({}) must be a valid python identifier"
-msgstr "Der Name muss ein gültiger Python-Identifikator sein"
+msgstr "Unter-Bericht Name ({}) muss ein gültiger Python-Identifikator sein"
 
 #. module: mis_builder
 #: sql_constraint:mis.report.subreport:0
-#, fuzzy
 msgid "Subreport name should be unique by report"
-msgstr "Der Periodenname muss eindeutig sein pro Bericht"
+msgstr "Der Name des Unterberichts sollte pro Bericht eindeutig sein"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style_suffix
