@@ -137,7 +137,9 @@ export class MisReportWidget extends Component {
             [this._instanceId(), drilldown],
             {context: this.context}
         );
-        this.action.doAction(action);
+        if (action) {
+            this.action.doAction(action);
+        }
     }
 
     async refresh() {
