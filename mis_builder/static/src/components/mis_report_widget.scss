@@ -24,6 +24,37 @@
     }
 }
 
+// Sticky header implementation with higher specificity
+.o_list_renderer.o_renderer.table-responsive {
+    // Remove any overflow that might interfere
+    overflow: visible !important;
+}
+
+// Sticky header for mis_builder table
+.o_list_table.mis_builder {
+    thead {
+        tr {
+            th {
+                position: sticky !important;
+                background-color: #f8f9fa !important;
+                z-index: 100 !important;
+                border-bottom: 1px solid #dee2e6;
+            }
+        }
+
+        // First header row (main period columns)
+        tr:first-child th {
+            top: 0 !important;
+        }
+
+        // Second header row (sub-columns) - stacks below first row
+        tr:nth-child(2) th {
+            top: 43px !important; // Adjust based on first row height
+            border-top: 1px solid #dee2e6;
+        }
+    }
+}
+
 /* style for the control panel (search box and buttons) */
 
 .oe_mis_builder_report_wide_sheet {
