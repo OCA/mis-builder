@@ -314,17 +314,23 @@ class AccountingExpressionProcessor:
         return account_ids
 
     def get_accounting_variables_for_expr(self, expr):
-        """Iterate accounting variables in an expression.
+        """Return the details of an expression. Used for consistency checks.
 
         Prerequisite: done_parsing() must have been invoked.
 
-        Returns a set of (field, mode) used in the expression.
+        Returns a list of (field, mode, account_ids, expression_item)
+        used in the expression. expression_item is useful to have
+        accurate error messages.
         """
-        vars = set()
+        res = []
         for mo in self._ACC_RE.finditer(expr):
-            field, mode, _, _ = self._parse_match_object(mo)
-            vars.add((field, mode))
-        return vars
+            field, mode, _, acc_domain, _ = self._parse_match_object(mo)
+            account_ids = self._account_ids_by_acc_domain[acc_domain]
+            expr_item_str = mo.group()
+            res.append(
+                (field, mode, account_ids, expr_item_str and expr_item_str.strip())
+            )
+        return res
 
     def get_aml_domain_for_expr(self, expr, date_from, date_to, account_id=None):
         """Get a domain on account.move.line for an expression.

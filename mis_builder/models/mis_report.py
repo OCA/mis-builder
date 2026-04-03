@@ -461,6 +461,12 @@ class MisReport(models.Model):
         "data source for column Actuals.",
     )
     account_model = fields.Char(compute="_compute_account_model")
+    constraint_type = fields.Selection(
+        [
+            ("profit_and_loss", "Profit & Loss"),
+            ("balance_sheet", "Balance Sheet"),
+        ]
+    )
 
     @api.depends("kpi_ids", "subreport_ids")
     def _compute_all_kpi_ids(self):
@@ -1009,27 +1015,279 @@ class MisReport(models.Model):
         )
         return locals_dict
 
-    @api.model
-    def _profit_and_loss_consistency_check(self, company):
-        """Validate consistency of expressions for a P&L report.
+    def _check_constraint(self, companies):
+        self.ensure_one()
+        if self.constraint_type == "profit_and_loss":
+            self._profit_and_loss_check_constraint(companies)
+        elif self.constraint_type == "balance_sheet":
+            self._balance_sheet_check_constraint(companies)
 
-        - only balp is used in accounting expressions
-        - each P&L account of the company is used exactly once
+    def test_constraint_type_button(self):
+        self.ensure_one()
+        company = self.env.company
+        self._check_constraint(company)
+        action = {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "message": self.env._(
+                    "Test successful in company '%s'.", company.display_name
+                ),
+                "type": "success",
+                "sticky": False,
+            },
+        }
+        return action
+
+    @api.model
+    def _profit_and_loss_check_constraint(self, companies, raise_if_errors=True):
+        """Validate expressions for a P&L report.
+
+        - 'balp' only
+        - each income and expense account of the company is used exactly once
+        TODO check that expense accounts have +balp and income accounts have -balp
         """
-        aep = self._prepare_aep(company)
-        used_account_ids = set()
+        aep = self._prepare_aep(companies)
+        acc_obj = self.env["account.account"].with_company(companies[0])
+        errors = []
+        account_id2locations = defaultdict(list)
+        income_expense_account_ids = set(
+            self.env["account.account"]._search(
+                [
+                    ("company_ids", "in", companies.ids),
+                    (
+                        "account_type",
+                        "in",
+                        (
+                            "income",
+                            "income_other",
+                            "expense",
+                            "expense_depreciation",
+                            "expense_direct_cost",
+                        ),
+                    ),
+                ]
+            )
+        )
         for kpi in self.kpi_ids:
             for expression in kpi.expression_ids:
-                expr = expression.name
-                accounting_variables = aep.get_accounting_variables_for_expr(expr)
-                field, mode = accounting_variables.pop()
-                if field != "bal" or mode != aep.MODE_VARIATION:
-                    ... # only balp may be used in P&L reports
-                expression_account_ids = aep.get_account_ids_for_expr(expr)
-                if used_account_ids & expression_account_ids:
-                    ... # accounts used more than once
-                used_account_ids.update(expression_account_ids)
-        all_account_ids = set(self.env["account.account"].search([...]).ids)
-        if used_account_ids != all_account_ids:
-            ... # some accounts not used
+                expr_props = aep.get_accounting_variables_for_expr(expression.name)
+                for field, mode, account_ids, expr_item_str in expr_props:
+                    if not account_ids:
+                        continue
+                    # balp only
+                    if field != "bal" or mode != aep.MODE_VARIATION:
+                        errors.append(
+                            self.env._(
+                                "KPI '%(kpi)s' has expression '%(expression_item)s' "
+                                "but only 'balp' can be used on P&L reports.",
+                                kpi=kpi.display_name,
+                                expression_item=expr_item_str,
+                            )
+                        )
+                        continue
+                    # Check we don't have non income-expense accounts
+                    bad_type_account_ids = account_ids - income_expense_account_ids
+                    if bad_type_account_ids:
+                        bad_type_accounts = acc_obj.browse(bad_type_account_ids)
+                        errors.append(
+                            self.env._(
+                                "KPI '%(kpi)s' has expression '%(expression_item)s' "
+                                "which uses non expense/income account(s): "
+                                "%(accounts)s.",
+                                kpi=kpi.display_name,
+                                expression_item=expr_item_str,
+                                accounts=", ".join(
+                                    [acc.display_name for acc in bad_type_accounts]
+                                ),
+                            )
+                        )
+                        continue
+                    for account_id in account_ids:
+                        account_id2locations[account_id].append(
+                            (kpi.display_name, expr_item_str)
+                        )
+        missing_account_ids = []
+        # Income-expense accounts used more than once
+        for account_id, location_list in account_id2locations.items():
+            if not location_list:
+                missing_account_ids.append(account_id)
+            elif len(location_list) > 1:
+                account = acc_obj.browse(account_id)
+                errors.append(
+                    self.env._(
+                        "Account '%(account)s' is used several times: %(locations)s.",
+                        account=account.display_name,
+                        locations=", ".join(
+                            [
+                                self.env._(
+                                    "KPI '%(kpi)s' formula '%(expr_item_str)s'",
+                                    kpi=kpi,
+                                    expr_item_str=expr_item_str,
+                                )
+                                for (kpi, expr_item_str) in location_list
+                            ]
+                        ),
+                    )
+                )
+        # Income-expense accounts that are not taken in any expression
+        if missing_account_ids:
+            errors.append(
+                self.env._(
+                    "Income/expense account(s) not taken in any expression: %s.",
+                    ", ".join(
+                        [
+                            acc.display_name
+                            for acc in acc_obj.browse(missing_account_ids)
+                        ]
+                    ),
+                )
+            )
+        if errors and raise_if_errors:
+            raise UserError(
+                self.env._(
+                    "MIS Report template '%(report)s' is configured as "
+                    "a Profit and Loss report, but it contains the "
+                    "following error(s):\n%(error_list)s",
+                    report=self.display_name,
+                    error_list="\n".join([f"- {error}" for error in errors]),
+                )
+            )
+        return errors
+
+    @api.model
+    def _balance_sheet_check_constraint(self, companies, raise_if_errors=True):
+        """Validate expressions for a Balance Sheet report.
+
+        - bale/pbale/nbale only
+        - each account of the company is used exactly once (taking into account)
+        TODO check signs: start with + (assets) and then only - (equity and liabilities)
+        """
+        aep = self._prepare_aep(companies)
+        acc_obj = self.env["account.account"].with_company(companies[0])
+        errors = []
+        bs_account_ids = set(
+            self.env["account.account"]._search(
+                [
+                    ("company_ids", "in", companies.ids),
+                    ("account_type", "not in", ("equity_unaffected", "off_balance")),
+                ]
+            )
+        )
+        account_id2location_per_field = {}
+        for account_id in bs_account_ids:
+            account_id2location_per_field[account_id] = {
+                "bal": [],
+                "pbal": [],
+                "nbal": [],
+            }
+        for kpi in self.kpi_ids:
+            for expression in kpi.expression_ids:
+                expr_items = aep.get_accounting_variables_for_expr(expression.name)
+                for field, mode, account_ids, expr_item_str in expr_items:
+                    if not account_ids:
+                        continue
+                    if field not in ("bal", "pbal", "nbal") or mode != aep.MODE_END:
+                        errors.append(
+                            self.env._(
+                                "KPI '%(kpi)s' has expression '%(expression_item)s' "
+                                "but only 'bale', 'pbale' and 'nbale' can be used "
+                                "on balance sheet reports.",
+                                kpi=kpi.display_name,
+                                expression_item=expr_item_str,
+                            )
+                        )
+                        continue
+                    bad_type_account_ids = account_ids - bs_account_ids
+                    if bad_type_account_ids:
+                        bad_type_accounts = acc_obj.browse(bad_type_account_ids)
+                        errors.append(
+                            self.env._(
+                                "KPI '%(kpi)s' has expression '%(expression_item)s' "
+                                "which uses account(s) with type "
+                                "'Current Year Earnings' or "
+                                "'Off-Balance Sheet': %(accounts)s.",
+                                kpi=kpi.display_name,
+                                expression_item=expr_item_str,
+                                accounts=", ".join(
+                                    [acc.display_name for acc in bad_type_accounts]
+                                ),
+                            )
+                        )
+                        continue
+                    for account_id in account_ids:
+                        account_id2location_per_field[account_id][field].append(
+                            (kpi.display_name, expr_item_str)
+                        )
+        missing_accounts = []
+        for account_id, field2location_list in account_id2location_per_field.items():
+            if not (
+                (
+                    len(field2location_list["bal"]) == 1
+                    and not field2location_list["pbal"]
+                    and not field2location_list["nbal"]
+                )
+                or (
+                    not field2location_list["bal"]
+                    and len(field2location_list["pbal"]) == 1
+                    and len(field2location_list["nbal"]) == 1
+                )
+            ):
+                account = acc_obj.browse(account_id)
+                if (
+                    not field2location_list["bal"]
+                    and not field2location_list["pbal"]
+                    and not field2location_list["nbal"]
+                ):
+                    missing_accounts.append(account.display_name)
+                else:
+                    locations = []
+                    for field in ["bal", "pbal", "nbal"]:
+                        if field2location_list[field]:
+                            places = ", ".join(
+                                [
+                                    self.env._(
+                                        "KPI '%(kpi)s' " "formula '%(expr_item_str)s'",
+                                        kpi=kpi,
+                                        expr_item_str=expr_item_str,
+                                    )
+                                    for (
+                                        kpi,
+                                        expr_item_str,
+                                    ) in field2location_list[field]
+                                ]
+                            )
+                            locations.append(
+                                self.env._(
+                                    "as '%(field)s' in %(places)s",
+                                    field=field,
+                                    places=places,
+                                )
+                            )
+                    errors.append(
+                        self.env._(
+                            "Account '%(account)s' is used in the following KPIs: "
+                            "%(locations)s. It can be used only once as 'bale', "
+                            "or once as 'pbale' and once as 'nbale'.",
+                            account=account.display_name,
+                            locations="; ".join(locations),
+                        )
+                    )
+        if missing_accounts:
+            errors.append(
+                self.env._(
+                    "Balance sheet account(s) not taken in any expression: %s.",
+                    ", ".join(missing_accounts),
+                )
+            )
+        if errors and raise_if_errors:
+            raise UserError(
+                self.env._(
+                    "MIS Report template '%(report)s' is configured as a "
+                    "Balance Sheet report, but it contains the "
+                    "following error(s):\n%(error_list)s",
+                    report=self.display_name,
+                    error_list="\n".join([f"- {error}" for error in errors]),
+                )
+            )
         return errors

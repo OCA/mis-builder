@@ -7,6 +7,7 @@
             <list>
                 <field name="name" />
                 <field name="description" />
+                <field name="constraint_type" optional="show" />
             </list>
         </field>
     </record>
@@ -17,11 +18,29 @@
         <field name="arch" type="xml">
             <form string="MIS Report">
                 <sheet>
-                    <group col="2">
-                        <field name="name" />
-                        <field name="description" />
-                        <field name="style_id" />
-                        <field name="move_lines_source" options="{'no_open': true}" />
+                    <group name="top">
+                        <group name="left">
+                            <field name="name" />
+                            <field name="description" />
+                            <label for="constraint_type" />
+                            <div name="constraint_type">
+                                <field name="constraint_type" class="oe_inline" />
+                                <button
+                                    name="test_constraint_type_button"
+                                    type="object"
+                                    string="Test constraint"
+                                    invisible="not constraint_type"
+                                    class="oe_link"
+                                />
+                            </div>
+                        </group>
+                        <group name="right">
+                            <field name="style_id" />
+                            <field
+                                name="move_lines_source"
+                                options="{'no_open': true}"
+                            />
+                        </group>
                     </group>
                     <notebook>
                         <page string="KPI's">
@@ -108,6 +127,37 @@
                     </notebook>
                 </sheet>
             </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mis_report_view_search">
+        <field name="name">mis.report.view.search</field>
+        <field name="model">mis.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field
+                    name="name"
+                    filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]"
+                    string="Name or Description"
+                />
+                <filter
+                    string="Profit &amp; Loss"
+                    name="profit_and_loss"
+                    domain="[('constraint_type', '=', 'profit_and_loss')]"
+                />
+                <filter
+                    string="Balance Sheet"
+                    name="balance_sheet"
+                    domain="[('constraint_type', '=', 'balance_sheet')]"
+                />
+                <group name="groupby">
+                    <filter
+                        name="constraint_type_groupby"
+                        string="Constraint Type"
+                        context="{'group_by': 'constraint_type'}"
+                    />
+                </group>
+            </search>
         </field>
     </record>
 
