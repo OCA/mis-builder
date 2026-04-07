@@ -36,7 +36,7 @@
         tr {
             th {
                 position: sticky !important;
-                background-color: #f8f9fa !important;
+                background-color: var(--gray-300);
                 z-index: 100 !important;
                 border-bottom: 1px solid #dee2e6;
             }
