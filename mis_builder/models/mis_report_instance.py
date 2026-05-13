@@ -1029,3 +1029,18 @@ class MisReportInstance(models.Model):
         self.user_can_edit_annotation = self.env.user.has_group(
             "mis_builder.group_edit_annotation"
         )
+
+    @api.model
+    def _post_demo_moves(self):
+        """Post demo journal entries for the multi-company demo report."""
+        xmlids = [
+            "mis_builder.move_branch_consulting",
+            "mis_builder.move_branch_furniture",
+        ]
+        for xmlid in xmlids:
+            move = self.env.ref(xmlid, raise_if_not_found=False)
+            if move and move.state == "draft":
+                try:
+                    move.action_post()
+                except Exception:
+                    _logger.debug("Could not post demo move %s", xmlid)

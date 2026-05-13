@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Demo data for multi-company MIS reports. -->
+<odoo noupdate="1">
+    <!-- Second company -->
+    <record id="company_branch" model="res.company">
+        <field name="name">Branch Office</field>
+    </record>
+
+    <!-- Grant admin access to both companies -->
+    <record id="base.user_admin" model="res.users">
+        <field name="company_ids" eval="[(4, ref('company_branch'))]" />
+    </record>
+
+    <!-- Expense account for Branch Office -->
+    <record id="account_expense_branch" model="account.account">
+        <field name="code">600000</field>
+        <field name="name">Expenses</field>
+        <field name="account_type">expense</field>
+        <field name="company_ids" eval="[(6, 0, [ref('company_branch')])]" />
+    </record>
+
+    <!-- Equipment account for Branch Office -->
+    <record id="account_equipment_branch" model="account.account">
+        <field name="code">611000</field>
+        <field name="name">Purchase of Equipments</field>
+        <field name="account_type">expense</field>
+        <field name="company_ids" eval="[(6, 0, [ref('company_branch')])]" />
+    </record>
+
+    <!-- Bank account for Branch Office -->
+    <record id="account_bank_branch" model="account.account">
+        <field name="code">101401</field>
+        <field name="name">Bank</field>
+        <field name="account_type">asset_current</field>
+        <field name="company_ids" eval="[(6, 0, [ref('company_branch')])]" />
+    </record>
+
+    <!-- Journal for Branch Office -->
+    <record id="journal_misc_branch" model="account.journal">
+        <field name="name">Miscellaneous</field>
+        <field name="type">general</field>
+        <field name="code">MISC</field>
+        <field name="company_id" ref="company_branch" />
+    </record>
+
+    <!-- Journal entry: Branch Office consulting fees -->
+    <record id="move_branch_consulting" model="account.move">
+        <field name="company_id" ref="company_branch" />
+        <field name="journal_id" ref="journal_misc_branch" />
+        <field name="date">2026-03-10</field>
+        <field
+            name="line_ids"
+            eval="[
+                (0, 0, {'account_id': ref('account_expense_branch'), 'debit': 22000, 'name': 'Branch Consulting Fees'}),
+                (0, 0, {'account_id': ref('account_bank_branch'), 'credit': 22000, 'name': 'Branch Consulting Fees'}),
+            ]"
+        />
+    </record>
+
+    <!-- Journal entry: Branch Office furniture -->
+    <record id="move_branch_furniture" model="account.move">
+        <field name="company_id" ref="company_branch" />
+        <field name="journal_id" ref="journal_misc_branch" />
+        <field name="date">2026-02-20</field>
+        <field
+            name="line_ids"
+            eval="[
+                (0, 0, {'account_id': ref('account_equipment_branch'), 'debit': 5200, 'name': 'Branch Office Furniture'}),
+                (0, 0, {'account_id': ref('account_bank_branch'), 'credit': 5200, 'name': 'Branch Office Furniture'}),
+            ]"
+        />
+    </record>
+
+    <!-- MIS report template with auto-expanded expense accounts -->
+    <record id="report_mc_expenses" model="mis.report">
+        <field name="name">Multi-Company Expenses</field>
+    </record>
+
+    <record id="report_mc_expenses_kpi_exp" model="mis.report.kpi">
+        <field name="report_id" ref="report_mc_expenses" />
+        <field name="name">exp</field>
+        <field name="description">Expenses</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="report_mc_expenses_kpi_exp_expr" model="mis.report.kpi.expression">
+        <field name="kpi_id" ref="report_mc_expenses_kpi_exp" />
+        <field name="name">balp[600%]</field>
+    </record>
+
+    <record id="report_mc_expenses_kpi_equip" model="mis.report.kpi">
+        <field name="report_id" ref="report_mc_expenses" />
+        <field name="name">equip</field>
+        <field name="description">Equipment</field>
+        <field name="auto_expand_accounts">True</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="report_mc_expenses_kpi_equip_expr" model="mis.report.kpi.expression">
+        <field name="kpi_id" ref="report_mc_expenses_kpi_equip" />
+        <field name="name">balp[611%]</field>
+    </record>
+
+    <record id="report_mc_expenses_kpi_total" model="mis.report.kpi">
+        <field name="report_id" ref="report_mc_expenses" />
+        <field name="name">total</field>
+        <field name="description">Total</field>
+        <field name="sequence">100</field>
+        <field name="style_expression">AccountingTotal</field>
+    </record>
+
+    <record id="report_mc_expenses_kpi_total_expr" model="mis.report.kpi.expression">
+        <field name="kpi_id" ref="report_mc_expenses_kpi_total" />
+        <field name="name">exp + equip</field>
+    </record>
+
+    <!-- Multi-company report instance -->
+    <record id="instance_mc_expenses" model="mis.report.instance">
+        <field name="name">Multi-Company Expenses Report</field>
+        <field name="report_id" ref="report_mc_expenses" />
+        <field name="multi_company">True</field>
+        <field name="comparison_mode">True</field>
+        <field
+            name="company_ids"
+            eval="[
+                (4, ref('base.main_company')),
+                (4, ref('company_branch')),
+            ]"
+        />
+    </record>
+
+    <!-- Period: Year to Date -->
+    <record id="instance_mc_expenses_period" model="mis.report.instance.period">
+        <field name="report_instance_id" ref="instance_mc_expenses" />
+        <field name="name">Year to Date</field>
+        <field name="mode">relative</field>
+        <field name="source">actuals</field>
+        <field name="type">y</field>
+        <field name="offset">0</field>
+        <field name="duration">1</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Post the demo journal entries so they appear in reports -->
+    <function model="mis.report.instance" name="_post_demo_moves" />
+</odoo>

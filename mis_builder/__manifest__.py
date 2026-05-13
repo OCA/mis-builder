@@ -28,6 +28,9 @@
         "report/mis_report_instance_qweb.xml",
         "report/mis_report_instance_xlsx.xml",
     ],
+    "demo": [
+        "demo/mis_multicompany_demo.xml",
+    ],
     "assets": {
         "web.assets_backend": [
             "mis_builder/static/src/components/mis_report_widget.esm.js",
