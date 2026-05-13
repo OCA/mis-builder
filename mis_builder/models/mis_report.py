@@ -539,9 +539,11 @@ class MisReport(models.Model):
 
     # TODO: kpi name cannot be start with query name
 
-    def prepare_kpi_matrix(self, multi_company=False):
+    def prepare_kpi_matrix(self, multi_company=False, query_companies=None):
         self.ensure_one()
-        kpi_matrix = KpiMatrix(self.env, multi_company, self.account_model)
+        kpi_matrix = KpiMatrix(
+            self.env, multi_company, query_companies, self.account_model
+        )
         for kpi in self.kpi_ids:
             kpi_matrix.declare_kpi(kpi)
         return kpi_matrix
@@ -619,7 +621,7 @@ class MisReport(models.Model):
                         v = data[0][field_name]
                     except KeyError:
                         _logger.error(
-                            "field %s not found in read_group " "for %s; not summable?",
+                            "field %s not found in read_group for %s; not summable?",
                             field_name,
                             model._name,
                         )

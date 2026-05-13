@@ -423,8 +423,7 @@ class MisReportInstancePeriod(models.Model):
                 if rec.mode == MODE_NONE:
                     raise DateFilterRequired(
                         self.env._(
-                            "A date filter is mandatory for this source "
-                            "in column %s.",
+                            "A date filter is mandatory for this source in column %s.",
                             rec.name,
                         )
                     )
@@ -432,8 +431,7 @@ class MisReportInstancePeriod(models.Model):
                 if rec.mode != MODE_NONE:
                     raise DateFilterForbidden(
                         self.env._(
-                            "No date filter is allowed for this source "
-                            "in column %s.",
+                            "No date filter is allowed for this source in column %s.",
                             rec.name,
                         )
                     )
@@ -460,8 +458,7 @@ class MisReportInstancePeriod(models.Model):
                 ):
                     raise ValidationError(
                         self.env._(
-                            "Columns to compare must belong to the same report "
-                            "in %s",
+                            "Columns to compare must belong to the same report in %s",
                             rec.name,
                         )
                     )
@@ -499,7 +496,7 @@ class MisReportInstance(models.Model):
     sequence = fields.Integer(default=10)
     description = fields.Char(related="report_id.description")
     date = fields.Date(
-        string="Base date", help="Report base date " "(leave empty to use current date)"
+        string="Base date", help="Report base date (leave empty to use current date)"
     )
     pivot_date = fields.Date(compute="_compute_pivot_date")
     report_id = fields.Many2one("mis.report", required=True, string="Report")
@@ -765,9 +762,7 @@ class MisReportInstance(models.Model):
             context.get("from_dashboard")
             and context.get("active_model") == "mis.report.instance"
         ):
-            view_id = self.env.ref(
-                "mis_builder." "mis_report_instance_result_view_form"
-            )
+            view_id = self.env.ref("mis_builder.mis_report_instance_result_view_form")
             mis_report_form_view = view_id and [view_id.id, "form"]
             for view in views:
                 if view and view[1] == "form":
@@ -778,7 +773,7 @@ class MisReportInstance(models.Model):
 
     def preview(self):
         self.ensure_one()
-        view_id = self.env.ref("mis_builder." "mis_report_instance_result_view_form")
+        view_id = self.env.ref("mis_builder.mis_report_instance_result_view_form")
         return {
             "type": "ir.actions.act_window",
             "res_model": "mis.report.instance",
@@ -883,7 +878,9 @@ class MisReportInstance(models.Model):
         self.ensure_one()
         aep = self.report_id._prepare_aep(self.query_company_ids, self.currency_id)
         multi_company = self.multi_company and len(self.query_company_ids) > 1
-        kpi_matrix = self.report_id.prepare_kpi_matrix(multi_company)
+        kpi_matrix = self.report_id.prepare_kpi_matrix(
+            multi_company, self.query_company_ids
+        )
         for period in self.period_ids:
             description = None
             if period.mode == MODE_NONE:

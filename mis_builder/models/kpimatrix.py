@@ -139,12 +139,19 @@ class KpiMatrixCell:  # noqa: B903 (immutable data class)
 
 
 class KpiMatrix:
-    def __init__(self, env, multi_company=False, account_model="account.account"):
+    def __init__(
+        self,
+        env,
+        multi_company=False,
+        query_companies=None,
+        account_model="account.account",
+    ):
         # cache language id for faster rendering
         lang_model = env["res.lang"]
         self.lang = lang_model._lang_get(env.user.lang)
         self._style_model = env["mis.report.style"]
         self._account_model = env[account_model]
+        self._query_companies = query_companies
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
@@ -467,9 +474,18 @@ class KpiMatrix:
         self._account_names = {a.id: self._get_account_name(a) for a in accounts}
 
     def _get_account_name(self, account):
-        result = f"{account.code} {account.name}"
+        code = account.code
+        # In Odoo 18, account.code is company-dependent. If the current env
+        # company doesn't match the account's company, code may be False.
+        # Read the code from the account's owning company.
+        if not code and self._query_companies:
+            account_companies = account.company_ids & self._query_companies
+            if account_companies:
+                code = account.with_company(account_companies[0]).code
+        result = f"{code} {account.name}" if code else account.name
         if self._multi_company:
-            result = f"{result} [{account.company_id.name}]"
+            company_names = ", ".join(account.company_ids.mapped("name"))
+            result = f"{result} [{company_names}]"
         return result
 
     def get_account_name(self, account_id):
