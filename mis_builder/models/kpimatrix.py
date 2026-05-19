@@ -469,7 +469,7 @@ class KpiMatrix:
     def _get_account_name(self, account):
         result = f"{account.code} {account.name}"
         if self._multi_company:
-            result = f"{result} [{account.company_id.name}]"
+            result = f"{result} [{account.company_ids[0].name}]"
         return result
 
     def get_account_name(self, account_id):

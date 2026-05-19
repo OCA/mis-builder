@@ -383,7 +383,7 @@ class TestMisReportInstance(common.HttpCase):
                 account = self.env["account.account"].browse(row.account_id)
                 self.assertEqual(
                     row.label,
-                    f"{account.code} {account.name} [{account.company_id.name}]",
+                    f"{account.code} {account.name} [{account.company_ids[0].name}]",
                 )
         self.report_instance.write({"multi_company": False})
         matrix = self.report_instance._compute_matrix()
