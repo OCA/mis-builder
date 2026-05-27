@@ -70,6 +70,11 @@
                                         widget="code"
                                         options="{'mode': 'python'}"
                                     />
+                                    <field
+                                        name="ignore_constraint"
+                                        optional="hide"
+                                        column_invisible="not parent.constraint_type"
+                                    />
                                 </list>
                             </field>
                         </page>
@@ -175,6 +180,11 @@
                     <field name="accumulation_method" />
                     <field name="style_id" />
                     <field name="style_expression" />
+                    <field
+                        name="ignore_constraint"
+                        invisible="not report_constraint_type"
+                    />
+                    <field name="report_constraint_type" invisible="1" />
                     <field name='id' invisible='1' />
                     <field name="report_id" invisible="1" required="id != False" />
                 </group>

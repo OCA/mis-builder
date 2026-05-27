@@ -141,6 +141,8 @@ class MisReportKpi(models.Model):
         "Average: values of included period are averaged "
         "with a pro-rata temporis weight.",
     )
+    ignore_constraint = fields.Boolean()
+    report_constraint_type = fields.Selection(related="report_id.constraint_type")
     sequence = fields.Integer(default=100)
     report_id = fields.Many2one("mis.report", required=True, ondelete="cascade")
 
@@ -1069,7 +1071,7 @@ class MisReport(models.Model):
                 ]
             )
         )
-        for kpi in self.kpi_ids:
+        for kpi in self.kpi_ids.filtered(lambda x: not x.ignore_constraint):
             for expression in kpi.expression_ids:
                 expr_props = aep.get_accounting_variables_for_expr(expression.name)
                 for field, mode, account_ids, expr_item_str in expr_props:
@@ -1181,7 +1183,7 @@ class MisReport(models.Model):
                 "pbal": [],
                 "nbal": [],
             }
-        for kpi in self.kpi_ids:
+        for kpi in self.kpi_ids.filtered(lambda x: not x.ignore_constraint):
             for expression in kpi.expression_ids:
                 expr_items = aep.get_accounting_variables_for_expr(expression.name)
                 for field, mode, account_ids, expr_item_str in expr_items:
