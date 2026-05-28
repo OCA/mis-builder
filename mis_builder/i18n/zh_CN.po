@@ -38,8 +38,8 @@ msgid ""
 "<code>\n"
 "                                            balp[('user_type_id', '=',\n"
 "                                            ref('account.\n"
-"                                            data_account_type_receivable')."
-"id)][]\n"
+"                                            data_account_type_receivable').id)]"
+"[]\n"
 "                                        </code>\n"
 "                                        : variation of the balance of all "
 "receivable accounts over\n"
@@ -48,8 +48,8 @@ msgstr ""
 "<code>\n"
 "                                            balp[('user_type_id', '=',\n"
 "                                            ref('account.\n"
-"                                            data_account_type_receivable')."
-"id)][]\n"
+"                                            data_account_type_receivable').id)]"
+"[]\n"
 "                                        </code>\n"
 "                                        : 所有应收账款余额在该期间的变化。"
 
@@ -766,8 +766,8 @@ msgid ""
 "Expressions can involve other KPI, sub KPI and\n"
 "                                    query results by name (eg <code>kpi1 + "
 "kpi2</code>,\n"
-"                                    <code>kpi2.subkpi1</code>, <code>query1."
-"field1</code>)."
+"                                    <code>kpi2.subkpi1</code>, "
+"<code>query1.field1</code>)."
 msgstr ""
 "表达式可以涉及其他KPI、子KPI以及按名称查询结果（例如 <code>kpi1 + kpi2</"
 "code>，<code>kpi2.subkpi1</code>，<code>query1.field1</code>）。"
@@ -1081,6 +1081,14 @@ msgstr "最后更新于"
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 msgid "Layout"
 msgstr "布局"
+
+#. module: mis_builder
+#. odoo-python
+#: code:addons/mis_builder/models/mis_report_style.py:0
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e6
+#, python-format
+msgid "M"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_report_mis_builder_mis_report_instance_xlsx
@@ -1919,9 +1927,25 @@ msgid "from %(date_from)s to %(date_to)s"
 msgstr "从%(date_from)s至%(date_to)s"
 
 #. module: mis_builder
+#. odoo-python
+#: code:addons/mis_builder/models/mis_report_style.py:0
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e3
+#, python-format
+msgid "k"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
 msgid "large"
 msgstr "大号"
+
+#. module: mis_builder
+#. odoo-python
+#: code:addons/mis_builder/models/mis_report_style.py:0
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-3
+#, python-format
+msgid "m"
+msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__medium
@@ -1955,8 +1979,8 @@ msgstr "对抗"
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "when <code>fld</code> is used : a field name specifier\n"
-"                                        must be provided (e.g. <code>fldp."
-"quantity</code>"
+"                                        must be provided (e.g. "
+"<code>fldp.quantity</code>"
 msgstr ""
 
 #. module: mis_builder
@@ -1978,6 +2002,14 @@ msgstr "超大号"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
 msgstr "超小号"
+
+#. module: mis_builder
+#. odoo-python
+#: code:addons/mis_builder/models/mis_report_style.py:0
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-6
+#, python-format
+msgid "µ"
+msgstr ""
 
 #~ msgid ""
 #~ "<code>bal</code>, <code>crd</code>, <code>deb</code>, <code>\n"
