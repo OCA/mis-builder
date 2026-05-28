@@ -95,6 +95,11 @@ msgid "Line Type"
 msgstr "Tipo de línea"
 
 #. module: mis_builder_demo
+#: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_act_m
+msgid "M"
+msgstr ""
+
+#. module: mis_builder_demo
 #: model:mis.report.instance.period,name:mis_builder_demo.mis_report_instance_expenses_act_mm1
 msgid "M-1"
 msgstr "M-1"
