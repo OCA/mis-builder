@@ -995,6 +995,14 @@ msgid "Layout"
 msgstr ""
 
 #. module: mis_builder
+#. odoo-python
+#: code:addons/mis_builder/models/mis_report_style.py:0
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e6
+#, python-format
+msgid "M"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model,name:mis_builder.model_report_mis_builder_mis_report_instance_xlsx
 msgid "MIS Builder XLSX report"
 msgstr ""
@@ -1831,8 +1839,24 @@ msgid "from %(date_from)s to %(date_to)s"
 msgstr ""
 
 #. module: mis_builder
+#. odoo-python
+#: code:addons/mis_builder/models/mis_report_style.py:0
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e3
+#, python-format
+msgid "k"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
 msgid "large"
+msgstr ""
+
+#. module: mis_builder
+#. odoo-python
+#: code:addons/mis_builder/models/mis_report_style.py:0
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-3
+#, python-format
+msgid "m"
 msgstr ""
 
 #. module: mis_builder
@@ -1888,4 +1912,12 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
+msgstr ""
+
+#. module: mis_builder
+#. odoo-python
+#: code:addons/mis_builder/models/mis_report_style.py:0
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-6
+#, python-format
+msgid "µ"
 msgstr ""
