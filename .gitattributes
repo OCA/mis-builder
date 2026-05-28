@@ -6,3 +6,4 @@
 /*/readme/HISTORY.rst merge=ours
 /*/README.rst merge=ours
 /*/static/description/index.html merge=ours
+test-requirements.txt merge=union
