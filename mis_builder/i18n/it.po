@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-11-25 15:42+0000\n"
+"PO-Revision-Date: 2026-05-29 13:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_annotation__annotation_context
@@ -1145,7 +1145,7 @@ msgstr "Struttura"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e6
 #, python-format
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_report_mis_builder_mis_report_instance_xlsx
@@ -2010,7 +2010,7 @@ msgstr "dal %(date_from)s al %(date_to)s"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e3
 #, python-format
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
@@ -2023,7 +2023,7 @@ msgstr "grande"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-3
 #, python-format
 msgid "m"
-msgstr ""
+msgstr "m"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__medium
@@ -2090,7 +2090,7 @@ msgstr "xx-small"
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-6
 #, python-format
 msgid "µ"
-msgstr ""
+msgstr "µ"
 
 #~ msgid ""
 #~ "<code>bal</code>, <code>crd</code>, <code>deb</code>, <code>\n"
