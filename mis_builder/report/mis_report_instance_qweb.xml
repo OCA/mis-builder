@@ -19,6 +19,10 @@
                     <t t-set="matrix" t-value="o._compute_matrix()" />
                     <t t-set="notes" t-value="o.get_notes_by_cell_id()" />
                     <t t-set="style_obj" t-value="o.env['mis.report.style']" />
+                    <t
+                        t-set="subcols"
+                        t-value="list(matrix.iter_subcols_visible(o.hide_empty_columns))"
+                    />
                     <div class="page">
                         <h3>
                             <span t-field="o.name" />
@@ -44,7 +48,10 @@
                             <div class="mis_thead">
                                 <div class="mis_row">
                                     <div class="mis_cell mis_collabel" />
-                                    <t t-foreach="matrix.iter_cols()" t-as="col">
+                                    <t
+                                        t-foreach="matrix.iter_cols_visible(o.hide_empty_columns)"
+                                        t-as="col"
+                                    >
                                         <div class="mis_cell mis_collabel">
                                             <t t-out="col.label" />
                                             <t t-if="col.description">
@@ -63,7 +70,7 @@
                                 </div>
                                 <div class="mis_row">
                                     <div class="mis_cell mis_collabel" />
-                                    <t t-foreach="matrix.iter_subcols()" t-as="subcol">
+                                    <t t-foreach="subcols" t-as="subcol">
                                         <div class="mis_cell mis_collabel">
                                             <t t-out="subcol.label" />
                                             <t t-if="subcol.description">
@@ -75,11 +82,8 @@
                                 </div>
                             </div>
                             <div class="mis_tbody">
-                                <t t-foreach="matrix.iter_rows()" t-as="row">
-                                    <div
-                                        t-if="not ((row.style_props.hide_empty and row.is_empty()) or row.style_props.hide_always)"
-                                        class="mis_row"
-                                    >
+                                <t t-foreach="matrix.iter_visible_rows()" t-as="row">
+                                    <div class="mis_row">
                                         <div
                                             t-att-style="style_obj.to_css_style(row.style_props)"
                                             class="mis_cell mis_rowlabel"
@@ -90,7 +94,10 @@
                                                 <t t-out="row.description" />
                                             </t>
                                         </div>
-                                        <t t-foreach="row.iter_cells()" t-as="cell">
+                                        <t
+                                            t-foreach="row.iter_cells(subcols=subcols)"
+                                            t-as="cell"
+                                        >
                                             <div
                                                 t-att-style="cell and style_obj.to_css_style(cell.style_props) or ''"
                                                 class="mis_cell mis_amount"

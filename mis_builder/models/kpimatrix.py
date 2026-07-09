@@ -464,6 +464,41 @@ class KpiMatrix:
         for col in self.iter_cols():
             yield from col.iter_subcols()
 
+    def iter_visible_rows(self):
+        """Iterate rows that must be displayed, in display order.
+
+        yields KpiMatrixRow.
+        """
+        for row in self.iter_rows():
+            if not (
+                (row.style_props.hide_empty and row.is_empty())
+                or row.style_props.hide_always
+            ):
+                yield row
+
+    def iter_cols_visible(self, hide_empty_columns=False):
+        """Iterate columns in display order. If hide_empty_columns is set,
+        columns where all cells are empty (across visible rows) are skipped.
+
+        yields KpiMatrixCol: one for each column or comparison (if visible).
+        """
+        if not hide_empty_columns:
+            yield from self.iter_cols()
+            return
+        visible_rows = list(self.iter_visible_rows())
+        for col in self.iter_cols():
+            if not self._col_is_empty(col, visible_rows):
+                yield col
+
+    def iter_subcols_visible(self, hide_empty_columns=False):
+        """Iterate sub columns in display order, skipping empty columns.
+
+        yields KpiMatrixSubCol: one for each subkpi in each column and
+        comparison (if visible).
+        """
+        for col in self.iter_cols_visible(hide_empty_columns):
+            yield from col.iter_subcols()
+
     def _load_account_names(self):
         account_ids = set()
         for detail_rows in self._detail_rows.values():
@@ -506,9 +541,21 @@ class KpiMatrix:
             self._load_account_names()
         return self._account_names[account_id]
 
-    def as_dict(self):
+    def _col_is_empty(self, col, rows):
+        for subcol in col.iter_subcols():
+            for row in rows:
+                cell = subcol.get_cell_for_row(row)
+                if cell and cell.val not in (AccountingNone, None):
+                    return False
+        return True
+
+    def as_dict(self, hide_empty_columns=False):
+        visible_cols = list(self.iter_cols_visible(hide_empty_columns))
+        visible_subcols = [
+            subcol for col in visible_cols for subcol in col.iter_subcols()
+        ]
         header = [{"cols": []}, {"cols": []}]
-        for col in self.iter_cols():
+        for col in visible_cols:
             header[0]["cols"].append(
                 {
                     "label": col.label,
@@ -526,18 +573,14 @@ class KpiMatrix:
                 )
 
         body = []
-        for row in self.iter_rows():
-            if (
-                row.style_props.hide_empty and row.is_empty()
-            ) or row.style_props.hide_always:
-                continue
+        for row in self.iter_visible_rows():
             row_data = {
                 "label": row.label,
                 "description": row.description,
                 "style": self._style_model.to_css_style(row.style_props),
                 "cells": [],
             }
-            for cell in row.iter_cells():
+            for cell in row.iter_cells(subcols=visible_subcols):
                 if cell is None:
                     # TODO use subcol style here
                     row_data["cells"].append({})
