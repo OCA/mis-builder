@@ -144,6 +144,7 @@ class KpiMatrix:
         env,
         companies=None,
         account_model="account.account",
+        companies_as_columns=False,
     ):
         # cache language id for faster rendering
         lang_model = env["res.lang"]
@@ -151,6 +152,7 @@ class KpiMatrix:
         self._style_model = env["mis.report.style"]
         self._account_model = env[account_model]
         self._companies = companies
+        self._companies_as_columns = companies_as_columns
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
@@ -489,7 +491,11 @@ class KpiMatrix:
             # (this may return a name without code)
             account_name = account.display_name
         is_multi_company = self._companies and len(self._companies) > 1
-        if is_multi_company and len(account_companies) == 1:
+        if (
+            is_multi_company
+            and len(account_companies) == 1
+            and not self._companies_as_columns
+        ):
             # In a multi-company report, if the account is bound to one
             # company, it makes sense to show the company name. If the account
             # is bound to multiple companies it does not make sense, because we
@@ -498,6 +504,8 @@ class KpiMatrix:
             # information. To be able to accurately display the company on
             # detail lines when the account is bound to multiple companies,
             # we'll need a generalized kpi details expansion.
+            # When companies are shown as separate columns, each column is
+            # already a single company, so the per-row suffix is redundant.
             account_name = f"{account_name} [{account_companies.display_name}]"
         return account_name
 

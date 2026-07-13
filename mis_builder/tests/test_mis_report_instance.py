@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import odoo.tests.common as common
+from odoo import fields
 from odoo.tools import test_reports
 
 from ..models.accounting_none import AccountingNone
@@ -551,6 +552,148 @@ class TestMisReportInstance(common.HttpCase):
             has_false,
             "Account codes should not show as 'False' in multi-company reports",
         )
+
+    def test_generate_company_columns(self):
+        """action_generate_company_columns creates one period per company + Total."""
+        company2 = self.env["res.company"].create({"name": "Second Company"})
+        report = self.env["mis.report"].create({"name": "MC Columns Report"})
+        instance = self.env["mis.report.instance"].create(
+            {
+                "name": "MC Columns Instance",
+                "report_id": report.id,
+                "multi_company": True,
+                "company_ids": [
+                    (4, self.env.ref("base.main_company").id),
+                    (4, company2.id),
+                ],
+            }
+        )
+        instance.action_generate_company_columns()
+        periods = instance.period_ids.sorted("sequence")
+        # Expect 3 periods: main_company, company2, Total
+        self.assertEqual(len(periods), 3)
+        self.assertEqual(periods[0].company_id, self.env.ref("base.main_company"))
+        self.assertEqual(periods[1].company_id, company2)
+        self.assertFalse(periods[2].company_id)
+        self.assertEqual(periods[2].source, "sumcol")
+        self.assertTrue(instance.comparison_mode)
+
+    def test_generate_company_columns_guard(self):
+        """action_generate_company_columns raises UserError when preconditions unmet."""
+        from odoo.exceptions import UserError
+
+        report = self.env["mis.report"].create({"name": "MC Guard Report"})
+        # single-company instance (multi_company=False)
+        instance = self.env["mis.report.instance"].create(
+            {"name": "MC Guard Instance", "report_id": report.id}
+        )
+        with self.assertRaises(UserError):
+            instance.action_generate_company_columns()
+        # multi_company=True but only 1 company selected
+        instance.multi_company = True
+        instance._onchange_company()
+        with self.assertRaises(UserError):
+            instance.action_generate_company_columns()
+
+    def _post_expense(self, company, expense, bank, amount):
+        """Post one balanced expense move in ``company`` on shared accounts."""
+        journal = self.env["account.journal"].create(
+            {
+                "name": "Misc",
+                "type": "general",
+                "code": "MISC",
+                "company_id": company.id,
+            }
+        )
+        move = self.env["account.move"].create(
+            {
+                "company_id": company.id,
+                "journal_id": journal.id,
+                "date": fields.Date.today(),
+                "line_ids": [
+                    (0, 0, {"account_id": expense.id, "debit": amount, "name": "x"}),
+                    (0, 0, {"account_id": bank.id, "credit": amount, "name": "x"}),
+                ],
+            }
+        )
+        move.action_post()
+
+    def test_generate_company_columns_hierarchy_no_double_count(self):
+        """Total sums each selected company once, even with a parent/branch tree.
+
+        A parent company with two real branches (``parent_id`` set). Each
+        generated column filters on an exact ``company_id`` match, so a branch's
+        moves appear only in that branch's column -- never rolled up into the
+        parent's column. The Total must therefore equal the disjoint sum
+        (100 + 10 + 20 = 130), not double-count the branches (which a
+        ``child_of`` filter would, giving a parent column of 130 and a Total
+        of 160).
+        """
+        Company = self.env["res.company"]
+        parent = Company.create({"name": "Acme Group"})
+        branch1 = Company.create({"name": "Acme North", "parent_id": parent.id})
+        branch2 = Company.create({"name": "Acme South", "parent_id": parent.id})
+        companies = parent + branch1 + branch2
+        # Branches share the parent's chart of accounts, so the accounts are
+        # created once and used by every company in the tree.
+        expense = (
+            self.env["account.account"]
+            .with_company(parent)
+            .create(
+                {
+                    "name": "Expense",
+                    "code": "600000",
+                    "account_type": "expense",
+                    "company_ids": [(6, 0, companies.ids)],
+                }
+            )
+        )
+        bank = (
+            self.env["account.account"]
+            .with_company(parent)
+            .create(
+                {
+                    "name": "Bank",
+                    "code": "101401",
+                    "account_type": "asset_current",
+                    "company_ids": [(6, 0, companies.ids)],
+                }
+            )
+        )
+        self._post_expense(parent, expense, bank, 100)
+        self._post_expense(branch1, expense, bank, 10)
+        self._post_expense(branch2, expense, bank, 20)
+
+        report = self.env["mis.report"].create({"name": "Hierarchy Report"})
+        self.env["mis.report.kpi"].create(
+            {
+                "report_id": report.id,
+                "name": "exp",
+                "description": "Expenses",
+                "sequence": 1,
+                "expression_ids": [(0, 0, {"name": "balp[600%]"})],
+            }
+        )
+        instance = self.env["mis.report.instance"].create(
+            {
+                "name": "Hierarchy Instance",
+                "report_id": report.id,
+                "multi_company": True,
+                "company_ids": [(6, 0, companies.ids)],
+            }
+        )
+        instance.action_generate_company_columns()
+        matrix = instance.with_context(allowed_company_ids=companies.ids).compute()
+        cols = [c["label"] for c in matrix["header"][0]["cols"]]
+        exp_row = next(r for r in matrix["body"] if r["label"] == "Expenses")
+        vals = {
+            label: cell.get("val")
+            for label, cell in zip(cols, exp_row["cells"], strict=False)
+        }
+        self.assertEqual(vals["Acme Group"], 100)
+        self.assertEqual(vals["Acme North"], 10)
+        self.assertEqual(vals["Acme South"], 20)
+        self.assertEqual(vals["Total"], 130)
 
     def test_qweb(self):
         self.report_instance.print_pdf()  # get action

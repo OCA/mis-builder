@@ -230,6 +230,12 @@ class MisReportInstancePeriod(models.Model):
         default=1,
     )
     subkpi_ids = fields.Many2many("mis.report.subkpi", string="Sub KPI Filter")
+    company_id = fields.Many2one(
+        comodel_name="res.company",
+        string="Company",
+        help="Filter this column to a single company. "
+        "Leave empty to include all allowed companies.",
+    )
 
     source = fields.Selection(
         [
@@ -393,6 +399,8 @@ class MisReportInstancePeriod(models.Model):
             return []
         # First get the report-level filter domain.
         domain = self.report_instance_id._get_filter_domain(self.source_aml_model_name)
+        if self.company_id:
+            domain.append(("company_id", "=", self.company_id.id))
         if self.analytic_domain:
             # Then extend it with the column-level analytic domain.
             domain.extend(ast.literal_eval(self.analytic_domain))
@@ -411,9 +419,18 @@ class MisReportInstancePeriod(models.Model):
         self.ensure_one()
         domain = []
         if company_field := query.sudo().company_field_id:
-            query_company_ids = self.report_instance_id.query_company_ids.ids
-            assert query_company_ids
-            domain = [(company_field.name, "in", query_company_ids)]
+            if self.company_id:
+                domain = [(company_field.name, "=", self.company_id.id)]
+            else:
+                query_company_ids = self.report_instance_id.query_company_ids.ids
+                if not query_company_ids:
+                    raise UserError(
+                        self.env._(
+                            "No companies are configured for report '%s'.",
+                            self.report_instance_id.name,
+                        )
+                    )
+                domain = [(company_field.name, "in", query_company_ids)]
         return domain
 
     @api.constrains("mode", "source")
@@ -771,6 +788,49 @@ class MisReportInstance(models.Model):
         result = super().get_views(views, options)
         return result
 
+    def action_generate_company_columns(self):
+        """Generate one period/column per company in company_ids + Total."""
+        self.ensure_one()
+        if not self.multi_company or len(self.company_ids) < 2:
+            raise UserError(
+                self.env._(
+                    "Please enable Multi Company and select at least 2 companies "
+                    "before generating company columns."
+                )
+            )
+        self.period_ids.unlink()
+        seq = 10
+        period_ids = []
+        for company in self.company_ids:
+            period = self.env["mis.report.instance.period"].create(
+                {
+                    "report_instance_id": self.id,
+                    "name": company.name,
+                    "mode": MODE_REL,
+                    "source": SRC_ACTUALS,
+                    "type": "y",
+                    "offset": 0,
+                    "duration": 1,
+                    "sequence": seq,
+                    "company_id": company.id,
+                }
+            )
+            period_ids.append(period.id)
+            seq += 10
+        self.env["mis.report.instance.period"].create(
+            {
+                "report_instance_id": self.id,
+                "name": self.env._("Total"),
+                "mode": MODE_NONE,
+                "source": SRC_SUMCOL,
+                "sequence": seq,
+                "source_sumcol_ids": [
+                    (0, 0, {"period_to_sum_id": pid, "sign": "+"}) for pid in period_ids
+                ],
+            }
+        )
+        self.comparison_mode = True
+
     def preview(self):
         self.ensure_one()
         view_id = self.env.ref("mis_builder.mis_report_instance_result_view_form")
@@ -877,7 +937,15 @@ class MisReportInstance(models.Model):
         """
         self.ensure_one()
         aep = self.report_id._prepare_aep(self.query_company_ids, self.currency_id)
-        kpi_matrix = self.report_id.prepare_kpi_matrix(self.query_company_ids)
+        multi_company = self.multi_company and len(self.query_company_ids) > 1
+        companies_as_columns = multi_company and all(
+            p.company_id
+            for p in self.period_ids
+            if p.source in (SRC_ACTUALS, SRC_ACTUALS_ALT)
+        )
+        kpi_matrix = self.report_id.prepare_kpi_matrix(
+            self.query_company_ids, companies_as_columns
+        )
         for period in self.period_ids:
             description = None
             if period.mode == MODE_NONE:
@@ -1023,3 +1091,82 @@ class MisReportInstance(models.Model):
         self.user_can_edit_annotation = self.env.user.has_group(
             "mis_builder.group_edit_annotation"
         )
+
+    @api.model
+    def _post_demo_moves(self):
+        """Post demo journal entries for the multi-company demo report."""
+        # Post Other Company moves created via XML demo data
+        for xmlid in [
+            "mis_builder.move_other_consulting",
+            "mis_builder.move_other_furniture",
+        ]:
+            move = self.env.ref(xmlid, raise_if_not_found=False)
+            if move and move.state == "draft":
+                try:
+                    move.with_company(move.company_id).action_post()
+                except Exception:
+                    _logger.warning("Could not post demo move %s", xmlid)
+        # Create and post YourCompany demo moves so all columns show values
+        main_company = self.env.ref("base.main_company")
+        expense_account = self.env["account.account"].search(
+            [
+                ("company_ids", "in", [main_company.id]),
+                ("code", "=like", "6%"),
+                ("account_type", "=", "expense"),
+            ],
+            limit=1,
+        )
+        equip_account = self.env["account.account"].search(
+            [
+                ("company_ids", "in", [main_company.id]),
+                ("code", "=like", "61%"),
+                ("account_type", "=", "expense"),
+            ],
+            limit=1,
+        )
+        bank_account = self.env["account.account"].search(
+            [
+                ("company_ids", "in", [main_company.id]),
+                ("account_type", "in", ["asset_cash", "asset_current"]),
+            ],
+            limit=1,
+        )
+        journal = self.env["account.journal"].search(
+            [("type", "=", "general"), ("company_id", "=", main_company.id)],
+            limit=1,
+        )
+        if not (expense_account and bank_account and journal):
+            _logger.warning("Could not find accounts for YourCompany demo moves")
+            return
+        Move = self.env["account.move"].with_company(main_company)
+        for name, amount, account in [
+            ("Main Office Expenses", 18500, expense_account),
+            ("Main Office Equipment", 3800, equip_account or expense_account),
+        ]:
+            move = Move.create(
+                {
+                    "company_id": main_company.id,
+                    "journal_id": journal.id,
+                    "date": "2026-03-15",
+                    "line_ids": [
+                        (
+                            0,
+                            0,
+                            {"account_id": account.id, "debit": amount, "name": name},
+                        ),
+                        (
+                            0,
+                            0,
+                            {
+                                "account_id": bank_account.id,
+                                "credit": amount,
+                                "name": name,
+                            },
+                        ),
+                    ],
+                }
+            )
+            try:
+                move.with_company(main_company).action_post()
+            except Exception:
+                _logger.warning("Could not post YourCompany demo move: %s", name)

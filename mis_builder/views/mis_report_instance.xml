@@ -137,7 +137,16 @@
                                 <group>
                                     <field name="date" />
                                 </group>
-                                <group />
+                                <group>
+                                    <button
+                                        name="action_generate_company_columns"
+                                        string="Generate Company Columns"
+                                        type="object"
+                                        class="btn-secondary"
+                                        groups="base.group_multi_company"
+                                        invisible="not multi_company"
+                                    />
+                                </group>
                                 <field
                                     name="period_ids"
                                     nolabel="1"
@@ -150,6 +159,11 @@
                                         <field name="name" />
                                         <field name="source" />
                                         <field name="source_aml_model_id" />
+                                        <field
+                                            name="company_id"
+                                            groups="base.group_multi_company"
+                                            optional="hide"
+                                        />
                                         <field name="date_from" />
                                         <field name="date_to" />
                                     </list>
