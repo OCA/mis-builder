@@ -3,10 +3,11 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record model="ir.ui.view" id="mis_budget_form_view">
-        <field name="name">mis.budget.form (in mis_builder_budget)</field>
+        <field  name="name">mis.budget.form (in mis_builder_budget)</field>
         <field name="model">mis.budget</field>
         <field name="arch" type="xml">
             <form>
+
                 <header>
                     <button
                         name="action_draft"
