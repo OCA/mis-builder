@@ -53,8 +53,8 @@ msgstr ""
 "<code>\n"
 "                                            balp[('user_type_id', '=',\n"
 "                                            ref('account.\n"
-"                                            data_account_type_receivable')"
-".id)][]\n"
+"                                            data_account_type_receivable').id)]"
+"[]\n"
 "                                        </code>\n"
 "                                        : Veränderung des Saldos aller "
 "Forderungskonten über\n"
@@ -129,8 +129,8 @@ msgid ""
 "<code>balp[70]</code>."
 msgstr ""
 "<code>bal[70]</code> : Veränderung des Saldos des Kontos 70 über\n"
-"                                        den Zeitraum (entspricht <code>"
-"balp[70]</code>)."
+"                                        den Zeitraum (entspricht "
+"<code>balp[70]</code>)."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -775,6 +775,11 @@ msgid "Export"
 msgstr "Exportieren"
 
 #. module: mis_builder
+#: model:ir.actions.server,name:mis_builder.mis_builder_print_xls_report
+msgid "Export XLS"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__expression
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression__name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__expression_ids
@@ -804,8 +809,8 @@ msgstr ""
 "Ausdrücke können andere Kennzahlen, Unterkennzahlen und\n"
 "                                    Abfrageergebnisse über ihren Namen "
 "einbeziehen (z. B. <code>kpi1 + kpi2</code>,\n"
-"                                    <code>kpi2.subkpi1</code>, <code>"
-"query1.field1</code>)."
+"                                    <code>kpi2.subkpi1</code>, "
+"<code>query1.field1</code>)."
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_period__normalize_factor
@@ -896,7 +901,8 @@ msgstr "Schriftstärke geerbt"
 #. module: mis_builder
 #: model:ir.model.fields,help:mis_builder.field_mis_report_instance_period__is_ytd
 msgid "Forces the start date to Jan 1st of the relevant year"
-msgstr "Setzt das Startdatum zwingend auf den 1. Januar des betreffenden Jahres"
+msgstr ""
+"Setzt das Startdatum zwingend auf den 1. Januar des betreffenden Jahres"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__date_from
@@ -1647,7 +1653,8 @@ msgstr "Unterkennzahlen-Filter"
 #. module: mis_builder
 #: model:ir.model.constraint,message:mis_builder.constraint_mis_report_kpi_expression_subkpi_kpi_unique
 msgid "Sub KPI must be used once and only once for each KPI"
-msgstr "Jede Unterkennzahl muss für jede Kennzahl genau einmal verwendet werden"
+msgstr ""
+"Jede Unterkennzahl muss für jede Kennzahl genau einmal verwendet werden"
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_form
@@ -1777,8 +1784,8 @@ msgstr ""
 "Der <b>Kontoselektor</b> ist ein Like-Ausdruck auf den\n"
 "                                        Kontocode (z. B. <code>70%</code> "
 "usw.) oder eine Domain über Konten\n"
-"                                        (z. B. <code>[('code', 'like', '60%')"
-"]</code>)."
+"                                        (z. B. <code>[('code', 'like', "
+"'60%')]</code>)."
 
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
@@ -1980,8 +1987,8 @@ msgid ""
 "<code>fldp.quantity</code>"
 msgstr ""
 "wenn <code>fld</code> verwendet wird: muss ein Feldnamen-Spezifizierer\n"
-"                                        angegeben werden (z. B. <code>"
-"fldp.quantity</code>"
+"                                        angegeben werden (z. B. "
+"<code>fldp.quantity</code>"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__x-large
