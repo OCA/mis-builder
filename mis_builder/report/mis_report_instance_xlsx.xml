@@ -8,4 +8,15 @@
         <field name="report_type">xlsx</field>
         <field name="report_file">mis_report_instance</field>
     </record>
+
+    <record model="ir.actions.server" id="mis_builder_print_xls_report">
+        <field name="name">Export XLS</field>
+        <field name="model_id" ref="mis_builder.model_mis_report_instance" />
+        <field name="binding_model_id" ref="mis_builder.model_mis_report_instance" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = records.export_xls()
+        </field>
+    </record>
 </odoo>
