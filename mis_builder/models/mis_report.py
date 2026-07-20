@@ -128,9 +128,7 @@ class MisReportKpi(models.Model):
         required=False,
         help="Style applied to expanded detail rows (account or partner).",
     )
-    style_id = fields.Many2one(
-        string="Style", comodel_name="mis.report.style", required=False
-    )
+    style_id = fields.Many2one(comodel_name="mis.report.style", required=False)
     style_expression = fields.Char(
         help="An expression that returns a style depending on the KPI value. "
         "Such style is applied on top of the row style.",
@@ -459,7 +457,7 @@ class MisReport(models.Model):
 
     name = fields.Char(required=True, translate=True)
     description = fields.Char(required=False, translate=True)
-    style_id = fields.Many2one(string="Style", comodel_name="mis.report.style")
+    style_id = fields.Many2one(comodel_name="mis.report.style")
     query_ids = fields.One2many(
         "mis.report.query", "report_id", string="Queries", copy=True
     )

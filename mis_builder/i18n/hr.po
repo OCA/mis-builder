@@ -42,8 +42,8 @@ msgid ""
 "<code>\n"
 "                                            balp[('user_type_id', '=',\n"
 "                                            ref('account.\n"
-"                                            data_account_type_receivable')."
-"id)][]\n"
+"                                            data_account_type_receivable').id)]"
+"[]\n"
 "                                        </code>\n"
 "                                        : variation of the balance of all "
 "receivable accounts over\n"
@@ -597,6 +597,8 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__display_name
+#: model:ir.model.fields,field_description:mis_builder.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_annotation__display_name
@@ -608,6 +610,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__display_name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__display_name
+#: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__display_name
+#: model:ir.model.fields,field_description:mis_builder.field_report_mis_builder_mis_report_instance_xlsx__display_name
 msgid "Display Name"
 msgstr "Naziv "
 
@@ -683,6 +687,11 @@ msgid "Export"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.actions.server,name:mis_builder.mis_builder_print_xls_report
+msgid "Export XLS"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__expression
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression__name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__expression_ids
@@ -706,8 +715,8 @@ msgid ""
 "Expressions can involve other KPI, sub KPI and\n"
 "                                    query results by name (eg <code>kpi1 + "
 "kpi2</code>,\n"
-"                                    <code>kpi2.subkpi1</code>, <code>query1."
-"field1</code>)."
+"                                    <code>kpi2.subkpi1</code>, "
+"<code>query1.field1</code>)."
 msgstr ""
 
 #. module: mis_builder
@@ -844,6 +853,8 @@ msgstr ""
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__id
+#: model:ir.model.fields,field_description:mis_builder.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:mis_builder.field_mis_kpi_data__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_instance_annotation__id
@@ -855,6 +866,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_style__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__id
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__id
+#: model:ir.model.fields,field_description:mis_builder.field_prorata_read_group_mixin__id
+#: model:ir.model.fields,field_description:mis_builder.field_report_mis_builder_mis_report_instance_xlsx__id
 msgid "ID"
 msgstr "ID"
 
@@ -1002,6 +1015,11 @@ msgstr ""
 #. module: mis_builder
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_instance_view_form
 msgid "Layout"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e6
+msgid "M"
 msgstr ""
 
 #. module: mis_builder
@@ -1793,8 +1811,18 @@ msgid "from %(date_from)s to %(date_to)s"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e3
+msgid "k"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
 msgid "large"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-3
+msgid "m"
 msgstr ""
 
 #. module: mis_builder
@@ -1828,8 +1856,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:mis_builder.mis_report_view_kpi_form
 msgid ""
 "when <code>fld</code> is used : a field name specifier\n"
-"                                        must be provided (e.g. <code>fldp."
-"quantity</code>"
+"                                        must be provided (e.g. "
+"<code>fldp.quantity</code>"
 msgstr ""
 
 #. module: mis_builder
@@ -1850,6 +1878,11 @@ msgstr ""
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__xx-small
 msgid "xx-small"
+msgstr ""
+
+#. module: mis_builder
+#: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-6
+msgid "µ"
 msgstr ""
 
 #~ msgid "Account model"
@@ -1908,12 +1941,13 @@ msgstr ""
 #~ msgstr "<b>bali[70,60]</b>: početni saldo konta 70 i 60."
 
 #~ msgid ""
-#~ "<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
-#~ "id)][]</b>: variation of the balance of all receivable accounts over the "
-#~ "period."
+#~ "<b>balp[('user_type_id', '=', "
+#~ "ref('account.data_account_type_receivable').id)][]</b>: variation of the "
+#~ "balance of all receivable accounts over the period."
 #~ msgstr ""
-#~ "<b>balp[('user_type_id', '=', ref('account.data_account_type_receivable')."
-#~ "id)][]</b>: varijacija slada svih potražnih konta kroz period.."
+#~ "<b>balp[('user_type_id', '=', "
+#~ "ref('account.data_account_type_receivable').id)][]</b>: varijacija slada "
+#~ "svih potražnih konta kroz period.."
 
 #~ msgid ""
 #~ "<b>balp[][('tax_line_id.tag_ids', '=', ref('l10n_be.tax_tag_56').id)]</"

@@ -15,7 +15,6 @@ class AddMisReportInstanceDashboard(models.TransientModel):
 
     dashboard_id = fields.Many2one(
         "ir.actions.act_window",
-        string="Dashboard",
         required=True,
         domain="[('res_model', '=', 'board.board')]",
     )

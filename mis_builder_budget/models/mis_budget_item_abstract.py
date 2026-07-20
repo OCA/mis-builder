@@ -11,7 +11,6 @@ class MisBudgetItemAbstract(models.AbstractModel):
 
     budget_id = fields.Many2one(
         comodel_name="mis.budget.abstract",
-        string="Budget",
         required=True,
         ondelete="cascade",
         index=True,

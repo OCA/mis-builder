@@ -653,6 +653,11 @@ msgid "Export"
 msgstr ""
 
 #. module: mis_builder
+#: model:ir.actions.server,name:mis_builder.mis_builder_print_xls_report
+msgid "Export XLS"
+msgstr ""
+
+#. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__expression
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression__name
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__expression_ids

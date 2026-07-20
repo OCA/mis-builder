@@ -14,8 +14,8 @@ class MisCommittedPurchase(models.Model):
 
     line_type = fields.Char()
     name = fields.Char()
-    account_id = fields.Many2one(comodel_name="account.account", string="Account")
-    company_id = fields.Many2one(comodel_name="res.company", string="Company")
+    account_id = fields.Many2one(comodel_name="account.account")
+    company_id = fields.Many2one(comodel_name="res.company")
     credit = fields.Float()
     debit = fields.Float()
     date = fields.Date()
