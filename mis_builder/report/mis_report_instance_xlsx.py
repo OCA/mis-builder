@@ -34,17 +34,18 @@ class MisBuilderXlsx(models.AbstractModel):
         if cell and (annotation := notes.get(cell.cell_id, {}).get("text")):
             sheet.write_comment(row_pos, col_pos, annotation)
 
-    def generate_xlsx_report(self, workbook, data, objects):
+    def _get_worksheet_name(self, mis_instance):
+        return mis_instance._get_xlsx_report_name()[:31]
+
+    def _generate_xlsx_one_report(self, workbook, mis_instance):
         # get the computed result of the report
-        matrix = objects._compute_matrix()
-        notes = objects.get_notes_by_cell_id()
+        matrix = mis_instance._compute_matrix()
+        notes = mis_instance.get_notes_by_cell_id()
         style_obj = self.env["mis.report.style"]
 
         # create worksheet
-        report_name = "{} - {}".format(
-            objects[0].name, ", ".join([a.name for a in objects[0].query_company_ids])
-        )
-        sheet = workbook.add_worksheet(report_name[:31])
+        worksheet_name = self._get_worksheet_name(mis_instance)
+        sheet = workbook.add_worksheet(worksheet_name)
         row_pos = 0
         col_pos = 0
         # width of the labels column
@@ -57,13 +58,14 @@ class MisBuilderXlsx(models.AbstractModel):
         header_format = workbook.add_format(
             {"bold": True, "align": "center", "bg_color": "#F0EEEE"}
         )
+        report_name = mis_instance._get_xlsx_report_name()
         sheet.write(row_pos, 0, report_name, bold)
         row_pos += 2
 
         # filters
-        filter_descriptions = objects.get_filter_descriptions()
+        filter_descriptions = mis_instance.get_filter_descriptions()
         if filter_descriptions:
-            for filter_description in objects.get_filter_descriptions():
+            for filter_description in mis_instance.get_filter_descriptions():
                 sheet.write(row_pos, 0, filter_description)
                 row_pos += 1
             row_pos += 1
@@ -88,7 +90,9 @@ class MisBuilderXlsx(models.AbstractModel):
             else:
                 sheet.write(row_pos, col_pos, label, header_format)
                 col_width[col_pos] = max(
-                    col_width[col_pos], len(col.label or ""), len(col.description or "")
+                    col_width[col_pos],
+                    len(col.label or ""),
+                    len(col.description or ""),
                 )
             col_pos += col.colspan
         row_pos += 1
@@ -184,3 +188,9 @@ class MisBuilderXlsx(models.AbstractModel):
         min_col_pos = min(col_width.keys())
         max_col_pos = max(col_width.keys())
         sheet.set_column(min_col_pos, max_col_pos, data_col_width * COL_WIDTH)
+
+        return sheet
+
+    def generate_xlsx_report(self, workbook, data, objects):
+        for instance in objects:
+            self._generate_xlsx_one_report(workbook, instance)
