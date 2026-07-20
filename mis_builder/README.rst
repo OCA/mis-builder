@@ -110,6 +110,17 @@ can be found on GitHub.
 Changelog
 =========
 
+19.0.1.1.0 (2026-07-20)
+-----------------------
+
+Features
+~~~~~~~~
+
+- Add KPI option to expand detail rows by partner (customer/vendor), in
+  addition to the existing expansion by account. The new ``detail_by``
+  field supersedes ``auto_expand_accounts`` while keeping backward
+  compatibility.
+
 18.0.1.7.2 (2025-10-29)
 -----------------------
 

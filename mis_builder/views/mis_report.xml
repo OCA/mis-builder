@@ -163,10 +163,11 @@
                             />
                         </group>
                         <group col="4" string="Auto expand">
-                            <field name="auto_expand_accounts" />
+                            <field name="detail_by" />
+                            <field name="auto_expand_accounts" invisible="1" />
                             <field
                                 name="auto_expand_accounts_style_id"
-                                invisible="auto_expand_accounts != True"
+                                invisible="detail_by == 'none'"
                             />
                         </group>
                     </page>

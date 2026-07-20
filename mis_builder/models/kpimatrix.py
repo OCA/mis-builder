@@ -15,18 +15,17 @@ _logger = logging.getLogger(__name__)
 
 
 class KpiMatrixRow:
-    # TODO: ultimately, the kpi matrix will become ignorant of KPI's and
-    #       accounts and know about rows, columns, sub columns and styles only.
-    #       It is already ignorant of period and only knowns about columns.
-    #       This will require a correct abstraction for expanding row details.
+    # Detail rows are keyed by (detail_model, detail_id). Currently supported
+    # detail models are account.account and res.partner.
 
-    def __init__(self, matrix, kpi, account_id=None, parent_row=None):
+    def __init__(self, matrix, kpi, detail_id=None, parent_row=None, detail_model=None):
         self._matrix = matrix
         self.kpi = kpi
-        self.account_id = account_id
+        self.detail_id = detail_id
+        self.detail_model = detail_model
         self.description = ""
         self.parent_row = parent_row
-        if not self.account_id:
+        if self.detail_id is None:
             self.style_props = self._matrix._style_model.merge(
                 [self.kpi.report_id.style_id, self.kpi.style_id]
             )
@@ -36,11 +35,17 @@ class KpiMatrixRow:
             )
 
     @property
+    def account_id(self):
+        """Backward-compatible alias for account detail rows."""
+        if self.detail_model == self._matrix.account_model_name:
+            return self.detail_id
+        return None
+
+    @property
     def label(self):
-        if not self.account_id:
+        if self.detail_id is None:
             return self.kpi.description
-        else:
-            return self._matrix.get_account_name(self.account_id)
+        return self._matrix.get_detail_name(self.detail_model, self.detail_id)
 
     def iter_cell_tuples(self, cols=None):
         if cols is None:
@@ -149,12 +154,14 @@ class KpiMatrix:
         lang_model = env["res.lang"]
         self.lang = lang_model._lang_get(env.user.lang)
         self._style_model = env["mis.report.style"]
+        self.account_model_name = account_model
         self._account_model = env[account_model]
+        self._partner_model = env["res.partner"]
         self._companies = companies
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
-        # { kpi: {account_id: KpiMatrixRow} }
+        # { kpi: {(detail_model, detail_id): KpiMatrixRow} }
         self._detail_rows = {}
         # { col_key: KpiMatrixCol }
         self._cols = OrderedDict()
@@ -162,8 +169,8 @@ class KpiMatrix:
         self._comparison_todo = defaultdict(list)
         # { col_key (left of sum): (col_key, [(sign, sum_col_key)])
         self._sum_todo = {}
-        # { account_id: account_name }
-        self._account_names = {}
+        # { (detail_model, detail_id): display name }
+        self._detail_names = {}
 
     def declare_kpi(self, kpi):
         """Declare a new kpi (row) in the matrix.
@@ -208,30 +215,58 @@ class KpiMatrix:
 
         Invoke this after declaring the kpi and the column.
         """
-        self.set_values_detail_account(
-            kpi, col_key, None, vals, drilldown_args, tooltips
+        self.set_values_detail(
+            kpi, col_key, None, vals, drilldown_args, tooltips=tooltips
         )
 
     def set_values_detail_account(
         self, kpi, col_key, account_id, vals, drilldown_args, tooltips=True
     ):
-        """Set values for a kpi and a column and a detail account.
+        """Backward-compatible wrapper around set_values_detail."""
+        return self.set_values_detail(
+            kpi,
+            col_key,
+            account_id,
+            vals,
+            drilldown_args,
+            tooltips=tooltips,
+            detail_model=self.account_model_name if account_id is not None else None,
+        )
 
-        Invoke this after declaring the kpi and the column.
-        """
-        if not account_id:
+    def set_values_detail(
+        self,
+        kpi,
+        col_key,
+        detail_id,
+        vals,
+        drilldown_args,
+        tooltips=True,
+        detail_model=None,
+    ):
+        """Set values for a kpi, column and optional detail row."""
+        if detail_id is None:
             row = self._kpi_rows[kpi]
         else:
+            if detail_model is None:
+                detail_model = self.account_model_name
             kpi_row = self._kpi_rows[kpi]
-            if account_id in self._detail_rows[kpi]:
-                row = self._detail_rows[kpi][account_id]
+            detail_key = (detail_model, detail_id)
+            if detail_key in self._detail_rows[kpi]:
+                row = self._detail_rows[kpi][detail_key]
             else:
-                row = KpiMatrixRow(self, kpi, account_id, parent_row=kpi_row)
-                self._detail_rows[kpi][account_id] = row
+                row = KpiMatrixRow(
+                    self,
+                    kpi,
+                    detail_id,
+                    parent_row=kpi_row,
+                    detail_model=detail_model,
+                )
+                self._detail_rows[kpi][detail_key] = row
         col = self._cols[col_key]
         cell_tuple = []
         assert len(vals) == col.colspan
         assert len(drilldown_args) == col.colspan
+        style_name = None
         for val, drilldown_arg, subcol in zip(
             vals, drilldown_args, col.iter_subcols(), strict=True
         ):
@@ -262,6 +297,7 @@ class KpiMatrix:
                         row.kpi.style_expression,
                         exc_info=True,
                     )
+                    style_name = None
                 if style_name:
                     style = self._style_model.search([("name", "=", style_name)])
                     if style:
@@ -410,7 +446,7 @@ class KpiMatrix:
             for row in self.iter_rows():
                 acc = SimpleArray([AccountingNone] * (len(common_subkpis) or 1))
                 if row.kpi.accumulation_method == ACC_SUM and not (
-                    row.account_id and not sum_accdet
+                    row.detail_id is not None and not sum_accdet
                 ):
                     for sign, col_to_sum in col_to_sum_keys:
                         cell_tuple = self._cols[col_to_sum].get_cell_tuple_for_row(row)
@@ -427,13 +463,14 @@ class KpiMatrix:
                             acc += SimpleArray(vals)
                         else:
                             acc -= SimpleArray(vals)
-                self.set_values_detail_account(
+                self.set_values_detail(
                     row.kpi,
                     sumcol_key,
-                    row.account_id,
+                    row.detail_id,
                     acc,
                     [None] * (len(common_subkpis) or 1),
                     tooltips=False,
+                    detail_model=row.detail_model,
                 )
 
     def iter_rows(self):
@@ -464,12 +501,31 @@ class KpiMatrix:
         for col in self.iter_cols():
             yield from col.iter_subcols()
 
-    def _load_account_names(self):
+    def _load_detail_names(self):
         account_ids = set()
+        partner_ids = set()
         for detail_rows in self._detail_rows.values():
-            account_ids.update(detail_rows.keys())
-        accounts = self._account_model.search([("id", "in", list(account_ids))])
-        self._account_names = {a.id: self._get_account_name(a) for a in accounts}
+            for detail_model, detail_id in detail_rows:
+                if detail_model == self.account_model_name:
+                    account_ids.add(detail_id)
+                elif detail_model == "res.partner":
+                    partner_ids.add(detail_id)
+        if account_ids:
+            accounts = self._account_model.search([("id", "in", list(account_ids))])
+            for account in accounts:
+                self._detail_names[(self.account_model_name, account.id)] = (
+                    self._get_account_name(account)
+                )
+        if partner_ids:
+            # 0 is the sentinel used for move lines without partner
+            resolved_ids = [i for i in partner_ids if i]
+            partners = self._partner_model.browse(resolved_ids)
+            for partner in partners:
+                self._detail_names[("res.partner", partner.id)] = partner.display_name
+            if 0 in partner_ids:
+                self._detail_names[("res.partner", 0)] = self._partner_model.env._(
+                    "(No partner)"
+                )
 
     def _get_account_name(self, account):
         # display_name is account code + account name. Note the account may have
@@ -495,16 +551,18 @@ class KpiMatrix:
             # is bound to multiple companies it does not make sense, because we
             # don't know to which companies this detail line effectively
             # contributes, so the list of companies in it would not add useful
-            # information. To be able to accurately display the company on
-            # detail lines when the account is bound to multiple companies,
-            # we'll need a generalized kpi details expansion.
+            # information.
             account_name = f"{account_name} [{account_companies.display_name}]"
         return account_name
 
+    def get_detail_name(self, detail_model, detail_id):
+        key = (detail_model, detail_id)
+        if key not in self._detail_names:
+            self._load_detail_names()
+        return self._detail_names.get(key, "")
+
     def get_account_name(self, account_id):
-        if account_id not in self._account_names:
-            self._load_account_names()
-        return self._account_names[account_id]
+        return self.get_detail_name(self.account_model_name, account_id)
 
     def as_dict(self):
         header = [{"cols": []}, {"cols": []}]
@@ -554,8 +612,8 @@ class KpiMatrix:
                         "style": self._style_model.to_css_style(
                             cell.style_props, no_indent=True
                         ),
-                        # notes can not be added on 'details by account' lines
-                        "can_be_annotated": not cell.row.account_id,
+                        # notes can not be added on detail lines
+                        "can_be_annotated": cell.row.detail_id is None,
                     }
                     if cell.drilldown_arg:
                         col_data["drilldown_arg"] = cell.drilldown_arg
@@ -571,25 +629,63 @@ class KpiMatrix:
     # semantic domain occur.
 
     @classmethod
+    def _detail_key_to_cell_token(cls, detail_model, detail_id):
+        if detail_id is None:
+            return ""
+        if detail_model == "res.partner":
+            return f"p:{detail_id}"
+        # account details keep the historic numeric token for compatibility
+        return str(detail_id)
+
+    @classmethod
     def _make_cell_id(
-        cls, kpi_id: int, account_id: int | None, period_id: int, subkpi_id: int | None
+        cls,
+        kpi_id: int,
+        detail_id: int | None,
+        period_id: int,
+        subkpi_id: int | None,
+        detail_model: str | None = None,
     ) -> str:
-        return f"{kpi_id}#{account_id or ''}#{period_id}#{subkpi_id or ''}"
+        mid = cls._detail_key_to_cell_token(detail_model, detail_id)
+        return f"{kpi_id}#{mid}#{period_id}#{subkpi_id or ''}"
 
     @classmethod
     def _pack_cell_id(cls, cell: KpiMatrixCell) -> str:
         return cls._make_cell_id(
             cell.row.kpi.id,
-            cell.row.account_id,
+            cell.row.detail_id,
             cell.subcol.col.key,
             cell.subcol.subkpi and cell.subcol.subkpi.id,
+            detail_model=cell.row.detail_model,
         )
 
     @classmethod
     def _unpack_cell_id(cls, cell_id: str) -> tuple[int, int | None, int, int | None]:
-        kpi_id, account_id, col_key, subkpi_id = cell_id.split("#")
+        """Unpack a cell id.
+
+        The second element is the detail id. For partner details the raw token
+        is not returned here; callers that need the model should use
+        `_unpack_cell_id_detail`.
+        """
+        kpi_id, detail_id, period_id, subkpi_id = cls._unpack_cell_id_detail(cell_id)[
+            :4
+        ]
+        return kpi_id, detail_id, period_id, subkpi_id
+
+    @classmethod
+    def _unpack_cell_id_detail(
+        cls, cell_id: str
+    ) -> tuple[int, int | None, int, int | None, str | None]:
+        kpi_id, mid, col_key, subkpi_id = cell_id.split("#")
         kpi_id = int(kpi_id)
-        account_id = int(account_id) if account_id else None
         period_id = int(col_key)
         subkpi_id = int(subkpi_id) if subkpi_id else None
-        return kpi_id, account_id, period_id, subkpi_id
+        detail_model = None
+        detail_id = None
+        if mid.startswith("p:"):
+            detail_model = "res.partner"
+            detail_id = int(mid[2:])
+        elif mid:
+            detail_model = "account.account"
+            detail_id = int(mid)
+        return kpi_id, detail_id, period_id, subkpi_id, detail_model

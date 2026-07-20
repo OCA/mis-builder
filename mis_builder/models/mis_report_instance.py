@@ -545,7 +545,10 @@ class MisReportInstance(models.Model):
         required=False,
     )
     landscape_pdf = fields.Boolean(string="Landscape PDF")
-    no_auto_expand_accounts = fields.Boolean(string="Disable account details expansion")
+    no_auto_expand_accounts = fields.Boolean(
+        string="Disable details expansion",
+        help="Disable account/partner detail rows for all KPIs of this report.",
+    )
     display_columns_description = fields.Boolean(
         help="Display the date range details in the column headers."
     )
@@ -963,6 +966,7 @@ class MisReportInstance(models.Model):
         period_id = arg.get("period_id")
         expr = arg.get("expr")
         account_id = arg.get("account_id")
+        partner_id = arg.get("partner_id")
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env["mis.report.instance.period"].browse(period_id)
             aep = AEP(
@@ -975,6 +979,7 @@ class MisReportInstance(models.Model):
                 period.date_from,
                 period.date_to,
                 account_id,
+                partner_id=partner_id,
             )
             additional_domain = period._get_additional_move_line_filter()
             if additional_domain:
@@ -999,12 +1004,19 @@ class MisReportInstance(models.Model):
         period_id = arg.get("period_id")
         period = self.env["mis.report.instance.period"].browse(period_id)
         account_id = arg.get("account_id")
+        partner_id = arg.get("partner_id")
 
         if account_id:
             account = self.env[self.report_id.account_model].browse(account_id)
             return f"{kpi.description} - {account.display_name} - {period.display_name}"
-        else:
-            return f"{kpi.description} - {period.display_name}"
+        if partner_id is not None:
+            if partner_id:
+                partner = self.env["res.partner"].browse(partner_id)
+                partner_name = partner.display_name
+            else:
+                partner_name = self.env._("(No partner)")
+            return f"{kpi.description} - {partner_name} - {period.display_name}"
+        return f"{kpi.description} - {period.display_name}"
 
     def _get_annotation_context(self):
         """Return the context used to filter annotation linked to this instance."""

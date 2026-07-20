@@ -313,7 +313,9 @@ class AccountingExpressionProcessor:
             account_ids.update(self._account_ids_by_acc_domain[acc_domain])
         return account_ids
 
-    def get_aml_domain_for_expr(self, expr, date_from, date_to, account_id=None):
+    def get_aml_domain_for_expr(
+        self, expr, date_from, date_to, account_id=None, partner_id=None
+    ):
         """Get a domain on account.move.line for an expression.
 
         Prerequisite: done_parsing() must have been invoked.
@@ -335,6 +337,12 @@ class AccountingExpressionProcessor:
                     aml_domain.append(("account_id", "=", account_id))
                 else:
                     continue
+            if partner_id is not None:
+                # 0 means move lines with an empty partner_id
+                if partner_id:
+                    aml_domain.append(("partner_id", "=", partner_id))
+                else:
+                    aml_domain.append(("partner_id", "=", False))
             if field == "crd":
                 aml_domain.append(("credit", "<>", 0.0))
             elif field == "deb":
@@ -501,6 +509,38 @@ class AccountingExpressionProcessor:
                 self._data[key][account_id] += initial_data[account_id]
                 self._data[key][account_id] += variation_data[account_id]
 
+    def _value_from_entry(self, field, mode, fld_name, entry):
+        debit = entry.debit
+        credit = entry.credit
+        if field == "bal":
+            v = debit - credit
+        elif field == "pbal":
+            if debit >= credit:
+                v = debit - credit
+            else:
+                v = AccountingNone
+        elif field == "nbal":
+            if debit < credit:
+                v = debit - credit
+            else:
+                v = AccountingNone
+        elif field == "deb":
+            v = debit
+        elif field == "crd":
+            v = credit
+        else:
+            assert field == "fld"
+            v = entry.custom_fields[fld_name]
+        # in initial balance mode, assume 0 is None
+        # as it does not make sense to distinguish 0 from "no data"
+        if (
+            v is not AccountingNone
+            and mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED)
+            and float_is_zero(v, precision_digits=self.dp)
+        ):
+            v = AccountingNone
+        return v
+
     def replace_expr(self, expr):
         """Replace accounting variables in an expression by their amount.
 
@@ -517,31 +557,9 @@ class AccountingExpressionProcessor:
             account_ids = self._account_ids_by_acc_domain[acc_domain]
             for account_id in account_ids:
                 entry = account_ids_data[account_id]
-                debit = entry.debit
-                credit = entry.credit
-                if field == "bal":
-                    v += debit - credit
-                elif field == "pbal":
-                    if debit >= credit:
-                        v += debit - credit
-                elif field == "nbal":
-                    if debit < credit:
-                        v += debit - credit
-                elif field == "deb":
-                    v += debit
-                elif field == "crd":
-                    v += credit
-                else:
-                    assert field == "fld"
-                    v += entry.custom_fields[fld_name]
-            # in initial balance mode, assume 0 is None
-            # as it does not make sense to distinguish 0 from "no data"
-            if (
-                v is not AccountingNone
-                and mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED)
-                and float_is_zero(v, precision_digits=self.dp)
-            ):
-                v = AccountingNone
+                part = self._value_from_entry(field, mode, fld_name, entry)
+                if part is not AccountingNone:
+                    v += part
             return "(" + repr(v) + ")"
 
         return self._ACC_RE.sub(f, expr)
@@ -565,35 +583,7 @@ class AccountingExpressionProcessor:
             # here we know account_id is involved in acc_domain
             account_ids_data = self._data[key]
             entry = account_ids_data[account_id]
-            debit = entry.debit
-            credit = entry.credit
-            if field == "bal":
-                v = debit - credit
-            elif field == "pbal":
-                if debit >= credit:
-                    v = debit - credit
-                else:
-                    v = AccountingNone
-            elif field == "nbal":
-                if debit < credit:
-                    v = debit - credit
-                else:
-                    v = AccountingNone
-            elif field == "deb":
-                v = debit
-            elif field == "crd":
-                v = credit
-            else:
-                assert field == "fld"
-                v = entry.custom_fields[fld_name]
-            # in initial balance mode, assume 0 is None
-            # as it does not make sense to distinguish 0 from "no data"
-            if (
-                v is not AccountingNone
-                and mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED)
-                and float_is_zero(v, precision_digits=self.dp)
-            ):
-                v = AccountingNone
+            v = self._value_from_entry(field, mode, fld_name, entry)
             return "(" + repr(v) + ")"
 
         account_ids = set()
@@ -608,6 +598,145 @@ class AccountingExpressionProcessor:
 
         for account_id in account_ids:
             yield account_id, [self._ACC_RE.sub(f, expr) for expr in exprs]
+
+    def do_queries_by_partner(
+        self,
+        date_from,
+        date_to,
+        additional_move_line_filter=None,
+        aml_model=None,
+    ):
+        """Query debit/credit grouped by partner and account.
+
+        Populates ``_data_partner`` for use by ``replace_exprs_by_partner_id``.
+        Must be executed after ``done_parsing()``.
+        """
+        if not aml_model:
+            aml_model = self.env["account.move.line"]
+        else:
+            aml_model = self.env[aml_model]
+        aml_model = aml_model.with_context(active_test=False)
+        company_rates = self._get_company_rates(date_to)
+        # {(domain, mode): {partner_id: {account_id: Accumulator}}}
+        self._data_partner = defaultdict(
+            lambda: defaultdict(
+                lambda: defaultdict(
+                    lambda: Accumulator(self._custom_fields),
+                )
+            )
+        )
+        domain_by_mode = {}
+        ends = []
+        for key in self._map_account_ids:
+            domain, mode = key
+            if mode == self.MODE_END and self.smart_end:
+                ends.append((domain, mode))
+                continue
+            if mode not in domain_by_mode:
+                domain_by_mode[mode] = self.get_aml_domain_for_dates(
+                    date_from, date_to, mode
+                )
+            domain = list(domain) + domain_by_mode[mode]
+            domain.append(("account_id", "in", self._map_account_ids[key]))
+            if additional_move_line_filter:
+                domain.extend(additional_move_line_filter)
+            _logger.debug("read_group partner domain: %s", domain)
+            try:
+                accs = aml_model.with_context(
+                    allowed_company_ids=self.companies.ids
+                )._read_group(
+                    domain,
+                    groupby=("partner_id", "account_id", "company_id"),
+                    aggregates=(
+                        (
+                            "debit:sum",
+                            "credit:sum",
+                            *(f"{field}:sum" for field in self._custom_fields),
+                        )
+                    ),
+                )
+            except ValueError as e:
+                raise UserError(
+                    self.env._(
+                        'Error while querying move line source "%(model_name)s". '
+                        "This is likely due to a filter or expression referencing "
+                        "a field that does not exist in the model.\n\n"
+                        "The technical error message is: %(exception)s. ",
+                        model_name=aml_model._description,
+                        exception=e,
+                    )
+                ) from e
+            for partner, account, company, debit, credit, *custom_fields_sums in accs:
+                rate, _dp = company_rates[company.id]
+                debit = debit or 0.0
+                credit = credit or 0.0
+                if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and float_is_zero(
+                    debit - credit, precision_digits=self.dp
+                ):
+                    continue
+                # Use 0 as sentinel for move lines without a partner
+                partner_id = partner.id if partner else 0
+                account_data = self._data_partner[key][partner_id][account.id]
+                account_data.add_debit_credit(debit * rate, credit * rate)
+                for custom_field, custom_field_sum in zip(
+                    self._custom_fields, custom_fields_sums, strict=True
+                ):
+                    account_data.add_custom_field(
+                        custom_field, custom_field_sum or AccountingNone
+                    )
+        for key in ends:
+            domain, mode = key
+            initial_data = self._data_partner[(domain, self.MODE_INITIAL)]
+            variation_data = self._data_partner[(domain, self.MODE_VARIATION)]
+            partner_ids = set(initial_data.keys()) | set(variation_data.keys())
+            for partner_id in partner_ids:
+                account_ids = set(initial_data[partner_id].keys()) | set(
+                    variation_data[partner_id].keys()
+                )
+                for account_id in account_ids:
+                    self._data_partner[key][partner_id][account_id] += initial_data[
+                        partner_id
+                    ][account_id]
+                    self._data_partner[key][partner_id][account_id] += variation_data[
+                        partner_id
+                    ][account_id]
+
+    def replace_exprs_by_partner_id(self, exprs):
+        """Replace accounting variables iterating by partner.
+
+        yields partner_id, replaced_exprs
+
+        Prerequisite: do_queries_by_partner() must have been invoked.
+        Partner id 0 means move lines with an empty partner_id.
+        """
+
+        def f(mo):
+            field, mode, fld_name, acc_domain, ml_domain = self._parse_match_object(mo)
+            key = (ml_domain, mode)
+            partner_data = self._data_partner[key][partner_id]
+            v = AccountingNone
+            for account_id in self._account_ids_by_acc_domain[acc_domain]:
+                entry = partner_data[account_id]
+                if not entry.has_data():
+                    continue
+                part = self._value_from_entry(field, mode, fld_name, entry)
+                if part is not AccountingNone:
+                    v += part
+            return "(" + repr(v) + ")"
+
+        partner_ids = set()
+        for expr in exprs:
+            for mo in self._ACC_RE.finditer(expr):
+                _, mode, _, acc_domain, ml_domain = self._parse_match_object(mo)
+                key = (ml_domain, mode)
+                for partner_id, accounts_data in self._data_partner[key].items():
+                    for account_id in self._account_ids_by_acc_domain[acc_domain]:
+                        if accounts_data[account_id].has_data():
+                            partner_ids.add(partner_id)
+                            break
+
+        for partner_id in partner_ids:
+            yield partner_id, [self._ACC_RE.sub(f, expr) for expr in exprs]
 
     @classmethod
     def _get_balances(cls, mode, companies, date_from, date_to):

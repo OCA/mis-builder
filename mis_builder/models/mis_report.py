@@ -39,6 +39,10 @@ from .simple_array import SimpleArray, named_simple_array
 
 _logger = logging.getLogger(__name__)
 
+DETAIL_NONE = "none"
+DETAIL_ACCOUNT = "account"
+DETAIL_PARTNER = "partner"
+
 
 class SubKPITupleLengthError(UserError):
     pass
@@ -97,11 +101,32 @@ class MisReportKpi(models.Model):
         copy=True,
         string="Expressions",
     )
-    auto_expand_accounts = fields.Boolean(string="Display details by account")
+    detail_by = fields.Selection(
+        [
+            (DETAIL_NONE, "No details"),
+            (DETAIL_ACCOUNT, "By account"),
+            (DETAIL_PARTNER, "By partner"),
+        ],
+        string="Display details",
+        default=DETAIL_NONE,
+        required=True,
+        help="Expand this KPI into detail rows. "
+        "By account: one row per account involved in the expression. "
+        "By partner: one row per partner (customer/vendor) on matching move lines.",
+    )
+    auto_expand_accounts = fields.Boolean(
+        string="Display details by account",
+        compute="_compute_auto_expand_accounts",
+        inverse="_inverse_auto_expand_accounts",
+        store=True,
+        help="Deprecated: use Display details = By account. "
+        "Kept for backward compatibility.",
+    )
     auto_expand_accounts_style_id = fields.Many2one(
-        string="Style for account detail rows",
+        string="Style for detail rows",
         comodel_name="mis.report.style",
         required=False,
+        help="Style applied to expanded detail rows (account or partner).",
     )
     style_id = fields.Many2one(
         string="Style", comodel_name="mis.report.style", required=False
@@ -153,6 +178,18 @@ class MisReportKpi(models.Model):
     def _compute_display_name(self):
         for rec in self:
             rec.display_name = f"{rec.description} ({rec.name})"
+
+    @api.depends("detail_by")
+    def _compute_auto_expand_accounts(self):
+        for rec in self:
+            rec.auto_expand_accounts = rec.detail_by == DETAIL_ACCOUNT
+
+    def _inverse_auto_expand_accounts(self):
+        for rec in self:
+            if rec.auto_expand_accounts:
+                rec.detail_by = DETAIL_ACCOUNT
+            elif rec.detail_by == DETAIL_ACCOUNT:
+                rec.detail_by = DETAIL_NONE
 
     @api.constrains("name")
     def _check_name(self):
@@ -740,28 +777,41 @@ class MisReport(models.Model):
 
                 kpi_matrix.set_values(kpi, col_key, vals, drilldown_args)
 
-                if (
-                    name_error
-                    or no_auto_expand_accounts
-                    or not kpi.auto_expand_accounts
-                ):
+                detail_by = DETAIL_NONE if no_auto_expand_accounts else kpi.detail_by
+                if name_error or detail_by == DETAIL_NONE:
+                    continue
+
+                if detail_by == DETAIL_ACCOUNT:
+                    detail_iter = expression_evaluator.eval_expressions_by_account(
+                        expressions, locals_dict
+                    )
+                    detail_model = kpi_matrix.account_model_name
+                elif detail_by == DETAIL_PARTNER:
+                    detail_iter = expression_evaluator.eval_expressions_by_partner(
+                        expressions, locals_dict
+                    )
+                    detail_model = "res.partner"
+                else:
                     continue
 
                 for (
-                    account_id,
+                    detail_id,
                     vals,
                     drilldown_args,
                     _name_error,
-                ) in expression_evaluator.eval_expressions_by_account(
-                    expressions, locals_dict
-                ):
+                ) in detail_iter:
                     for drilldown_arg in drilldown_args:
                         if not drilldown_arg:
                             continue
                         drilldown_arg["period_id"] = col_key
                         drilldown_arg["kpi_id"] = kpi.id
-                    kpi_matrix.set_values_detail_account(
-                        kpi, col_key, account_id, vals, drilldown_args
+                    kpi_matrix.set_values_detail(
+                        kpi,
+                        col_key,
+                        detail_id,
+                        vals,
+                        drilldown_args,
+                        detail_model=detail_model,
                     )
 
             if len(recompute_queue) == 0:
@@ -843,7 +893,8 @@ class MisReport(models.Model):
                                             underlying model
         :param locals_dict: personalized locals dictionary used as evaluation
                             context for the KPI expressions
-        :param no_auto_expand_accounts: disable expansion of account details
+        :param no_auto_expand_accounts: disable expansion of detail rows
+                                        (account or partner)
         """
         self.ensure_one()
 

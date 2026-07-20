@@ -19,6 +19,7 @@ class ExpressionEvaluator:
         self.additional_move_line_filter = additional_move_line_filter
         self.aml_model = aml_model
         self._aep_queries_done = False
+        self._aep_partner_queries_done = False
 
     def aep_do_queries(self):
         if self.aep and not self._aep_queries_done:
@@ -29,6 +30,16 @@ class ExpressionEvaluator:
                 self.aml_model,
             )
             self._aep_queries_done = True
+
+    def aep_do_partner_queries(self):
+        if self.aep and not self._aep_partner_queries_done:
+            self.aep.do_queries_by_partner(
+                self.date_from,
+                self.date_to,
+                self.additional_move_line_filter,
+                self.aml_model,
+            )
+            self._aep_partner_queries_done = True
 
     def eval_expressions(self, expressions, locals_dict):
         vals = []
@@ -66,3 +77,21 @@ class ExpressionEvaluator:
                 else:
                     drilldown_args.append(None)
             yield account_id, vals, drilldown_args, name_error
+
+    def eval_expressions_by_partner(self, expressions, locals_dict):
+        if not self.aep:
+            return
+        self.aep_do_partner_queries()
+        exprs = [e and e.name or "AccountingNone" for e in expressions]
+        for partner_id, replaced_exprs in self.aep.replace_exprs_by_partner_id(exprs):
+            vals = []
+            drilldown_args = []
+            name_error = False
+            for expr, replaced_expr in zip(exprs, replaced_exprs, strict=True):
+                val = mis_safe_eval(replaced_expr, locals_dict)
+                vals.append(val)
+                if replaced_expr != expr:
+                    drilldown_args.append({"expr": expr, "partner_id": partner_id})
+                else:
+                    drilldown_args.append(None)
+            yield partner_id, vals, drilldown_args, name_error
