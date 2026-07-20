@@ -939,7 +939,7 @@ class MisReportInstance(models.Model):
         return {
             KpiMatrix._make_cell_id(
                 annotation.kpi_id.id,
-                False,
+                None,
                 annotation.period_id.id,
                 annotation.subkpi_id and annotation.subkpi_id.id,
             ): {"text": annotation.note, "sequence": sequence}

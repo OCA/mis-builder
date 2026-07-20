@@ -630,7 +630,9 @@ class KpiMatrix:
 
     @classmethod
     def _detail_key_to_cell_token(cls, detail_model, detail_id):
-        if detail_id is None:
+        # Annotations historically pass False for "no detail"; keep that
+        # equivalent to None. Partner id 0 (empty partner) must stay distinct.
+        if detail_id is None or detail_id is False:
             return ""
         if detail_model == "res.partner":
             return f"p:{detail_id}"
