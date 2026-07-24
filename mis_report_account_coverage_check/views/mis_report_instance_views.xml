@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mis_report_instance_view_form" model="ir.ui.view">
+        <field name="name">mis.report.instance.form.coverage.check</field>
+        <field name="model">mis.report.instance</field>
+        <field name="inherit_id" ref="mis_builder.mis_report_instance_view_form" />
+        <field name="arch" type="xml">
+            <div name="buttons" position="inside">
+                <button
+                    type="action"
+                    name="%(mis_report_account_coverage_check.action_mis_report_account_coverage_check)d"
+                    string="Check Account Coverage"
+                    icon="fa-search-plus"
+                    context="{'default_report_instance_id': active_id}"
+                />
+            </div>
+        </field>
+    </record>
+</odoo>

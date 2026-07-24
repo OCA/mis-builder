@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mis_report_account_coverage_check_view_form" model="ir.ui.view">
+        <field name="name">mis.report.account.coverage.check.form</field>
+        <field name="model">mis.report.account.coverage.check</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="init,done"
+                    />
+                </header>
+                <group attrs="{'invisible': [('state', '!=', 'init')]}">
+                    <field name="report_instance_id" />
+                    <field
+                        name="period_ids"
+                        widget="many2many_tags"
+                        options="{'no_create': True}"
+                    />
+                    <field name="account_code_from" />
+                    <field name="account_code_to" />
+                </group>
+                <field name="line_ids" attrs="{'invisible': [('state', '!=', 'done')]}">
+                    <tree create="false" edit="false" delete="false">
+                        <field name="period_id" />
+                        <field name="account_code" />
+                        <field name="account_name" />
+                        <field name="debit" sum="Total Debit" />
+                        <field name="credit" sum="Total Credit" />
+                        <field name="balance" sum="Total Balance" />
+                        <field name="move_line_count" />
+                        <field name="currency_id" invisible="1" />
+                        <button
+                            name="action_view_move_lines"
+                            type="object"
+                            string="View Journal Items"
+                            icon="fa-search-plus"
+                        />
+                    </tree>
+                </field>
+                <footer>
+                    <span attrs="{'invisible': [('state', '!=', 'init')]}">
+                        <button
+                            name="action_check"
+                            string="Check"
+                            type="object"
+                            class="oe_highlight"
+                        />
+                    </span>
+                    <span attrs="{'invisible': [('state', '!=', 'done')]}">
+                        <button
+                            name="action_back"
+                            string="Modify criteria"
+                            type="object"
+                        />
+                    </span>
+                    <button special="cancel" string="Close" class="oe_link" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_mis_report_account_coverage_check" model="ir.actions.act_window">
+        <field name="name">Check Account Coverage</field>
+        <field name="res_model">mis.report.account.coverage.check</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem
+        id="mis_report_account_coverage_check_menu"
+        parent="mis_builder.mis_report_finance_menu"
+        name="Account Coverage Check"
+        action="action_mis_report_account_coverage_check"
+        sequence="30"
+    />
+</odoo>
