@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===========
 MIS Builder
 ===========
@@ -17,7 +13,7 @@ MIS Builder
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fmis--builder-lightgray.png?logo=github
@@ -59,16 +55,16 @@ Usage
 
 To configure this module, you need to:
 
-- Go to Accounting > Configuration > MIS Reporting > MIS Report
+- Go to MIS Reports > Configuration > MIS Reporting > MIS Report
   Templates where you can create report templates by defining KPI's.
   KPI's constitute the rows of your reports. Such report templates are
   time independent.
 
 |image1|
 
-- Then in Accounting > Reports > MIS Reporting > MIS Reports you can
-  create report instance by binding the templates to time periods, hence
-  defining the columns of your reports.
+- Then in MIS Reports > Reporting > MIS Reports you can create report
+  instance by binding the templates to time periods, hence defining the
+  columns of your reports.
 
 |image2|
 
