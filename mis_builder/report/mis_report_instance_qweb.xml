@@ -74,7 +74,10 @@
                                 </div>
                             </div>
                             <div class="mis_tbody">
-                                <t t-foreach="matrix.iter_rows()" t-as="row">
+                                <t
+                                    t-foreach="matrix.iter_rows(o.details_before_kpi)"
+                                    t-as="row"
+                                >
                                     <div
                                         t-if="not ((row.style_props.hide_empty and row.is_empty()) or row.style_props.hide_always)"
                                         class="mis_row"
