@@ -15,14 +15,16 @@ _logger = logging.getLogger(__name__)
 
 
 class KpiMatrixRow:
-    # Detail rows are keyed by (detail_model, detail_id). Currently supported
-    # detail models are account.account and res.partner.
+    # Detail rows are keyed by (detail_groupby, detail_id), where detail_groupby
+    # is a field name on the move line source (account_id, partner_id, ...).
 
-    def __init__(self, matrix, kpi, detail_id=None, parent_row=None, detail_model=None):
+    def __init__(
+        self, matrix, kpi, detail_id=None, parent_row=None, detail_groupby=None
+    ):
         self._matrix = matrix
         self.kpi = kpi
         self.detail_id = detail_id
-        self.detail_model = detail_model
+        self.detail_groupby = detail_groupby
         self.description = ""
         self.parent_row = parent_row
         if self.detail_id is None:
@@ -37,7 +39,7 @@ class KpiMatrixRow:
     @property
     def account_id(self):
         """Backward-compatible alias for account detail rows."""
-        if self.detail_model == self._matrix.account_model_name:
+        if self.detail_groupby == "account_id":
             return self.detail_id
         return None
 
@@ -45,7 +47,7 @@ class KpiMatrixRow:
     def label(self):
         if self.detail_id is None:
             return self.kpi.description
-        return self._matrix.get_detail_name(self.detail_model, self.detail_id)
+        return self._matrix.get_detail_name(self.detail_groupby, self.detail_id)
 
     def iter_cell_tuples(self, cols=None):
         if cols is None:
@@ -156,12 +158,12 @@ class KpiMatrix:
         self._style_model = env["mis.report.style"]
         self.account_model_name = account_model
         self._account_model = env[account_model]
-        self._partner_model = env["res.partner"]
+        self._aml_model = env["account.move.line"]
         self._companies = companies
         # data structures
         # { kpi: KpiMatrixRow }
         self._kpi_rows = OrderedDict()
-        # { kpi: {(detail_model, detail_id): KpiMatrixRow} }
+        # { kpi: {(detail_groupby, detail_id): KpiMatrixRow} }
         self._detail_rows = {}
         # { col_key: KpiMatrixCol }
         self._cols = OrderedDict()
@@ -169,7 +171,7 @@ class KpiMatrix:
         self._comparison_todo = defaultdict(list)
         # { col_key (left of sum): (col_key, [(sign, sum_col_key)])
         self._sum_todo = {}
-        # { (detail_model, detail_id): display name }
+        # { (detail_groupby, detail_id): display name }
         self._detail_names = {}
 
     def declare_kpi(self, kpi):
@@ -230,7 +232,7 @@ class KpiMatrix:
             vals,
             drilldown_args,
             tooltips=tooltips,
-            detail_model=self.account_model_name if account_id is not None else None,
+            detail_groupby="account_id" if account_id is not None else None,
         )
 
     def set_values_detail(
@@ -241,16 +243,16 @@ class KpiMatrix:
         vals,
         drilldown_args,
         tooltips=True,
-        detail_model=None,
+        detail_groupby=None,
     ):
         """Set values for a kpi, column and optional detail row."""
         if detail_id is None:
             row = self._kpi_rows[kpi]
         else:
-            if detail_model is None:
-                detail_model = self.account_model_name
+            if not detail_groupby:
+                detail_groupby = "account_id"
             kpi_row = self._kpi_rows[kpi]
-            detail_key = (detail_model, detail_id)
+            detail_key = (detail_groupby, detail_id)
             if detail_key in self._detail_rows[kpi]:
                 row = self._detail_rows[kpi][detail_key]
             else:
@@ -259,7 +261,7 @@ class KpiMatrix:
                     kpi,
                     detail_id,
                     parent_row=kpi_row,
-                    detail_model=detail_model,
+                    detail_groupby=detail_groupby,
                 )
                 self._detail_rows[kpi][detail_key] = row
         col = self._cols[col_key]
@@ -470,7 +472,7 @@ class KpiMatrix:
                     acc,
                     [None] * (len(common_subkpis) or 1),
                     tooltips=False,
-                    detail_model=row.detail_model,
+                    detail_groupby=row.detail_groupby,
                 )
 
     def iter_rows(self):
@@ -502,30 +504,40 @@ class KpiMatrix:
             yield from col.iter_subcols()
 
     def _load_detail_names(self):
-        account_ids = set()
-        partner_ids = set()
+        by_field = defaultdict(set)
         for detail_rows in self._detail_rows.values():
-            for detail_model, detail_id in detail_rows:
-                if detail_model == self.account_model_name:
-                    account_ids.add(detail_id)
-                elif detail_model == "res.partner":
-                    partner_ids.add(detail_id)
-        if account_ids:
-            accounts = self._account_model.search([("id", "in", list(account_ids))])
-            for account in accounts:
-                self._detail_names[(self.account_model_name, account.id)] = (
-                    self._get_account_name(account)
+            for detail_groupby, detail_id in detail_rows:
+                by_field[detail_groupby or "account_id"].add(detail_id)
+        for detail_groupby, detail_ids in by_field.items():
+            if detail_groupby == "account_id":
+                accounts = self._account_model.search(
+                    [("id", "in", [i for i in detail_ids if i])]
                 )
-        if partner_ids:
-            # 0 is the sentinel used for move lines without partner
-            resolved_ids = [i for i in partner_ids if i]
-            partners = self._partner_model.browse(resolved_ids)
-            for partner in partners:
-                self._detail_names[("res.partner", partner.id)] = partner.display_name
-            if 0 in partner_ids:
-                self._detail_names[("res.partner", 0)] = self._partner_model.env._(
-                    "(No partner)"
-                )
+                for account in accounts:
+                    self._detail_names[("account_id", account.id)] = (
+                        self._get_account_name(account)
+                    )
+                continue
+            field = self._aml_model._fields.get(detail_groupby)
+            if field and field.type == "many2one" and field.comodel_name:
+                resolved_ids = [i for i in detail_ids if i]
+                records = self._aml_model.env[field.comodel_name].browse(resolved_ids)
+                for record in records:
+                    self._detail_names[(detail_groupby, record.id)] = (
+                        record.display_name
+                    )
+                if 0 in detail_ids:
+                    self._detail_names[(detail_groupby, 0)] = self._aml_model.env._(
+                        "(No value)"
+                    )
+            else:
+                for detail_id in detail_ids:
+                    if detail_id in (0, False, None):
+                        self._detail_names[(detail_groupby, detail_id)] = (
+                            self._aml_model.env._("(No value)")
+                        )
+                    else:
+                        self._detail_names[(detail_groupby, detail_id)] = str(detail_id)
 
     def _get_account_name(self, account):
         # display_name is account code + account name. Note the account may have
@@ -555,14 +567,14 @@ class KpiMatrix:
             account_name = f"{account_name} [{account_companies.display_name}]"
         return account_name
 
-    def get_detail_name(self, detail_model, detail_id):
-        key = (detail_model, detail_id)
+    def get_detail_name(self, detail_groupby, detail_id):
+        key = (detail_groupby or "account_id", detail_id)
         if key not in self._detail_names:
             self._load_detail_names()
         return self._detail_names.get(key, "")
 
     def get_account_name(self, account_id):
-        return self.get_detail_name(self.account_model_name, account_id)
+        return self.get_detail_name("account_id", account_id)
 
     def as_dict(self):
         header = [{"cols": []}, {"cols": []}]
@@ -629,15 +641,15 @@ class KpiMatrix:
     # semantic domain occur.
 
     @classmethod
-    def _detail_key_to_cell_token(cls, detail_model, detail_id):
+    def _detail_key_to_cell_token(cls, detail_groupby, detail_id):
         # Annotations historically pass False for "no detail"; keep that
-        # equivalent to None. Partner id 0 (empty partner) must stay distinct.
+        # equivalent to None. Detail id 0 (empty many2one) must stay distinct.
         if detail_id is None or detail_id is False:
             return ""
-        if detail_model == "res.partner":
-            return f"p:{detail_id}"
-        # account details keep the historic numeric token for compatibility
-        return str(detail_id)
+        if not detail_groupby or detail_groupby == "account_id":
+            # account details keep the historic numeric token for compatibility
+            return str(detail_id)
+        return f"d:{detail_groupby}:{detail_id}"
 
     @classmethod
     def _make_cell_id(
@@ -646,9 +658,9 @@ class KpiMatrix:
         detail_id: int | None,
         period_id: int,
         subkpi_id: int | None,
-        detail_model: str | None = None,
+        detail_groupby: str | None = None,
     ) -> str:
-        mid = cls._detail_key_to_cell_token(detail_model, detail_id)
+        mid = cls._detail_key_to_cell_token(detail_groupby, detail_id)
         return f"{kpi_id}#{mid}#{period_id}#{subkpi_id or ''}"
 
     @classmethod
@@ -658,16 +670,15 @@ class KpiMatrix:
             cell.row.detail_id,
             cell.subcol.col.key,
             cell.subcol.subkpi and cell.subcol.subkpi.id,
-            detail_model=cell.row.detail_model,
+            detail_groupby=cell.row.detail_groupby,
         )
 
     @classmethod
     def _unpack_cell_id(cls, cell_id: str) -> tuple[int, int | None, int, int | None]:
         """Unpack a cell id.
 
-        The second element is the detail id. For partner details the raw token
-        is not returned here; callers that need the model should use
-        `_unpack_cell_id_detail`.
+        The second element is the detail id. Callers that need the groupby
+        field should use ``_unpack_cell_id_detail``.
         """
         kpi_id, detail_id, period_id, subkpi_id = cls._unpack_cell_id_detail(cell_id)[
             :4
@@ -682,12 +693,16 @@ class KpiMatrix:
         kpi_id = int(kpi_id)
         period_id = int(col_key)
         subkpi_id = int(subkpi_id) if subkpi_id else None
-        detail_model = None
+        detail_groupby = None
         detail_id = None
-        if mid.startswith("p:"):
-            detail_model = "res.partner"
+        if mid.startswith("d:"):
+            _, detail_groupby, detail_id_s = mid.split(":", 2)
+            detail_id = int(detail_id_s) if detail_id_s.isdigit() else detail_id_s
+        elif mid.startswith("p:"):
+            # legacy partner token from earlier PR revisions
+            detail_groupby = "partner_id"
             detail_id = int(mid[2:])
         elif mid:
-            detail_model = "account.account"
+            detail_groupby = "account_id"
             detail_id = int(mid)
-        return kpi_id, detail_id, period_id, subkpi_id, detail_model
+        return kpi_id, detail_id, period_id, subkpi_id, detail_groupby

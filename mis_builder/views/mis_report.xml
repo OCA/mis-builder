@@ -163,11 +163,14 @@
                             />
                         </group>
                         <group col="4" string="Auto expand">
-                            <field name="detail_by" />
+                            <field
+                                name="detail_groupby"
+                                placeholder="e.g. account_id, partner_id, journal_id"
+                            />
                             <field name="auto_expand_accounts" invisible="1" />
                             <field
                                 name="auto_expand_accounts_style_id"
-                                invisible="detail_by == 'none'"
+                                invisible="not detail_groupby"
                             />
                         </group>
                     </page>

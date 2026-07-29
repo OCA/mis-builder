@@ -3,12 +3,39 @@
 
 
 def migrate(cr, version):
-    """Map legacy auto_expand_accounts onto detail_by."""
+    """Map legacy detail expansion flags onto detail_groupby."""
     cr.execute(
         """
-        UPDATE mis_report_kpi
-           SET detail_by = 'account'
-         WHERE auto_expand_accounts IS TRUE
-           AND (detail_by IS NULL OR detail_by = 'none')
+        SELECT column_name
+          FROM information_schema.columns
+         WHERE table_name = 'mis_report_kpi'
+           AND column_name IN ('detail_by', 'detail_groupby', 'auto_expand_accounts')
         """
     )
+    columns = {row[0] for row in cr.fetchall()}
+    if "detail_groupby" not in columns:
+        return
+
+    if "detail_by" in columns:
+        cr.execute(
+            """
+            UPDATE mis_report_kpi
+               SET detail_groupby = CASE
+                    WHEN detail_by = 'account' THEN 'account_id'
+                    WHEN detail_by = 'partner' THEN 'partner_id'
+                    WHEN auto_expand_accounts IS TRUE THEN 'account_id'
+                    ELSE detail_groupby
+               END
+             WHERE detail_groupby IS NULL
+                OR detail_groupby = ''
+            """
+        )
+    else:
+        cr.execute(
+            """
+            UPDATE mis_report_kpi
+               SET detail_groupby = 'account_id'
+             WHERE auto_expand_accounts IS TRUE
+               AND (detail_groupby IS NULL OR detail_groupby = '')
+            """
+        )

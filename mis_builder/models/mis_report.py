@@ -39,10 +39,6 @@ from .simple_array import SimpleArray, named_simple_array
 
 _logger = logging.getLogger(__name__)
 
-DETAIL_NONE = "none"
-DETAIL_ACCOUNT = "account"
-DETAIL_PARTNER = "partner"
-
 
 class SubKPITupleLengthError(UserError):
     pass
@@ -101,32 +97,27 @@ class MisReportKpi(models.Model):
         copy=True,
         string="Expressions",
     )
-    detail_by = fields.Selection(
-        [
-            (DETAIL_NONE, "No details"),
-            (DETAIL_ACCOUNT, "By account"),
-            (DETAIL_PARTNER, "By partner"),
-        ],
-        string="Display details",
-        default=DETAIL_NONE,
-        required=True,
-        help="Expand this KPI into detail rows. "
-        "By account: one row per account involved in the expression. "
-        "By partner: one row per partner (customer/vendor) on matching move lines.",
+    detail_groupby = fields.Char(
+        string="Expand details by",
+        help="Technical name of a field on the move line source model used to "
+        "expand this KPI into detail rows (for example account_id, partner_id "
+        "or journal_id). Leave empty for no expansion. "
+        "account_id uses the optimized accounting expression path; any other "
+        "field is queried with a generic group-by.",
     )
     auto_expand_accounts = fields.Boolean(
         string="Display details by account",
         compute="_compute_auto_expand_accounts",
         inverse="_inverse_auto_expand_accounts",
         store=True,
-        help="Deprecated: use Display details = By account. "
+        help="Deprecated: set Expand details by = account_id. "
         "Kept for backward compatibility.",
     )
     auto_expand_accounts_style_id = fields.Many2one(
         string="Style for detail rows",
         comodel_name="mis.report.style",
         required=False,
-        help="Style applied to expanded detail rows (account or partner).",
+        help="Style applied to expanded detail rows.",
     )
     style_id = fields.Many2one(comodel_name="mis.report.style", required=False)
     style_expression = fields.Char(
@@ -177,17 +168,17 @@ class MisReportKpi(models.Model):
         for rec in self:
             rec.display_name = f"{rec.description} ({rec.name})"
 
-    @api.depends("detail_by")
+    @api.depends("detail_groupby")
     def _compute_auto_expand_accounts(self):
         for rec in self:
-            rec.auto_expand_accounts = rec.detail_by == DETAIL_ACCOUNT
+            rec.auto_expand_accounts = rec.detail_groupby == "account_id"
 
     def _inverse_auto_expand_accounts(self):
         for rec in self:
             if rec.auto_expand_accounts:
-                rec.detail_by = DETAIL_ACCOUNT
-            elif rec.detail_by == DETAIL_ACCOUNT:
-                rec.detail_by = DETAIL_NONE
+                rec.detail_groupby = "account_id"
+            elif rec.detail_groupby == "account_id":
+                rec.detail_groupby = False
 
     @api.constrains("name")
     def _check_name(self):
@@ -775,21 +766,10 @@ class MisReport(models.Model):
 
                 kpi_matrix.set_values(kpi, col_key, vals, drilldown_args)
 
-                detail_by = DETAIL_NONE if no_auto_expand_accounts else kpi.detail_by
-                if name_error or detail_by == DETAIL_NONE:
-                    continue
-
-                if detail_by == DETAIL_ACCOUNT:
-                    detail_iter = expression_evaluator.eval_expressions_by_account(
-                        expressions, locals_dict
-                    )
-                    detail_model = kpi_matrix.account_model_name
-                elif detail_by == DETAIL_PARTNER:
-                    detail_iter = expression_evaluator.eval_expressions_by_partner(
-                        expressions, locals_dict
-                    )
-                    detail_model = "res.partner"
-                else:
+                detail_groupby = (
+                    False if no_auto_expand_accounts else kpi.detail_groupby
+                )
+                if name_error or not detail_groupby:
                     continue
 
                 for (
@@ -797,7 +777,9 @@ class MisReport(models.Model):
                     vals,
                     drilldown_args,
                     _name_error,
-                ) in detail_iter:
+                ) in expression_evaluator.eval_expressions_by_groupby(
+                    detail_groupby, expressions, locals_dict
+                ):
                     for drilldown_arg in drilldown_args:
                         if not drilldown_arg:
                             continue
@@ -809,7 +791,7 @@ class MisReport(models.Model):
                         detail_id,
                         vals,
                         drilldown_args,
-                        detail_model=detail_model,
+                        detail_groupby=detail_groupby,
                     )
 
             if len(recompute_queue) == 0:

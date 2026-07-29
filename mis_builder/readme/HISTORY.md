@@ -2,10 +2,12 @@
 
 ### Features
 
-- Add KPI option to expand detail rows by partner (customer/vendor),
-  in addition to the existing expansion by account. The new
-  ``detail_by`` field supersedes ``auto_expand_accounts`` while keeping
-  backward compatibility.
+- Add a generic KPI detail expansion mechanism via ``detail_groupby``:
+  any field on the move line source (e.g. ``account_id``, ``partner_id``,
+  ``journal_id``) can be used to expand a KPI into detail rows.
+  ``account_id`` keeps the optimized AEP path; other fields use a generic
+  group-by query. ``auto_expand_accounts`` remains supported as a
+  compatibility alias for ``detail_groupby=account_id``.
 
 
 ## 18.0.1.7.2 (2025-10-29)

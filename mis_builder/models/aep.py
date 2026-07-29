@@ -314,14 +314,29 @@ class AccountingExpressionProcessor:
         return account_ids
 
     def get_aml_domain_for_expr(
-        self, expr, date_from, date_to, account_id=None, partner_id=None
+        self,
+        expr,
+        date_from,
+        date_to,
+        account_id=None,
+        detail_groupby=None,
+        detail_id=None,
     ):
         """Get a domain on account.move.line for an expression.
 
         Prerequisite: done_parsing() must have been invoked.
 
         Returns a domain that can be used to search on account.move.line.
+
+        ``detail_groupby`` / ``detail_id`` restrict the domain to one detail
+        value (e.g. partner_id / journal_id). Use ``detail_id=0`` for an empty
+        many2one. When ``detail_groupby`` is ``account_id``, ``account_id``
+        is used instead (same meaning as the dedicated argument).
         """
+        if detail_groupby == "account_id" and account_id is None:
+            account_id = detail_id
+            detail_groupby = None
+            detail_id = None
         aml_domains = []
         date_domain_by_mode = {}
         for mo in self._ACC_RE.finditer(expr):
@@ -337,12 +352,12 @@ class AccountingExpressionProcessor:
                     aml_domain.append(("account_id", "=", account_id))
                 else:
                     continue
-            if partner_id is not None:
-                # 0 means move lines with an empty partner_id
-                if partner_id:
-                    aml_domain.append(("partner_id", "=", partner_id))
+            if detail_groupby is not None and detail_id is not None:
+                # 0 means empty many2one
+                if detail_id:
+                    aml_domain.append((detail_groupby, "=", detail_id))
                 else:
-                    aml_domain.append(("partner_id", "=", False))
+                    aml_domain.append((detail_groupby, "=", False))
             if field == "crd":
                 aml_domain.append(("credit", "<>", 0.0))
             elif field == "deb":
@@ -599,32 +614,52 @@ class AccountingExpressionProcessor:
         for account_id in account_ids:
             yield account_id, [self._ACC_RE.sub(f, expr) for expr in exprs]
 
-    def do_queries_by_partner(
+    def do_queries_by_groupby(
         self,
+        groupby_field,
         date_from,
         date_to,
         additional_move_line_filter=None,
         aml_model=None,
     ):
-        """Query debit/credit grouped by partner and account.
+        """Query debit/credit grouped by ``groupby_field`` and account.
 
-        Populates ``_data_partner`` for use by ``replace_exprs_by_partner_id``.
-        Must be executed after ``done_parsing()``.
+        Populates ``_data_groupby[groupby_field]`` for use by
+        ``replace_exprs_by_groupby``. Must be executed after ``done_parsing()``.
+
+        For many2one fields, empty values are keyed as ``0``.
         """
+        if groupby_field == "account_id":
+            raise ValueError(
+                "account_id details use do_queries() / replace_exprs_by_account_id()"
+            )
         if not aml_model:
             aml_model = self.env["account.move.line"]
         else:
             aml_model = self.env[aml_model]
         aml_model = aml_model.with_context(active_test=False)
+        if groupby_field not in aml_model._fields:
+            raise UserError(
+                self.env._(
+                    'Unknown detail field "%(field)s" on move line source '
+                    '"%(model_name)s".',
+                    field=groupby_field,
+                    model_name=aml_model._description,
+                )
+            )
         company_rates = self._get_company_rates(date_to)
-        # {(domain, mode): {partner_id: {account_id: Accumulator}}}
-        self._data_partner = defaultdict(
+        if not hasattr(self, "_data_groupby"):
+            # {groupby_field: {(domain, mode): {detail_id: {account_id: Accum}}}}
+            self._data_groupby = {}
+        self._data_groupby[groupby_field] = defaultdict(
             lambda: defaultdict(
                 lambda: defaultdict(
                     lambda: Accumulator(self._custom_fields),
                 )
             )
         )
+        data = self._data_groupby[groupby_field]
+        field = aml_model._fields[groupby_field]
         domain_by_mode = {}
         ends = []
         for key in self._map_account_ids:
@@ -640,18 +675,18 @@ class AccountingExpressionProcessor:
             domain.append(("account_id", "in", self._map_account_ids[key]))
             if additional_move_line_filter:
                 domain.extend(additional_move_line_filter)
-            _logger.debug("read_group partner domain: %s", domain)
+            _logger.debug("read_group detail domain (%s): %s", groupby_field, domain)
             try:
                 accs = aml_model.with_context(
                     allowed_company_ids=self.companies.ids
                 )._read_group(
                     domain,
-                    groupby=("partner_id", "account_id", "company_id"),
+                    groupby=(groupby_field, "account_id", "company_id"),
                     aggregates=(
                         (
                             "debit:sum",
                             "credit:sum",
-                            *(f"{field}:sum" for field in self._custom_fields),
+                            *(f"{fname}:sum" for fname in self._custom_fields),
                         )
                     ),
                 )
@@ -666,7 +701,14 @@ class AccountingExpressionProcessor:
                         exception=e,
                     )
                 ) from e
-            for partner, account, company, debit, credit, *custom_fields_sums in accs:
+            for (
+                detail_value,
+                account,
+                company,
+                debit,
+                credit,
+                *custom_fields_sums,
+            ) in accs:
                 rate, _dp = company_rates[company.id]
                 debit = debit or 0.0
                 credit = credit or 0.0
@@ -674,9 +716,8 @@ class AccountingExpressionProcessor:
                     debit - credit, precision_digits=self.dp
                 ):
                     continue
-                # Use 0 as sentinel for move lines without a partner
-                partner_id = partner.id if partner else 0
-                account_data = self._data_partner[key][partner_id][account.id]
+                detail_id = self._groupby_value_to_key(field, detail_value)
+                account_data = data[key][detail_id][account.id]
                 account_data.add_debit_credit(debit * rate, credit * rate)
                 for custom_field, custom_field_sum in zip(
                     self._custom_fields, custom_fields_sums, strict=True
@@ -686,37 +727,47 @@ class AccountingExpressionProcessor:
                     )
         for key in ends:
             domain, mode = key
-            initial_data = self._data_partner[(domain, self.MODE_INITIAL)]
-            variation_data = self._data_partner[(domain, self.MODE_VARIATION)]
-            partner_ids = set(initial_data.keys()) | set(variation_data.keys())
-            for partner_id in partner_ids:
-                account_ids = set(initial_data[partner_id].keys()) | set(
-                    variation_data[partner_id].keys()
+            initial_data = data[(domain, self.MODE_INITIAL)]
+            variation_data = data[(domain, self.MODE_VARIATION)]
+            detail_ids = set(initial_data.keys()) | set(variation_data.keys())
+            for detail_id in detail_ids:
+                account_ids = set(initial_data[detail_id].keys()) | set(
+                    variation_data[detail_id].keys()
                 )
                 for account_id in account_ids:
-                    self._data_partner[key][partner_id][account_id] += initial_data[
-                        partner_id
-                    ][account_id]
-                    self._data_partner[key][partner_id][account_id] += variation_data[
-                        partner_id
-                    ][account_id]
+                    data[key][detail_id][account_id] += initial_data[detail_id][
+                        account_id
+                    ]
+                    data[key][detail_id][account_id] += variation_data[detail_id][
+                        account_id
+                    ]
 
-    def replace_exprs_by_partner_id(self, exprs):
-        """Replace accounting variables iterating by partner.
+    @staticmethod
+    def _groupby_value_to_key(field, value):
+        """Normalize a read_group value to a stable detail key."""
+        if field.type == "many2one":
+            return value.id if value else 0
+        if value is False or value is None:
+            return 0
+        return value
 
-        yields partner_id, replaced_exprs
+    def replace_exprs_by_groupby(self, groupby_field, exprs):
+        """Replace accounting variables iterating by a groupby field.
 
-        Prerequisite: do_queries_by_partner() must have been invoked.
-        Partner id 0 means move lines with an empty partner_id.
+        yields detail_id, replaced_exprs
+
+        Prerequisite: do_queries_by_groupby() must have been invoked.
+        For many2one fields, detail id 0 means an empty value.
         """
+        data = self._data_groupby[groupby_field]
 
         def f(mo):
             field, mode, fld_name, acc_domain, ml_domain = self._parse_match_object(mo)
             key = (ml_domain, mode)
-            partner_data = self._data_partner[key][partner_id]
+            detail_data = data[key][detail_id]
             v = AccountingNone
             for account_id in self._account_ids_by_acc_domain[acc_domain]:
-                entry = partner_data[account_id]
+                entry = detail_data[account_id]
                 if not entry.has_data():
                     continue
                 part = self._value_from_entry(field, mode, fld_name, entry)
@@ -724,19 +775,19 @@ class AccountingExpressionProcessor:
                     v += part
             return "(" + repr(v) + ")"
 
-        partner_ids = set()
+        detail_ids = set()
         for expr in exprs:
             for mo in self._ACC_RE.finditer(expr):
                 _, mode, _, acc_domain, ml_domain = self._parse_match_object(mo)
                 key = (ml_domain, mode)
-                for partner_id, accounts_data in self._data_partner[key].items():
+                for detail_id, accounts_data in data[key].items():
                     for account_id in self._account_ids_by_acc_domain[acc_domain]:
                         if accounts_data[account_id].has_data():
-                            partner_ids.add(partner_id)
+                            detail_ids.add(detail_id)
                             break
 
-        for partner_id in partner_ids:
-            yield partner_id, [self._ACC_RE.sub(f, expr) for expr in exprs]
+        for detail_id in detail_ids:
+            yield detail_id, [self._ACC_RE.sub(f, expr) for expr in exprs]
 
     @classmethod
     def _get_balances(cls, mode, companies, date_from, date_to):

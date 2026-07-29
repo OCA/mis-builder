@@ -16,4 +16,4 @@ from . import test_simple_array
 from . import test_target_move
 from . import test_utc_midnight
 from . import test_mis_report_instance_annotation
-from . import test_partner_detail
+from . import test_detail_groupby

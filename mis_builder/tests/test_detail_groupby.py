@@ -4,11 +4,9 @@
 import odoo.tests.common as common
 from odoo import Command
 
-from ..models.mis_report import DETAIL_PARTNER
 
-
-class TestMisReportPartnerDetail(common.TransactionCase):
-    """Test KPI expansion by partner."""
+class TestMisReportDetailGroupby(common.TransactionCase):
+    """Test generic KPI expansion by a move line field."""
 
     def _create_move(self, date, amount, debit_acc, credit_acc, partner):
         move = self.move_model.create(
@@ -46,7 +44,7 @@ class TestMisReportPartnerDetail(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.company = cls.env["res.company"].create({"name": "Partner Detail Co"})
+        cls.company = cls.env["res.company"].create({"name": "Detail Groupby Co"})
         cls.env.user.company_id = cls.company
 
     def setUp(self):
@@ -89,19 +87,19 @@ class TestMisReportPartnerDetail(common.TransactionCase):
         )
         self._create_move("2017-01-25", 3, self.account_ar, self.account_in, False)
 
-        self.report = self.env["mis.report"].create({"name": "partner detail report"})
+        self.report = self.env["mis.report"].create({"name": "detail groupby report"})
         self.kpi = self.env["mis.report.kpi"].create(
             {
                 "report_id": self.report.id,
                 "name": "ar",
                 "description": "Receivable",
                 "expression": "bale[400AR]",
-                "detail_by": DETAIL_PARTNER,
+                "detail_groupby": "partner_id",
             }
         )
         self.instance = self.env["mis.report.instance"].create(
             {
-                "name": "partner detail instance",
+                "name": "detail groupby instance",
                 "report_id": self.report.id,
                 "comparison_mode": False,
                 "date_from": "2017-01-01",
@@ -119,7 +117,7 @@ class TestMisReportPartnerDetail(common.TransactionCase):
                 "auto_expand_accounts": True,
             }
         )
-        self.assertEqual(kpi.detail_by, "account")
+        self.assertEqual(kpi.detail_groupby, "account_id")
         self.assertTrue(kpi.auto_expand_accounts)
 
     def test_partner_detail_rows(self):
@@ -130,6 +128,8 @@ class TestMisReportPartnerDetail(common.TransactionCase):
         self.assertIsNone(rows[0].detail_id)
         by_partner = {r.detail_id: r for r in rows[1:]}
         self.assertEqual(set(by_partner), {self.partner_a.id, self.partner_b.id, 0})
+        for row in rows[1:]:
+            self.assertEqual(row.detail_groupby, "partner_id")
 
         def cell_val(row):
             return next(c for c in row.iter_cells() if c).val
@@ -148,3 +148,14 @@ class TestMisReportPartnerDetail(common.TransactionCase):
         action = self.instance.drilldown(cell.drilldown_arg)
         self.assertEqual(action["res_model"], "account.move.line")
         self.assertIn(("partner_id", "=", self.partner_a.id), action["domain"])
+        self.assertEqual(cell.drilldown_arg.get("detail_groupby"), "partner_id")
+
+    def test_journal_detail_rows(self):
+        self.kpi.detail_groupby = "journal_id"
+        matrix = self.instance._compute_matrix()
+        rows = list(matrix.iter_rows())
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[1].detail_groupby, "journal_id")
+        self.assertEqual(rows[1].detail_id, self.journal.id)
+        cell = next(c for c in rows[1].iter_cells() if c)
+        self.assertEqual(cell.val, 20)

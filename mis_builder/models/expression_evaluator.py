@@ -19,7 +19,7 @@ class ExpressionEvaluator:
         self.additional_move_line_filter = additional_move_line_filter
         self.aml_model = aml_model
         self._aep_queries_done = False
-        self._aep_partner_queries_done = False
+        self._aep_groupby_queries_done = set()
 
     def aep_do_queries(self):
         if self.aep and not self._aep_queries_done:
@@ -31,15 +31,17 @@ class ExpressionEvaluator:
             )
             self._aep_queries_done = True
 
-    def aep_do_partner_queries(self):
-        if self.aep and not self._aep_partner_queries_done:
-            self.aep.do_queries_by_partner(
-                self.date_from,
-                self.date_to,
-                self.additional_move_line_filter,
-                self.aml_model,
-            )
-            self._aep_partner_queries_done = True
+    def aep_do_groupby_queries(self, groupby_field):
+        if not self.aep or groupby_field in self._aep_groupby_queries_done:
+            return
+        self.aep.do_queries_by_groupby(
+            groupby_field,
+            self.date_from,
+            self.date_to,
+            self.additional_move_line_filter,
+            self.aml_model,
+        )
+        self._aep_groupby_queries_done.add(groupby_field)
 
     def eval_expressions(self, expressions, locals_dict):
         vals = []
@@ -78,12 +80,22 @@ class ExpressionEvaluator:
                     drilldown_args.append(None)
             yield account_id, vals, drilldown_args, name_error
 
-    def eval_expressions_by_partner(self, expressions, locals_dict):
+    def eval_expressions_by_groupby(self, groupby_field, expressions, locals_dict):
+        """Evaluate expressions for each distinct value of ``groupby_field``.
+
+        ``account_id`` uses the optimized AEP account path. Any other field on
+        the move line source is handled via a generic group-by query.
+        """
         if not self.aep:
             return
-        self.aep_do_partner_queries()
+        if groupby_field == "account_id":
+            yield from self.eval_expressions_by_account(expressions, locals_dict)
+            return
+        self.aep_do_groupby_queries(groupby_field)
         exprs = [e and e.name or "AccountingNone" for e in expressions]
-        for partner_id, replaced_exprs in self.aep.replace_exprs_by_partner_id(exprs):
+        for detail_id, replaced_exprs in self.aep.replace_exprs_by_groupby(
+            groupby_field, exprs
+        ):
             vals = []
             drilldown_args = []
             name_error = False
@@ -91,7 +103,13 @@ class ExpressionEvaluator:
                 val = mis_safe_eval(replaced_expr, locals_dict)
                 vals.append(val)
                 if replaced_expr != expr:
-                    drilldown_args.append({"expr": expr, "partner_id": partner_id})
+                    drilldown_args.append(
+                        {
+                            "expr": expr,
+                            "detail_groupby": groupby_field,
+                            "detail_id": detail_id,
+                        }
+                    )
                 else:
                     drilldown_args.append(None)
-            yield partner_id, vals, drilldown_args, name_error
+            yield detail_id, vals, drilldown_args, name_error
