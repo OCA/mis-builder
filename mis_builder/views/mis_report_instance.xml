@@ -406,6 +406,11 @@
                         options="{'model': 'source_aml_model_name'}"
                         invisible="not source_aml_model_name"
                     />
+                    <field
+                        name="hide_period_based_on_instance_date"
+                        invisible="source in ('cmpcol','sumcol') or (mode in ('relative','none') and source in ('actuals','actuals_alt'))"
+                        force_save="1"
+                    />
                 </group>
             </form>
         </field>
