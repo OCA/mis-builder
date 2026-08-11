@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-29 13:46+0000\n"
+"PO-Revision-Date: 2026-08-11 12:48+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -793,7 +793,7 @@ msgstr "Esporta"
 #. module: mis_builder
 #: model:ir.actions.server,name:mis_builder.mis_builder_print_xls_report
 msgid "Export XLS"
-msgstr ""
+msgstr "Esporta XLS"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__expression
