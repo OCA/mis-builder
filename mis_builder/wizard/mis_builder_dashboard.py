@@ -5,6 +5,7 @@
 from lxml import etree
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
 
 
 class AddMisReportInstanceDashboard(models.TransientModel):
@@ -14,11 +15,40 @@ class AddMisReportInstanceDashboard(models.TransientModel):
     name = fields.Char(required=True)
 
     dashboard_id = fields.Many2one(
-        "ir.actions.act_window",
-        string="Dashboard",
+        comodel_name="ir.actions.act_window",
         required=True,
         domain="[('res_model', '=', 'board.board')]",
+        context={"mis_builder_dashboard_selection": True},
+        default=lambda self: self._default_dashboard_id(),
     )
+
+    @api.model
+    def _dashboard_domain(self):
+        return self.env["ir.actions.act_window"]._mis_builder_dashboard_domain()
+
+    @api.model
+    def _default_dashboard_id(self):
+        dashboard = self.env.ref("board.open_board_my_dash_action", False)
+        if dashboard and dashboard.sudo().filtered_domain(self._dashboard_domain()):
+            return dashboard.id
+        return False
+
+    def _get_dashboard(self):
+        self.ensure_one()
+        dashboard_id = self.sudo().dashboard_id.id
+        dashboard = (
+            self.env["ir.actions.act_window"]
+            .sudo()
+            .search(
+                [("id", "=", dashboard_id), *self._dashboard_domain()],
+                limit=1,
+            )
+        )
+        if not dashboard:
+            raise ValidationError(
+                self.env._("The selected dashboard is not available to your user.")
+            )
+        return dashboard
 
     @api.model
     def default_get(self, fields_list):
@@ -38,6 +68,7 @@ class AddMisReportInstanceDashboard(models.TransientModel):
         assert active_model == "mis.report.instance"
         active_id = self.env.context.get("active_id")
         assert active_id
+        dashboard = self._get_dashboard()
         # create the act_window corresponding to this report
         self.env.ref("mis_builder.mis_report_instance_result_view_form")
         view = self.env.ref("mis_builder.mis_report_instance_result_view_form")
@@ -58,14 +89,15 @@ class AddMisReportInstanceDashboard(models.TransientModel):
             )
         )
         # add this result in the selected dashboard
-        last_customization = self.env["ir.ui.view.custom"].search(
+        custom_views = self.env["ir.ui.view.custom"].sudo()
+        last_customization = custom_views.search(
             [
                 ("user_id", "=", self.env.uid),
-                ("ref_id", "=", self.dashboard_id.view_id.id),
+                ("ref_id", "=", dashboard.view_id.id),
             ],
             limit=1,
         )
-        arch = self.dashboard_id.view_id.arch
+        arch = dashboard.view_id.arch
         if last_customization:
             arch = last_customization[0].arch
         new_arch = etree.fromstring(arch)
@@ -84,10 +116,10 @@ class AddMisReportInstanceDashboard(models.TransientModel):
                 },
             )
         )
-        self.env["ir.ui.view.custom"].create(
+        custom_views.create(
             {
                 "user_id": self.env.uid,
-                "ref_id": self.dashboard_id.view_id.id,
+                "ref_id": dashboard.view_id.id,
                 "arch": etree.tostring(new_arch, pretty_print=True),
             }
         )
