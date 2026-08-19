@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-03 09:46+0000\n"
+"PO-Revision-Date: 2026-07-22 07:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -777,7 +777,7 @@ msgstr "Esporta"
 #. module: mis_builder
 #: model:ir.actions.server,name:mis_builder.mis_builder_print_xls_report
 msgid "Export XLS"
-msgstr ""
+msgstr "Esporta XLS"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi__expression
@@ -1128,7 +1128,7 @@ msgstr "Struttura"
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e6
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #. module: mis_builder
 #: model:ir.model,name:mis_builder.model_report_mis_builder_mis_report_instance_xlsx
@@ -1944,7 +1944,7 @@ msgstr "dal %(date_from)s al %(date_to)s"
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e3
 msgid "k"
-msgstr ""
+msgstr "k"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__large
@@ -1954,7 +1954,7 @@ msgstr "grande"
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-3
 msgid "m"
-msgstr ""
+msgstr "m"
 
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__font_size__medium
@@ -2017,7 +2017,7 @@ msgstr "xx-small"
 #. module: mis_builder
 #: model:ir.model.fields.selection,name:mis_builder.selection__mis_report_style__divider__1e-6
 msgid "µ"
-msgstr ""
+msgstr "µ"
 
 #~ msgid ""
 #~ "<code>bal</code>, <code>crd</code>, <code>deb</code>, <code>\n"
