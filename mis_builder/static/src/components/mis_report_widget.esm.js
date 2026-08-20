@@ -53,12 +53,7 @@ export class MisReportWidget extends Component {
             this.refresh();
         });
         useSetupAction({
-            getLocalState: () => ({
-                searchState: this.searchModel ? this.searchModel.exportState() : null,
-                pivotDate: this.state.pivot_date
-                    ? serializeDate(this.state.pivot_date)
-                    : null,
-            }),
+            getLocalState: () => this.exportState(),
         });
         onWillStart(this.willStart);
 
@@ -67,15 +62,57 @@ export class MisReportWidget extends Component {
 
     // Lifecycle
     async willStart() {
-        const state =
+        const state = this._getRestoredState();
+        const result = await this._loadReportInstanceData();
+
+        this.source_aml_model_name = result.source_aml_model_name;
+        this.widget_show_filters = result.widget_show_filters;
+        this.widget_show_settings_button = result.widget_show_settings_button;
+        this.widget_search_view_id = result.widget_search_view_id?.[0];
+        this.widget_show_pivot_date = result.widget_show_pivot_date;
+        this.widget_cache_report_on_drill_down =
+            result.widget_cache_report_on_drill_down;
+        this.wide_display = result.wide_display_by_default;
+
+        this.state.can_edit_annotation = result.user_can_edit_annotation;
+        this.state.can_read_annotation = result.user_can_read_annotation;
+
+        this._restoreState(state, result);
+        await this._setupSearchModel(state?.searchState);
+        this._loadReportData(state?.cachedReportData);
+    }
+
+    exportState() {
+        return {
+            searchState: this.searchModel ? this.searchModel.exportState() : null,
+            pivotDate: this.state.pivot_date
+                ? serializeDate(this.state.pivot_date)
+                : null,
+            cachedReportData:
+                this.widget_cache_report_on_drill_down && this.state.mis_report_data
+                    ? this.state.mis_report_data
+                    : null,
+        };
+    }
+
+    _restoreState(state, result) {
+        const pivotDateStr = state?.pivotDate;
+        this.state.pivot_date = pivotDateStr
+            ? parseDate(pivotDateStr)
+            : parseDate(result.pivot_date);
+    }
+
+    _getRestoredState() {
+        return (
             this.props.state ||
             this.env.config?.state ||
             this.action.currentController?.props?.state ||
-            this.action.currentController?.exportedState;
+            this.action.currentController?.exportedState ||
+            null
+        );
+    }
 
-        const searchState = state?.searchState;
-        const pivotDateStr = state?.pivotDate;
-
+    async _loadReportInstanceData() {
         const [result] = await this.orm.read(
             "mis.report.instance",
             [this._instanceId()],
@@ -86,39 +123,36 @@ export class MisReportWidget extends Component {
                 "widget_search_view_id",
                 "pivot_date",
                 "widget_show_pivot_date",
+                "widget_cache_report_on_drill_down",
                 "wide_display_by_default",
                 "user_can_read_annotation",
                 "user_can_edit_annotation",
             ],
             {context: this.context}
         );
+        return result;
+    }
 
-        this.source_aml_model_name = result.source_aml_model_name;
-        this.widget_show_filters = result.widget_show_filters;
-        this.widget_show_settings_button = result.widget_show_settings_button;
-        this.widget_search_view_id = result.widget_search_view_id?.[0];
-        this.state.pivot_date = pivotDateStr
-            ? parseDate(pivotDateStr)
-            : parseDate(result.pivot_date);
-        this.widget_show_pivot_date = result.widget_show_pivot_date;
-
-        if (this.showSearchBar) {
-            const config = {
-                resModel: this.source_aml_model_name,
-                searchViewId: this.widget_search_view_id,
-            };
-            if (searchState) {
-                config.state = searchState;
-            }
-            await this.searchModel.load(config);
+    async _setupSearchModel(searchState) {
+        if (!this.showSearchBar) {
+            return;
         }
+        const config = {
+            resModel: this.source_aml_model_name,
+            searchViewId: this.widget_search_view_id,
+        };
+        if (searchState) {
+            config.state = searchState;
+        }
+        await this.searchModel.load(config);
+    }
 
-        this.wide_display = result.wide_display_by_default;
-
-        // Compute the report
-        this.refresh();
-        this.state.can_edit_annotation = result.user_can_edit_annotation;
-        this.state.can_read_annotation = result.user_can_read_annotation;
+    _loadReportData(cachedReportData) {
+        if (this.widget_cache_report_on_drill_down && cachedReportData) {
+            this.state.mis_report_data = cachedReportData;
+        } else {
+            this.refresh();
+        }
     }
 
     async _onMounted() {
@@ -178,10 +212,7 @@ export class MisReportWidget extends Component {
         if (this.action.currentController) {
             this.action.currentController.exportedState = {
                 ...(this.action.currentController.exportedState || {}),
-                searchState: this.searchModel ? this.searchModel.exportState() : null,
-                pivotDate: this.state.pivot_date
-                    ? serializeDate(this.state.pivot_date)
-                    : null,
+                ...this.exportState(),
             };
         }
         const drilldown = JSON.parse(event.target.dataset.drilldown);

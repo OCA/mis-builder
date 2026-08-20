@@ -585,6 +585,15 @@ class MisReportInstance(models.Model):
         string="Show Pivot Date",
         help="Show the Pivot Date in the report widget filter bar.",
     )
+    widget_cache_report_on_drill_down = fields.Boolean(
+        default=False,
+        string="Cache report on drilldown",
+        help=(
+            "Cache computed report data in browser memory during drilldown "
+            "navigation to prevent recomputing the report when returning via "
+            "breadcrumbs."
+        ),
+    )
     widget_search_view_id = fields.Many2one(
         comodel_name="ir.ui.view",
         domain='[("type", "=", "search"), ("model", "=", source_aml_model_name)]',

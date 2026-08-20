@@ -1,6 +1,8 @@
 # Copyright 2026 APyCOD (<https://apycod.com>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from unittest.mock import patch
+
 import odoo.tests.common as common
 from odoo.tests import tagged
 
@@ -112,6 +114,7 @@ class TestMisReportWidgetTour(common.HttpCase):
         )
 
     def test_mis_report_drilldown_tour(self):
+        self.report_instance.widget_cache_report_on_drill_down = False
         view_id = self.env.ref("mis_builder.mis_report_instance_result_view_form").id
         url = (
             f"/web#id={self.report_instance.id}"
@@ -119,4 +122,49 @@ class TestMisReportWidgetTour(common.HttpCase):
             f"&view_type=form"
             f"&view_id={view_id}"
         )
-        self.start_tour(url, "mis_report_drilldown_tour", login="admin")
+        compute_calls = []
+        model_cls = type(self.report_instance)
+        orig_compute = model_cls.compute
+
+        def mock_compute(instance_self, *args, **kwargs):
+            compute_calls.append(instance_self.id)
+            return orig_compute(instance_self, *args, **kwargs)
+
+        with patch.object(
+            model_cls, "compute", side_effect=mock_compute, autospec=True
+        ):
+            self.start_tour(url, "mis_report_drilldown_tour", login="admin")
+
+        # Without cache: compute() is called 3 times:
+        # 1. Initial form view load
+        # 2. Filter search input update
+        # 3. Return via breadcrumbs (recomputed)
+        self.assertEqual(len(compute_calls), 3)
+
+    def test_mis_report_drilldown_cache_tour(self):
+        self.report_instance.widget_cache_report_on_drill_down = True
+        view_id = self.env.ref("mis_builder.mis_report_instance_result_view_form").id
+        url = (
+            f"/web#id={self.report_instance.id}"
+            f"&model=mis.report.instance"
+            f"&view_type=form"
+            f"&view_id={view_id}"
+        )
+        compute_calls = []
+        model_cls = type(self.report_instance)
+        orig_compute = model_cls.compute
+
+        def mock_compute(instance_self, *args, **kwargs):
+            compute_calls.append(instance_self.id)
+            return orig_compute(instance_self, *args, **kwargs)
+
+        with patch.object(
+            model_cls, "compute", side_effect=mock_compute, autospec=True
+        ):
+            self.start_tour(url, "mis_report_drilldown_tour", login="admin")
+
+        # With cache: compute() is called 2 times:
+        # 1. Initial form view load
+        # 2. Filter search input update
+        # Return via breadcrumbs uses cached data, skipping compute()
+        self.assertEqual(len(compute_calls), 2)
