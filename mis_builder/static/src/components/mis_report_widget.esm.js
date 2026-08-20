@@ -1,36 +1,64 @@
 import {Component, onMounted, onWillStart, useState, useSubEnv} from "@odoo/owl";
+import {parseDate, serializeDate} from "@web/core/l10n/dates";
 import {useBus, useService} from "@web/core/utils/hooks";
+import {AnnotationDialog} from "../annotation_dialog/annotation_dialog.esm";
 import {DateTimeInput} from "@web/core/datetime/datetime_input";
+import {FormController} from "@web/views/form/form_controller";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
-import {parseDate} from "@web/core/l10n/dates";
-import {registry} from "@web/core/registry";
-import {AnnotationDialog} from "../annotation_dialog/annotation_dialog.esm";
 import {_t} from "@web/core/l10n/translation";
+import {patch} from "@web/core/utils/patch";
+import {registry} from "@web/core/registry";
+import {useSetupAction} from "@web/search/action_hook";
+
+// Patch FormController to forward restored controller state to env.config
+// for mis.report.instance form views.
+// When returning from drilldown via breadcrumbs, ActionService restores FormController
+// and passes saved exportedState via props.state. FormController does not propagate
+// props.state to env.config.state by default, so patching it here ensures child components
+// (like MisReportWidget) can access searchState in willStart() during view restoration.
+patch(FormController.prototype, {
+    setup() {
+        super.setup();
+        if (this.props.state && this.props.resModel === "mis.report.instance") {
+            this.env.config.state = this.props.state;
+        }
+    },
+});
 
 export class MisReportWidget extends Component {
     setup() {
         super.setup();
-        this.orm = useService("orm");
         this.action = useService("action");
-        this.view = useService("view");
+        this.orm = useService("orm");
         this.dialog = useService("dialog");
+        this.notification = useService("notification");
+        this.view = useService("view");
         this.JSON = JSON;
+
         this.state = useState({
-            mis_report_data: {header: [], body: [], notes: {}},
+            mis_report_data: null,
             pivot_date: null,
             can_edit_annotation: false,
-            can_read_annotation: false,
         });
+
         this.searchModel = new SearchModel(this.env, {
             orm: this.orm,
             view: this.view,
             dialog: this.dialog,
         });
         useSubEnv({searchModel: this.searchModel});
-        useBus(this.env.searchModel, "update", async () => {
-            await this.env.searchModel.sectionsPromise;
+        useBus(this.searchModel, "update", async () => {
+            await this.searchModel.sectionsPromise;
             this.refresh();
+        });
+        useSetupAction({
+            getLocalState: () => ({
+                searchState: this.searchModel ? this.searchModel.exportState() : null,
+                pivotDate: this.state.pivot_date
+                    ? serializeDate(this.state.pivot_date)
+                    : null,
+            }),
         });
         onWillStart(this.willStart);
 
@@ -39,6 +67,15 @@ export class MisReportWidget extends Component {
 
     // Lifecycle
     async willStart() {
+        const state =
+            this.props.state ||
+            this.env.config?.state ||
+            this.action.currentController?.props?.state ||
+            this.action.currentController?.exportedState;
+
+        const searchState = state?.searchState;
+        const pivotDateStr = state?.pivotDate;
+
         const [result] = await this.orm.read(
             "mis.report.instance",
             [this._instanceId()],
@@ -60,15 +97,20 @@ export class MisReportWidget extends Component {
         this.widget_show_filters = result.widget_show_filters;
         this.widget_show_settings_button = result.widget_show_settings_button;
         this.widget_search_view_id = result.widget_search_view_id?.[0];
-        this.state.pivot_date = parseDate(result.pivot_date);
+        this.state.pivot_date = pivotDateStr
+            ? parseDate(pivotDateStr)
+            : parseDate(result.pivot_date);
         this.widget_show_pivot_date = result.widget_show_pivot_date;
 
         if (this.showSearchBar) {
-            // Initialize the search model
-            await this.searchModel.load({
+            const config = {
                 resModel: this.source_aml_model_name,
                 searchViewId: this.widget_search_view_id,
-            });
+            };
+            if (searchState) {
+                config.state = searchState;
+            }
+            await this.searchModel.load(config);
         }
 
         this.wide_display = result.wide_display_by_default;
@@ -105,6 +147,9 @@ export class MisReportWidget extends Component {
         if (this.props.value) {
             return this.props.value;
         }
+        if (this.props.record?.resId) {
+            return this.props.record.resId;
+        }
 
         /*
          * This trick is needed because in a dashboard the view does
@@ -112,7 +157,7 @@ export class MisReportWidget extends Component {
          * of Odoo dashboards that are not designed to contain forms but
          * rather tree views or charts.
          */
-        const context = this.props.record.context;
+        const context = this.props.record?.context || {};
         if (context.active_model === "mis.report.instance") {
             return context.active_id;
         }
@@ -130,6 +175,15 @@ export class MisReportWidget extends Component {
     }
 
     async drilldown(event) {
+        if (this.action.currentController) {
+            this.action.currentController.exportedState = {
+                ...(this.action.currentController.exportedState || {}),
+                searchState: this.searchModel ? this.searchModel.exportState() : null,
+                pivotDate: this.state.pivot_date
+                    ? serializeDate(this.state.pivot_date)
+                    : null,
+            };
+        }
         const drilldown = JSON.parse(event.target.dataset.drilldown);
         const action = await this.orm.call(
             "mis.report.instance",
@@ -242,13 +296,13 @@ export class MisReportWidget extends Component {
 
     async resize_sheet() {
         var sheet_element = document.getElementsByClassName("o_form_sheet_bg")[0];
-        sheet_element.classList.toggle(
+        sheet_element?.classList.toggle(
             "oe_mis_builder_report_wide_sheet",
             this.wide_display
         );
         var button_resize_element = document.getElementById("icon_resize");
-        button_resize_element.classList.toggle("fa-expand", !this.wide_display);
-        button_resize_element.classList.toggle("fa-compress", this.wide_display);
+        button_resize_element?.classList.toggle("fa-expand", !this.wide_display);
+        button_resize_element?.classList.toggle("fa-compress", this.wide_display);
     }
 }
 
