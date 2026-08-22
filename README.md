@@ -10,8 +10,12 @@
 
 <!-- /!\ do not modify above this line -->
 
+... test
+
 Management Information System reports for Odoo: easily build super fast,
 beautiful, custom reports such as P&L, Balance Sheets and more.
+
+... test
 
 This project implements a class of reports where KPI (Key Performance Indicators)
 are displayed in rows, and time periods in columns. It focuses on very fast reporting
