@@ -11,17 +11,17 @@ import {patch} from "@web/core/utils/patch";
 import {registry} from "@web/core/registry";
 import {useSetupAction} from "@web/search/action_hook";
 
-// Patch FormController to forward restored controller state to env.config
+// Patch FormController to forward restored globalState to env.config
 // for mis.report.instance form views.
-// When returning from drilldown via breadcrumbs, ActionService restores FormController
-// and passes saved exportedState via props.state. FormController does not propagate
-// props.state to env.config.state by default, so patching it here ensures child components
-// (like MisReportWidget) can access searchState in willStart() during view restoration.
+// When returning from drilldown via breadcrumbs or browser back button (popstate),
+// ActionService restores FormController and passes saved exportedState via props.globalState.
 patch(FormController.prototype, {
     setup() {
         super.setup();
-        if (this.props.state && this.props.resModel === "mis.report.instance") {
-            this.env.config.state = this.props.state;
+        if (this.props.resModel === "mis.report.instance") {
+            if (this.props.globalState) {
+                this.env.config.globalState = this.props.globalState;
+            }
         }
     },
 });
@@ -32,7 +32,6 @@ export class MisReportWidget extends Component {
         this.action = useService("action");
         this.orm = useService("orm");
         this.dialog = useService("dialog");
-        this.notification = useService("notification");
         this.view = useService("view");
         this.JSON = JSON;
 
@@ -53,7 +52,9 @@ export class MisReportWidget extends Component {
             this.refresh();
         });
         useSetupAction({
-            getLocalState: () => this.exportState(),
+            getGlobalState: () => ({
+                misReportState: JSON.stringify(this.exportState()),
+            }),
         });
         onWillStart(this.willStart);
 
@@ -72,14 +73,15 @@ export class MisReportWidget extends Component {
         this.widget_show_pivot_date = result.widget_show_pivot_date;
         this.widget_cache_report_on_drill_down =
             result.widget_cache_report_on_drill_down;
-        this.wide_display = result.wide_display_by_default;
-
-        this.state.can_edit_annotation = result.user_can_edit_annotation;
-        this.state.can_read_annotation = result.user_can_read_annotation;
 
         this._restoreState(state, result);
         await this._setupSearchModel(state?.searchState);
+
+        this.wide_display = result.wide_display_by_default;
+
         this._loadReportData(state?.cachedReportData);
+        this.state.can_edit_annotation = result.user_can_edit_annotation;
+        this.state.can_read_annotation = result.user_can_read_annotation;
     }
 
     exportState() {
@@ -103,13 +105,15 @@ export class MisReportWidget extends Component {
     }
 
     _getRestoredState() {
-        return (
-            this.props.state ||
-            this.env.config?.state ||
-            this.action.currentController?.props?.state ||
-            this.action.currentController?.exportedState ||
-            null
-        );
+        const globalState = this.props.globalState || this.env.config?.globalState;
+        if (globalState?.misReportState) {
+            try {
+                return JSON.parse(globalState.misReportState);
+            } catch {
+                return null;
+            }
+        }
+        return this.props.state || this.env.config?.state || null;
     }
 
     async _loadReportInstanceData() {
@@ -212,7 +216,7 @@ export class MisReportWidget extends Component {
         if (this.action.currentController) {
             this.action.currentController.exportedState = {
                 ...(this.action.currentController.exportedState || {}),
-                ...this.exportState(),
+                misReportState: JSON.stringify(this.exportState()),
             };
         }
         const drilldown = JSON.parse(event.target.dataset.drilldown);

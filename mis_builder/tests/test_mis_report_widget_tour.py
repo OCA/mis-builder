@@ -9,19 +9,18 @@ from odoo.tests import tagged
 
 @tagged("at_install", "post_install")
 class TestMisReportWidgetTour(common.HttpCase):
-    def setUp(self):
-        super().setUp()
-        aml_model_id = self.env.ref("account.model_account_move_line").id
-        aml_date_field_id = self.env.ref("account.field_account_move_line__date").id
-        aml_debit_field_id = self.env.ref("account.field_account_move_line__debit").id
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        aml_model_id = cls.env.ref("account.model_account_move_line").id
+        aml_date_field_id = cls.env.ref("account.field_account_move_line__date").id
+        aml_debit_field_id = cls.env.ref("account.field_account_move_line__debit").id
 
-        journal = self.env["account.journal"].search(
-            [("type", "=", "general")], limit=1
-        )
-        account = self.env["account.account"].search([("code", "!=", False)], limit=1)
+        journal = cls.env["account.journal"].search([("type", "=", "general")], limit=1)
+        account = cls.env["account.account"].search([("code", "!=", False)], limit=1)
         account.name = "Line Account"
 
-        move = self.env["account.move"].create(
+        move = cls.env["account.move"].create(
             {
                 "journal_id": journal.id,
                 "date": "2026-06-01",
@@ -53,7 +52,7 @@ class TestMisReportWidgetTour(common.HttpCase):
         )
         move.action_post()
 
-        self.report = self.env["mis.report"].create(
+        cls.report = cls.env["mis.report"].create(
             {
                 "name": "Test Drilldown Report",
                 "move_lines_source": aml_model_id,
@@ -86,12 +85,12 @@ class TestMisReportWidgetTour(common.HttpCase):
             }
         )
 
-        search_view = self.env.ref("account.view_account_move_line_filter")
+        search_view = cls.env.ref("account.view_account_move_line_filter")
 
-        self.report_instance = self.env["mis.report.instance"].create(
+        cls.report_instance = cls.env["mis.report.instance"].create(
             {
                 "name": "Test Instance Drilldown",
-                "report_id": self.report.id,
+                "report_id": cls.report.id,
                 "widget_show_filters": True,
                 "widget_search_view_id": search_view.id,
                 "comparison_mode": True,
@@ -168,3 +167,21 @@ class TestMisReportWidgetTour(common.HttpCase):
         # 2. Filter search input update
         # Return via breadcrumbs uses cached data, skipping compute()
         self.assertEqual(len(compute_calls), 2)
+
+    def test_mis_report_back_button_tour(self):
+        search_view = self.env.ref("account.view_account_move_line_filter")
+        self.report_instance.write(
+            {
+                "widget_show_filters": True,
+                "widget_search_view_id": search_view.id,
+            }
+        )
+        action = self.env.ref("mis_builder.mis_report_instance_view_action")
+        domain = f"[('id', '=', {self.report_instance.id})]"
+        url = (
+            f"/web#action={action.id}"
+            f"&model=mis.report.instance"
+            f"&view_type=list"
+            f"&domain={domain}"
+        )
+        self.start_tour(url, "mis_report_back_button_tour", login="admin")

@@ -781,16 +781,12 @@ class MisReportInstance(models.Model):
 
     def preview(self):
         self.ensure_one()
-        view_id = self.env.ref("mis_builder.mis_report_instance_result_view_form")
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "mis.report.instance",
-            "res_id": self.id,
-            "view_mode": "form",
-            "view_id": view_id.id,
-            "target": "current",
-            "context": self.env.context,
-        }
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "mis_builder.mis_report_instance_preview_action"
+        )
+        action["res_id"] = self.id
+        action["context"] = self.env.context
+        return action
 
     def print_pdf(self):
         self.ensure_one()

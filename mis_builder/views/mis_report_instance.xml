@@ -221,6 +221,13 @@
         <field name="domain">[('temporary', '=', False)]</field>
         <field name="path">mis-report-instances</field>
     </record>
+    <record model="ir.actions.act_window" id="mis_report_instance_preview_action">
+        <field name="name">MIS Report Preview</field>
+        <field name="res_model">mis.report.instance</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="mis_report_instance_result_view_form" />
+        <field name="path">mis-report-instance-preview</field>
+    </record>
     <menuitem
         id="mis_report_finance_menu"
         parent="account.menu_finance_reports"
