@@ -5,7 +5,14 @@ import odoo.tests.common as common
 
 from ..models.accounting_none import AccountingNone
 from ..models.data_error import DataError
-from ..models.mis_report_style import CMP_DIFF, CMP_PCT, TYPE_NUM, TYPE_PCT, TYPE_STR
+from ..models.mis_report_style import (
+    CMP_DIFF,
+    CMP_PCT,
+    CMP_PCT_NEG,
+    TYPE_NUM,
+    TYPE_PCT,
+    TYPE_STR,
+)
 
 
 class TestRendering(common.TransactionCase):
@@ -190,6 +197,42 @@ class TestRendering(common.TransactionCase):
             self.lang, style_props, TYPE_PCT, CMP_DIFF, 0.75, 0.50
         )
         self.assertEqual(result[3], TYPE_NUM)
+
+    def test_compare_num_pct_neg(self):
+        """Test percentage (negative growth) comparison method."""
+        # Case 1: Cost increases (more negative) = negative growth
+        # -100 to -114.6 should give -14.6%
+        result = self._compare_and_render(-114.6, -100, TYPE_NUM, CMP_PCT_NEG)
+        self.assertEqual((-0.146, "\u201114.6\xa0%"), result)
+
+        # Case 2: Cost decreases (less negative) = positive growth
+        # -100 to -80 should give +20%
+        result = self._compare_and_render(-80, -100, TYPE_NUM, CMP_PCT_NEG)
+        self.assertEqual((0.2, "+20.0\xa0%"), result)
+
+        # Case 3: Positive values (should work same as CMP_PCT)
+        result = self._compare_and_render(120, 100, TYPE_NUM, CMP_PCT_NEG)
+        self.assertEqual((0.2, "+20.0\xa0%"), result)
+
+        # Case 4: From positive to negative
+        result = self._compare_and_render(-50, 100, TYPE_NUM, CMP_PCT_NEG)
+        self.assertEqual((-1.5, "\u2011150.0\xa0%"), result)
+
+        # Case 5: Edge case - zero base value
+        result = self._compare_and_render(50, 0, TYPE_NUM, CMP_PCT_NEG)
+        self.assertEqual((AccountingNone, ""), result)
+
+        # Case 6: Edge case - both zero
+        result = self._compare_and_render(0, 0, TYPE_NUM, CMP_PCT_NEG)
+        self.assertEqual((AccountingNone, ""), result)
+
+        # Case 7: Small change detection
+        result = self._compare_and_render(-100.01, -100, TYPE_NUM, CMP_PCT_NEG)
+        self.assertEqual((AccountingNone, ""), result)
+
+        # Case 8: Large negative growth
+        result = self._compare_and_render(-200, -100, TYPE_NUM, CMP_PCT_NEG)
+        self.assertEqual((-1.0, "\u2011100.0\xa0%"), result)
 
     def test_merge(self):
         self.style.color = "#FF0000"
