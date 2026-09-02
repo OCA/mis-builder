@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
-<title>README.rst</title>
+<title>MIS Builder</title>
 <style type="text/css">
 
 /*
@@ -482,6 +482,18 @@ cells coming from the option “details by account”). Added notes will
 be pinted when exporting to PDF and Excel. Only users having either
 the group to read or the group to update annotations can see those
 annotations.</li>
+<li>In the <strong>Widget</strong> tab of a MIS Report Instance, you can configure
+interactive widget options:<ul>
+<li><strong>Show filters box</strong>: Displays an inline search bar to filter report
+lines. Active search filters and pivot dates are preserved when
+navigating to drilldown details and returning via breadcrumbs.</li>
+<li><strong>Cache report on drilldown</strong>: Caches computed report data in
+browser memory during drilldown navigation. Returning via
+breadcrumbs renders the report instantly from memory without
+triggering a new server computation. Modifying filters or pivot
+dates automatically invalidates the cache and fetches fresh data.</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="development">
@@ -1166,6 +1178,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <li>Miquel Pascual &lt;<a class="reference external" href="mailto:mpascual&#64;apsl.net">mpascual&#64;apsl.net</a>&gt;</li>
 <li>Antoni Marroig &lt;<a class="reference external" href="mailto:amarroig&#64;apsl.net">amarroig&#64;apsl.net</a>&gt;</li>
 <li>Chau Le &lt;<a class="reference external" href="mailto:chaulb&#64;trobz.com">chaulb&#64;trobz.com</a>&gt;</li>
+<li>Pierre Verkest &lt;<a class="reference external" href="mailto:pierre&#64;verkest.fr">pierre&#64;verkest.fr</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">

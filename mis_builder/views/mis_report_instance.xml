@@ -202,9 +202,11 @@
                                 <field
                                     name="widget_search_view_id"
                                     invisible="not widget_show_filters"
+                                    required="widget_show_filters"
                                 />
                                 <field name="widget_show_settings_button" />
                                 <field name="widget_show_pivot_date" />
+                                <field name="widget_cache_report_on_drill_down" />
                             </group>
                         </page>
                     </notebook>
@@ -219,6 +221,22 @@
         <field name="view_mode">list,form</field>
         <field name="domain">[('temporary', '=', False)]</field>
         <field name="path">mis-report-instances</field>
+    </record>
+    <record model="ir.actions.act_window" id="mis_report_instance_preview_action">
+        <field name="name">MIS Report Preview</field>
+        <field name="res_model">mis.report.instance</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="mis_report_instance_result_view_form" />
+        <field name="path">mis-report-instance-preview</field>
+    </record>
+    <record
+        model="ir.actions.act_window.view"
+        id="mis_report_instance_preview_action_view"
+    >
+        <field name="sequence" eval="1" />
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="mis_report_instance_result_view_form" />
+        <field name="act_window_id" ref="mis_report_instance_preview_action" />
     </record>
     <menuitem
         id="mis_report_finance_menu"

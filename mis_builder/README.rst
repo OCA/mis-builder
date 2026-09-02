@@ -83,6 +83,18 @@ To configure this module, you need to:
   the group to read or the group to update annotations can see those
   annotations.
 
+- In the **Widget** tab of a MIS Report Instance, you can configure
+  interactive widget options:
+
+  - **Show filters box**: Displays an inline search bar to filter report
+    lines. Active search filters and pivot dates are preserved when
+    navigating to drilldown details and returning via breadcrumbs.
+  - **Cache report on drilldown**: Caches computed report data in
+    browser memory during drilldown navigation. Returning via
+    breadcrumbs renders the report instantly from memory without
+    triggering a new server computation. Modifying filters or pivot
+    dates automatically invalidates the cache and fetches fresh data.
+
 .. |image1| image:: https://raw.githubusercontent.com/OCA/mis-builder/10.0/mis_builder/static/description/ex_report_template.png
 .. |image2| image:: https://raw.githubusercontent.com/OCA/mis-builder/10.0/mis_builder/static/description/ex_report_settings.png
 .. |image3| image:: https://raw.githubusercontent.com/OCA/mis-builder/10.0/mis_builder/static/description/ex_report_preview.png
@@ -768,6 +780,7 @@ Contributors
 - Miquel Pascual <mpascual@apsl.net>
 - Antoni Marroig <amarroig@apsl.net>
 - Chau Le <chaulb@trobz.com>
+- Pierre Verkest <pierre@verkest.fr>
 
 Maintainers
 -----------
