@@ -86,10 +86,14 @@ export class MisReportWidget extends Component {
 
     exportState() {
         return {
-            searchState: this.searchModel ? this.searchModel.exportState() : null,
-            pivotDate: this.state.pivot_date
-                ? serializeDate(this.state.pivot_date)
-                : null,
+            searchState:
+                this.showSearchBar && this.searchModel && this.searchModel.sections
+                    ? this.searchModel.exportState()
+                    : null,
+            pivotDate:
+                this.showPivotDate && this.state.pivot_date
+                    ? serializeDate(this.state.pivot_date)
+                    : null,
             cachedReportData:
                 this.widget_cache_report_on_drill_down && this.state.mis_report_data
                     ? this.state.mis_report_data

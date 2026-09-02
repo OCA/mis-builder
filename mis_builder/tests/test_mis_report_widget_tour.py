@@ -185,3 +185,20 @@ class TestMisReportWidgetTour(common.HttpCase):
             f"&domain={domain}"
         )
         self.start_tour(url, "mis_report_back_button_tour", login="admin")
+
+    def test_mis_report_back_button_no_filters_tour(self):
+        self.report_instance.write(
+            {
+                "widget_show_filters": False,
+                "widget_search_view_id": False,
+            }
+        )
+        action = self.env.ref("mis_builder.mis_report_instance_view_action")
+        domain = f"[('id', '=', {self.report_instance.id})]"
+        url = (
+            f"/web#action={action.id}"
+            f"&model=mis.report.instance"
+            f"&view_type=list"
+            f"&domain={domain}"
+        )
+        self.start_tour(url, "mis_report_back_button_no_filters_tour", login="admin")

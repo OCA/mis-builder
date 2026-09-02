@@ -202,6 +202,7 @@
                                 <field
                                     name="widget_search_view_id"
                                     invisible="not widget_show_filters"
+                                    required="widget_show_filters"
                                 />
                                 <field name="widget_show_settings_button" />
                                 <field name="widget_show_pivot_date" />
