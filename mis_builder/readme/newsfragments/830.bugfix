@@ -1,0 +1,3 @@
+No longer log a spurious `Style '' not found` error for each KPI whose style
+expression is evaluated before its value is available. A style expression that
+genuinely fails is now reported with its error message.

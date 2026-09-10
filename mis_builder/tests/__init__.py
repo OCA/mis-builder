@@ -13,6 +13,7 @@ from . import test_period_dates
 from . import test_pro_rata_read_group
 from . import test_render
 from . import test_simple_array
+from . import test_style_expression
 from . import test_target_move
 from . import test_utc_midnight
 from . import test_mis_report_instance_annotation
