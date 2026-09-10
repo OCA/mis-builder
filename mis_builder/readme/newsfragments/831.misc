@@ -1,0 +1,2 @@
+The subreport unit tests are now part of the test suite. `test_subreport.py`
+had never been imported in `tests/__init__.py`, so it was never collected.
