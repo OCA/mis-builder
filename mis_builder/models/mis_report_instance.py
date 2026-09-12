@@ -542,7 +542,10 @@ class MisReportInstance(models.Model):
         required=False,
     )
     landscape_pdf = fields.Boolean(string="Landscape PDF")
-    no_auto_expand_accounts = fields.Boolean(string="Disable account details expansion")
+    no_auto_expand_accounts = fields.Boolean(
+        string="Disable details expansion",
+        help="Disable account/partner detail rows for all KPIs of this report.",
+    )
     display_columns_description = fields.Boolean(
         help="Display the date range details in the column headers."
     )
@@ -932,7 +935,7 @@ class MisReportInstance(models.Model):
         return {
             KpiMatrix._make_cell_id(
                 annotation.kpi_id.id,
-                False,
+                None,
                 annotation.period_id.id,
                 annotation.subkpi_id and annotation.subkpi_id.id,
             ): {"text": annotation.note, "sequence": sequence}
@@ -959,6 +962,8 @@ class MisReportInstance(models.Model):
         period_id = arg.get("period_id")
         expr = arg.get("expr")
         account_id = arg.get("account_id")
+        detail_groupby = arg.get("detail_groupby")
+        detail_id = arg.get("detail_id")
         if period_id and expr and AEP.has_account_var(expr):
             period = self.env["mis.report.instance.period"].browse(period_id)
             aep = AEP(
@@ -971,6 +976,8 @@ class MisReportInstance(models.Model):
                 period.date_from,
                 period.date_to,
                 account_id,
+                detail_groupby=detail_groupby,
+                detail_id=detail_id,
             )
             additional_domain = period._get_additional_move_line_filter()
             if additional_domain:
@@ -995,12 +1002,30 @@ class MisReportInstance(models.Model):
         period_id = arg.get("period_id")
         period = self.env["mis.report.instance.period"].browse(period_id)
         account_id = arg.get("account_id")
+        detail_groupby = arg.get("detail_groupby")
+        detail_id = arg.get("detail_id")
 
         if account_id:
             account = self.env[self.report_id.account_model].browse(account_id)
             return f"{kpi.description} - {account.display_name} - {period.display_name}"
-        else:
-            return f"{kpi.description} - {period.display_name}"
+        if detail_groupby and detail_id is not None:
+            aml_model = self.env[period.source_aml_model_name or "account.move.line"]
+            field = aml_model._fields.get(detail_groupby)
+            if field and field.type == "many2one" and field.comodel_name:
+                if detail_id:
+                    detail_name = (
+                        self.env[field.comodel_name].browse(detail_id).display_name
+                    )
+                else:
+                    detail_name = self.env._("(No value)")
+            else:
+                detail_name = (
+                    self.env._("(No value)")
+                    if detail_id in (0, False, None)
+                    else str(detail_id)
+                )
+            return f"{kpi.description} - {detail_name} - {period.display_name}"
+        return f"{kpi.description} - {period.display_name}"
 
     def _get_annotation_context(self):
         """Return the context used to filter annotation linked to this instance."""
