@@ -97,11 +97,27 @@ class MisReportKpi(models.Model):
         copy=True,
         string="Expressions",
     )
-    auto_expand_accounts = fields.Boolean(string="Display details by account")
+    detail_groupby = fields.Char(
+        string="Expand details by",
+        help="Technical name of a field on the move line source model used to "
+        "expand this KPI into detail rows (for example account_id, partner_id "
+        "or journal_id). Leave empty for no expansion. "
+        "account_id uses the optimized accounting expression path; any other "
+        "field is queried with a generic group-by.",
+    )
+    auto_expand_accounts = fields.Boolean(
+        string="Display details by account",
+        compute="_compute_auto_expand_accounts",
+        inverse="_inverse_auto_expand_accounts",
+        store=True,
+        help="Deprecated: set Expand details by = account_id. "
+        "Kept for backward compatibility.",
+    )
     auto_expand_accounts_style_id = fields.Many2one(
-        string="Style for account detail rows",
+        string="Style for detail rows",
         comodel_name="mis.report.style",
         required=False,
+        help="Style applied to expanded detail rows.",
     )
     style_id = fields.Many2one(comodel_name="mis.report.style", required=False)
     style_expression = fields.Char(
@@ -151,6 +167,18 @@ class MisReportKpi(models.Model):
     def _compute_display_name(self):
         for rec in self:
             rec.display_name = f"{rec.description} ({rec.name})"
+
+    @api.depends("detail_groupby")
+    def _compute_auto_expand_accounts(self):
+        for rec in self:
+            rec.auto_expand_accounts = rec.detail_groupby == "account_id"
+
+    def _inverse_auto_expand_accounts(self):
+        for rec in self:
+            if rec.auto_expand_accounts:
+                rec.detail_groupby = "account_id"
+            elif rec.detail_groupby == "account_id":
+                rec.detail_groupby = False
 
     @api.constrains("name")
     def _check_name(self):
@@ -738,28 +766,32 @@ class MisReport(models.Model):
 
                 kpi_matrix.set_values(kpi, col_key, vals, drilldown_args)
 
-                if (
-                    name_error
-                    or no_auto_expand_accounts
-                    or not kpi.auto_expand_accounts
-                ):
+                detail_groupby = (
+                    False if no_auto_expand_accounts else kpi.detail_groupby
+                )
+                if name_error or not detail_groupby:
                     continue
 
                 for (
-                    account_id,
+                    detail_id,
                     vals,
                     drilldown_args,
                     _name_error,
-                ) in expression_evaluator.eval_expressions_by_account(
-                    expressions, locals_dict
+                ) in expression_evaluator.eval_expressions_by_groupby(
+                    detail_groupby, expressions, locals_dict
                 ):
                     for drilldown_arg in drilldown_args:
                         if not drilldown_arg:
                             continue
                         drilldown_arg["period_id"] = col_key
                         drilldown_arg["kpi_id"] = kpi.id
-                    kpi_matrix.set_values_detail_account(
-                        kpi, col_key, account_id, vals, drilldown_args
+                    kpi_matrix.set_values_detail(
+                        kpi,
+                        col_key,
+                        detail_id,
+                        vals,
+                        drilldown_args,
+                        detail_groupby=detail_groupby,
                     )
 
             if len(recompute_queue) == 0:
@@ -841,7 +873,8 @@ class MisReport(models.Model):
                                             underlying model
         :param locals_dict: personalized locals dictionary used as evaluation
                             context for the KPI expressions
-        :param no_auto_expand_accounts: disable expansion of account details
+        :param no_auto_expand_accounts: disable expansion of detail rows
+                                        (account or partner)
         """
         self.ensure_one()
 
