@@ -102,6 +102,16 @@ export class MisReportWidget extends Component {
      * @returns int
      */
     _instanceId() {
+        /*
+         * When the widget is used as a field in a mis.report.instance
+         * form view, the record it belongs to is the instance itself.
+         * This is the modern owl field API; props.value is kept below
+         * as a fallback for legacy call sites.
+         */
+        if (this.props.record && this.props.record.resId) {
+            return this.props.record.resId;
+        }
+
         if (this.props.value) {
             return this.props.value;
         }
