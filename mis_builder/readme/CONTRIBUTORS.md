@@ -28,3 +28,4 @@
 - Miquel Pascual  \<<mpascual@apsl.net>\>
 - Antoni Marroig  \<<amarroig@apsl.net>\>
 - Chau Le \<<chaulb@trobz.com>\>
+- Pierre Verkest \<<pierre@verkest.fr>\>
