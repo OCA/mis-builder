@@ -12,6 +12,9 @@
     }
 
     .mis_builder {
+        border-collapse: separate !important;
+        border-spacing: 0 !important;
+
         a {
             // we don't want the link color, to respect user styles
             color: inherit;
@@ -21,6 +24,24 @@
                 text-decoration: underline;
             }
         }
+
+        // Make the header cells sticky and ensure they render on top of scrolling content
+        thead {
+            top: 0;
+            position: sticky;
+            z-index: var(--sticky-header-zindex) !important;
+
+            tr {
+                th {
+                    background-color: var(--gray-300);
+                }
+            }
+        }
+    }
+
+    .oe_mis_builder_content .o_list_renderer {
+        max-height: calc(100vh - 250px);
+        overflow-y: auto !important;
     }
 }
 
@@ -89,6 +110,7 @@
     display: inline-block;
     padding-right: 1px;
 }
+
 .oe_mis_builder_footnote_div {
     padding-top: 1em;
 }
