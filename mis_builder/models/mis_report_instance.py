@@ -286,6 +286,17 @@ class MisReportInstancePeriod(models.Model):
         help="A domain to additionally filter move lines considered in this column.",
     )
 
+    hide_period_based_on_instance_date = fields.Boolean(
+        string="Dynamically Hide Column",
+        help="""Hide this column if the pivot date is before the end date.
+        In the case of a column computed from other columns (e.g. compare column),
+        the column is displayed if all subcolumns should be displayed.
+        """,
+        compute="_compute_hide_period_base_on_instance_date",
+        store=True,
+        readonly=False,
+    )
+
     _order = "sequence, id"
 
     _duration = models.Constraint(
@@ -302,6 +313,14 @@ class MisReportInstancePeriod(models.Model):
         "unique(name, report_instance_id)",
         "Period name should be unique by report",
     )
+
+    @api.depends("source")
+    def _compute_hide_period_base_on_instance_date(self):
+        for rec in self:
+            # Coluwns with source 'Actuals' or 'Actuals (alternative)'
+            # will be displayed depending on their subcolumns
+            if rec.source in (SRC_CMPCOL, SRC_SUMCOL):
+                rec.hide_period_based_on_instance_date = True
 
     @api.depends("source", "report_instance_id.report_id.move_lines_source")
     def _compute_source_aml_model_id(self):
@@ -472,6 +491,45 @@ class MisReportInstancePeriod(models.Model):
         return super(MisReportInstancePeriod, filtered_records).copy_data(
             default=default
         )
+
+    def _period_should_be_displayed(self, pivot_date):
+        """
+        Returns true if period should be displayed
+
+         - If the field to dynamically hide period is not set to true,
+           the col is always displayed
+         - If the mode is fix, the period is displayed if the pivot date
+           is before the end
+         - A period with a source 'Acutals' or 'Actuals (alternative)'
+           will always be displayed if the mode is not 'fix'
+         - A period that sums columnns will be displayed if its 'source
+           columns' should be displayed
+         - A period that compares columns will be displayed if its
+           'source columns' should be displayed
+        """
+        self.ensure_one()
+        if not self.hide_period_based_on_instance_date:
+            return True
+
+        if self.mode == MODE_FIX:
+            return not (self.date_to and pivot_date < self.date_to)
+
+        if self.source == SRC_ACTUALS or self.source == SRC_ACTUALS_ALT:
+            return True
+        elif self.source == SRC_SUMCOL:
+            return all(
+                sumcol.period_to_sum_id._period_should_be_displayed(pivot_date)
+                for sumcol in self.source_sumcol_ids
+            )
+        elif self.source == SRC_CMPCOL:
+            return (
+                bool(self.source_cmpcol_from_id)
+                and bool(self.source_cmpcol_to_id)
+                and self.source_cmpcol_from_id._period_should_be_displayed(pivot_date)
+                and self.source_cmpcol_to_id._period_should_be_displayed(pivot_date)
+            )
+        else:
+            return False
 
 
 class MisReportInstance(models.Model):
@@ -867,6 +925,11 @@ class MisReportInstance(models.Model):
         elif period.source == SRC_CMPCOL:
             return self._add_column_cmpcol(aep, kpi_matrix, period, label, description)
 
+    def _get_periods(self):
+        return self.period_ids.filtered(
+            lambda rec: rec._period_should_be_displayed(self.pivot_date)
+        )
+
     def _compute_matrix(self):
         """Compute a report and return a KpiMatrix.
 
@@ -876,7 +939,7 @@ class MisReportInstance(models.Model):
         self.ensure_one()
         aep = self.report_id._prepare_aep(self.query_company_ids, self.currency_id)
         kpi_matrix = self.report_id.prepare_kpi_matrix(self.query_company_ids)
-        for period in self.period_ids:
+        for period in self._get_periods():
             description = None
             if period.mode == MODE_NONE:
                 pass
