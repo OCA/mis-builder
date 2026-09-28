@@ -1,45 +1,16 @@
 
 [![Support the OCA](https://odoo-community.org/readme-banner-image)](https://odoo-community.org/get-involved?utm_source=repo-readme)
 
-# MIS Builder
-[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&target_branch=19.0)
-[![Pre-commit Status](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml/badge.svg?branch=19.0)](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml?query=branch%3A19.0)
-[![Build Status](https://github.com/OCA/mis-builder/actions/workflows/test.yml/badge.svg?branch=19.0)](https://github.com/OCA/mis-builder/actions/workflows/test.yml?query=branch%3A19.0)
-[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/19.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
-[![Translation Status](https://translation.odoo-community.org/widgets/mis-builder-19-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/mis-builder-19-0/?utm_source=widget)
+# mis-builder
+[![Runboat](https://img.shields.io/badge/runboat-Try%20me-875A7B.png)](https://runboat.odoo-community.org/builds?repo=OCA/mis-builder&target_branch=20.0)
+[![Pre-commit Status](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml/badge.svg?branch=20.0)](https://github.com/OCA/mis-builder/actions/workflows/pre-commit.yml?query=branch%3A20.0)
+[![Build Status](https://github.com/OCA/mis-builder/actions/workflows/test.yml/badge.svg?branch=20.0)](https://github.com/OCA/mis-builder/actions/workflows/test.yml?query=branch%3A20.0)
+[![codecov](https://codecov.io/gh/OCA/mis-builder/branch/20.0/graph/badge.svg)](https://codecov.io/gh/OCA/mis-builder)
+[![Translation Status](https://translation.odoo-community.org/widgets/mis-builder-20-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/mis-builder-20-0/?utm_source=widget)
 
 <!-- /!\ do not modify above this line -->
 
-Management Information System reports for Odoo: easily build super fast,
-beautiful, custom reports such as P&L, Balance Sheets and more.
-
-This project implements a class of reports where KPI (Key Performance Indicators)
-are displayed in rows, and time periods in columns. It focuses on very fast reporting
-on accounting data but can also use data from any other Odoo model.
-
-It features the following key characteristics:
-
-- User configurable: end users can create new report templates without development,
-  using simple Excel-like formulas.
-- Very fast balance reporting for accounting data, even on million lines databases
-  and very complex account charts.
-- Use the same template for different reports.
-- Compare data over different time periods.
-- User-configurable styles, rendered perfectly in the UI as well as Excel and PDF exports.
-- Interactive display with drill-down.
-- Export to PDF and Excel.
-- A budgeting module.
-- Evaluate KPI over various data sources, such as actuals, simulation, committed costs
-  (some custom development is required to create the data source).
-- For developers, the accounting balance computation engine is exposed as an easy
-  to use API.
-
-Here are some presentations:
-
-- OCA Days 2020 ([video](https://www.youtube.com/watch?v=45FXd8XM5m8))
-- Odoo Experience 2017 ([slides](https://www.slideshare.net/acsone/budget-control-with-misbuilder-3-2017), [video](https://youtu.be/0PpxGAf2l-0))
-- Odoo Experience 2016 ([slides](https://www.slideshare.net/acsone/misbuilder-2016))
-- Odoo Experience 2015 ([slides](https://www.slideshare.net/acsone/misbuilder))
+mis-builder
 
 <!-- /!\ do not modify below this line -->
 
@@ -47,13 +18,7 @@ Here are some presentations:
 
 [//]: # (addons)
 
-Available addons
-----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[mis_builder](mis_builder/) | 19.0.1.2.1 | <a href='https://github.com/sbidoul'><img src='https://github.com/sbidoul.png' width='32' height='32' style='border-radius:50%;' alt='sbidoul'/></a> | Build 'Management Information System' Reports and Dashboards
-[mis_builder_budget](mis_builder_budget/) | 19.0.1.0.1 | <a href='https://github.com/sbidoul'><img src='https://github.com/sbidoul.png' width='32' height='32' style='border-radius:50%;' alt='sbidoul'/></a> | Create budgets for MIS reports
-[mis_builder_demo](mis_builder_demo/) | 19.0.1.0.1 | <a href='https://github.com/sbidoul'><img src='https://github.com/sbidoul.png' width='32' height='32' style='border-radius:50%;' alt='sbidoul'/></a> | Demo addon for MIS Builder
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
 
 [//]: # (end addons)
 

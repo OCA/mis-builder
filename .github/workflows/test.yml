@@ -3,11 +3,11 @@ name: tests
 on:
   pull_request:
     branches:
-      - "19.0*"
+      - "20.0*"
   push:
     branches:
-      - "19.0"
-      - "19.0-ocabot-*"
+      - "20.0"
+      - "20.0-ocabot-*"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -39,14 +39,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - container: ghcr.io/oca/oca-ci/py3.10-odoo19.0:latest
+          - container: ghcr.io/oca/oca-ci/py3.12-odoo20.0:latest
             name: test with Odoo
-          - container: ghcr.io/oca/oca-ci/py3.10-ocb19.0:latest
+          - container: ghcr.io/oca/oca-ci/py3.12-ocb20.0:latest
             name: test with OCB
             makepot: "true"
     services:
       postgres:
-        image: postgres:13
+        image: postgres:16
         env:
           POSTGRES_USER: odoo
           POSTGRES_PASSWORD: odoo

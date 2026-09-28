@@ -21,4 +21,5 @@
     ],
     "maintainers": ["sbidoul"],
     "development_status": "Alpha",
+    'installable': False,
 }

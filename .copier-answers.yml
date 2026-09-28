@@ -1,5 +1,5 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.44
+_commit: v1.45
 _src_path: https://github.com/OCA/oca-addons-repo-template
 additional_ruff_rules: []
 convert_readme_fragments_to_markdown: true
@@ -13,31 +13,13 @@ github_enable_stale_action: true
 github_enforce_dev_status_compatibility: true
 include_wkhtmltopdf: false
 odoo_test_flavor: Both
-odoo_version: 19.0
+odoo_version: 20.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
 postgres_image: ''
 rebel_module_groups: []
-repo_description: "Management Information System reports for Odoo: easily build super\
-    \ fast,\nbeautiful, custom reports such as P&L, Balance Sheets and more.\n\nThis\
-    \ project implements a class of reports where KPI (Key Performance Indicators)\n\
-    are displayed in rows, and time periods in columns. It focuses on very fast reporting\n\
-    on accounting data but can also use data from any other Odoo model.\n\nIt features\
-    \ the following key characteristics:\n\n- User configurable: end users can create\
-    \ new report templates without development,\n  using simple Excel-like formulas.\n\
-    - Very fast balance reporting for accounting data, even on million lines databases\n\
-    \  and very complex account charts.\n- Use the same template for different reports.\n\
-    - Compare data over different time periods.\n- User-configurable styles, rendered\
-    \ perfectly in the UI as well as Excel and PDF exports.\n- Interactive display\
-    \ with drill-down.\n- Export to PDF and Excel.\n- A budgeting module.\n- Evaluate\
-    \ KPI over various data sources, such as actuals, simulation, committed costs\n\
-    \  (some custom development is required to create the data source).\n- For developers,\
-    \ the accounting balance computation engine is exposed as an easy\n  to use API.\n\
-    \nHere are some presentations:\n\n- OCA Days 2020 ([video](https://www.youtube.com/watch?v=45FXd8XM5m8))\n\
-    - Odoo Experience 2017 ([slides](https://www.slideshare.net/acsone/budget-control-with-misbuilder-3-2017),\
-    \ [video](https://youtu.be/0PpxGAf2l-0))\n- Odoo Experience 2016 ([slides](https://www.slideshare.net/acsone/misbuilder-2016))\n\
-    - Odoo Experience 2015 ([slides](https://www.slideshare.net/acsone/misbuilder))"
-repo_name: MIS Builder
+repo_description: mis-builder
+repo_name: mis-builder
 repo_slug: mis-builder
 repo_website: https://github.com/OCA/mis-builder
 use_pyproject_toml: true

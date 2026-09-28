@@ -5,7 +5,7 @@ load-plugins=pylint_odoo
 score=n
 
 [IMPORTS]
-deprecated-modules=pdb,pudb,ipdb,bs4
+deprecated-modules=pdb,pudb,ipdb,bs4,pytz
 
 [ODOOLINT]
 readme-template-url="https://github.com/OCA/maintainer-tools/blob/master/template/module/README.rst"
@@ -13,7 +13,7 @@ manifest-required-authors=Odoo Community Association (OCA)
 manifest-required-keys=license
 manifest-deprecated-keys=description,active
 license-allowed=AGPL-3,GPL-2,GPL-2 or any later version,GPL-3,GPL-3 or any later version,LGPL-3
-valid-odoo-versions=19.0
+valid-odoo-versions=20.0
 
 [MESSAGES CONTROL]
 disable=all
@@ -75,6 +75,7 @@ enable=anomalous-backslash-in-string,
     category-allowed,
     deprecated-name-get,
     deprecated-odoo-model-method,
+    deprecated-self-cr,
     inheritable-method-lambda,
     inheritable-method-string,
     invalid-email,
@@ -95,6 +96,7 @@ enable=anomalous-backslash-in-string,
     translation-too-many-args,
     translation-unsupported-format,
     no-write-in-compute,
+    manifest-summary-multiline,
     # messages that do not cause the lint step to fail
     consider-merging-classes-inherited,
     deprecated-module,
