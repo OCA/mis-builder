@@ -106,59 +106,63 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
             credit_acc=self.account_in2,
         )
         # create report
-        self.report = self.env["mis.report"].create(dict(name="test report"))
+        self.report = self.env["mis.report"].create({"name": "test report"})
         self.kpi1 = self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                name="k1",
-                description="kpi 1",
-                expression="-balp[700IN]",
-                compare_method=CMP_DIFF,
-            )
+            {
+                "report_id": self.report.id,
+                "name": "k1",
+                "description": "kpi 1",
+                "expression": "-balp[700IN]",
+                "compare_method": CMP_DIFF,
+            }
         )
         self.expr1 = self.kpi1.expression_ids[0]
         self.kpi2 = self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                name="k2",
-                description="kpi 2",
-                expression="-balp[700%]",
-                compare_method=CMP_DIFF,
-                auto_expand_accounts=True,
-            )
+            {
+                "report_id": self.report.id,
+                "name": "k2",
+                "description": "kpi 2",
+                "expression": "-balp[700%]",
+                "compare_method": CMP_DIFF,
+                "auto_expand_accounts": True,
+            }
         )
         self.instance = self.env["mis.report.instance"].create(
-            dict(name="test instance", report_id=self.report.id, comparison_mode=True)
+            {
+                "name": "test instance",
+                "report_id": self.report.id,
+                "comparison_mode": True,
+            }
         )
         self.p1 = self.env["mis.report.instance.period"].create(
-            dict(
-                name="p1",
-                report_instance_id=self.instance.id,
-                manual_date_from="2017-01-01",
-                manual_date_to="2017-01-31",
-            )
+            {
+                "name": "p1",
+                "report_instance_id": self.instance.id,
+                "manual_date_from": "2017-01-01",
+                "manual_date_to": "2017-01-31",
+            }
         )
         self.p2 = self.env["mis.report.instance.period"].create(
-            dict(
-                name="p2",
-                report_instance_id=self.instance.id,
-                manual_date_from="2017-02-01",
-                manual_date_to="2017-02-28",
-            )
+            {
+                "name": "p2",
+                "report_instance_id": self.instance.id,
+                "manual_date_from": "2017-02-01",
+                "manual_date_to": "2017-02-28",
+            }
         )
 
     def test_sum(self):
         self.psum = self.env["mis.report.instance.period"].create(
-            dict(
-                name="psum",
-                report_instance_id=self.instance.id,
-                mode=MODE_NONE,
-                source=SRC_SUMCOL,
-                source_sumcol_ids=[
-                    (0, 0, dict(period_to_sum_id=self.p1.id, sign="+")),
-                    (0, 0, dict(period_to_sum_id=self.p2.id, sign="+")),
+            {
+                "name": "psum",
+                "report_instance_id": self.instance.id,
+                "mode": MODE_NONE,
+                "source": SRC_SUMCOL,
+                "source_sumcol_ids": [
+                    (0, 0, {"period_to_sum_id": self.p1.id, "sign": "+"}),
+                    (0, 0, {"period_to_sum_id": self.p2.id, "sign": "+"}),
                 ],
-            )
+            }
         )
         matrix = self.instance._compute_matrix()
         # None in last col because account details are not summed by default
@@ -174,17 +178,17 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
 
     def test_sum_diff(self):
         self.psum = self.env["mis.report.instance.period"].create(
-            dict(
-                name="psum",
-                report_instance_id=self.instance.id,
-                mode=MODE_NONE,
-                source=SRC_SUMCOL,
-                source_sumcol_ids=[
-                    (0, 0, dict(period_to_sum_id=self.p1.id, sign="+")),
-                    (0, 0, dict(period_to_sum_id=self.p2.id, sign="-")),
+            {
+                "name": "psum",
+                "report_instance_id": self.instance.id,
+                "mode": MODE_NONE,
+                "source": SRC_SUMCOL,
+                "source_sumcol_ids": [
+                    (0, 0, {"period_to_sum_id": self.p1.id, "sign": "+"}),
+                    (0, 0, {"period_to_sum_id": self.p2.id, "sign": "-"}),
                 ],
-                source_sumcol_accdet=True,
-            )
+                "source_sumcol_accdet": True,
+            }
         )
         matrix = self.instance._compute_matrix()
         assert_matrix(
@@ -194,14 +198,14 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
 
     def test_cmp(self):
         self.pcmp = self.env["mis.report.instance.period"].create(
-            dict(
-                name="pcmp",
-                report_instance_id=self.instance.id,
-                mode=MODE_NONE,
-                source=SRC_CMPCOL,
-                source_cmpcol_from_id=self.p1.id,
-                source_cmpcol_to_id=self.p2.id,
-            )
+            {
+                "name": "pcmp",
+                "report_instance_id": self.instance.id,
+                "mode": MODE_NONE,
+                "source": SRC_CMPCOL,
+                "source_cmpcol_from_id": self.p1.id,
+                "source_cmpcol_to_id": self.p2.id,
+            }
         )
         matrix = self.instance._compute_matrix()
         assert_matrix(

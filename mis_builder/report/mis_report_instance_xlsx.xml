@@ -6,7 +6,6 @@
         <field name="type">ir.actions.report</field>
         <field name="report_name">mis_builder.mis_report_instance_xlsx</field>
         <field name="report_type">xlsx</field>
-        <field name="report_file">mis_report_instance</field>
     </record>
 
     <record id="mis_builder_print_xls_report" model="ir.actions.server">
