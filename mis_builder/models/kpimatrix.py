@@ -257,10 +257,9 @@ class KpiMatrix:
                         row.kpi.style_expression, col.locals_dict
                     )
                 except Exception:
-                    _logger.error(
+                    _logger.exception(
                         "Error evaluating style expression <%s>",
                         row.kpi.style_expression,
-                        exc_info=True,
                     )
                 if style_name:
                     style = self._style_model.search([("name", "=", style_name)])
@@ -452,8 +451,7 @@ class KpiMatrix:
 
         yields KpiMatrixCol: one for each column or comparison.
         """
-        for _col_key, col in self._cols.items():
-            yield col
+        yield from self._cols.values()
 
     def iter_subcols(self):
         """Iterate sub columns in display order.

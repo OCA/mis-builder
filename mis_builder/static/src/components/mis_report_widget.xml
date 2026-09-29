@@ -2,42 +2,45 @@
 <templates>
     <t t-name="mis_builder.MisReportWidget">
         <div class="oe_mis_builder_content">
-            <t t-if="state.mis_report_data">
-                <t t-set="notes" t-value="state.mis_report_data.notes" />
+            <t t-if="this.state.mis_report_data">
+                <t t-set="notes" t-value="this.state.mis_report_data.notes" />
                 <div class="oe_mis_builder_cp">
                     <div class="oe_mis_builder_cp_left" />
                     <div class="oe_mis_builder_cp_right">
                         <div class="oe_mis_builder_cp_right_top_right">
                             <div class="oe_mis_builder_action_buttons">
-                                <button t-on-click="toggle_wide_display" class="btn">
+                                <button
+                                    t-on-click="this.toggle_wide_display"
+                                    class="btn"
+                                >
                                     <i id="icon_resize" class="fa" />
                                 </button>
                             </div>
                         </div>
                         <div class="oe_mis_builder_cp_right_top">
-                            <SearchBar t-if="showSearchBar" />
+                            <SearchBar t-if="this.showSearchBar" />
                         </div>
                         <div class="oe_mis_builder_cp_right_bottom">
                             <div class="oe_mis_builder_filter_buttons">
                                 <DateTimeInput
-                                    value="state.pivot_date"
+                                    value="this.state.pivot_date"
                                     placeholder="'Base date...'"
                                     type="'date'"
-                                    t-if="showPivotDate"
-                                    onChange.bind="onDateTimeChanged"
+                                    t-if="this.showPivotDate"
+                                    onChange.bind="this.onDateTimeChanged"
                                 />
                             </div>
                             <div class="oe_mis_builder_action_buttons">
-                                <button t-on-click="refresh" class="btn">
+                                <button t-on-click="this.refresh" class="btn">
                                     <span class="fa fa-refresh" /> Refresh </button>
-                                <button t-on-click="printPdf" class="btn">
+                                <button t-on-click="this.printPdf" class="btn">
                                     <span class="fa fa-print" /> Print </button>
-                                <button t-on-click="exportXls" class="btn">
+                                <button t-on-click="this.exportXls" class="btn">
                                     <span class="fa fa-download" /> Export </button>
                                 <button
-                                    t-if="widget_show_settings_button"
+                                    t-if="this.widget_show_settings_button"
                                     class="btn"
-                                    t-on-click="displaySettings"
+                                    t-on-click="this.displaySettings"
                                 >
                                     <span class="fa fa-cog" /> Settings </button>
                             </div>
@@ -50,7 +53,7 @@
                     >
                         <thead>
                             <tr
-                                t-foreach="state.mis_report_data.header"
+                                t-foreach="this.state.mis_report_data.header"
                                 t-as="row"
                                 t-key="row_index"
                                 class="oe_list_header_columns"
@@ -73,7 +76,7 @@
                         </thead>
                         <tbody>
                             <tr
-                                t-foreach="state.mis_report_data.body"
+                                t-foreach="this.state.mis_report_data.body"
                                 t-as="row"
                                 t-key="row_index"
                             >
@@ -96,14 +99,14 @@
                                             <a
                                                 href="#"
                                                 class="mis_builder_drilldown"
-                                                t-on-click.prevent="drilldown"
-                                                t-att-data-drilldown="JSON.stringify(cell.drilldown_arg)"
+                                                t-on-click.prevent="this.drilldown"
+                                                t-att-data-drilldown="this.JSON.stringify(cell.drilldown_arg)"
                                             >
-                                                <t t-esc="cell.val_r" />
+                                                <t t-out="cell.val_r" />
                                             </a>
                                         </t>
                                         <t t-else="">
-                                            <t t-esc="cell.val_r" />
+                                            <t t-out="cell.val_r" />
                                         </t>
                                         <span class="oe_mis_builder_footnote">
                                             <div t-if="notes[cell.cell_id]">
@@ -118,7 +121,7 @@
 
                                         <div id="dropdown_menu" class="btn-group">
                                             <div
-                                                t-if="state.can_edit_annotation and cell.can_be_annotated"
+                                                t-if="this.state.can_edit_annotation and cell.can_be_annotated"
                                                 class="dropdown"
                                             >
                                                 <div
@@ -132,7 +135,7 @@
                                                 >
                                                     <a
                                                         href="javascript:void(0)"
-                                                        t-on-click="annotate"
+                                                        t-on-click="this.annotate"
                                                         t-att-data-cell-id="cell.cell_id"
                                                         role="menuitem"
                                                         class="dropdown-item js_tag"
@@ -160,7 +163,7 @@
                 <div id="footnotes" class="oe_mis_builder_footnote_div">
                     <table class="oe_mis_builder_footnote_table">
                         <t
-                            t-foreach="state.mis_report_data.notes"
+                            t-foreach="this.state.mis_report_data.notes"
                             t-as="cell_id"
                             t-key="cell_id"
                         >
@@ -174,10 +177,10 @@
                                 </td>
                                 <td>
                                     <i
-                                        t-if="state.can_edit_annotation"
+                                        t-if="this.state.can_edit_annotation"
                                         class="btn fa fa-trash-o"
                                         href="javascript:void(0)"
-                                        t-on-click="remove_annotation"
+                                        t-on-click="this.remove_annotation"
                                         t-att-data-cell-id="cell_id"
                                     />
                                 </td>

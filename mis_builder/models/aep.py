@@ -217,7 +217,7 @@ class AccountingExpressionProcessor:
             inner_account_sel = account_sel[1:-1].strip()
             if not inner_account_sel:
                 # empty selector: select all accounts
-                acc_domain = tuple()
+                acc_domain = ()
             elif _is_domain(inner_account_sel):
                 # account selector is a domain
                 acc_domain = tuple(safe_eval(account_sel, domain_eval_context))
@@ -229,7 +229,7 @@ class AccountingExpressionProcessor:
             assert ml_domain[0] == "[" and ml_domain[-1] == "]"
             ml_domain = tuple(safe_eval(ml_domain, domain_eval_context))
         else:
-            ml_domain = tuple()
+            ml_domain = ()
         return field, mode, fld_name, acc_domain, ml_domain
 
     def parse_expr(self, expr):
@@ -336,9 +336,9 @@ class AccountingExpressionProcessor:
                 else:
                     continue
             if field == "crd":
-                aml_domain.append(("credit", "<>", 0.0))
+                aml_domain.append(("credit", "!=", 0.0))
             elif field == "deb":
-                aml_domain.append(("debit", "<>", 0.0))
+                aml_domain.append(("debit", "!=", 0.0))
             elif fld_name:
                 aml_domain.append((fld_name, "!=", False))
             aml_domains.append(aml_domain)
@@ -472,7 +472,7 @@ class AccountingExpressionProcessor:
                     )
                 ) from e
             for account_id, company_id, debit, credit, *custom_fields_sums in accs:
-                rate, dp = company_rates[company_id.id]
+                rate, _dp = company_rates[company_id.id]
                 debit = debit or 0.0
                 credit = credit or 0.0
                 if mode in (self.MODE_INITIAL, self.MODE_UNALLOCATED) and float_is_zero(
