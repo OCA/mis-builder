@@ -13,7 +13,7 @@ class TestRendering(common.TransactionCase):
         super().setUp()
         self.style_obj = self.env["mis.report.style"]
         self.kpi_obj = self.env["mis.report.kpi"]
-        self.style = self.style_obj.create(dict(name="teststyle"))
+        self.style = self.style_obj.create({"name": "teststyle"})
         self.lang = (
             self.env["res.lang"]
             .with_context(active_test=False)
@@ -200,13 +200,13 @@ class TestRendering(common.TransactionCase):
         style_props = self.style_obj.merge([self.style, style_dict])
         self.assertEqual(style_props, {"color": "#00FF00", "dp": 0})
         style2 = self.style_obj.create(
-            dict(
-                name="teststyle2",
-                dp_inherit=False,
-                dp=1,
+            {
+                "name": "teststyle2",
+                "dp_inherit": False,
+                "dp": 1,
                 # color_inherit=True: will not be applied
-                color="#0000FF",
-            )
+                "color": "#0000FF",
+            }
         )
         style_props = self.style_obj.merge([self.style, style_dict, style2])
         self.assertEqual(style_props, {"color": "#00FF00", "dp": 1})
