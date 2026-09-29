@@ -4,10 +4,10 @@
 import datetime
 import time
 
-import odoo.tests.common as common
 from odoo import Command, fields
 from odoo.exceptions import UserError
 from odoo.fields import Domain
+from odoo.tests import common
 from odoo.tools.safe_eval import safe_eval
 
 from ..models import aep

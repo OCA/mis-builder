@@ -854,11 +854,7 @@ class MisReportInstance(models.Model):
         )
 
     def _add_column(self, aep, kpi_matrix, period, label, description):
-        if period.source == SRC_ACTUALS:
-            return self._add_column_move_lines(
-                aep, kpi_matrix, period, label, description
-            )
-        elif period.source == SRC_ACTUALS_ALT:
+        if period.source == SRC_ACTUALS or period.source == SRC_ACTUALS_ALT:
             return self._add_column_move_lines(
                 aep, kpi_matrix, period, label, description
             )
@@ -878,9 +874,7 @@ class MisReportInstance(models.Model):
         kpi_matrix = self.report_id.prepare_kpi_matrix(self.query_company_ids)
         for period in self.period_ids:
             description = None
-            if period.mode == MODE_NONE:
-                pass
-            elif not self.display_columns_description:
+            if period.mode == MODE_NONE or not self.display_columns_description:
                 pass
             elif period.date_from == period.date_to and period.date_from:
                 description = self._format_date(period.date_from)
