@@ -99,8 +99,8 @@
                                                     t-out="cell and cell.val_rendered or ''"
                                                 />
                                                 <span
-                                                    class="oe_mis_builder_footnote"
                                                     t-if="cell"
+                                                    class="oe_mis_builder_footnote"
                                                 >
                                                     <t
                                                         t-out="notes.get(cell.cell_id,{}).get('sequence','')"

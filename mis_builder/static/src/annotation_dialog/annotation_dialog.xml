@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="mis_builder.AnnotationDialog">
         <Dialog title="props.title" size="'md'">
@@ -11,9 +11,9 @@
             <t t-set-slot="footer">
                 <button class="btn btn-primary" t-on-click="confirm">Confirm</button>
                 <button
+                    t-if="props.canRemove"
                     class="btn btn-secondary"
                     t-on-click="remove"
-                    t-if="props.canRemove"
                 >Remove</button>
                 <button
                     class="btn btn-secondary"

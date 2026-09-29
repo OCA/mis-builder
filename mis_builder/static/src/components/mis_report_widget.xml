@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="mis_builder.MisReportWidget">
         <div class="oe_mis_builder_content">
@@ -35,9 +35,9 @@
                                 <button t-on-click="exportXls" class="btn">
                                     <span class="fa fa-download" /> Export </button>
                                 <button
-                                    t-on-click="displaySettings"
                                     t-if="widget_show_settings_button"
                                     class="btn"
+                                    t-on-click="displaySettings"
                                 >
                                     <span class="fa fa-cog" /> Settings </button>
                             </div>
@@ -118,8 +118,8 @@
 
                                         <div id="dropdown_menu" class="btn-group">
                                             <div
-                                                class="dropdown"
                                                 t-if="state.can_edit_annotation and cell.can_be_annotated"
+                                                class="dropdown"
                                             >
                                                 <div
                                                     data-bs-toggle="dropdown"
@@ -157,7 +157,7 @@
                     </table>
                 </div>
                 <!-- Table with notes -->
-                <div class="oe_mis_builder_footnote_div" id="footnotes">
+                <div id="footnotes" class="oe_mis_builder_footnote_div">
                     <table class="oe_mis_builder_footnote_table">
                         <t
                             t-foreach="state.mis_report_data.notes"
@@ -174,11 +174,11 @@
                                 </td>
                                 <td>
                                     <i
+                                        t-if="state.can_edit_annotation"
+                                        class="btn fa fa-trash-o"
                                         href="javascript:void(0)"
                                         t-on-click="remove_annotation"
                                         t-att-data-cell-id="cell_id"
-                                        class="btn fa fa-trash-o"
-                                        t-if="state.can_edit_annotation"
                                     />
                                 </td>
                             </tr>

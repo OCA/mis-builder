@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="mis_builder_multi_company_rule" model="ir.rule">
         <field name="name">Mis Report Instance multi company</field>

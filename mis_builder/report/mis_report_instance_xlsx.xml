@@ -9,7 +9,7 @@
         <field name="report_file">mis_report_instance</field>
     </record>
 
-    <record model="ir.actions.server" id="mis_builder_print_xls_report">
+    <record id="mis_builder_print_xls_report" model="ir.actions.server">
         <field name="name">Export XLS</field>
         <field name="model_id" ref="mis_builder.model_mis_report_instance" />
         <field name="binding_model_id" ref="mis_builder.model_mis_report_instance" />

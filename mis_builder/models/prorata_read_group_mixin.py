@@ -77,13 +77,14 @@ class ProRataReadGroupMixin(models.AbstractModel):
         for domain_item in domain:
             if isinstance(domain_item, list | tuple):
                 field, op, value = domain_item
-                if field == "date" and op == ">=":
+                if field == "date" and op == ">=" or field == "date_to" and op == ">=":
                     date_from = value
-                elif field == "date_to" and op == ">=":
-                    date_from = value
-                elif field == "date" and op == "<=":
-                    date_to = value
-                elif field == "date_from" and op == "<=":
+                elif (
+                    field == "date"
+                    and op == "<="
+                    or field == "date_from"
+                    and op == "<="
+                ):
                     date_to = value
         if (
             date_from is not None

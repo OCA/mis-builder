@@ -115,7 +115,7 @@ class KpiMatrixSubCol:
         return cell_tuple[self.index]
 
 
-class KpiMatrixCell:  # noqa: B903 (immutable data class)
+class KpiMatrixCell:
     def __init__(
         self,
         row,
