@@ -57,11 +57,11 @@ class MisReportKpiStyle(models.Model):
                     self.env._("Indent level must be greater than or equal to 0")
                 )
 
-    _font_style_selection = [("normal", "Normal"), ("italic", "Italic")]
+    _font_style_selection = [("normal", "Normal"), ("italic", "Italic")]  # noqa: RUF012
 
-    _font_weight_selection = [("nornal", "Normal"), ("bold", "Bold")]
+    _font_weight_selection = [("nornal", "Normal"), ("bold", "Bold")]  # noqa: RUF012
 
-    _font_size_selection = [
+    _font_size_selection = [  # noqa: RUF012
         ("medium", "medium"),
         ("xx-small", "xx-small"),
         ("x-small", "x-small"),
@@ -71,7 +71,7 @@ class MisReportKpiStyle(models.Model):
         ("xx-large", "xx-large"),
     ]
 
-    _font_size_to_xlsx_size = {
+    _font_size_to_xlsx_size = {  # noqa: RUF012
         "medium": 11,
         "xx-small": 5,
         "x-small": 7,

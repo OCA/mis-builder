@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model="res.groups" id="group_read_annotation">
+    <record id="group_read_annotation" model="res.groups">
         <field name="name">MIS Report: view annotations</field>
     </record>
-    <record model="res.groups" id="group_edit_annotation">
+    <record id="group_edit_annotation" model="res.groups">
         <field name="name">MIS Report: add annotations</field>
         <field
             name="implied_ids"

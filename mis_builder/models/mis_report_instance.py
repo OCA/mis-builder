@@ -358,12 +358,11 @@ class MisReportInstancePeriod(models.Model):
 
     @api.onchange("manual_date_from", "manual_date_to")
     def _onchange_dates(self):
-        if self.date_range_id:
-            if (
-                self.manual_date_from != self.date_range_id.date_start
-                or self.manual_date_to != self.date_range_id.date_end
-            ):
-                self.date_range_id = False
+        if self.date_range_id and (
+            self.manual_date_from != self.date_range_id.date_start
+            or self.manual_date_to != self.date_range_id.date_end
+        ):
+            self.date_range_id = False
 
     @api.onchange("source")
     def _onchange_source(self):
@@ -427,14 +426,13 @@ class MisReportInstancePeriod(models.Model):
                             rec.name,
                         )
                     )
-            elif rec.source in (SRC_SUMCOL, SRC_CMPCOL):
-                if rec.mode != MODE_NONE:
-                    raise DateFilterForbidden(
-                        self.env._(
-                            "No date filter is allowed for this source in column %s.",
-                            rec.name,
-                        )
+            elif rec.source in (SRC_SUMCOL, SRC_CMPCOL) and rec.mode != MODE_NONE:
+                raise DateFilterForbidden(
+                    self.env._(
+                        "No date filter is allowed for this source in column %s.",
+                        rec.name,
                     )
+                )
 
     @api.constrains("source", "source_cmpcol_from_id", "source_cmpcol_to_id")
     def _check_source_cmpcol(self):
@@ -667,7 +665,7 @@ class MisReportInstance(models.Model):
     @api.model
     def _vacuum_report(self, hours=24):
         clear_date = fields.Datetime.to_string(
-            datetime.datetime.now() - datetime.timedelta(hours=hours)
+            fields.Datetime.now() - datetime.timedelta(hours=hours)
         )
         reports = self.search(
             [("write_date", "<", clear_date), ("temporary", "=", True)]
@@ -716,12 +714,11 @@ class MisReportInstance(models.Model):
 
     @api.onchange("date_from", "date_to")
     def _onchange_dates(self):
-        if self.date_range_id:
-            if (
-                self.date_from != self.date_range_id.date_start
-                or self.date_to != self.date_range_id.date_end
-            ):
-                self.date_range_id = False
+        if self.date_range_id and (
+            self.date_from != self.date_range_id.date_start
+            or self.date_to != self.date_range_id.date_end
+        ):
+            self.date_range_id = False
 
     def _add_analytic_filters_to_context(self, context):
         self.ensure_one()
@@ -788,12 +785,12 @@ class MisReportInstance(models.Model):
         return (
             self.env.ref("mis_builder.qweb_pdf_export")
             .with_context(landscape=self.landscape_pdf)
-            .report_action(self, data=dict(dummy=True))  # required to propagate context
+            .report_action(self, data={"dummy": True})  # required to propagate context
         )
 
     def export_xls(self):
         return self.env.ref("mis_builder.xls_export").report_action(
-            self, data=dict(dummy=True)
+            self, data={"dummy": True}
         )  # required to propagate context
 
     def display_settings(self):
@@ -854,11 +851,7 @@ class MisReportInstance(models.Model):
         )
 
     def _add_column(self, aep, kpi_matrix, period, label, description):
-        if period.source == SRC_ACTUALS:
-            return self._add_column_move_lines(
-                aep, kpi_matrix, period, label, description
-            )
-        elif period.source == SRC_ACTUALS_ALT:
+        if period.source == SRC_ACTUALS or period.source == SRC_ACTUALS_ALT:
             return self._add_column_move_lines(
                 aep, kpi_matrix, period, label, description
             )
@@ -878,9 +871,7 @@ class MisReportInstance(models.Model):
         kpi_matrix = self.report_id.prepare_kpi_matrix(self.query_company_ids)
         for period in self.period_ids:
             description = None
-            if period.mode == MODE_NONE:
-                pass
-            elif not self.display_columns_description:
+            if period.mode == MODE_NONE or not self.display_columns_description:
                 pass
             elif period.date_from == period.date_to and period.date_from:
                 description = self._format_date(period.date_from)
@@ -952,7 +943,7 @@ class MisReportInstance(models.Model):
         views_records = set(views_records.mapped("type"))
         views_order = self._get_drilldown_views_and_orders()
         views = {view_type for view_type in views_records if view_type in views_order}
-        return sorted(list(views), key=lambda x: views_order[x])
+        return sorted(views, key=lambda x: views_order[x])
 
     def drilldown(self, arg):
         self.ensure_one()

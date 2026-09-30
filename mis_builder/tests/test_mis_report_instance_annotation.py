@@ -9,70 +9,76 @@ class TestMisReportInstanceAnnotation(TransactionCase):
     def setUp(self):
         super().setUp()
         self.report = self.env["mis.report"].create(
-            dict(
-                name="test report",
-                subkpi_ids=[
+            {
+                "name": "test report",
+                "subkpi_ids": [
                     Command.create(
-                        dict(
-                            name="subkpi1_report2",
-                            description="subkpi 1, report 2",
-                            sequence=1,
-                        )
+                        {
+                            "name": "subkpi1_report2",
+                            "description": "subkpi 1, report 2",
+                            "sequence": 1,
+                        }
                     ),
                     Command.create(
-                        dict(
-                            name="subkpi2_report2",
-                            description="subkpi 2, report 2",
-                            sequence=2,
-                        ),
+                        {
+                            "name": "subkpi2_report2",
+                            "description": "subkpi 2, report 2",
+                            "sequence": 2,
+                        },
                     ),
                 ],
-            )
+            }
         )
 
         self.kpi = self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                description="kpi 1",
-                name="k1",
-                multi=True,
-                expression_ids=[
+            {
+                "report_id": self.report.id,
+                "description": "kpi 1",
+                "name": "k1",
+                "multi": True,
+                "expression_ids": [
                     Command.create(
-                        dict(name="bale[200%]", subkpi_id=self.report.subkpi_ids[0].id),
+                        {
+                            "name": "bale[200%]",
+                            "subkpi_id": self.report.subkpi_ids[0].id,
+                        },
                     ),
                     Command.create(
-                        dict(name="balp[200%]", subkpi_id=self.report.subkpi_ids[1].id),
+                        {
+                            "name": "balp[200%]",
+                            "subkpi_id": self.report.subkpi_ids[1].id,
+                        },
                     ),
                 ],
-            )
+            }
         )
 
         self.report_instance = self.env["mis.report.instance"].create(
-            dict(
-                name="test instance",
-                report_id=self.report.id,
-                company_id=self.env.ref("base.main_company").id,
-                period_ids=[
+            {
+                "name": "test instance",
+                "report_id": self.report.id,
+                "company_id": self.env.ref("base.main_company").id,
+                "period_ids": [
                     Command.create(
-                        dict(
-                            name="p1",
-                            mode="fix",
-                            manual_date_from="2013-01-01",
-                            manual_date_to="2013-12-31",
-                            sequence=1,
-                        ),
+                        {
+                            "name": "p1",
+                            "mode": "fix",
+                            "manual_date_from": "2013-01-01",
+                            "manual_date_to": "2013-12-31",
+                            "sequence": 1,
+                        },
                     ),
                     Command.create(
-                        dict(
-                            name="p2",
-                            mode="fix",
-                            manual_date_from="2014-01-01",
-                            manual_date_to="2014-12-31",
-                            sequence=2,
-                        ),
+                        {
+                            "name": "p2",
+                            "mode": "fix",
+                            "manual_date_from": "2014-01-01",
+                            "manual_date_to": "2014-12-31",
+                            "sequence": 2,
+                        },
                     ),
                 ],
-            )
+            }
         )
 
     def test_adding_note(self):

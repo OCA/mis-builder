@@ -7,9 +7,9 @@ import logging
 import re
 import time
 from collections import defaultdict
+from zoneinfo import ZoneInfo
 
 import dateutil
-import pytz
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
@@ -56,10 +56,12 @@ class AutoStruct:
 
 def _utc_midnight(d, tz_name, add_day=0):
     d = fields.Datetime.from_string(d) + datetime.timedelta(days=add_day)
-    utc_tz = pytz.timezone("UTC")
-    context_tz = pytz.timezone(tz_name)
-    local_timestamp = context_tz.localize(d, is_dst=False)
-    return fields.Datetime.to_string(local_timestamp.astimezone(utc_tz))
+    local_timestamp = d.replace(tzinfo=ZoneInfo(tz_name))
+    # on an ambiguous time, prefer the standard time (as pytz is_dst=False did)
+    other_fold = local_timestamp.replace(fold=1)
+    if other_fold.utcoffset() != local_timestamp.utcoffset() and not other_fold.dst():
+        local_timestamp = other_fold
+    return fields.Datetime.to_string(local_timestamp.astimezone(datetime.timezone.utc))
 
 
 def _python_var(var_str):
@@ -145,7 +147,7 @@ class MisReportKpi(models.Model):
 
     _order = "sequence, id"
 
-    _rec_names_search = ["name", "description"]
+    _rec_names_search = ("name", "description")
 
     @api.depends("description", "name")
     def _compute_display_name(self):
@@ -598,7 +600,7 @@ class MisReport(models.Model):
                     ]
                 )
             field_names = [f.name for f in query_sudo.field_ids]
-            all_stored = all([model._fields[f].store for f in field_names])
+            all_stored = all(model._fields[f].store for f in field_names)
             if not query.aggregate:
                 data = model.search_read(domain, field_names)
                 res[query.name] = [AutoStruct(**d) for d in data]

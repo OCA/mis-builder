@@ -1,14 +1,18 @@
-import {Component, onMounted, onWillStart, useState, useSubEnv} from "@odoo/owl";
+import {Component, onMounted, onWillStart, proxy, useProps} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {DateTimeInput} from "@web/core/datetime/datetime_input";
+import {useSubEnv} from "@web/owl2/utils";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {SearchModel} from "@web/search/search_model";
 import {parseDate} from "@web/core/l10n/dates";
 import {registry} from "@web/core/registry";
 import {AnnotationDialog} from "../annotation_dialog/annotation_dialog.esm";
 import {_t} from "@web/core/l10n/translation";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class MisReportWidget extends Component {
+    props = useProps(standardFieldProps);
+
     setup() {
         super.setup();
         this.orm = useService("orm");
@@ -16,7 +20,7 @@ export class MisReportWidget extends Component {
         this.view = useService("view");
         this.dialog = useService("dialog");
         this.JSON = JSON;
-        this.state = useState({
+        this.state = proxy({
             mis_report_data: {header: [], body: [], notes: {}},
             pivot_date: null,
             can_edit_annotation: false,
@@ -25,7 +29,10 @@ export class MisReportWidget extends Component {
         this.searchModel = new SearchModel(this.env, {
             orm: this.orm,
             view: this.view,
+            field: useService("field"),
+            name: useService("name"),
             dialog: this.dialog,
+            treeProcessor: useService("tree_processor"),
         });
         useSubEnv({searchModel: this.searchModel});
         useBus(this.env.searchModel, "update", async () => {
@@ -102,8 +109,8 @@ export class MisReportWidget extends Component {
      * @returns int
      */
     _instanceId() {
-        if (this.props.value) {
-            return this.props.value;
+        if (this.props.record.resId) {
+            return this.props.record.resId;
         }
 
         /*
