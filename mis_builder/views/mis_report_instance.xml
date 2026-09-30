@@ -28,12 +28,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="sequence" widget="handle" />
-                <button
-                    type="object"
-                    name="preview"
-                    string="Preview"
-                    icon="search"
-                />
+                <button type="object" name="preview" string="Preview" icon="search" />
                 <button type="object" name="print_pdf" string="Print" icon="print" />
                 <button
                     type="object"
