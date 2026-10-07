@@ -447,7 +447,16 @@ class TestMisReportInstance(common.HttpCase):
 
     def test_drilldown_action_name_with_account(self):
         period = self.report_instance.period_ids[0]
-        account = self.env["account.account"].search([], limit=1)
+        # Create the account instead of searching for an existing one, so the
+        # test also works on a database without demo data (where the search
+        # returns an empty recordset and the expected name would embed "False").
+        account = self.env["account.account"].create(
+            {
+                "code": "200999",
+                "name": "test drilldown account",
+                "account_type": "asset_current",
+            }
+        )
         args = {
             "period_id": period.id,
             "kpi_id": self.kpi1.id,
