@@ -1,0 +1,3 @@
+id,name,model_id,group_id/id,operation,domain
+access_mis_analytic_move_line,mis.analytic.move.line read,mis.analytic.move.line,account.group_account_readonly,r,
+mis_analytic_move_line_comp_rule,MIS analytic move line multi-company,mis.analytic.move.line,,r,"[('company_id', 'in', company_ids)]"

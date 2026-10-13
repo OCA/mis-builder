@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 KMEE
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.form (mis_builder_analytic_source)</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <setting id="track_costs_revenues" position="after">
+                <setting
+                    id="mis_analytic_fallback_account"
+                    string="MIS Analytic Fallback Account"
+                    help="Financial account for analytic lines without one (e.g. timesheets) in MIS reports based on analytic lines"
+                    groups="account.group_account_user"
+                >
+                    <field
+                        name="mis_analytic_fallback_account_id"
+                        domain="[('company_ids', 'in', company_id)]"
+                    />
+                </setting>
+            </setting>
+        </field>
+    </record>
+</odoo>
