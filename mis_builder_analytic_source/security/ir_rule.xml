@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 KMEE
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+    <record id="mis_analytic_move_line_comp_rule" model="ir.rule">
+        <field name="name">MIS analytic move line multi-company</field>
+        <field name="model_id" ref="model_mis_analytic_move_line" />
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
