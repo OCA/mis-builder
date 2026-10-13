@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2026 KMEE
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="mis_analytic_move_line_view_list" model="ir.ui.view">
+        <field name="name">mis.analytic.move.line.list</field>
+        <field name="model">mis.analytic.move.line</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="date" />
+                <field name="name" />
+                <field name="analytic_account_id" optional="show" />
+                <field
+                    name="analytic_distribution"
+                    widget="analytic_distribution"
+                    optional="hide"
+                />
+                <field name="account_id" />
+                <field name="line_origin" />
+                <field name="category" optional="hide" />
+                <field name="partner_id" optional="show" />
+                <field name="product_id" optional="hide" />
+                <field name="unit_amount" sum="Total" optional="show" />
+                <field name="debit" sum="Total" />
+                <field name="credit" sum="Total" />
+                <field name="balance" sum="Total" optional="hide" />
+                <field name="parent_state" optional="hide" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="company_currency_id" column_invisible="1" />
+            </list>
+        </field>
+    </record>
+
+    <record id="mis_analytic_move_line_view_search" model="ir.ui.view">
+        <field name="name">mis.analytic.move.line.search</field>
+        <field name="model">mis.analytic.move.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="analytic_account_id" />
+                <field name="account_id" />
+                <field name="partner_id" />
+                <filter
+                    name="timesheet"
+                    string="Timesheets"
+                    domain="[('line_origin', '=', 'timesheet')]"
+                />
+                <filter
+                    name="journal"
+                    string="Journal Items"
+                    domain="[('line_origin', '=', 'journal')]"
+                />
+                <filter
+                    name="manual"
+                    string="Manual Entries"
+                    domain="[('line_origin', '=', 'manual')]"
+                />
+                <group>
+                    <filter
+                        name="group_analytic"
+                        string="Analytic Account"
+                        context="{'group_by': 'analytic_account_id'}"
+                    />
+                    <filter
+                        name="group_account"
+                        string="Financial Account"
+                        context="{'group_by': 'account_id'}"
+                    />
+                    <filter
+                        name="group_origin"
+                        string="Origin"
+                        context="{'group_by': 'line_origin'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+</odoo>
