@@ -276,25 +276,33 @@ class AccountingExpressionProcessor:
 
     def done_parsing(self):
         """Replace account domains by account ids in map"""
+        all_unique_domains = {
+            acc_domain
+            for acc_domains in self._map_account_ids.values()
+            for acc_domain in acc_domains
+            if acc_domain not in self._account_ids_by_acc_domain
+        }
+        for acc_domain in all_unique_domains:
+            # XXX It is apparently not possible to search accounts by code
+            # across multiple companies at once (due to how _search_code is
+            # implemented for instance), so we have to search each company
+            # separately.
+            account_ids = []
+            for company in self.companies:
+                acc_domain_with_company = Domain.AND(
+                    [acc_domain, [("company_ids", "=", company.id)]]
+                )
+                # order="id" avoids DISTINCT ON subquery on code_store in v19
+                account_ids += (
+                    self._account_model.with_company(company)
+                    .search(acc_domain_with_company, order="id")
+                    .ids
+                )
+            self._account_ids_by_acc_domain[acc_domain].update(account_ids)
         for key, acc_domains in self._map_account_ids.items():
             all_account_ids = set()
             for acc_domain in acc_domains:
-                # XXX It is apparently not possible to search accounts by code
-                # across multiple companies at once (due to how _search_code is
-                # implemented for instance), so we have to search each company
-                # separately.
-                account_ids = []
-                for company in self.companies:
-                    acc_domain_with_company = Domain.AND(
-                        [acc_domain, [("company_ids", "=", company.id)]]
-                    )
-                    account_ids += (
-                        self._account_model.with_company(company)
-                        .search(acc_domain_with_company)
-                        .ids
-                    )
-                self._account_ids_by_acc_domain[acc_domain].update(account_ids)
-                all_account_ids.update(account_ids)
+                all_account_ids.update(self._account_ids_by_acc_domain[acc_domain])
             self._map_account_ids[key] = list(all_account_ids)
 
     @classmethod
