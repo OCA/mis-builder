@@ -274,14 +274,7 @@ class AccountingExpressionProcessor:
                         )
                     )
 
-    def done_parsing(self):
-        """Replace account domains by account ids in map"""
-        all_unique_domains = {
-            acc_domain
-            for acc_domains in self._map_account_ids.values()
-            for acc_domain in acc_domains
-            if acc_domain not in self._account_ids_by_acc_domain
-        }
+    def _done_parsing_search_accounts(self, all_unique_domains):
         for acc_domain in all_unique_domains:
             # XXX It is apparently not possible to search accounts by code
             # across multiple companies at once (due to how _search_code is
@@ -299,6 +292,16 @@ class AccountingExpressionProcessor:
                     .ids
                 )
             self._account_ids_by_acc_domain[acc_domain].update(account_ids)
+
+    def done_parsing(self):
+        """Replace account domains by account ids in map"""
+        all_unique_domains = {
+            acc_domain
+            for acc_domains in self._map_account_ids.values()
+            for acc_domain in acc_domains
+            if acc_domain not in self._account_ids_by_acc_domain
+        }
+        self._done_parsing_search_accounts(all_unique_domains)
         for key, acc_domains in self._map_account_ids.items():
             all_account_ids = set()
             for acc_domain in acc_domains:
