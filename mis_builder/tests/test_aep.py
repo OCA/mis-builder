@@ -208,6 +208,16 @@ class TestAEP(common.TransactionCase):
             aep.parse_expr("balp.quantity[700%]")
         self.assertIn("`bal` cannot have a field name", str(cm.exception))
 
+    def test_done_parsing_duplicate_account_domain_executes_single_query(self):
+        aep = AEP(self.company)
+        aep.parse_expr("balp[700%]")
+        aep.parse_expr("bali[700%]")
+        aep.parse_expr("bale[700%]")
+        aep.parse_expr("bale[600%]")
+        aep.parse_expr("balp[600%]")
+        with self.assertQueryCount(2):
+            aep.done_parsing()
+
     def test_aep_basic(self):
         self.aep.done_parsing()
         # let's query for december
