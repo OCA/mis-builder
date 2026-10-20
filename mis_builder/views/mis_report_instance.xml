@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="mis_report_instance_result_view_form">
+    <record id="mis_report_instance_result_view_form" model="ir.ui.view">
         <field name="name">mis.report.instance.result.view.form</field>
         <field name="model">mis.report.instance</field>
         <field name="priority" eval="20 " />
@@ -22,24 +22,19 @@
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="mis_report_instance_view_list">
+    <record id="mis_report_instance_view_list" model="ir.ui.view">
         <field name="name">mis.report.instance.view.list</field>
         <field name="model">mis.report.instance</field>
         <field name="arch" type="xml">
             <list>
                 <field name="sequence" widget="handle" />
-                <button
-                    type="object"
-                    name="preview"
-                    string="Preview"
-                    icon="fa-search"
-                />
-                <button type="object" name="print_pdf" string="Print" icon="fa-print" />
+                <button type="object" name="preview" string="Preview" icon="search" />
+                <button type="object" name="print_pdf" string="Print" icon="print" />
                 <button
                     type="object"
                     name="export_xls"
                     string="Export"
-                    icon="fa-download"
+                    icon="download"
                 />
                 <field name="name" />
                 <field name="report_id" string="Template" />
@@ -51,7 +46,7 @@
             </list>
         </field>
     </record>
-    <record model="ir.ui.view" id="mis_report_instance_view_form">
+    <record id="mis_report_instance_view_form" model="ir.ui.view">
         <field name="name">mis.report.instance.view.form</field>
         <field name="model">mis.report.instance</field>
         <field name="priority" eval="15" />
@@ -64,28 +59,28 @@
                             type="object"
                             name="preview"
                             string="Preview"
-                            icon="fa-search"
+                            icon="search"
                             class="btn"
                         />
                         <button
                             type="object"
                             name="print_pdf"
                             string="Print"
-                            icon="fa-print"
+                            icon="print"
                             class="btn"
                         />
                         <button
                             type="object"
                             name="export_xls"
                             string="Export"
-                            icon="fa-download"
+                            icon="download"
                             class="btn"
                         />
                         <button
                             type="action"
                             name="%(mis_report_instance_add_to_dashboard_action)d"
                             string="Add to dashboard"
-                            icon="fa-plus"
+                            icon="add"
                             invisible="temporary"
                             class="btn"
                         />
@@ -93,7 +88,7 @@
                             type="object"
                             name="save_report"
                             string="Save"
-                            icon="fa-save"
+                            icon="save"
                             invisible="not temporary"
                             class="btn"
                         />
@@ -212,7 +207,7 @@
             </form>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="mis_report_instance_view_action">
+    <record id="mis_report_instance_view_action" model="ir.actions.act_window">
         <field name="name">MIS Reports</field>
         <field name="view_id" ref="mis_report_instance_view_list" />
         <field name="res_model">mis.report.instance</field>
@@ -236,7 +231,7 @@
     />
     <record id="wizard_mis_report_instance_view_form" model="ir.ui.view">
         <field name="model">mis.report.instance</field>
-        <field name="priority">99</field>
+        <field name="priority" eval="99" />
         <field name="inherit_id" ref="mis_builder.mis_report_instance_view_form" />
         <field name="mode">primary</field>
         <field name="arch" type="xml">
@@ -256,35 +251,35 @@
                     type="object"
                     name="save_report"
                     string="Save"
-                    icon="fa-save"
+                    icon="save"
                     class="btn"
                 />
                     <button
                     type="object"
                     name="preview"
                     string="Preview"
-                    icon="fa-search"
+                    icon="search"
                     class="btn"
                 />
                     <button
                     type="object"
                     name="print_pdf"
                     string="Print"
-                    icon="fa-print"
+                    icon="print"
                     class="btn"
                 />
                     <button
                     type="object"
                     name="export_xls"
                     string="Export"
-                    icon="fa-download"
+                    icon="download"
                     class="btn"
                 /> or <button string="Cancel" class="oe_link" special="cancel" />
                 </footer>
             </sheet>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="last_mis_report_instance_view_action">
+    <record id="last_mis_report_instance_view_action" model="ir.actions.act_window">
         <field name="name">Last Reports Generated</field>
         <field name="view_id" ref="mis_report_instance_view_list" />
         <field name="res_model">mis.report.instance</field>
@@ -299,7 +294,7 @@
         action="last_mis_report_instance_view_action"
         sequence="20"
     />
-    <record model="ir.ui.view" id="mis_report_instance_period_view_form">
+    <record id="mis_report_instance_period_view_form" model="ir.ui.view">
         <field name="model">mis.report.instance.period</field>
         <field name="priority" eval="16" />
         <field name="arch" type="xml">

@@ -99,7 +99,7 @@ class SimpleArray(tuple):
                 return op(x, y)
             except ZeroDivisionError:
                 return DataError("#DIV/0", traceback.format_exc())
-            except Exception:
+            except Exception:  # noqa: BLE001
                 return DataError("#ERR", traceback.format_exc())
 
         if isinstance(other, tuple):
