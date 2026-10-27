@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2017 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.ui.view" id="mis_budget_form_view">
+    <record id="mis_budget_form_view" model="ir.ui.view">
         <field name="name">mis.budget.form (in mis_builder_budget)</field>
         <field name="model">mis.budget</field>
         <field name="arch" type="xml">
@@ -41,7 +41,7 @@
                             name="%(mis_budget_item_act_window)d"
                             type="action"
                             class="oe_stat_button"
-                            icon="fa-bars"
+                            icon="menu"
                             string="Budget items"
                         />
                     </div>
@@ -63,7 +63,7 @@
             </form>
         </field>
     </record>
-    <record model="ir.ui.view" id="mis_budget_search_view">
+    <record id="mis_budget_search_view" model="ir.ui.view">
         <field name="name">mis.budget.search (in mis_builder_budget)</field>
         <field name="model">mis.budget</field>
         <field name="arch" type="xml">
@@ -79,7 +79,7 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="mis_budget_list_view">
+    <record id="mis_budget_list_view" model="ir.ui.view">
         <field name="name">mis.budget.list (in mis_builder_budget)</field>
         <field name="model">mis.budget</field>
         <field name="arch" type="xml">
@@ -92,7 +92,7 @@
             </list>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="mis_budget_act_window">
+    <record id="mis_budget_act_window" model="ir.actions.act_window">
         <field name="name">MIS Budgets (by KPIs)</field>
         <field name="res_model">mis.budget</field>
         <field name="view_mode">list,form</field>
@@ -100,7 +100,7 @@
         <field name="context">{}</field>
         <field name="path">mis-budgets</field>
     </record>
-    <record model="ir.ui.menu" id="mis_budget_menu">
+    <record id="mis_budget_menu" model="ir.ui.menu">
         <field name="name">MIS Budgets (by KPIs)</field>
         <field name="parent_id" ref="mis_builder.mis_report_finance_menu" />
         <field name="action" ref="mis_budget_act_window" />

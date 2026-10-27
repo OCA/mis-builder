@@ -15,52 +15,52 @@ class TestMisBudgetByAccount(TransactionCase):
         super().setUpClass()
         # create account
         account = cls.env["account.account"].create(
-            dict(
-                name="test account",
-                code="1",
-                account_type="income",
-            )
+            {
+                "name": "test account",
+                "code": "1",
+                "account_type": "income",
+            }
         )
         # create report
-        cls.report = cls.env["mis.report"].create(dict(name="test report"))
+        cls.report = cls.env["mis.report"].create({"name": "test report"})
         cls.kpi1 = cls.env["mis.report.kpi"].create(
-            dict(
-                report_id=cls.report.id,
-                name="k1",
-                description="kpi 1",
-                expression=f"balp[('id', '=', {account.id})]",
-            )
+            {
+                "report_id": cls.report.id,
+                "name": "k1",
+                "description": "kpi 1",
+                "expression": f"balp[('id', '=', {account.id})]",
+            }
         )
         # budget
         cls.budget = cls.env["mis.budget.by.account"].create(
-            dict(
-                name="the budget",
-                date_from="2017-01-01",
-                date_to="2017-12-31",
-                company_id=cls.env.ref("base.main_company").id,
-                item_ids=[
+            {
+                "name": "the budget",
+                "date_from": "2017-01-01",
+                "date_to": "2017-12-31",
+                "company_id": cls.env.ref("base.main_company").id,
+                "item_ids": [
                     (
                         0,
                         0,
-                        dict(
-                            account_id=account.id,
-                            date_from="2017-01-01",
-                            date_to="2017-01-08",
-                            debit=11,
-                        ),
+                        {
+                            "account_id": account.id,
+                            "date_from": "2017-01-01",
+                            "date_to": "2017-01-08",
+                            "debit": 11,
+                        },
                     ),
                     (
                         0,
                         0,
-                        dict(
-                            account_id=account.id,
-                            date_from="2017-01-09",
-                            date_to="2017-01-16",
-                            debit=13,
-                        ),
+                        {
+                            "account_id": account.id,
+                            "date_from": "2017-01-09",
+                            "date_to": "2017-01-16",
+                            "debit": 13,
+                        },
                     ),
                 ],
-            )
+            }
         )
 
     def test_basic(self):
@@ -99,24 +99,32 @@ class TestMisBudgetByAccount(TransactionCase):
 
     def test_with_report_instance(self):
         instance = self.env["mis.report.instance"].create(
-            dict(name="test instance", report_id=self.report.id, comparison_mode=True)
+            {
+                "name": "test instance",
+                "report_id": self.report.id,
+                "comparison_mode": True,
+            }
         )
         self.pbud1 = self.env["mis.report.instance.period"].create(
-            dict(
-                name="pbud1",
-                report_instance_id=instance.id,
-                source=SRC_MIS_BUDGET_BY_ACCOUNT,
-                source_mis_budget_by_account_id=self.budget.id,
-                manual_date_from="2017-01-01",
-                manual_date_to="2017-01-31",
-            )
+            {
+                "name": "pbud1",
+                "report_instance_id": instance.id,
+                "source": SRC_MIS_BUDGET_BY_ACCOUNT,
+                "source_mis_budget_by_account_id": self.budget.id,
+                "manual_date_from": "2017-01-01",
+                "manual_date_to": "2017-01-31",
+            }
         )
         matrix = instance._compute_matrix()
         assert_matrix(matrix, [[24]])
 
     def test_copy(self):
+        self.budget.item_ids[:1].name = "Label X"
         budget2 = self.budget.copy()
         self.assertEqual(len(budget2.item_ids), len(self.budget.item_ids))
+        self.assertEqual(
+            budget2.item_ids.mapped("name"), self.budget.item_ids.mapped("name")
+        )
 
     def test_workflow(self):
         self.assertEqual(self.budget.state, "draft")
