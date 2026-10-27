@@ -253,8 +253,9 @@ export class MisReportWidget extends Component {
             this.wide_display
         );
         var button_resize_element = document.getElementById("icon_resize");
-        button_resize_element.classList.toggle("fa-expand", !this.wide_display);
-        button_resize_element.classList.toggle("fa-compress", this.wide_display);
+        button_resize_element.dataset.icon = this.wide_display
+            ? "fullscreen_exit"
+            : "fullscreen";
     }
 }
 

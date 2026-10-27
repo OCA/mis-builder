@@ -13,7 +13,7 @@
                                     t-on-click="this.toggle_wide_display"
                                     class="btn"
                                 >
-                                    <i id="icon_resize" class="fa" />
+                                    <i id="icon_resize" class="oi" data-icon="fullscreen" />
                                 </button>
                             </div>
                         </div>
@@ -32,17 +32,17 @@
                             </div>
                             <div class="oe_mis_builder_action_buttons">
                                 <button t-on-click="this.refresh" class="btn">
-                                    <span class="fa fa-refresh" /> Refresh </button>
+                                    <span class="oi" data-icon="refresh" /> Refresh </button>
                                 <button t-on-click="this.printPdf" class="btn">
-                                    <span class="fa fa-print" /> Print </button>
+                                    <span class="oi" data-icon="print" /> Print </button>
                                 <button t-on-click="this.exportXls" class="btn">
-                                    <span class="fa fa-download" /> Export </button>
+                                    <span class="oi" data-icon="download" /> Export </button>
                                 <button
                                     t-if="this.widget_show_settings_button"
                                     class="btn"
                                     t-on-click="this.displaySettings"
                                 >
-                                    <span class="fa fa-cog" /> Settings </button>
+                                    <span class="oi" data-icon="settings" /> Settings </button>
                             </div>
                         </div>
                     </div>
@@ -178,7 +178,8 @@
                                 <td>
                                     <i
                                         t-if="this.state.can_edit_annotation"
-                                        class="btn fa fa-trash-o"
+                                        class="btn oi"
+                                        data-icon="delete"
                                         href="javascript:void(0)"
                                         t-on-click="this.remove_annotation"
                                         t-att-data-cell-id="cell_id"
