@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="mis_report_style_view_list">
+    <record id="mis_report_style_view_list" model="ir.ui.view">
         <field name="name">mis.report.style.view.list</field>
         <field name="model">mis.report.style</field>
         <field name="arch" type="xml">
@@ -151,7 +151,7 @@
             </form>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="mis_report_style_view_action">
+    <record id="mis_report_style_view_action" model="ir.actions.act_window">
         <field name="name">MIS Report Styles</field>
         <field name="view_id" ref="mis_report_style_view_list" />
         <field name="res_model">mis.report.style</field>

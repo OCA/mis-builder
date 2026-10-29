@@ -4,7 +4,6 @@
 import logging
 import numbers
 from collections import defaultdict
-from datetime import datetime
 
 from odoo import api, fields, models
 
@@ -153,7 +152,7 @@ class MisBuilderXlsx(models.AbstractModel):
                     if (
                         divider != 1
                         and isinstance(cell.val, numbers.Number)
-                        and not cell.val_type == "pct"
+                        and cell.val_type != "pct"
                     ):
                         val = cell.val / divider
                     else:
@@ -173,7 +172,7 @@ class MisBuilderXlsx(models.AbstractModel):
         lang = lang_model._lang_get(self.env.user.lang)
 
         now_tz = fields.Datetime.context_timestamp(
-            self.env["res.users"], datetime.now()
+            self.env["res.users"], fields.Datetime.now()
         )
         create_date = self.env._(
             "Generated on %(gen_date)s at %(gen_time)s",

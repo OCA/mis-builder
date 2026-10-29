@@ -4,10 +4,10 @@
 import datetime
 import time
 
-import odoo.tests.common as common
 from odoo import Command, fields
 from odoo.exceptions import UserError
 from odoo.fields import Domain
+from odoo.tests import common
 from odoo.tools.safe_eval import safe_eval
 
 from ..models import aep
@@ -26,7 +26,7 @@ class TestAEP(common.TransactionCase):
         self.account_model = self.env["account.account"]
         self.move_model = self.env["account.move"]
         self.journal_model = self.env["account.journal"]
-        self.curr_year = datetime.date.today().year
+        self.curr_year = fields.Date.today().year
         self.prev_year = self.curr_year - 1
         # create company
         self.company = self.res_company.create(
@@ -421,11 +421,11 @@ class TestAEP(common.TransactionCase):
                     # debi[700IN]
                     "&",
                     ("account_id", "in", [self.account_in.id]),
-                    ("debit", "<>", 0.0),
+                    ("debit", "!=", 0.0),
                     # crdi[400AR]
                     "&",
                     ("account_id", "in", [self.account_ar.id]),
-                    ("credit", "<>", 0.0),
+                    ("credit", "!=", 0.0),
                     "&",
                     # for P&L accounts, only after fy start
                     "|",
@@ -454,16 +454,16 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr(expr)
         self.aep.done_parsing()
 
-        tax_group = self.env["account.tax.group"].create(dict(name="test tax group"))
+        tax_group = self.env["account.tax.group"].create({"name": "test tax group"})
 
         tax = self.env["account.tax"].create(
-            dict(
-                name="test tax",
-                active=True,
-                amount=0,
-                company_id=self.company.id,
-                tax_group_id=tax_group.id,
-            )
+            {
+                "name": "test tax",
+                "active": True,
+                "amount": 0,
+                "company_id": self.company.id,
+                "tax_group_id": tax_group.id,
+            }
         )
         move = self._create_move(
             date=datetime.date(self.prev_year, 12, 1),
@@ -474,7 +474,7 @@ class TestAEP(common.TransactionCase):
         )
         for ml in move.line_ids:
             if ml.credit:
-                ml.write(dict(tax_ids=[(6, 0, [tax.id])]))
+                ml.write({"tax_ids": [(6, 0, [tax.id])]})
         tax.active = False
         move._post()
         # let's query for december 1st

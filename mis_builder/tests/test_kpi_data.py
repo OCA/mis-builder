@@ -20,56 +20,56 @@ class TestKpiData(TransactionCase):
         cls.registry.init_models(cls.env.cr, [model_name], {"models_to_check": True})
         cls.addClassCleanup(cls.registry.__delitem__, model_name)
 
-        report = cls.env["mis.report"].create(dict(name="test report"))
+        report = cls.env["mis.report"].create({"name": "test report"})
         cls.kpi1 = cls.env["mis.report.kpi"].create(
-            dict(
-                report_id=report.id,
-                name="k1",
-                description="kpi 1",
-                expression="AccountingNone",
-            )
+            {
+                "report_id": report.id,
+                "name": "k1",
+                "description": "kpi 1",
+                "expression": "AccountingNone",
+            }
         )
         cls.expr1 = cls.kpi1.expression_ids[0]
         cls.kpi2 = cls.env["mis.report.kpi"].create(
-            dict(
-                report_id=report.id,
-                name="k2",
-                description="kpi 2",
-                expression="AccountingNone",
-            )
+            {
+                "report_id": report.id,
+                "name": "k2",
+                "description": "kpi 2",
+                "expression": "AccountingNone",
+            }
         )
         cls.expr2 = cls.kpi2.expression_ids[0]
         cls.kd11 = cls.env["mis.kpi.data.test.item"].create(
-            dict(
-                kpi_expression_id=cls.expr1.id,
-                date_from="2017-05-01",
-                date_to="2017-05-10",
-                amount=10,
-            )
+            {
+                "kpi_expression_id": cls.expr1.id,
+                "date_from": "2017-05-01",
+                "date_to": "2017-05-10",
+                "amount": 10,
+            }
         )
         cls.kd12 = cls.env["mis.kpi.data.test.item"].create(
-            dict(
-                kpi_expression_id=cls.expr1.id,
-                date_from="2017-05-11",
-                date_to="2017-05-20",
-                amount=20,
-            )
+            {
+                "kpi_expression_id": cls.expr1.id,
+                "date_from": "2017-05-11",
+                "date_to": "2017-05-20",
+                "amount": 20,
+            }
         )
         cls.kd13 = cls.env["mis.kpi.data.test.item"].create(
-            dict(
-                kpi_expression_id=cls.expr1.id,
-                date_from="2017-05-21",
-                date_to="2017-05-25",
-                amount=30,
-            )
+            {
+                "kpi_expression_id": cls.expr1.id,
+                "date_from": "2017-05-21",
+                "date_to": "2017-05-25",
+                "amount": 30,
+            }
         )
         cls.kd21 = cls.env["mis.kpi.data.test.item"].create(
-            dict(
-                kpi_expression_id=cls.expr2.id,
-                date_from="2017-06-01",
-                date_to="2017-06-30",
-                amount=3,
-            )
+            {
+                "kpi_expression_id": cls.expr2.id,
+                "date_from": "2017-06-01",
+                "date_to": "2017-06-30",
+                "amount": 3,
+            }
         )
 
     def test_kpi_data_name(self):

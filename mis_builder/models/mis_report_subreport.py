@@ -19,7 +19,7 @@ class MisReportSubReport(models.Model):
     _name = "mis.report.subreport"
     _description = "MIS Report - Sub Reports Relation"
 
-    name = fields.Char(required=True)
+    name = fields.Char(required=True, copy=True)
     report_id = fields.Many2one(
         comodel_name="mis.report",
         required=True,

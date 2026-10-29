@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="mis_report_view_list">
+    <record id="mis_report_view_list" model="ir.ui.view">
         <field name="name">mis.report.view.list</field>
         <field name="model">mis.report</field>
         <field name="arch" type="xml">
@@ -11,7 +11,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="mis_report_view_form">
+    <record id="mis_report_view_form" model="ir.ui.view">
         <field name="name">mis.report.view.form</field>
         <field name="model">mis.report</field>
         <field name="arch" type="xml">
@@ -293,7 +293,7 @@
             </form>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="mis_report_view_action">
+    <record id="mis_report_view_action" model="ir.actions.act_window">
         <field name="name">MIS Report Templates</field>
         <field name="view_id" ref="mis_report_view_list" />
         <field name="res_model">mis.report</field>
