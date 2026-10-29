@@ -13,7 +13,11 @@
                                     t-on-click="this.toggle_wide_display"
                                     class="btn"
                                 >
-                                    <i id="icon_resize" class="oi" data-icon="fullscreen" />
+                                    <i
+                                        id="icon_resize"
+                                        class="oi"
+                                        data-icon="fullscreen"
+                                    />
                                 </button>
                             </div>
                         </div>
@@ -32,17 +36,29 @@
                             </div>
                             <div class="oe_mis_builder_action_buttons">
                                 <button t-on-click="this.refresh" class="btn">
-                                    <span class="oi" data-icon="refresh" /> Refresh </button>
+                                    <span
+                                    class="oi"
+                                    data-icon="refresh"
+                                /> Refresh </button>
                                 <button t-on-click="this.printPdf" class="btn">
-                                    <span class="oi" data-icon="print" /> Print </button>
+                                    <span
+                                    class="oi"
+                                    data-icon="print"
+                                /> Print </button>
                                 <button t-on-click="this.exportXls" class="btn">
-                                    <span class="oi" data-icon="download" /> Export </button>
+                                    <span
+                                    class="oi"
+                                    data-icon="download"
+                                /> Export </button>
                                 <button
                                     t-if="this.widget_show_settings_button"
                                     class="btn"
                                     t-on-click="this.displaySettings"
                                 >
-                                    <span class="oi" data-icon="settings" /> Settings </button>
+                                    <span
+                                    class="oi"
+                                    data-icon="settings"
+                                /> Settings </button>
                             </div>
                         </div>
                     </div>
