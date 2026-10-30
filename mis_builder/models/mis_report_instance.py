@@ -894,8 +894,13 @@ class MisReportInstance(models.Model):
                     date_to=date_to,
                 )
             self._add_column(aep, kpi_matrix, period, period.name, description)
-        kpi_matrix.compute_comparisons()
-        kpi_matrix.compute_sums()
+        if not kpi_matrix.compute_comparisons_and_sums():
+            raise UserError(
+                self.env._(
+                    "Comparison and sum columns cannot be computed "
+                    "because they depend on each other."
+                )
+            )
         return kpi_matrix
 
     def compute(self):
