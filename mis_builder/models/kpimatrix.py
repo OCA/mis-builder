@@ -433,17 +433,20 @@ class KpiMatrix(object):
                     tooltips=False,
                 )
 
-    def iter_rows(self):
+    def iter_rows(self, details_before_kpi=False):
         """Iterate rows in display order.
 
         yields KpiMatrixRow.
         """
         for kpi_row in self._kpi_rows.values():
-            yield kpi_row
+            if not details_before_kpi:
+                yield kpi_row
             detail_rows = self._detail_rows[kpi_row.kpi].values()
             detail_rows = sorted(detail_rows, key=lambda r: r.label)
             for detail_row in detail_rows:
                 yield detail_row
+            if details_before_kpi:
+                yield kpi_row
 
     def iter_cols(self):
         """Iterate columns in display order.
@@ -481,7 +484,7 @@ class KpiMatrix(object):
             self._load_account_names()
         return self._account_names[account_id]
 
-    def as_dict(self):
+    def as_dict(self, details_before_kpi=False):
         header = [{"cols": []}, {"cols": []}]
         for col in self.iter_cols():
             header[0]["cols"].append(
@@ -501,7 +504,7 @@ class KpiMatrix(object):
                 )
 
         body = []
-        for row in self.iter_rows():
+        for row in self.iter_rows(details_before_kpi=details_before_kpi):
             if (
                 row.style_props.hide_empty and row.is_empty()
             ) or row.style_props.hide_always:
