@@ -116,37 +116,16 @@
                                             </div>
                                         </span>
 
-                                        <div id="dropdown_menu" class="btn-group">
-                                            <div
-                                                class="dropdown"
-                                                t-if="state.can_edit_annotation and cell.can_be_annotated"
-                                            >
-                                                <div
-                                                    data-bs-toggle="dropdown"
-                                                    t-attf-class="dropdown-toggle"
-                                                />
-
-                                                <div
-                                                    class="dropdown-menu o_filter_menu"
-                                                    role="menu"
-                                                >
-                                                    <a
-                                                        href="javascript:void(0)"
-                                                        t-on-click="annotate"
-                                                        t-att-data-cell-id="cell.cell_id"
-                                                        role="menuitem"
-                                                        class="dropdown-item js_tag"
-                                                    >
-                                                        Annotate
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <!-- show menu as disabled -->
-                                            <div
-                                                t-else=""
-                                                class="dropdown-toggle oe_mis_builder_menu_disabled"
-                                            />
-                                        </div>
+                                        <a
+                                            t-if="state.can_edit_annotation and cell.can_be_annotated"
+                                            href="#"
+                                            role="button"
+                                            title="Annotate"
+                                            aria-label="Annotate"
+                                            t-attf-class="oe_mis_builder_annotate fa #{notes[cell.cell_id] ? 'fa-comment oe_mis_builder_annotated' : 'fa-comment-o'}"
+                                            t-att-data-cell-id="cell.cell_id"
+                                            t-on-click.prevent="annotate"
+                                        />
                                     </div>
                                 </td>
                             </tr>
