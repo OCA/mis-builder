@@ -38,12 +38,11 @@ class MisBudgetItemAbstract(models.AbstractModel):
     @api.onchange("date_from", "date_to")
     def _onchange_dates(self):
         for rec in self:
-            if rec.date_range_id:
-                if (
-                    rec.date_from != rec.date_range_id.date_start
-                    or rec.date_to != rec.date_range_id.date_end
-                ):
-                    rec.date_range_id = False
+            if rec.date_range_id and (
+                rec.date_from != rec.date_range_id.date_start
+                or rec.date_to != rec.date_range_id.date_end
+            ):
+                rec.date_range_id = False
 
     def _prepare_overlap_domain(self) -> list:
         """Prepare a domain to check for overlapping budget items."""
