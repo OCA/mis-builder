@@ -231,7 +231,7 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
         matrix = self.instance._compute_matrix()
 
         account = self.account_in
-        account_name = account.name
+        account_name = account.display_name
 
         name = matrix.get_account_name(account.id)
 
