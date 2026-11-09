@@ -585,6 +585,15 @@ class MisReportInstance(models.Model):
         string="Show Pivot Date",
         help="Show the Pivot Date in the report widget filter bar.",
     )
+    widget_cache_report_on_drill_down = fields.Boolean(
+        default=False,
+        string="Cache report on drilldown",
+        help=(
+            "Cache computed report data in browser memory during drilldown "
+            "navigation to prevent recomputing the report when returning via "
+            "breadcrumbs."
+        ),
+    )
     widget_search_view_id = fields.Many2one(
         comodel_name="ir.ui.view",
         domain='[("type", "=", "search"), ("model", "=", source_aml_model_name)]',
@@ -772,16 +781,12 @@ class MisReportInstance(models.Model):
 
     def preview(self):
         self.ensure_one()
-        view_id = self.env.ref("mis_builder.mis_report_instance_result_view_form")
-        return {
-            "type": "ir.actions.act_window",
-            "res_model": "mis.report.instance",
-            "res_id": self.id,
-            "view_mode": "form",
-            "view_id": view_id.id,
-            "target": "current",
-            "context": self.env.context,
-        }
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "mis_builder.mis_report_instance_preview_action"
+        )
+        action["res_id"] = self.id
+        action["context"] = self.env.context
+        return action
 
     def print_pdf(self):
         self.ensure_one()
