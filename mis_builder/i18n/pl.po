@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-11-11 10:46+0000\n"
+"PO-Revision-Date: 2026-11-11 13:46+0000\n"
 "Last-Translator: leszekszczepkowski <leszekszczepkowski@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -144,7 +144,7 @@ msgid ""
 msgstr ""
 "<code>balu[]</code> : (<code>u</code> od unallocated) to specjalne "
 "wyrażenie,\n"
-"                                        które pokazuje nierozliczony wynik "
+"                                        które pokazuje niepodzielony wynik "
 "(zysk lub stratę) z poprzednich lat\n"
 "                                        obrotowych."
 
@@ -544,7 +544,7 @@ msgstr "Potwierdź"
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__create_uid
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subreport__create_uid
 msgid "Created by"
-msgstr "Utworzone przez"
+msgstr "Utworzył(a)"
 
 #. module: mis_builder
 #: model:ir.model.fields,field_description:mis_builder.field_add_mis_report_instance_dashboard_wizard__create_date
@@ -1524,7 +1524,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_kpi_expression__sequence
 #: model:ir.model.fields,field_description:mis_builder.field_mis_report_subkpi__sequence
 msgid "Sequence"
-msgstr "Kolejność"
+msgstr "Sekwencja"
 
 #. module: mis_builder
 #. odoo-javascript
