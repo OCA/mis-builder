@@ -454,7 +454,9 @@ class TestAEP(common.TransactionCase):
         self.aep.parse_expr(expr)
         self.aep.done_parsing()
 
-        tax_group = self.env["account.tax.group"].create(dict(name="test tax group"))
+        tax_group = self.env["account.tax.group"].create(
+            dict(name="test tax group", company_id=self.company.id)
+        )
 
         tax = self.env["account.tax"].create(
             dict(
