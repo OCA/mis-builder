@@ -42,6 +42,8 @@ class MisBuilderXlsx(models.AbstractModel):
         matrix = mis_instance._compute_matrix()
         notes = mis_instance.get_notes_by_cell_id()
         style_obj = self.env["mis.report.style"]
+        hide_empty_columns = mis_instance.hide_empty_columns
+        visible_subcols = list(matrix.iter_subcols_visible(hide_empty_columns))
 
         # create worksheet
         worksheet_name = self._get_worksheet_name(mis_instance)
@@ -73,7 +75,7 @@ class MisBuilderXlsx(models.AbstractModel):
         # column headers
         sheet.write(row_pos, 0, "", header_format)
         col_pos = 1
-        for col in matrix.iter_cols():
+        for col in matrix.iter_cols_visible(hide_empty_columns):
             label = col.label
             if col.description:
                 label += "\n" + col.description
@@ -100,7 +102,7 @@ class MisBuilderXlsx(models.AbstractModel):
         # sub column headers
         sheet.write(row_pos, 0, "", header_format)
         col_pos = 1
-        for subcol in matrix.iter_subcols():
+        for subcol in visible_subcols:
             label = subcol.label
             if subcol.description:
                 label += "\n" + subcol.description
@@ -115,11 +117,7 @@ class MisBuilderXlsx(models.AbstractModel):
         row_pos += 1
 
         # rows
-        for row in matrix.iter_rows():
-            if (
-                row.style_props.hide_empty and row.is_empty()
-            ) or row.style_props.hide_always:
-                continue
+        for row in matrix.iter_visible_rows():
             row_xlsx_style = style_obj.to_xlsx_style(TYPE_STR, row.style_props)
             row_format = workbook.add_format(row_xlsx_style)
             col_pos = 0
@@ -131,7 +129,7 @@ class MisBuilderXlsx(models.AbstractModel):
             label_col_width = max(
                 label_col_width, len(row.label or ""), len(row.description or "")
             )
-            for cell in row.iter_cells():
+            for cell in row.iter_cells(subcols=visible_subcols):
                 col_pos += 1
                 self._mis_builder_add_annotation(sheet, cell, row_pos, col_pos, notes)
                 if not cell or cell.val is AccountingNone:
@@ -184,10 +182,11 @@ class MisBuilderXlsx(models.AbstractModel):
 
         # adjust col widths
         sheet.set_column(0, 0, min(label_col_width, MAX_COL_WIDTH) * COL_WIDTH)
-        data_col_width = min(MAX_COL_WIDTH, max(col_width.values()))
-        min_col_pos = min(col_width.keys())
-        max_col_pos = max(col_width.keys())
-        sheet.set_column(min_col_pos, max_col_pos, data_col_width * COL_WIDTH)
+        if col_width:
+            data_col_width = min(MAX_COL_WIDTH, max(col_width.values()))
+            min_col_pos = min(col_width.keys())
+            max_col_pos = max(col_width.keys())
+            sheet.set_column(min_col_pos, max_col_pos, data_col_width * COL_WIDTH)
 
         return sheet
 

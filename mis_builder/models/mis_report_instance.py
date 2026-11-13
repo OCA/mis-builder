@@ -605,6 +605,10 @@ class MisReportInstance(models.Model):
     wide_display_by_default = fields.Boolean(
         string="Open report in wide mode by default",
     )
+    hide_empty_columns = fields.Boolean(
+        string="Hide empty columns",
+        help="Hide columns for which all displayed values are empty.",
+    )
 
     @api.depends("report_id.move_lines_source")
     def _compute_widget_search_view_id(self):
@@ -708,6 +712,12 @@ class MisReportInstance(models.Model):
             else:
                 record.date_from = None
                 record.date_to = None
+
+    @api.onchange("comparison_mode")
+    def _onchange_comparison_mode(self):
+        # hiding empty columns only makes sense when comparing columns
+        if not self.comparison_mode:
+            self.hide_empty_columns = False
 
     @api.onchange("date_range_id")
     def _onchange_date_range(self):
@@ -901,7 +911,7 @@ class MisReportInstance(models.Model):
     def compute(self):
         self.ensure_one()
         kpi_matrix = self._compute_matrix()
-        ret = kpi_matrix.as_dict()
+        ret = kpi_matrix.as_dict(hide_empty_columns=self.hide_empty_columns)
 
         ret["notes"] = self.get_notes_by_cell_id()
         return ret
