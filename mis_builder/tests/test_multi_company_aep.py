@@ -3,8 +3,8 @@
 
 import datetime
 
-import odoo.tests.common as common
 from odoo import Command, fields
+from odoo.tests import common
 from odoo.tools.safe_eval import safe_eval
 
 from ..models.accounting_none import AccountingNone
@@ -19,7 +19,7 @@ class TestMultiCompanyAEP(common.TransactionCase):
         self.move_model = self.env["account.move"]
         self.journal_model = self.env["account.journal"]
         self.currency_model = self.env["res.currency"]
-        self.curr_year = datetime.date.today().year
+        self.curr_year = fields.Date.today().year
         self.prev_year = self.curr_year - 1
         self.usd = self.currency_model.with_context(active_test=False).search(
             [("name", "=", "USD")]
@@ -183,12 +183,12 @@ class TestMultiCompanyAEP(common.TransactionCase):
     def test_aep_multi_currency(self):
         date_from = datetime.date(self.prev_year, 12, 1)
         date_to = datetime.date(self.prev_year, 12, 31)
-        today = datetime.date.today()
+        today = fields.Date.today()
         self.env["res.currency.rate"].create(
-            dict(currency_id=self.usd.id, name=date_to, rate=1.1)
+            {"currency_id": self.usd.id, "name": date_to, "rate": 1.1}
         )
         self.env["res.currency.rate"].create(
-            dict(currency_id=self.usd.id, name=today, rate=1.2)
+            {"currency_id": self.usd.id, "name": today, "rate": 1.2}
         )
         # let's query for december, one company, default currency = eur
         aep = self._do_queries(self.company_eur, None, date_from, date_to)
