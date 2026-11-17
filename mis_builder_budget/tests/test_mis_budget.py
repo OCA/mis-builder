@@ -15,99 +15,103 @@ class TestMisBudget(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         # create report
-        cls.report = cls.env["mis.report"].create(dict(name="test report"))
+        cls.report = cls.env["mis.report"].create({"name": "test report"})
         cls.kpi1 = cls.env["mis.report.kpi"].create(
-            dict(
-                report_id=cls.report.id,
-                name="k1",
-                description="kpi 1",
-                expression="10",
-                budgetable=True,
-            )
+            {
+                "report_id": cls.report.id,
+                "name": "k1",
+                "description": "kpi 1",
+                "expression": "10",
+                "budgetable": True,
+            }
         )
         cls.expr1 = cls.kpi1.expression_ids[0]
         cls.kpi2 = cls.env["mis.report.kpi"].create(
-            dict(
-                report_id=cls.report.id,
-                name="k2",
-                description="kpi 2",
-                expression="k1 + 1",
-                sequence=0,  # kpi2 before kpi1 to test out of order evaluation
-            )
+            {
+                "report_id": cls.report.id,
+                "name": "k2",
+                "description": "kpi 2",
+                "expression": "k1 + 1",
+                "sequence": 0,  # kpi2 before kpi1 to test out of order evaluation
+            }
         )
         # budget
         cls.budget = cls.env["mis.budget"].create(
-            dict(
-                name="the budget",
-                report_id=cls.report.id,
-                date_from="2017-01-01",
-                date_to="2017-12-31",
-                item_ids=[
+            {
+                "name": "the budget",
+                "report_id": cls.report.id,
+                "date_from": "2017-01-01",
+                "date_to": "2017-12-31",
+                "item_ids": [
                     (
                         0,
                         0,
-                        dict(
-                            kpi_expression_id=cls.expr1.id,
-                            date_from="2017-01-01",
-                            date_to="2017-01-31",
-                            amount=10,
-                        ),
+                        {
+                            "kpi_expression_id": cls.expr1.id,
+                            "date_from": "2017-01-01",
+                            "date_to": "2017-01-31",
+                            "amount": 10,
+                        },
                     ),
                     (
                         0,
                         0,
-                        dict(
-                            kpi_expression_id=cls.expr1.id,
-                            date_from="2017-02-01",
-                            date_to="2017-02-28",
-                            amount=20,
-                        ),
+                        {
+                            "kpi_expression_id": cls.expr1.id,
+                            "date_from": "2017-02-01",
+                            "date_to": "2017-02-28",
+                            "amount": 20,
+                        },
                     ),
                 ],
-            )
+            }
         )
         # instance
         cls.instance = cls.env["mis.report.instance"].create(
-            dict(name="test instance", report_id=cls.report.id, comparison_mode=True)
+            {
+                "name": "test instance",
+                "report_id": cls.report.id,
+                "comparison_mode": True,
+            }
         )
         cls.pact1 = cls.env["mis.report.instance.period"].create(
-            dict(
-                name="pact1",
-                report_instance_id=cls.instance.id,
-                manual_date_from="2017-01-01",
-                manual_date_to="2017-01-31",
-            )
+            {
+                "name": "pact1",
+                "report_instance_id": cls.instance.id,
+                "manual_date_from": "2017-01-01",
+                "manual_date_to": "2017-01-31",
+            }
         )
         cls.pbud1 = cls.env["mis.report.instance.period"].create(
-            dict(
-                name="pbud1",
-                report_instance_id=cls.instance.id,
-                source=SRC_MIS_BUDGET,
-                source_mis_budget_id=cls.budget.id,
-                manual_date_from="2017-01-01",
-                manual_date_to="2017-01-31",
-            )
+            {
+                "name": "pbud1",
+                "report_instance_id": cls.instance.id,
+                "source": SRC_MIS_BUDGET,
+                "source_mis_budget_id": cls.budget.id,
+                "manual_date_from": "2017-01-01",
+                "manual_date_to": "2017-01-31",
+            }
         )
         cls.pact2 = cls.env["mis.report.instance.period"].create(
-            dict(
-                name="pact2",
-                report_instance_id=cls.instance.id,
-                manual_date_from="2017-02-01",
-                manual_date_to="2017-02-28",
-            )
+            {
+                "name": "pact2",
+                "report_instance_id": cls.instance.id,
+                "manual_date_from": "2017-02-01",
+                "manual_date_to": "2017-02-28",
+            }
         )
         cls.pbud2 = cls.env["mis.report.instance.period"].create(
-            dict(
-                name="pbud2",
-                report_instance_id=cls.instance.id,
-                source=SRC_MIS_BUDGET,
-                source_mis_budget_id=cls.budget.id,
-                manual_date_from="2017-02-01",
-                manual_date_to="2017-02-21",
-            )
+            {
+                "name": "pbud2",
+                "report_instance_id": cls.instance.id,
+                "source": SRC_MIS_BUDGET,
+                "source_mis_budget_id": cls.budget.id,
+                "manual_date_from": "2017-02-01",
+                "manual_date_to": "2017-02-21",
+            }
         )
         # clear cache to force re-read of kpis ordered by sequence
-        cls.env.clear()
+        cls.env.transaction.clear()
 
     def test1(self):
         matrix = self.instance._compute_matrix()
@@ -122,7 +126,7 @@ class TestMisBudget(TransactionCase):
 
     def test_drilldown(self):
         act = self.instance.drilldown(
-            dict(period_id=self.pbud1.id, expr_id=self.expr1.id)
+            {"period_id": self.pbud1.id, "expr_id": self.expr1.id}
         )
         self.assertEqual(act["res_model"], "mis.budget.item")
         self.assertEqual(

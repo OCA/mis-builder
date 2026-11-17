@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2017-2020 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.ui.view" id="mis_budget_by_account_item_search_view">
+    <record id="mis_budget_by_account_item_search_view" model="ir.ui.view">
         <field name="name">
             mis.budget.by.account.item.search (in mis_builder_budget)
         </field>
@@ -14,7 +14,7 @@
             </search>
         </field>
     </record>
-    <record model="ir.ui.view" id="mis_budget_by_account_item_list_view">
+    <record id="mis_budget_by_account_item_list_view" model="ir.ui.view">
         <field name="name">
             mis.budget.by.account.item.list (in mis_builder_budget)
         </field>
@@ -42,7 +42,7 @@
             </list>
         </field>
     </record>
-    <record model="ir.actions.act_window" id="mis_budget_by_account_item_act_window">
+    <record id="mis_budget_by_account_item_act_window" model="ir.actions.act_window">
         <field name="name">MIS Budget Items (by accounts)</field>
         <field name="res_model">mis.budget.by.account.item</field>
         <field name="view_mode">list,form</field>
