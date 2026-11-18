@@ -26,6 +26,12 @@ class MisBuilderXlsx(models.AbstractModel):
     _description = "MIS Builder XLSX report"
     _inherit = "report.report_xlsx.abstract"
 
+    def get_workbook_options(self):
+        # labels like "= Net income" are text, not formulas
+        options = super().get_workbook_options()
+        options["strings_to_formulas"] = False
+        return options
+
     @api.model
     def _mis_builder_add_annotation(self, sheet, cell, row_pos, col_pos, notes):
         """

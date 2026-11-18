@@ -595,6 +595,18 @@ class TestMisReportInstance(common.HttpCase):
         )
         self.assertEqual(len(excel_workbook.sheetnames), 1)
 
+    def test_xlsx_label_starting_with_equal_sign(self):
+        self.kpi1.description = "= kpi 1"
+        excel_workbook = try_xlsx_report(
+            self.env.cr,
+            self.env.uid,
+            "mis_builder.mis_report_instance_xlsx",
+            [self.report_instance.id],
+            report_type="xlsx",
+        )
+        labels = [c.value for c in excel_workbook.active["A"]]
+        self.assertIn("= kpi 1", labels)
+
     def test_xlsx_multiple_instances(self):
         self.report_instance.export_xls()  # get action
         excel_workbook = try_xlsx_report(
