@@ -1,0 +1,2 @@
+XLSX export: labels and text values starting with ``=`` are written as text instead of
+formulas, so they are no longer shown as ``0``.
