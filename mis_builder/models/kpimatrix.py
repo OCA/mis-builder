@@ -27,13 +27,12 @@ class KpiMatrixRow:
         self.description = ""
         self.parent_row = parent_row
         if not self.account_id:
-            self.style_props = self._matrix._style_model.merge(
-                [self.kpi.report_id.style_id, self.kpi.style_id]
-            )
+            self.style = self.kpi.style_id
         else:
-            self.style_props = self._matrix._style_model.merge(
-                [self.kpi.report_id.style_id, self.kpi.auto_expand_accounts_style_id]
-            )
+            self.style = self.kpi.auto_expand_accounts_style_id
+        self.style_props = self._matrix._style_model.merge(
+            [self.kpi.report_id.style_id, self.style]
+        )
 
     @property
     def label(self):
@@ -164,6 +163,8 @@ class KpiMatrix:
         self._sum_todo = {}
         # { account_id: account_name }
         self._account_names = {}
+        # { col_key: mis.report.style }
+        self._col_styles = {}
 
     def declare_kpi(self, kpi):
         """Declare a new kpi (row) in the matrix.
@@ -172,6 +173,22 @@ class KpiMatrix:
         """
         self._kpi_rows[kpi] = KpiMatrixRow(self, kpi)
         self._detail_rows[kpi] = {}
+
+    def set_col_style(self, col_key, style):
+        """Set the style of a column, applied to its cells below the row style.
+
+        Invoke this before setting the values of the column.
+        """
+        if style:
+            self._col_styles[col_key] = style
+
+    def _get_cell_style_props(self, row, col_key):
+        col_style = self._col_styles.get(col_key)
+        if not col_style:
+            return row.style_props
+        return self._style_model.merge(
+            [row.kpi.report_id.style_id, col_style, row.style]
+        )
 
     def declare_col(self, col_key, label, description, locals_dict, subkpis):
         """Declare a new column, giving it an identifier (key).
@@ -229,6 +246,7 @@ class KpiMatrix:
                 row = KpiMatrixRow(self, kpi, account_id, parent_row=kpi_row)
                 self._detail_rows[kpi][account_id] = row
         col = self._cols[col_key]
+        base_style_props = self._get_cell_style_props(row, col_key)
         cell_tuple = []
         assert len(vals) == col.colspan
         assert len(drilldown_args) == col.colspan
@@ -240,7 +258,7 @@ class KpiMatrix:
                 val_comment = val.msg
             else:
                 val_rendered = self._style_model.render(
-                    self.lang, row.style_props, kpi.type, val
+                    self.lang, base_style_props, kpi.type, val
                 )
                 if row.kpi.multi and subcol.subkpi:
                     val_comment = (
@@ -249,7 +267,7 @@ class KpiMatrix:
                     )
                 else:
                     val_comment = f"{row.kpi.name} = {row.kpi.expression}"
-            cell_style_props = row.style_props
+            cell_style_props = base_style_props
             if row.kpi.style_expression:
                 # evaluate style expression
                 try:
@@ -266,7 +284,7 @@ class KpiMatrix:
                     style = self._style_model.search([("name", "=", style_name)])
                     if style:
                         cell_style_props = self._style_model.merge(
-                            [row.style_props, style[0]]
+                            [base_style_props, style[0]]
                         )
                     else:
                         _logger.error("Style '%s' not found.", style_name)
@@ -353,7 +371,7 @@ class KpiMatrix:
                     # TODO FIXME average factors
                     comparison = self._style_model.compare_and_render(
                         self.lang,
-                        row.style_props,
+                        self._get_cell_style_props(row, cmpcol_key),
                         row.kpi.type,
                         row.kpi.compare_method,
                         val,
