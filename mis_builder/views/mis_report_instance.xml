@@ -312,6 +312,7 @@
                         widget="many2many_tags"
                         options="{'no_create': True}"
                     />
+                    <field name="style_id" />
                     <field name="valid" invisible="1" />
                     <field
                         name="report_instance_id"
