@@ -250,8 +250,9 @@ class KpiMatrix:
                 else:
                     val_comment = f"{row.kpi.name} = {row.kpi.expression}"
             cell_style_props = row.style_props
-            if row.kpi.style_expression:
-                # evaluate style expression
+            if row.kpi.style_expression and not isinstance(val, DataError):
+                # a kpi in error is requeued, its style is evaluated later
+                style_name = None
                 try:
                     style_name = mis_safe_eval(
                         row.kpi.style_expression, col.locals_dict
@@ -262,7 +263,13 @@ class KpiMatrix:
                         row.kpi.style_expression,
                         exc_info=True,
                     )
-                if style_name:
+                if isinstance(style_name, DataError):
+                    _logger.error(
+                        "Error evaluating style expression <%s>: %s",
+                        row.kpi.style_expression,
+                        style_name.msg,
+                    )
+                elif style_name:
                     style = self._style_model.search([("name", "=", style_name)])
                     if style:
                         cell_style_props = self._style_model.merge(
