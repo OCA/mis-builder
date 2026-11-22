@@ -80,6 +80,26 @@
     overflow: visible !important;
 }
 
+// The annotation icon of a cell: shown on the row under the pointer and on
+// keyboard focus, and always when the cell already has a note.
+.oe_mis_builder_annotate {
+    margin-left: 0.3em;
+    color: $text-muted;
+    text-decoration: none;
+    opacity: 0;
+    transition: opacity 0.1s;
+
+    &:hover {
+        color: $link-color;
+    }
+}
+
+tr:hover .oe_mis_builder_annotate,
+.oe_mis_builder_annotate:focus,
+.oe_mis_builder_annotate.oe_mis_builder_annotated {
+    opacity: 1;
+}
+
 .oe_mis_builder_footnote {
     font-size: 70%;
     color: red;
