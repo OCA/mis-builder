@@ -7,6 +7,7 @@
             <list>
                 <field name="name" />
                 <field name="description" />
+                <field name="constraint_type" optional="show" />
             </list>
         </field>
     </record>
@@ -17,11 +18,29 @@
         <field name="arch" type="xml">
             <form string="MIS Report">
                 <sheet>
-                    <group col="2">
-                        <field name="name" />
-                        <field name="description" />
-                        <field name="style_id" />
-                        <field name="move_lines_source" options="{'no_open': true}" />
+                    <group name="top">
+                        <group name="left">
+                            <field name="name" />
+                            <field name="description" />
+                            <label for="constraint_type" />
+                            <div name="constraint_type">
+                                <field name="constraint_type" class="oe_inline" />
+                                <button
+                                    name="test_constraint_type_button"
+                                    type="object"
+                                    string="Test constraint"
+                                    invisible="not constraint_type"
+                                    class="oe_link"
+                                />
+                            </div>
+                        </group>
+                        <group name="right">
+                            <field name="style_id" />
+                            <field
+                                name="move_lines_source"
+                                options="{'no_open': true}"
+                            />
+                        </group>
                     </group>
                     <notebook>
                         <page string="KPI's">
@@ -50,6 +69,11 @@
                                         name="expression"
                                         widget="code"
                                         options="{'mode': 'python'}"
+                                    />
+                                    <field
+                                        name="ignore_constraint"
+                                        optional="hide"
+                                        column_invisible="not parent.constraint_type"
                                     />
                                 </list>
                             </field>
@@ -111,6 +135,37 @@
         </field>
     </record>
 
+    <record model="ir.ui.view" id="mis_report_view_search">
+        <field name="name">mis.report.view.search</field>
+        <field name="model">mis.report</field>
+        <field name="arch" type="xml">
+            <search>
+                <field
+                    name="name"
+                    filter_domain="['|', ('name', 'ilike', self), ('description', 'ilike', self)]"
+                    string="Name or Description"
+                />
+                <filter
+                    string="Profit &amp; Loss"
+                    name="profit_and_loss"
+                    domain="[('constraint_type', '=', 'profit_and_loss')]"
+                />
+                <filter
+                    string="Balance Sheet"
+                    name="balance_sheet"
+                    domain="[('constraint_type', '=', 'balance_sheet')]"
+                />
+                <group name="groupby">
+                    <filter
+                        name="constraint_type_groupby"
+                        string="Constraint Type"
+                        context="{'group_by': 'constraint_type'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="mis_report_view_kpi_form" model="ir.ui.view">
         <field name="name">mis.report.view.kpi.form</field>
         <field name="model">mis.report.kpi</field>
@@ -125,6 +180,11 @@
                     <field name="accumulation_method" />
                     <field name="style_id" />
                     <field name="style_expression" />
+                    <field
+                        name="ignore_constraint"
+                        invisible="not report_constraint_type"
+                    />
+                    <field name="report_constraint_type" invisible="1" />
                     <field name='id' invisible='1' />
                     <field name="report_id" invisible="1" required="id != False" />
                 </group>
