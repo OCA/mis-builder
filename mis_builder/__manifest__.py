@@ -39,6 +39,11 @@
         "web.report_assets_common": [
             "mis_builder/static/src/scss/report.scss",
         ],
+        "web.assets_tests": [
+            "mis_builder/static/tests/tours/mis_report_drilldown_tour.esm.js",
+            "mis_builder/static/tests/tours/mis_report_back_button_tour.esm.js",
+            "mis_builder/static/tests/tours/mis_report_back_button_no_filters_tour.esm.js",
+        ],
     },
     "qweb": ["static/src/xml/mis_report_widget.xml"],
     "installable": True,
