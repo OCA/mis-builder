@@ -286,6 +286,11 @@ class MisReportInstancePeriod(models.Model):
         default="[]",
         help="A domain to additionally filter move lines considered in this column.",
     )
+    style_id = fields.Many2one(
+        "mis.report.style",
+        string="Style",
+        help="Style of the cells of this column. The row style has priority.",
+    )
 
     _order = "sequence, id"
 
@@ -893,6 +898,7 @@ class MisReportInstance(models.Model):
                     date_from=date_from,
                     date_to=date_to,
                 )
+            kpi_matrix.set_col_style(period.id, period.style_id)
             self._add_column(aep, kpi_matrix, period, period.name, description)
         kpi_matrix.compute_comparisons()
         kpi_matrix.compute_sums()

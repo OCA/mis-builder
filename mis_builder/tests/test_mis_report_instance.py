@@ -606,6 +606,36 @@ class TestMisReportInstance(common.HttpCase):
         )
         self.assertEqual(len(excel_workbook.sheetnames), 2)
 
+    def test_column_style(self):
+        style = self.env["mis.report.style"]
+        col_style = style.create(
+            {
+                "name": "test column",
+                "background_color_inherit": False,
+                "background_color": "#FFF",
+            }
+        )
+        self.kpi1.style_id = style.create(
+            {
+                "name": "test row",
+                "background_color_inherit": False,
+                "background_color": "#000",
+            }
+        )
+        p1, p2 = self.report_instance.period_ids
+        p2.style_id = col_style
+        matrix = self.report_instance._compute_matrix()
+        for row in matrix.iter_rows():
+            for cell in row.iter_cells():
+                if not cell or row.account_id:
+                    continue
+                expected = None
+                if row.kpi == self.kpi1:
+                    expected = "#000"
+                elif cell.subcol.col.key == p2.id:
+                    expected = "#FFF"
+                self.assertEqual(cell.style_props.background_color, expected)
+
     def test_get_kpis_by_account_id(self):
         account_ids = (
             self.env["account.account"]
