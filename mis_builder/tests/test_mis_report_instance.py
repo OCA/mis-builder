@@ -753,3 +753,53 @@ class TestMisReportInstance(common.HttpCase):
     def test_copy_mis_report_instance(self):
         new_instance = self.report_instance.copy()
         self.assertEqual(new_instance.name, f"{self.report_instance.name} (copy)")
+
+    def test_single_company_user_can_preview_multi_company_report(self):
+        c1 = self.env["res.company"].create({"name": "Company 1"})
+        c2 = self.env["res.company"].create({"name": "Company 2"})
+        single_user = common.new_test_user(
+            self.env,
+            "single_comp_user",
+            groups="base.group_user,account.group_account_readonly",
+            company_id=c1.id,
+            company_ids=[(6, 0, [c1.id])],
+        )
+        report_instance = self.env["mis.report.instance"].create(
+            {
+                "name": "Multi Company Report",
+                "report_id": self.report.id,
+                "multi_company": True,
+                "company_ids": [(6, 0, [c1.id, c2.id])],
+            }
+        )
+        res = (
+            report_instance.with_user(single_user)
+            .with_context(allowed_company_ids=[c1.id])
+            .preview()
+        )
+        self.assertEqual(res["res_id"], report_instance.id)
+
+    def test_single_company_user_can_compute_multi_company_report(self):
+        c1 = self.env["res.company"].create({"name": "Company 1"})
+        c2 = self.env["res.company"].create({"name": "Company 2"})
+        single_user = common.new_test_user(
+            self.env,
+            "single_comp_user",
+            groups="base.group_user,account.group_account_readonly",
+            company_id=c1.id,
+            company_ids=[(6, 0, [c1.id])],
+        )
+        report_instance = self.env["mis.report.instance"].create(
+            {
+                "name": "Multi Company Report",
+                "report_id": self.report.id,
+                "multi_company": True,
+                "company_ids": [(6, 0, [c1.id, c2.id])],
+            }
+        )
+        matrix = (
+            report_instance.with_user(single_user)
+            .with_context(allowed_company_ids=[c1.id])
+            .compute()
+        )
+        self.assertIn("body", matrix)

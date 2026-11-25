@@ -644,10 +644,10 @@ class MisReportInstance(models.Model):
     def _compute_query_company_ids(self):
         for rec in self:
             if rec.multi_company:
-                if not rec.company_ids:
+                if not rec.sudo().company_ids:
                     rec.query_company_ids = self.env.companies
                 else:
-                    rec.query_company_ids = rec.company_ids & self.env.companies
+                    rec.query_company_ids = rec.sudo().company_ids & self.env.companies
             else:
                 rec.query_company_ids = rec.company_id or self.env.company
 
