@@ -145,6 +145,7 @@ class KpiMatrix:
         companies=None,
         account_model="account.account",
     ):
+        self.env = env
         # cache language id for faster rendering
         lang_model = env["res.lang"]
         self.lang = lang_model._lang_get(env.user.lang)

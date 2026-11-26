@@ -2,10 +2,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 import odoo.tests.common as common
+from odoo.exceptions import UserError
 from odoo.tools import test_reports
 
 from ..models.accounting_none import AccountingNone
 from ..models.mis_report import TYPE_STR, SubKPITupleLengthError, SubKPIUnknownTypeError
+from ..models.mis_report_instance import MODE_NONE, SRC_CMPCOL, SRC_SUMCOL
 from .common import try_xlsx_report
 
 
@@ -413,6 +415,40 @@ class TestMisReportInstance(common.HttpCase):
             if row.account_id:
                 account = self.env["account.account"].browse(row.account_id)
                 self.assertEqual(row.label, f"{account.code} {account.name}")
+
+    def test_compare_columns_without_common_subkpis(self):
+        p1, p2 = self.report_instance.period_ids
+        p2.subkpi_ids = self.report.subkpi_ids[1]
+        self.env["mis.report.instance.period"].create(
+            dict(
+                name="p1 vs p2",
+                report_instance_id=self.report_instance.id,
+                mode=MODE_NONE,
+                source=SRC_CMPCOL,
+                source_cmpcol_from_id=p1.id,
+                source_cmpcol_to_id=p2.id,
+            )
+        )
+        with self.assertRaisesRegex(UserError, "are not comparable"):
+            self.report_instance.compute()
+
+    def test_sum_columns_without_common_subkpis(self):
+        p1, p2 = self.report_instance.period_ids
+        p2.subkpi_ids = self.report.subkpi_ids[1]
+        self.env["mis.report.instance.period"].create(
+            dict(
+                name="p1 + p2",
+                report_instance_id=self.report_instance.id,
+                mode=MODE_NONE,
+                source=SRC_SUMCOL,
+                source_sumcol_ids=[
+                    (0, 0, dict(period_to_sum_id=p1.id, sign="+")),
+                    (0, 0, dict(period_to_sum_id=p2.id, sign="+")),
+                ],
+            )
+        )
+        with self.assertRaisesRegex(UserError, "Sum cannot be computed"):
+            self.report_instance.compute()
 
     def test_evaluate(self):
         company = self.env.ref("base.main_company")
