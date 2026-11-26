@@ -292,6 +292,24 @@ class KpiMatrix:
             common_subkpis = common_subkpis & set(col.subkpis)
         return common_subkpis
 
+    def compute_comparisons_and_sums(self):
+        """Compute comparison and sum columns.
+
+        They may depend on each other, so compute those whose source
+        columns are available until all are done.
+
+        Invoke this after setting all values.
+        Return False if some columns can't be computed because they
+        depend on each other.
+        """
+        while self._comparison_todo or self._sum_todo:
+            todo_count = len(self._comparison_todo) + len(self._sum_todo)
+            self.compute_comparisons()
+            self.compute_sums()
+            if len(self._comparison_todo) + len(self._sum_todo) == todo_count:
+                return False
+        return True
+
     def compute_comparisons(self):
         """Compute comparisons.
 
@@ -300,9 +318,13 @@ class KpiMatrix:
         for (
             cmpcol_key,
             (col_key, base_col_key, label, description),
-        ) in self._comparison_todo.items():
+        ) in list(self._comparison_todo.items()):
             col = self._cols[col_key]
             base_col = self._cols[base_col_key]
+            if col is None or base_col is None:
+                # depends on a sum or comparison column not computed yet
+                continue
+            del self._comparison_todo[cmpcol_key]
             common_subkpis = self._common_subkpis([col, base_col])
             if (col.subkpis or base_col.subkpis) and not common_subkpis:
                 raise UserError(
@@ -384,11 +406,12 @@ class KpiMatrix:
         for (
             sumcol_key,
             (col_to_sum_keys, label, description, sum_accdet),
-        ) in self._sum_todo.items():
+        ) in list(self._sum_todo.items()):
             sumcols = [self._cols[k] for (sign, k) in col_to_sum_keys]
-            # TODO check all sumcols are resolved; we need a kind of
-            #      recompute queue here so we don't depend on insertion
-            #      order
+            if any(c is None for c in sumcols):
+                # depends on a sum or comparison column not computed yet
+                continue
+            del self._sum_todo[sumcol_key]
             common_subkpis = self._common_subkpis(sumcols)
             if any(c.subkpis for c in sumcols) and not common_subkpis:
                 raise UserError(

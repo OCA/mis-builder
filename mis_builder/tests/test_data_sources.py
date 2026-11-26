@@ -3,6 +3,7 @@
 
 import odoo.tests.common as common
 from odoo import Command
+from odoo.exceptions import UserError
 
 from ..models.accounting_none import AccountingNone
 from ..models.mis_report import CMP_DIFF
@@ -226,3 +227,70 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
         self.p1.source_aml_model_id = aml_model.id
         matrix = self.instance._compute_matrix()
         assert_matrix(matrix, [[11, 13], [11, 30]])
+
+    def _create_sum_period(self, periods):
+        return self.env["mis.report.instance.period"].create(
+            dict(
+                name="psum",
+                report_instance_id=self.instance.id,
+                mode=MODE_NONE,
+                source=SRC_SUMCOL,
+                source_sumcol_ids=[
+                    Command.create(dict(period_to_sum_id=period.id, sign="+"))
+                    for period in periods
+                ],
+            )
+        )
+
+    def _create_cmp_period(self, period_from, period_to):
+        return self.env["mis.report.instance.period"].create(
+            dict(
+                name="pcmp",
+                report_instance_id=self.instance.id,
+                mode=MODE_NONE,
+                source=SRC_CMPCOL,
+                source_cmpcol_from_id=period_from.id,
+                source_cmpcol_to_id=period_to.id,
+            )
+        )
+
+    def test_cmpcol_with_sumcol(self):
+        """A comparison column can compare to a sum column."""
+        psum = self._create_sum_period(self.p1 + self.p2)
+        self._create_cmp_period(self.p1, psum)
+        self.instance.compute()
+        matrix = self.instance._compute_matrix()
+        assert_matrix(
+            matrix,
+            [
+                [11, 13, 24, 13],
+                [11, 30, 41, 30],
+                [11, 13, AccountingNone, -11],
+                [AccountingNone, 17, AccountingNone, AccountingNone],
+            ],
+        )
+
+    def test_sumcol_with_cmpcol(self):
+        """A sum column can sum a comparison column."""
+        pcmp = self._create_cmp_period(self.p1, self.p2)
+        self._create_sum_period(self.p1 + pcmp)
+        self.instance.compute()
+        matrix = self.instance._compute_matrix()
+        assert_matrix(
+            matrix,
+            [
+                [11, 13, 2, 13],
+                [11, 30, 19, 30],
+                [11, 13, 2, AccountingNone],
+                [AccountingNone, 17, 17, AccountingNone],
+            ],
+        )
+
+    def test_cmpcol_sumcol_depending_on_each_other(self):
+        psum = self._create_sum_period(self.p1)
+        pcmp = self._create_cmp_period(self.p1, psum)
+        psum.source_sumcol_ids = [
+            Command.create(dict(period_to_sum_id=pcmp.id, sign="+"))
+        ]
+        with self.assertRaisesRegex(UserError, "depend on each other"):
+            self.instance.compute()
