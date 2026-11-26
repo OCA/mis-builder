@@ -355,7 +355,6 @@ class TestMisReportInstance(common.HttpCase):
                 ],
             )
         )
-
         # create a duplicate of first instance with different period
         self.report_instance_4 = self.env["mis.report.instance"].create(
             dict(
@@ -376,6 +375,55 @@ class TestMisReportInstance(common.HttpCase):
                 ],
             )
         )
+        # report with a single KPI: it yields value only for period starting
+        # in 2020, and AccountingNone otherwise, to test column emptiness
+        self.report_5 = self.env["mis.report"].create(
+            dict(
+                name="test report 5",
+                kpi_ids=[
+                    (
+                        0,
+                        0,
+                        dict(
+                            name="k",
+                            description="kpi",
+                            expression="1.0 if date_from.year == 2020"
+                            " else AccountingNone",
+                        ),
+                    )
+                ],
+            )
+        )
+        # instance with one empty column (2019) and one populated column (2020)
+        self.report_instance_5 = self.env["mis.report.instance"].create(
+            dict(
+                name="test instance 5",
+                report_id=self.report_5.id,
+                company_id=self.env.ref("base.main_company").id,
+                period_ids=[
+                    (
+                        0,
+                        0,
+                        dict(
+                            name="empty",
+                            mode="fix",
+                            manual_date_from="2019-01-01",
+                            manual_date_to="2019-12-31",
+                        ),
+                    ),
+                    (
+                        0,
+                        0,
+                        dict(
+                            name="filled",
+                            mode="fix",
+                            manual_date_from="2020-01-01",
+                            manual_date_to="2020-12-31",
+                        ),
+                    ),
+                ],
+            )
+        )
 
     def test_compute(self):
         matrix = self.report_instance._compute_matrix()
@@ -390,6 +438,25 @@ class TestMisReportInstance(common.HttpCase):
             elif row.kpi.name == "k7":
                 # k7 references k3 via subkpi names
                 self.assertEqual(vals, [AccountingNone, AccountingNone, 1.0])
+
+    def test_hide_empty_columns(self):
+        instance = self.report_instance_5
+        # with option off, both columns are present
+        header = instance.compute()["header"]
+        self.assertEqual(
+            [col["label"] for col in header[0]["cols"]],
+            ["empty", "filled"],
+        )
+        # with the option on, the empty column is dropped from header and body
+        instance.hide_empty_columns = True
+        ret = instance.compute()
+        self.assertEqual(
+            [col["label"] for col in ret["header"][0]["cols"]],
+            ["filled"],
+        )
+        self.assertEqual(len(ret["header"][1]["cols"]), 1)
+        for row in ret["body"]:
+            self.assertEqual(len(row["cells"]), 1)
 
     def test_multi_company_compute(self):
         self.report_instance.write(
