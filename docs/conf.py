@@ -15,12 +15,12 @@
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 # -- Project information -----------------------------------------------------
 
 project = "MIS Builder"
-year = datetime.now().year
+year = datetime.now(tz=timezone.utc).year
 # pylint: disable=redefined-builtin
 copyright = f"{year}, Odoo Community Association (OCA)"
 author = "Odoo Community Association (OCA)"

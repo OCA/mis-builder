@@ -1,9 +1,10 @@
 # Copyright 2016 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-import odoo.tests.common as common
+from odoo import Command
 from odoo.fields import Domain
-from odoo.tools import test_reports
+from odoo.tests import common
+from odoo.tests import reports as test_reports
 
 from ..models.accounting_none import AccountingNone
 from ..models.mis_report import TYPE_STR, SubKPITupleLengthError, SubKPIUnknownTypeError
@@ -26,356 +27,346 @@ class TestMisReportInstance(common.HttpCase):
         partner_debit_field_id = self.env.ref("account.field_res_partner__debit").id
         # create a report with 2 subkpis and one query
         self.report = self.env["mis.report"].create(
-            dict(
-                name="test report",
-                subkpi_ids=[
-                    (0, 0, dict(name="sk1", description="subkpi 1", sequence=1)),
-                    (0, 0, dict(name="sk2", description="subkpi 2", sequence=2)),
+            {
+                "name": "test report",
+                "subkpi_ids": [
+                    Command.create(
+                        {"name": "sk1", "description": "subkpi 1", "sequence": 1}
+                    ),
+                    Command.create(
+                        {"name": "sk2", "description": "subkpi 2", "sequence": 2}
+                    ),
                 ],
-                query_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="partner",
-                            model_id=partner_model_id,
-                            field_ids=[(4, partner_debit_field_id, None)],
-                            date_field=partner_create_date_field_id,
-                            aggregate="sum",
-                        ),
+                "query_ids": [
+                    Command.create(
+                        {
+                            "name": "partner",
+                            "model_id": partner_model_id,
+                            "field_ids": [Command.link(partner_debit_field_id)],
+                            "date_field": partner_create_date_field_id,
+                            "aggregate": "sum",
+                        }
                     )
                 ],
-            )
+            }
         )
         # create another report with 2 subkpis, no query
         self.report_2 = self.env["mis.report"].create(
-            dict(
-                name="another test report",
-                subkpi_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="subkpi1_report2",
-                            description="subkpi 1, report 2",
-                            sequence=1,
-                        ),
+            {
+                "name": "another test report",
+                "subkpi_ids": [
+                    Command.create(
+                        {
+                            "name": "subkpi1_report2",
+                            "description": "subkpi 1, report 2",
+                            "sequence": 1,
+                        }
                     ),
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="subkpi2_report2",
-                            description="subkpi 2, report 2",
-                            sequence=2,
-                        ),
+                    Command.create(
+                        {
+                            "name": "subkpi2_report2",
+                            "description": "subkpi 2, report 2",
+                            "sequence": 2,
+                        }
                     ),
                 ],
-            )
+            }
         )
         # Third report, 2 subkpis, no query
         self.report_3 = self.env["mis.report"].create(
-            dict(
-                name="test report 3",
-                subkpi_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="subkpi1_report3",
-                            description="subkpi 1, report 3",
-                            sequence=1,
-                        ),
+            {
+                "name": "test report 3",
+                "subkpi_ids": [
+                    Command.create(
+                        {
+                            "name": "subkpi1_report3",
+                            "description": "subkpi 1, report 3",
+                            "sequence": 1,
+                        }
                     ),
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="subkpi2_report3",
-                            description="subkpi 2, report 3",
-                            sequence=2,
-                        ),
+                    Command.create(
+                        {
+                            "name": "subkpi2_report3",
+                            "description": "subkpi 2, report 3",
+                            "sequence": 2,
+                        }
                     ),
                 ],
-            )
+            }
         )
         # kpi with accounting formulas
         self.kpi1 = self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                description="kpi 1",
-                name="k1",
-                multi=True,
-                expression_ids=[
-                    (
-                        0,
-                        0,
-                        dict(name="bale[200%]", subkpi_id=self.report.subkpi_ids[0].id),
+            {
+                "report_id": self.report.id,
+                "description": "kpi 1",
+                "name": "k1",
+                "multi": True,
+                "expression_ids": [
+                    Command.create(
+                        {
+                            "name": "bale[200%]",
+                            "subkpi_id": self.report.subkpi_ids[0].id,
+                        }
                     ),
-                    (
-                        0,
-                        0,
-                        dict(name="balp[200%]", subkpi_id=self.report.subkpi_ids[1].id),
+                    Command.create(
+                        {
+                            "name": "balp[200%]",
+                            "subkpi_id": self.report.subkpi_ids[1].id,
+                        }
                     ),
                 ],
-            )
+            }
         )
         # kpi with accounting formula and query
         self.kpi2 = self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                description="kpi 2",
-                name="k2",
-                multi=True,
-                expression_ids=[
-                    (
-                        0,
-                        0,
-                        dict(name="balp[200%]", subkpi_id=self.report.subkpi_ids[0].id),
+            {
+                "report_id": self.report.id,
+                "description": "kpi 2",
+                "name": "k2",
+                "multi": True,
+                "expression_ids": [
+                    Command.create(
+                        {
+                            "name": "balp[200%]",
+                            "subkpi_id": self.report.subkpi_ids[0].id,
+                        }
                     ),
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="partner.debit", subkpi_id=self.report.subkpi_ids[1].id
-                        ),
+                    Command.create(
+                        {
+                            "name": "partner.debit",
+                            "subkpi_id": self.report.subkpi_ids[1].id,
+                        }
                     ),
                 ],
-            )
+            }
         )
         # kpi with a simple expression summing other multi-valued kpis
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                description="kpi 4",
-                name="k4",
-                multi=False,
-                expression="k1 + k2 + k3",
-            )
+            {
+                "report_id": self.report.id,
+                "description": "kpi 4",
+                "name": "k4",
+                "multi": False,
+                "expression": "k1 + k2 + k3",
+            }
         )
         # kpi with 2 constants
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                description="kpi 3",
-                name="k3",
-                multi=True,
-                expression_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="AccountingNone",
-                            subkpi_id=self.report.subkpi_ids[0].id,
-                        ),
+            {
+                "report_id": self.report.id,
+                "description": "kpi 3",
+                "name": "k3",
+                "multi": True,
+                "expression_ids": [
+                    Command.create(
+                        {
+                            "name": "AccountingNone",
+                            "subkpi_id": self.report.subkpi_ids[0].id,
+                        }
                     ),
-                    (0, 0, dict(name="1.0", subkpi_id=self.report.subkpi_ids[1].id)),
+                    Command.create(
+                        {"name": "1.0", "subkpi_id": self.report.subkpi_ids[1].id}
+                    ),
                 ],
-            )
+            }
         )
         # kpi with a NameError (x not defined)
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                description="kpi 5",
-                name="k5",
-                multi=True,
-                expression_ids=[
-                    (0, 0, dict(name="x", subkpi_id=self.report.subkpi_ids[0].id)),
-                    (0, 0, dict(name="1.0", subkpi_id=self.report.subkpi_ids[1].id)),
+            {
+                "report_id": self.report.id,
+                "description": "kpi 5",
+                "name": "k5",
+                "multi": True,
+                "expression_ids": [
+                    Command.create(
+                        {"name": "x", "subkpi_id": self.report.subkpi_ids[0].id}
+                    ),
+                    Command.create(
+                        {"name": "1.0", "subkpi_id": self.report.subkpi_ids[1].id}
+                    ),
                 ],
-            )
+            }
         )
         # string-type kpi
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                description="kpi 6",
-                name="k6",
-                multi=True,
-                type=TYPE_STR,
-                expression_ids=[
-                    (0, 0, dict(name='"bla"', subkpi_id=self.report.subkpi_ids[0].id)),
-                    (
-                        0,
-                        0,
-                        dict(name='"blabla"', subkpi_id=self.report.subkpi_ids[1].id),
+            {
+                "report_id": self.report.id,
+                "description": "kpi 6",
+                "name": "k6",
+                "multi": True,
+                "type": TYPE_STR,
+                "expression_ids": [
+                    Command.create(
+                        {"name": '"bla"', "subkpi_id": self.report.subkpi_ids[0].id}
+                    ),
+                    Command.create(
+                        {"name": '"blabla"', "subkpi_id": self.report.subkpi_ids[1].id}
                     ),
                 ],
-            )
+            }
         )
         # kpi that references another subkpi by name
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report.id,
-                description="kpi 7",
-                name="k7",
-                multi=True,
-                expression_ids=[
-                    (0, 0, dict(name="k3.sk1", subkpi_id=self.report.subkpi_ids[0].id)),
-                    (0, 0, dict(name="k3.sk2", subkpi_id=self.report.subkpi_ids[1].id)),
+            {
+                "report_id": self.report.id,
+                "description": "kpi 7",
+                "name": "k7",
+                "multi": True,
+                "expression_ids": [
+                    Command.create(
+                        {"name": "k3.sk1", "subkpi_id": self.report.subkpi_ids[0].id}
+                    ),
+                    Command.create(
+                        {"name": "k3.sk2", "subkpi_id": self.report.subkpi_ids[1].id}
+                    ),
                 ],
-            )
+            }
         )
         # Report 2 : kpi with AccountingNone value
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report_2.id,
-                description="AccountingNone kpi",
-                name="AccountingNoneKPI",
-                multi=False,
-            )
+            {
+                "report_id": self.report_2.id,
+                "description": "AccountingNone kpi",
+                "name": "AccountingNoneKPI",
+                "multi": False,
+            }
         )
         # Report 2 : 'classic' kpi with values for each sub-KPI
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report_2.id,
-                description="Classic kpi",
-                name="classic_kpi_r2",
-                multi=True,
-                expression_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="bale[200%]", subkpi_id=self.report_2.subkpi_ids[0].id
-                        ),
+            {
+                "report_id": self.report_2.id,
+                "description": "Classic kpi",
+                "name": "classic_kpi_r2",
+                "multi": True,
+                "expression_ids": [
+                    Command.create(
+                        {
+                            "name": "bale[200%]",
+                            "subkpi_id": self.report_2.subkpi_ids[0].id,
+                        }
                     ),
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="balp[200%]", subkpi_id=self.report_2.subkpi_ids[1].id
-                        ),
+                    Command.create(
+                        {
+                            "name": "balp[200%]",
+                            "subkpi_id": self.report_2.subkpi_ids[1].id,
+                        }
                     ),
                 ],
-            )
+            }
         )
         # Report 3 : kpi with wrong tuple length
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report_3.id,
-                description="Wrong tuple length kpi",
-                name="wrongTupleLen",
-                multi=False,
-                expression="('hello', 'does', 'this', 'work')",
-            )
+            {
+                "report_id": self.report_3.id,
+                "description": "Wrong tuple length kpi",
+                "name": "wrongTupleLen",
+                "multi": False,
+                "expression": "('hello', 'does', 'this', 'work')",
+            }
         )
         # Report 3 : 'classic' kpi
         self.env["mis.report.kpi"].create(
-            dict(
-                report_id=self.report_3.id,
-                description="Classic kpi",
-                name="classic_kpi_r2",
-                multi=True,
-                expression_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="bale[200%]", subkpi_id=self.report_3.subkpi_ids[0].id
-                        ),
+            {
+                "report_id": self.report_3.id,
+                "description": "Classic kpi",
+                "name": "classic_kpi_r2",
+                "multi": True,
+                "expression_ids": [
+                    Command.create(
+                        {
+                            "name": "bale[200%]",
+                            "subkpi_id": self.report_3.subkpi_ids[0].id,
+                        }
                     ),
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="balp[200%]", subkpi_id=self.report_3.subkpi_ids[1].id
-                        ),
+                    Command.create(
+                        {
+                            "name": "balp[200%]",
+                            "subkpi_id": self.report_3.subkpi_ids[1].id,
+                        }
                     ),
                 ],
-            )
+            }
         )
         # create a report instance
         self.report_instance = self.env["mis.report.instance"].create(
-            dict(
-                name="test instance",
-                report_id=self.report.id,
-                company_id=self.env.ref("base.main_company").id,
-                period_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="p1",
-                            mode="relative",
-                            type="d",
-                            subkpi_ids=[(4, self.report.subkpi_ids[0].id, None)],
-                        ),
+            {
+                "name": "test instance",
+                "report_id": self.report.id,
+                "company_id": self.env.ref("base.main_company").id,
+                "period_ids": [
+                    Command.create(
+                        {
+                            "name": "p1",
+                            "mode": "relative",
+                            "type": "d",
+                            "subkpi_ids": [Command.link(self.report.subkpi_ids[0].id)],
+                        }
                     ),
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="p2",
-                            mode="fix",
-                            manual_date_from="2014-01-01",
-                            manual_date_to="2014-12-31",
-                        ),
+                    Command.create(
+                        {
+                            "name": "p2",
+                            "mode": "fix",
+                            "manual_date_from": "2014-01-01",
+                            "manual_date_to": "2014-12-31",
+                        }
                     ),
                 ],
-            )
+            }
         )
         # same for report 2
         self.report_instance_2 = self.env["mis.report.instance"].create(
-            dict(
-                name="test instance 2",
-                report_id=self.report_2.id,
-                company_id=self.env.ref("base.main_company").id,
-                period_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="p3",
-                            mode="fix",
-                            manual_date_from="2019-01-01",
-                            manual_date_to="2019-12-31",
-                        ),
+            {
+                "name": "test instance 2",
+                "report_id": self.report_2.id,
+                "company_id": self.env.ref("base.main_company").id,
+                "period_ids": [
+                    Command.create(
+                        {
+                            "name": "p3",
+                            "mode": "fix",
+                            "manual_date_from": "2019-01-01",
+                            "manual_date_to": "2019-12-31",
+                        }
                     )
                 ],
-            )
+            }
         )
         # and for report 3
         self.report_instance_3 = self.env["mis.report.instance"].create(
-            dict(
-                name="test instance 3",
-                report_id=self.report_3.id,
-                company_id=self.env.ref("base.main_company").id,
-                period_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="p4",
-                            mode="fix",
-                            manual_date_from="2019-01-01",
-                            manual_date_to="2019-12-31",
-                        ),
+            {
+                "name": "test instance 3",
+                "report_id": self.report_3.id,
+                "company_id": self.env.ref("base.main_company").id,
+                "period_ids": [
+                    Command.create(
+                        {
+                            "name": "p4",
+                            "mode": "fix",
+                            "manual_date_from": "2019-01-01",
+                            "manual_date_to": "2019-12-31",
+                        }
                     )
                 ],
-            )
+            }
         )
 
         # create a duplicate of first instance with different period
         self.report_instance_4 = self.env["mis.report.instance"].create(
-            dict(
-                name="test instance",
-                report_id=self.report.id,
-                company_id=self.env.ref("base.main_company").id,
-                period_ids=[
-                    (
-                        0,
-                        0,
-                        dict(
-                            name="p2",
-                            mode="fix",
-                            manual_date_from="2015-01-01",
-                            manual_date_to="2015-12-31",
-                        ),
+            {
+                "name": "test instance",
+                "report_id": self.report.id,
+                "company_id": self.env.ref("base.main_company").id,
+                "period_ids": [
+                    Command.create(
+                        {
+                            "name": "p2",
+                            "mode": "fix",
+                            "manual_date_from": "2015-01-01",
+                            "manual_date_to": "2015-12-31",
+                        }
                     ),
                 ],
-            )
+            }
         )
 
     def test_compute(self):
@@ -396,7 +387,7 @@ class TestMisReportInstance(common.HttpCase):
         self.report_instance.write(
             {
                 "multi_company": True,
-                "company_ids": [(6, 0, self.report_instance.company_id.ids)],
+                "company_ids": [Command.set(self.report_instance.company_id.ids)],
             }
         )
         self.report_instance.report_id.kpi_ids.write({"auto_expand_accounts": True})
@@ -428,7 +419,7 @@ class TestMisReportInstance(common.HttpCase):
 
     def test_drilldown(self):
         action = self.report_instance.drilldown(
-            dict(expr="balp[200%]", period_id=self.report_instance.period_ids[0].id)
+            {"expr": "balp[200%]", "period_id": self.report_instance.period_ids[0].id}
         )
         account_ids = (
             self.env["account.account"]
@@ -488,7 +479,7 @@ class TestMisReportInstance(common.HttpCase):
             ]
         )
         action = self.report_instance.drilldown(
-            dict(expr="balp[200%]", period_id=self.report_instance.period_ids[0].id)
+            {"expr": "balp[200%]", "period_id": self.report_instance.period_ids[0].id}
         )
         self.assertEqual(action["view_mode"], "pivot,graph")
         self.assertEqual(action["views"], [[False, "pivot"], [False, "graph"]])
@@ -507,7 +498,7 @@ class TestMisReportInstance(common.HttpCase):
             ]
         )
         action = self.report_instance.drilldown(
-            dict(expr="balp[200%]", period_id=self.report_instance.period_ids[0].id)
+            {"expr": "balp[200%]", "period_id": self.report_instance.period_ids[0].id}
         )
         self.assertEqual(action["view_mode"], "list,form,pivot,graph")
         self.assertEqual(
@@ -531,7 +522,7 @@ class TestMisReportInstance(common.HttpCase):
                     "name": "Test Account",
                     "code": "999001",
                     "account_type": "expense",
-                    "company_ids": [(6, 0, [company2.id])],
+                    "company_ids": [Command.set([company2.id])],
                 }
             )
         )
@@ -547,7 +538,7 @@ class TestMisReportInstance(common.HttpCase):
                 "description": "Test Expense",
                 "auto_expand_accounts": True,
                 "sequence": 1,
-                "expression_ids": [(0, 0, {"name": "balp[999%]"})],
+                "expression_ids": [Command.create({"name": "balp[999%]"})],
             }
         )
         instance = self.env["mis.report.instance"].create(
@@ -556,15 +547,13 @@ class TestMisReportInstance(common.HttpCase):
                 "report_id": report.id,
                 "company_id": company2.id,
                 "period_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "2024",
                             "mode": "fix",
                             "manual_date_from": "2024-01-01",
                             "manual_date_to": "2024-12-31",
-                        },
+                        }
                     ),
                 ],
             }
@@ -655,11 +644,11 @@ class TestMisReportInstance(common.HttpCase):
         # create a second company
         c1 = self.report_instance.company_id
         c2 = self.env["res.company"].create(
-            dict(
-                name="company 2",
-            )
+            {
+                "name": "company 2",
+            }
         )
-        self.report_instance.write(dict(multi_company=True, company_id=False))
+        self.report_instance.write({"multi_company": True, "company_id": False})
         self.report_instance.company_ids |= c1
         self.report_instance.company_ids |= c2
         assert len(self.report_instance.company_ids) == 2
@@ -683,7 +672,7 @@ class TestMisReportInstance(common.HttpCase):
         )
         # create a child company
         self.env["res.company"].create(
-            dict(name="company 2", parent_id=self.report_instance.company_id.id)
+            {"name": "company 2", "parent_id": self.report_instance.company_id.id}
         )
         self.report_instance.multi_company = True
         # multi company, company_ids not set
@@ -753,3 +742,25 @@ class TestMisReportInstance(common.HttpCase):
     def test_copy_mis_report_instance(self):
         new_instance = self.report_instance.copy()
         self.assertEqual(new_instance.name, f"{self.report_instance.name} (copy)")
+        self.assertEqual(
+            new_instance.period_ids.mapped("name"),
+            self.report_instance.period_ids.mapped("name"),
+        )
+
+    def test_copy_mis_report(self):
+        new_report = self.report.copy()
+        self.assertEqual(new_report.name, f"{self.report.name} (copy)")
+        self.assertEqual(
+            new_report.kpi_ids.mapped("name"), self.report.kpi_ids.mapped("name")
+        )
+        self.assertEqual(
+            new_report.subkpi_ids.mapped("name"),
+            self.report.subkpi_ids.mapped("name"),
+        )
+        self.assertEqual(
+            new_report.query_ids.mapped("name"), self.report.query_ids.mapped("name")
+        )
+        self.assertEqual(
+            new_report.kpi_ids.expression_ids.mapped("name"),
+            self.report.kpi_ids.expression_ids.mapped("name"),
+        )
