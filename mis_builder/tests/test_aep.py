@@ -147,24 +147,20 @@ class TestAEP(common.TransactionCase):
                 "journal_id": self.journal.id,
                 "date": fields.Date.to_string(date),
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "/",
                             "debit": amount,
                             "account_id": debit_acc.id,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "/",
                             "credit": amount,
                             "account_id": credit_acc.id,
                             "quantity": credit_quantity,
-                        },
+                        }
                     ),
                 ],
             }
@@ -474,7 +470,7 @@ class TestAEP(common.TransactionCase):
         )
         for ml in move.line_ids:
             if ml.credit:
-                ml.write({"tax_ids": [(6, 0, [tax.id])]})
+                ml.write({"tax_ids": [Command.set([tax.id])]})
         tax.active = False
         move._post()
         # let's query for december 1st

@@ -24,11 +24,11 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
                 "journal_id": self.journal.id,
                 "date": date,
                 "line_ids": [
-                    (0, 0, {"name": "/", "debit": amount, "account_id": debit_acc.id}),
-                    (
-                        0,
-                        0,
-                        {"name": "/", "credit": amount, "account_id": credit_acc.id},
+                    Command.create(
+                        {"name": "/", "debit": amount, "account_id": debit_acc.id}
+                    ),
+                    Command.create(
+                        {"name": "/", "credit": amount, "account_id": credit_acc.id}
                     ),
                 ],
             }
@@ -159,8 +159,8 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
                 "mode": MODE_NONE,
                 "source": SRC_SUMCOL,
                 "source_sumcol_ids": [
-                    (0, 0, {"period_to_sum_id": self.p1.id, "sign": "+"}),
-                    (0, 0, {"period_to_sum_id": self.p2.id, "sign": "+"}),
+                    Command.create({"period_to_sum_id": self.p1.id, "sign": "+"}),
+                    Command.create({"period_to_sum_id": self.p2.id, "sign": "+"}),
                 ],
             }
         )
@@ -184,8 +184,8 @@ class TestMisReportInstanceDataSources(common.TransactionCase):
                 "mode": MODE_NONE,
                 "source": SRC_SUMCOL,
                 "source_sumcol_ids": [
-                    (0, 0, {"period_to_sum_id": self.p1.id, "sign": "+"}),
-                    (0, 0, {"period_to_sum_id": self.p2.id, "sign": "-"}),
+                    Command.create({"period_to_sum_id": self.p1.id, "sign": "+"}),
+                    Command.create({"period_to_sum_id": self.p2.id, "sign": "-"}),
                 ],
                 "source_sumcol_accdet": True,
             }

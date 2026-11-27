@@ -108,11 +108,11 @@ class TestMultiCompanyAEP(common.TransactionCase):
                 "journal_id": journal.id,
                 "date": fields.Date.to_string(date),
                 "line_ids": [
-                    (0, 0, {"name": "/", "debit": amount, "account_id": debit_acc.id}),
-                    (
-                        0,
-                        0,
-                        {"name": "/", "credit": amount, "account_id": credit_acc.id},
+                    Command.create(
+                        {"name": "/", "debit": amount, "account_id": debit_acc.id}
+                    ),
+                    Command.create(
+                        {"name": "/", "credit": amount, "account_id": credit_acc.id}
                     ),
                 ],
             }

@@ -1,6 +1,7 @@
 # Copyright 2016 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from odoo import Command
 from odoo.fields import Domain
 from odoo.tests import common
 from odoo.tests import reports as test_reports
@@ -29,20 +30,22 @@ class TestMisReportInstance(common.HttpCase):
             {
                 "name": "test report",
                 "subkpi_ids": [
-                    (0, 0, {"name": "sk1", "description": "subkpi 1", "sequence": 1}),
-                    (0, 0, {"name": "sk2", "description": "subkpi 2", "sequence": 2}),
+                    Command.create(
+                        {"name": "sk1", "description": "subkpi 1", "sequence": 1}
+                    ),
+                    Command.create(
+                        {"name": "sk2", "description": "subkpi 2", "sequence": 2}
+                    ),
                 ],
                 "query_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "partner",
                             "model_id": partner_model_id,
-                            "field_ids": [(4, partner_debit_field_id, None)],
+                            "field_ids": [Command.link(partner_debit_field_id)],
                             "date_field": partner_create_date_field_id,
                             "aggregate": "sum",
-                        },
+                        }
                     )
                 ],
             }
@@ -52,23 +55,19 @@ class TestMisReportInstance(common.HttpCase):
             {
                 "name": "another test report",
                 "subkpi_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "subkpi1_report2",
                             "description": "subkpi 1, report 2",
                             "sequence": 1,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "subkpi2_report2",
                             "description": "subkpi 2, report 2",
                             "sequence": 2,
-                        },
+                        }
                     ),
                 ],
             }
@@ -78,23 +77,19 @@ class TestMisReportInstance(common.HttpCase):
             {
                 "name": "test report 3",
                 "subkpi_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "subkpi1_report3",
                             "description": "subkpi 1, report 3",
                             "sequence": 1,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "subkpi2_report3",
                             "description": "subkpi 2, report 3",
                             "sequence": 2,
-                        },
+                        }
                     ),
                 ],
             }
@@ -107,21 +102,17 @@ class TestMisReportInstance(common.HttpCase):
                 "name": "k1",
                 "multi": True,
                 "expression_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "bale[200%]",
                             "subkpi_id": self.report.subkpi_ids[0].id,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "balp[200%]",
                             "subkpi_id": self.report.subkpi_ids[1].id,
-                        },
+                        }
                     ),
                 ],
             }
@@ -134,21 +125,17 @@ class TestMisReportInstance(common.HttpCase):
                 "name": "k2",
                 "multi": True,
                 "expression_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "balp[200%]",
                             "subkpi_id": self.report.subkpi_ids[0].id,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "partner.debit",
                             "subkpi_id": self.report.subkpi_ids[1].id,
-                        },
+                        }
                     ),
                 ],
             }
@@ -171,15 +158,15 @@ class TestMisReportInstance(common.HttpCase):
                 "name": "k3",
                 "multi": True,
                 "expression_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "AccountingNone",
                             "subkpi_id": self.report.subkpi_ids[0].id,
-                        },
+                        }
                     ),
-                    (0, 0, {"name": "1.0", "subkpi_id": self.report.subkpi_ids[1].id}),
+                    Command.create(
+                        {"name": "1.0", "subkpi_id": self.report.subkpi_ids[1].id}
+                    ),
                 ],
             }
         )
@@ -191,8 +178,12 @@ class TestMisReportInstance(common.HttpCase):
                 "name": "k5",
                 "multi": True,
                 "expression_ids": [
-                    (0, 0, {"name": "x", "subkpi_id": self.report.subkpi_ids[0].id}),
-                    (0, 0, {"name": "1.0", "subkpi_id": self.report.subkpi_ids[1].id}),
+                    Command.create(
+                        {"name": "x", "subkpi_id": self.report.subkpi_ids[0].id}
+                    ),
+                    Command.create(
+                        {"name": "1.0", "subkpi_id": self.report.subkpi_ids[1].id}
+                    ),
                 ],
             }
         )
@@ -205,15 +196,11 @@ class TestMisReportInstance(common.HttpCase):
                 "multi": True,
                 "type": TYPE_STR,
                 "expression_ids": [
-                    (
-                        0,
-                        0,
-                        {"name": '"bla"', "subkpi_id": self.report.subkpi_ids[0].id},
+                    Command.create(
+                        {"name": '"bla"', "subkpi_id": self.report.subkpi_ids[0].id}
                     ),
-                    (
-                        0,
-                        0,
-                        {"name": '"blabla"', "subkpi_id": self.report.subkpi_ids[1].id},
+                    Command.create(
+                        {"name": '"blabla"', "subkpi_id": self.report.subkpi_ids[1].id}
                     ),
                 ],
             }
@@ -226,15 +213,11 @@ class TestMisReportInstance(common.HttpCase):
                 "name": "k7",
                 "multi": True,
                 "expression_ids": [
-                    (
-                        0,
-                        0,
-                        {"name": "k3.sk1", "subkpi_id": self.report.subkpi_ids[0].id},
+                    Command.create(
+                        {"name": "k3.sk1", "subkpi_id": self.report.subkpi_ids[0].id}
                     ),
-                    (
-                        0,
-                        0,
-                        {"name": "k3.sk2", "subkpi_id": self.report.subkpi_ids[1].id},
+                    Command.create(
+                        {"name": "k3.sk2", "subkpi_id": self.report.subkpi_ids[1].id}
                     ),
                 ],
             }
@@ -256,21 +239,17 @@ class TestMisReportInstance(common.HttpCase):
                 "name": "classic_kpi_r2",
                 "multi": True,
                 "expression_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "bale[200%]",
                             "subkpi_id": self.report_2.subkpi_ids[0].id,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "balp[200%]",
                             "subkpi_id": self.report_2.subkpi_ids[1].id,
-                        },
+                        }
                     ),
                 ],
             }
@@ -293,21 +272,17 @@ class TestMisReportInstance(common.HttpCase):
                 "name": "classic_kpi_r2",
                 "multi": True,
                 "expression_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "bale[200%]",
                             "subkpi_id": self.report_3.subkpi_ids[0].id,
-                        },
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "balp[200%]",
                             "subkpi_id": self.report_3.subkpi_ids[1].id,
-                        },
+                        }
                     ),
                 ],
             }
@@ -319,25 +294,21 @@ class TestMisReportInstance(common.HttpCase):
                 "report_id": self.report.id,
                 "company_id": self.env.ref("base.main_company").id,
                 "period_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "p1",
                             "mode": "relative",
                             "type": "d",
-                            "subkpi_ids": [(4, self.report.subkpi_ids[0].id, None)],
-                        },
+                            "subkpi_ids": [Command.link(self.report.subkpi_ids[0].id)],
+                        }
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "p2",
                             "mode": "fix",
                             "manual_date_from": "2014-01-01",
                             "manual_date_to": "2014-12-31",
-                        },
+                        }
                     ),
                 ],
             }
@@ -349,15 +320,13 @@ class TestMisReportInstance(common.HttpCase):
                 "report_id": self.report_2.id,
                 "company_id": self.env.ref("base.main_company").id,
                 "period_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "p3",
                             "mode": "fix",
                             "manual_date_from": "2019-01-01",
                             "manual_date_to": "2019-12-31",
-                        },
+                        }
                     )
                 ],
             }
@@ -369,15 +338,13 @@ class TestMisReportInstance(common.HttpCase):
                 "report_id": self.report_3.id,
                 "company_id": self.env.ref("base.main_company").id,
                 "period_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "p4",
                             "mode": "fix",
                             "manual_date_from": "2019-01-01",
                             "manual_date_to": "2019-12-31",
-                        },
+                        }
                     )
                 ],
             }
@@ -390,15 +357,13 @@ class TestMisReportInstance(common.HttpCase):
                 "report_id": self.report.id,
                 "company_id": self.env.ref("base.main_company").id,
                 "period_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "p2",
                             "mode": "fix",
                             "manual_date_from": "2015-01-01",
                             "manual_date_to": "2015-12-31",
-                        },
+                        }
                     ),
                 ],
             }
@@ -422,7 +387,7 @@ class TestMisReportInstance(common.HttpCase):
         self.report_instance.write(
             {
                 "multi_company": True,
-                "company_ids": [(6, 0, self.report_instance.company_id.ids)],
+                "company_ids": [Command.set(self.report_instance.company_id.ids)],
             }
         )
         self.report_instance.report_id.kpi_ids.write({"auto_expand_accounts": True})
@@ -557,7 +522,7 @@ class TestMisReportInstance(common.HttpCase):
                     "name": "Test Account",
                     "code": "999001",
                     "account_type": "expense",
-                    "company_ids": [(6, 0, [company2.id])],
+                    "company_ids": [Command.set([company2.id])],
                 }
             )
         )
@@ -573,7 +538,7 @@ class TestMisReportInstance(common.HttpCase):
                 "description": "Test Expense",
                 "auto_expand_accounts": True,
                 "sequence": 1,
-                "expression_ids": [(0, 0, {"name": "balp[999%]"})],
+                "expression_ids": [Command.create({"name": "balp[999%]"})],
             }
         )
         instance = self.env["mis.report.instance"].create(
@@ -582,15 +547,13 @@ class TestMisReportInstance(common.HttpCase):
                 "report_id": report.id,
                 "company_id": company2.id,
                 "period_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "2024",
                             "mode": "fix",
                             "manual_date_from": "2024-01-01",
                             "manual_date_to": "2024-12-31",
-                        },
+                        }
                     ),
                 ],
             }

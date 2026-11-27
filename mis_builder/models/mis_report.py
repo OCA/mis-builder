@@ -11,7 +11,7 @@ from zoneinfo import ZoneInfo
 
 import dateutil
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Domain
 from odoo.tools.safe_eval import (
@@ -203,7 +203,7 @@ class MisReportKpi(models.Model):
                 expressions = []
                 for subkpi in kpi.report_id.subkpi_ids:
                     expressions.append(
-                        (0, 0, {"name": kpi.expression, "subkpi_id": subkpi.id})
+                        Command.create({"name": kpi.expression, "subkpi_id": subkpi.id})
                     )
                 kpi.expression_ids = expressions
 
@@ -484,13 +484,13 @@ class MisReport(models.Model):
             for expression in kpi.expression_ids:
                 assert expression.subkpi_id  # must be true if kpi is multi
                 if expression.subkpi_id not in self.subkpi_ids:
-                    expressions.append((2, expression.id, None))  # remove
+                    expressions.append(Command.delete(expression.id))  # remove
                 else:
                     new_subkpis.remove(expression.subkpi_id)  # no change
             for subkpi in new_subkpis:
                 # TODO FIXME this does not work, while the remove above works
                 expressions.append(
-                    (0, None, {"name": False, "subkpi_id": subkpi.id})
+                    Command.create({"name": False, "subkpi_id": subkpi.id})
                 )  # add empty expressions for new subkpis
             if expressions:
                 kpi.expression_ids = expressions

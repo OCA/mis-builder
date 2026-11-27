@@ -1,6 +1,7 @@
 # Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
+from odoo import Command
 from odoo.tests.common import TransactionCase
 
 from odoo.addons.mis_builder.models.expression_evaluator import ExpressionEvaluator
@@ -28,7 +29,9 @@ class TestMisSubreport(TransactionCase):
             {
                 "name": "test report",
                 "subreport_ids": [
-                    (0, 0, {"name": "subreport", "subreport_id": cls.subreport.id})
+                    Command.create(
+                        {"name": "subreport", "subreport_id": cls.subreport.id}
+                    )
                 ],
             }
         )
@@ -44,7 +47,7 @@ class TestMisSubreport(TransactionCase):
             {
                 "name": "parent report",
                 "subreport_ids": [
-                    (0, 0, {"name": "report", "subreport_id": cls.report.id})
+                    Command.create({"name": "report", "subreport_id": cls.report.id})
                 ],
             }
         )
@@ -79,10 +82,8 @@ class TestMisSubreport(TransactionCase):
             self.report.write(
                 {
                     "subreport_ids": [
-                        (
-                            0,
-                            0,
-                            {"name": "preport1", "subreport_id": self.parent_report.id},
+                        Command.create(
+                            {"name": "preport1", "subreport_id": self.parent_report.id}
                         )
                     ]
                 }
@@ -91,10 +92,8 @@ class TestMisSubreport(TransactionCase):
             self.report.write(
                 {
                     "subreport_ids": [
-                        (
-                            0,
-                            0,
-                            {"name": "preport2", "subreport_id": self.report.id},
+                        Command.create(
+                            {"name": "preport2", "subreport_id": self.report.id}
                         )
                     ]
                 }

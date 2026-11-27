@@ -8,7 +8,7 @@ import logging
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Domain
 
@@ -701,7 +701,7 @@ class MisReportInstance(models.Model):
                 if not record.date_to:
                     record.date_to = fields.Date.context_today(self)
                 record.period_ids.unlink()
-                record.write({"period_ids": [(0, 0, {"name": "Default"})]})
+                record.write({"period_ids": [Command.create({"name": "Default"})]})
             else:
                 record.date_from = None
                 record.date_to = None
