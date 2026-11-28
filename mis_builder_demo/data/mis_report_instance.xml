@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2017-2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -16,7 +16,7 @@
         <field name="type">m</field>
         <field name="offset">-2</field>
         <field name="duration">3</field>
-        <field name="sequence">10</field>
+        <field name="sequence" eval="10" />
     </record>
     <record id="mis_report_instance_expenses_commit" model="mis.report.instance.period">
         <field name="name">Committed</field>
@@ -27,7 +27,7 @@
         <field name="type">m</field>
         <field name="offset">-2</field>
         <field name="duration">3</field>
-        <field name="sequence">20</field>
+        <field name="sequence" eval="20" />
     </record>
     <record
         id="mis_report_instance_expenses_act_mm2"
@@ -39,7 +39,7 @@
         <field name="mode">relative</field>
         <field name="type">m</field>
         <field name="offset">-2</field>
-        <field name="sequence">30</field>
+        <field name="sequence" eval="30" />
     </record>
     <record
         id="mis_report_instance_expenses_act_mm1"
@@ -51,7 +51,7 @@
         <field name="mode">relative</field>
         <field name="type">m</field>
         <field name="offset">-1</field>
-        <field name="sequence">40</field>
+        <field name="sequence" eval="40" />
     </record>
     <record id="mis_report_instance_expenses_act_m" model="mis.report.instance.period">
         <field name="name">M</field>
@@ -60,7 +60,7 @@
         <field name="mode">relative</field>
         <field name="type">m</field>
         <field name="offset">0</field>
-        <field name="sequence">50</field>
+        <field name="sequence" eval="50" />
     </record>
     <record id="mis_report_instance_expenses_avail" model="mis.report.instance.period">
         <field name="name">Available</field>
