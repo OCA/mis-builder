@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2017-2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -13,7 +13,7 @@
         <field name="auto_expand_accounts">True</field>
         <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2" />
         <field name="budgetable" eval="True" />
-        <field name="sequence">1</field>
+        <field name="sequence" eval="1" />
     </record>
     <record id="mis_report_expenses_kpi_expr_exp" model="mis.report.kpi.expression">
         <field name="kpi_id" ref="mis_report_expenses_kpi_exp" />
@@ -26,7 +26,7 @@
         <field name="auto_expand_accounts">True</field>
         <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2" />
         <field name="budgetable" eval="True" />
-        <field name="sequence">2</field>
+        <field name="sequence" eval="2" />
     </record>
     <record id="mis_report_expenses_kpi_expr_equip" model="mis.report.kpi.expression">
         <field name="kpi_id" ref="mis_report_expenses_kpi_equip" />
@@ -39,7 +39,7 @@
         <field name="auto_expand_accounts">True</field>
         <field name="auto_expand_accounts_style_id" ref="mis_report_expenses_style2" />
         <field name="budgetable" eval="True" />
-        <field name="sequence">3</field>
+        <field name="sequence" eval="3" />
     </record>
     <record id="mis_report_expenses_kpi_expr_other" model="mis.report.kpi.expression">
         <field name="kpi_id" ref="mis_report_expenses_kpi_other" />
@@ -53,6 +53,6 @@
         <field name="auto_expand_accounts">False</field>
         <field name="budgetable" eval="False" />
         <field name="style_id" ref="mis_report_expenses_style4" />
-        <field name="sequence">4</field>
+        <field name="sequence" eval="4" />
     </record>
 </odoo>

@@ -4,13 +4,13 @@
 {
     "name": "MIS Builder Demo",
     "summary": "Demo addon for MIS Builder",
-    "version": "19.0.1.0.1",
+    "version": "20.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/mis-builder",
     "depends": ["mis_builder_budget", "purchase"],
     "data": [
-        "security/mis_committed_purchase.xml",
+        "security/ir.access.csv",
         "views/mis_committed_purchase.xml",
     ],
     "demo": [
@@ -21,5 +21,4 @@
     ],
     "maintainers": ["sbidoul"],
     "development_status": "Alpha",
-    'installable': False,
 }

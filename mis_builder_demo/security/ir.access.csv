@@ -1,0 +1,2 @@
+id,name,model_id,group_id/id,operation,domain
+mis_committed_purchase_access_name,mis.committed.purchase access name,mis.committed.purchase,base.group_user,r,

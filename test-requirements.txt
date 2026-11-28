@@ -1,0 +1,2 @@
+odoo-addon-mis_builder @ git+https://github.com/OCA/mis-builder@refs/pull/842/head#subdirectory=mis_builder
+odoo-addon-mis_builder_budget @ git+https://github.com/OCA/mis-builder@refs/pull/853/head#subdirectory=mis_builder_budget
